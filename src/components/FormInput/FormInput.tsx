@@ -17,6 +17,7 @@ const FormInput = ({ register, error, label, id, ...rest }: FormInputProps) => {
         className={`mt-0 border-[1px] border-borderGray 
         outline-none p-[10px] rounded-md overflow-hidden 
         text-ellipsis text-sm disabled:opacity-50 disabled:cursor-not-allowed
+        hover:border-primary hover:ring-1 hover:ring-primary
         ${error ? "border-red" : ""}`}
         {...register(id)}
         {...rest}
