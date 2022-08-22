@@ -13,7 +13,6 @@ const schema = yup.object({
 const LoginForm = () => {
   const {
     register,
-    watch,
     formState: { errors: formErrors },
   } = useForm({
     resolver: yupResolver(schema),
