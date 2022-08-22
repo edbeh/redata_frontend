@@ -8,7 +8,7 @@ const LoginSplash = () => {
         </h1>
 
         <p className="text-xl leading-[2rem] text-white">
-          A platform where reseachers may showcase their research portfolio and
+          A platform for reseachers to showcase their research portfolio and
           connect with like-minded peers
         </p>
       </div>

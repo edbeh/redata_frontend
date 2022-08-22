@@ -20,7 +20,7 @@ const LoginForm = () => {
 
   return (
     <div className="flex items-center justify-center flex-1">
-      <form className="w-full p-[18%]">
+      <form className="w-full p-[12%] md:p-[18%]">
         <div className="flex flex-col space-y-4">
           <h1 className="text-3xl font-bold text-blue-900">LOGIN</h1>
 
