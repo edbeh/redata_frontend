@@ -19,8 +19,8 @@ export const selectStyles = {
       opacity: state?.isDisabled ? 0.5 : 1,
 
       "&:hover": {
-        boxShadow: `0 0 0 1px #2F80ED`,
-        borderColor: "#2F80ED",
+        boxShadow: `0 0 0 1px #2a73d5`,
+        borderColor: "#2a73d5",
       },
     };
   },
