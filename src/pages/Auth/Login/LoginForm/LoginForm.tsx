@@ -1,4 +1,3 @@
-import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
@@ -6,16 +5,14 @@ import { Link } from "react-router-dom";
 import { getYupIsRequired } from "utils";
 import { FormInput, Button } from "components";
 
-const schema = yup.object({
-  email: yup.string().required("Email is required"),
-  password: yup.string().required("Password is required"),
-});
+import { schema } from "./LoginForm.schema";
+import { ILoginFormFields } from "./LoginForm.model";
 
 const LoginForm = () => {
   const {
     register,
     formState: { errors: formErrors },
-  } = useForm({
+  } = useForm<ILoginFormFields>({
     resolver: yupResolver(schema),
   });
 

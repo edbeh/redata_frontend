@@ -1,4 +1,3 @@
-import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
@@ -6,30 +5,29 @@ import { Link } from "react-router-dom";
 import { FormInput, Button } from "components";
 import { getYupIsRequired } from "utils";
 
-const schema = yup.object({
-  name: yup.string().required("Name is required"),
-  email: yup.string().required("Email is required"),
-  password: yup.string().required("Password is required"),
-  passwordConfirmation: yup
-    .string()
-    .test("passwords-match", "Passwords must match", function (value) {
-      return this.parent.password === value;
-    })
-    .required("Confirm password is required"),
-});
+import { schema } from "./RegisterForm.schema";
+import { IRegisterFormFields } from "./RegisterForm.model";
 
 const RegisterForm = () => {
   const {
     register,
     formState: { errors: formErrors },
-  } = useForm({
+    handleSubmit,
+  } = useForm<IRegisterFormFields>({
     mode: "onChange",
     resolver: yupResolver(schema),
   });
 
+  const handleSubmitForm = (data: IRegisterFormFields) => {
+    console.log("data", data);
+  };
+
   return (
     <div className="flex items-center justify-center flex-1">
-      <form className="w-full p-[12%] md:p-[18%]">
+      <form
+        onSubmit={handleSubmit(handleSubmitForm)}
+        className="w-full p-[12%] md:p-[18%]"
+      >
         <div className="flex flex-col space-y-4">
           <h1 className="text-3xl font-bold text-blue-900">REGISTER</h1>
 
