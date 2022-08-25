@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
 
 import { FormInput, Button } from "components";
+import { getYupIsRequired } from "utils";
 
 const schema = yup.object({
   name: yup.string().required("Name is required"),
@@ -13,7 +14,8 @@ const schema = yup.object({
     .string()
     .test("passwords-match", "Passwords must match", function (value) {
       return this.parent.password === value;
-    }),
+    })
+    .required("Confirm password is required"),
 });
 
 const RegisterForm = () => {
@@ -38,7 +40,7 @@ const RegisterForm = () => {
             type="text"
             label="Full name"
             error={formErrors?.name?.message as string}
-            required
+            required={getYupIsRequired(schema, "name")}
           />
 
           <FormInput
@@ -48,7 +50,7 @@ const RegisterForm = () => {
             type="email"
             label="Email"
             error={formErrors?.email?.message as string}
-            required
+            required={getYupIsRequired(schema, "email")}
           />
 
           <FormInput
@@ -58,7 +60,7 @@ const RegisterForm = () => {
             type="password"
             label="Password"
             error={formErrors?.password?.message as string}
-            required
+            required={getYupIsRequired(schema, "password")}
           />
 
           <FormInput
@@ -68,7 +70,7 @@ const RegisterForm = () => {
             type="password"
             label="Confirm Password"
             error={formErrors?.passwordConfirmation?.message as string}
-            required
+            required={getYupIsRequired(schema, "passwordConfirmation")}
           />
         </div>
 

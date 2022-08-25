@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
 
+import { getYupIsRequired } from "utils";
 import { FormInput, Button } from "components";
 
 const schema = yup.object({
@@ -31,6 +32,7 @@ const LoginForm = () => {
             type="email"
             label="Email"
             error={formErrors?.email?.message as string}
+            required={getYupIsRequired(schema, "email")}
           />
           <FormInput
             register={register}
@@ -39,6 +41,7 @@ const LoginForm = () => {
             type="password"
             label="Password"
             error={formErrors?.password?.message as string}
+            required={getYupIsRequired(schema, "password")}
           />
         </div>
 
