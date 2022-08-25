@@ -6,10 +6,13 @@ interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const FormInput = ({ register, error, label, id, ...rest }: FormInputProps) => {
+  const { required } = rest;
+
   return (
     <div className="flex flex-col">
-      <label htmlFor={id} className="flex flex-col text-[15px]">
+      <label htmlFor={id} className="flex text-[15px]">
         {label}
+        {required && <span className="text-red">*</span>}
       </label>
 
       <input

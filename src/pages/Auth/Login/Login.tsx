@@ -1,11 +1,11 @@
 import LoginForm from "./components/LoginForm/LoginForm";
-import LoginSplash from "./components/LoginSplash/LoginSplash";
+import Splash from "../components/Splash/Splash";
 
 const Login = () => {
   return (
     <div className="flex w-[100vw] h-[100vh]">
       <LoginForm />
-      <LoginSplash />
+      <Splash />
     </div>
   );
 };
