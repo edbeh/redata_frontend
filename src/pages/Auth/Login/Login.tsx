@@ -1,5 +1,5 @@
-import LoginForm from "./components/LoginForm/LoginForm";
-import Splash from "../components/Splash/Splash";
+import LoginForm from "./LoginForm/LoginForm";
+import Splash from "../Splash/Splash";
 
 const Login = () => {
   return (

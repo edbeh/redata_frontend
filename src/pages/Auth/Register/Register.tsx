@@ -1,5 +1,5 @@
-import RegisterForm from "./components/RegisterForm/RegisterForm";
-import Splash from "../components/Splash/Splash";
+import RegisterForm from "./RegisterForm/RegisterForm";
+import Splash from "../Splash/Splash";
 
 const Register = () => {
   return (
