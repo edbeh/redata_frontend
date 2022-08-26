@@ -11,6 +11,7 @@ import { IRegisterFormFields } from "./RegisterForm.model";
 import { useEffect } from "react";
 
 const RegisterForm = () => {
+  // *Form
   const {
     register,
     formState: { errors: formErrors },
@@ -25,7 +26,6 @@ const RegisterForm = () => {
   const {
     mutate: mutateUser,
     isLoading: submitUserIsLoading,
-    isError: submitUserIsError,
     error: submitUserError,
   } = useSubmitUser();
 
@@ -34,12 +34,13 @@ const RegisterForm = () => {
     mutateUser(data);
   };
 
+  // *Effects
   useEffect(() => {
-    if (submitUserIsError && isApiError(submitUserError)) {
+    if (isApiError(submitUserError)) {
       handleApiErrorsForm(submitUserError, setError);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [submitUserError, submitUserIsError]);
+  }, [submitUserError]);
 
   // *JSX
   return (

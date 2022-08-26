@@ -1,24 +1,54 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
 
-import { getYupIsRequired } from "utils";
+import { getYupIsRequired, isApiError, handleApiErrorsForm } from "utils";
 import { FormInput, Button } from "components";
+import { useSubmitSession } from "hooks";
 
 import { schema } from "./LoginForm.schema";
 import { ILoginFormFields } from "./LoginForm.model";
 
 const LoginForm = () => {
+  // *Form
   const {
     register,
+    handleSubmit,
     formState: { errors: formErrors },
+    setError,
   } = useForm<ILoginFormFields>({
     resolver: yupResolver(schema),
   });
 
+  // *Queries
+  const {
+    mutate: mutateSession,
+    isLoading: submitSessionIsLoading,
+    error: submitSessionError,
+  } = useSubmitSession();
+
+  // *Methods
+  const handleSubmitForm = (data: ILoginFormFields) => {
+    mutateSession(data);
+  };
+
+  // *Effects
+  useEffect(() => {
+    if (isApiError(submitSessionError)) {
+      console.log(submitSessionError);
+      handleApiErrorsForm(submitSessionError, setError);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [submitSessionError]);
+
+  // *JSX
   return (
     <div className="flex items-center justify-center flex-1">
-      <form className="w-full p-[12%] md:p-[18%]">
+      <form
+        onSubmit={handleSubmit(handleSubmitForm)}
+        className="w-full p-[12%] md:p-[18%]"
+      >
         <div className="flex flex-col space-y-4">
           <h1 className="text-3xl font-bold text-blue-900">LOGIN</h1>
 
@@ -31,6 +61,7 @@ const LoginForm = () => {
             error={formErrors?.email?.message as string}
             required={getYupIsRequired(schema, "email")}
           />
+
           <FormInput
             register={register}
             id="password"
@@ -43,7 +74,7 @@ const LoginForm = () => {
         </div>
 
         <div className="mt-[30px]">
-          <Button>Login</Button>
+          <Button isLoading={submitSessionIsLoading}>Login</Button>
           <p className="mt-3 text-sm text-center">
             Don't have an account?{" "}
             <Link to="/register" className="text-blue-500 underline">
