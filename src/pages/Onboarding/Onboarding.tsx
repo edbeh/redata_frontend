@@ -55,7 +55,7 @@ const Onboarding = () => {
   return (
     <BaseLayout withTopPadding>
       <div className="flex w-full p-6">
-        <div className="hidden md:flex flex-col mx-11 align-center min-w-[200px]">
+        <div className="hidden md:flex flex-col mx-6 align-center min-w-[200px]">
           {onboardingSteps?.map((step, i) => {
             return (
               <OnboardingIndicator
@@ -70,8 +70,14 @@ const Onboarding = () => {
         </div>
 
         <div className="flex flex-col w-full">
-          <h1 className="mb-4 text-4xl font-semibold">Onboarding</h1>
-          <ProgressBar initial={initialProgress} progress={currentProgress} />
+          <h1 className="mb-4 text-4xl font-semibold">
+            {onboardingSteps[currentStep - 1].description}
+          </h1>
+          <ProgressBar
+            initial={initialProgress}
+            progress={currentProgress}
+            showProgressInText
+          />
 
           <div className="flex self-end w-1/2 min-w-[275px] mt-11 space-x-4">
             <Button

@@ -2,11 +2,11 @@ export const getOnboardingSteps = () => {
   return [
     {
       number: 1,
-      description: "Basic information",
+      description: "Basic Information",
     },
     {
       number: 2,
-      description: "Research interests",
+      description: "Research Interests",
     },
     {
       number: 3,

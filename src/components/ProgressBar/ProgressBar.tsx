@@ -13,15 +13,20 @@ const ProgressBar = ({
 }: ProgressBarProps) => {
   console.log("progress", progress);
   return (
-    <div className="w-full">
-      <div className="h-2 rounded-lg bg-slate-300">
+    <div className="flex items-center w-full space-x-2">
+      <div className="w-full h-2 rounded-lg shadow-md bg-slate-300">
         <motion.div
           className={`rounded-lg h-full bg-primary-500`}
           initial={{ width: initial || "0%" }}
           animate={{ width: progress }}
-          transition={{ duration: 1.5 }}
+          transition={{ duration: 0.5 }}
         />
       </div>
+      {showProgressInText && (
+        <p className="text-xs text-slate-400 whitespace-nowrap">
+          {progress} complete
+        </p>
+      )}
     </div>
   );
 };
