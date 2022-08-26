@@ -36,7 +36,6 @@ const LoginForm = () => {
   // *Effects
   useEffect(() => {
     if (isApiError(submitSessionError)) {
-      console.log(submitSessionError);
       handleApiErrorsForm(submitSessionError, setError);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

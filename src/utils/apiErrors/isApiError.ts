@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 
-interface ApiErrorObjectProps {
+export interface ApiErrorObjectProps {
   status: string;
   field: string;
   detail: string;
