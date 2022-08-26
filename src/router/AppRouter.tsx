@@ -7,7 +7,7 @@ const AppRouter = () => {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/onboarding" element={<Onboarding />} />
+      <Route path="/onboarding/:step" element={<Onboarding />} />
       <Route path="/" element={<Navigate to="/login" />} />
     </Routes>
   );
