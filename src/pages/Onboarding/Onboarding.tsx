@@ -70,7 +70,7 @@ const Onboarding = () => {
         </div>
 
         <div className="flex flex-col w-full">
-          <h1 className="mb-4 text-4xl font-semibold">
+          <h1 className="mb-4 text-4xl font-semibold tracking-tight">
             {onboardingSteps[currentStep - 1].description}
           </h1>
           <ProgressBar
@@ -79,7 +79,7 @@ const Onboarding = () => {
             showProgressInText
           />
 
-          <div className="flex self-end w-1/2 min-w-[275px] mt-11 space-x-4">
+          <div className="flex self-end w-1/3 min-w-[275px] mt-11 space-x-4">
             <Button
               variant="secondary"
               onClick={handlePrevStep}
