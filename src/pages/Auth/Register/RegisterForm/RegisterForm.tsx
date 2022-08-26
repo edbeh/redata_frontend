@@ -3,25 +3,45 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
 
 import { FormInput, Button } from "components";
-import { getYupIsRequired } from "utils";
+import { getYupIsRequired, isApiError, handleApiErrorsForm } from "utils";
+import { useSubmitUser } from "hooks/apis/useUsersQuery";
 
 import { schema } from "./RegisterForm.schema";
 import { IRegisterFormFields } from "./RegisterForm.model";
+import { useEffect } from "react";
 
 const RegisterForm = () => {
   const {
     register,
     formState: { errors: formErrors },
+    setError,
     handleSubmit,
   } = useForm<IRegisterFormFields>({
     mode: "onChange",
     resolver: yupResolver(schema),
   });
 
+  // *Queries
+  const {
+    mutate: mutateUser,
+    isLoading: submitUserIsLoading,
+    isError: submitUserIsError,
+    error: submitUserError,
+  } = useSubmitUser();
+
+  // *Methods
   const handleSubmitForm = (data: IRegisterFormFields) => {
-    console.log("data", data);
+    mutateUser(data);
   };
 
+  useEffect(() => {
+    if (submitUserIsError && isApiError(submitUserError)) {
+      handleApiErrorsForm(submitUserError, setError);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [submitUserError, submitUserIsError]);
+
+  // *JSX
   return (
     <div className="flex items-center justify-center flex-1">
       <form
@@ -73,7 +93,7 @@ const RegisterForm = () => {
         </div>
 
         <div className="mt-[30px]">
-          <Button>Register</Button>
+          <Button isLoading={submitUserIsLoading}>Register</Button>
           <p className="mt-3 text-sm text-center">
             Already have an account?{" "}
             <Link to="/login" className="text-blue-500 underline">

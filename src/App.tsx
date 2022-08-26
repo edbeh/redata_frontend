@@ -1,12 +1,21 @@
+import { AppRouter } from "router";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
 
-import { AppRouter } from "router";
+import { AxiosErrorInterceptor } from "components";
+
+// React query client
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <BrowserRouter>
-      <AppRouter />
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <AxiosErrorInterceptor>
+          <AppRouter />
+        </AxiosErrorInterceptor>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 
