@@ -1,22 +1,33 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
 
 import { FormInput, Button } from "components";
-import { getYupIsRequired, isApiError, handleApiErrorsForm } from "utils";
+import {
+  getYupIsRequired,
+  isApiError,
+  handleApiErrorsForm,
+  setJwtTokenLocalStorage,
+} from "utils";
 import { useSubmitUser } from "hooks/apis/useUsersQuery";
 
 import { schema } from "./RegisterForm.schema";
 import { IRegisterFormFields } from "./RegisterForm.model";
 import { useEffect } from "react";
+import { useSubmitSession } from "hooks";
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
+
   // *Form
   const {
     register,
     formState: { errors: formErrors },
     setError,
     handleSubmit,
+    getValues,
   } = useForm<IRegisterFormFields>({
     mode: "onChange",
     resolver: yupResolver(schema),
@@ -24,10 +35,17 @@ const RegisterForm = () => {
 
   // *Queries
   const {
+    data: submitUserData,
     mutate: mutateUser,
     isLoading: submitUserIsLoading,
     error: submitUserError,
   } = useSubmitUser();
+
+  const {
+    data: submitSessionData,
+    mutate: mutateSession,
+    isLoading: submitSessionIsLoading,
+  } = useSubmitSession();
 
   // *Methods
   const handleSubmitForm = (data: IRegisterFormFields) => {
@@ -36,10 +54,26 @@ const RegisterForm = () => {
 
   // *Effects
   useEffect(() => {
+    if (submitUserData) {
+      const email = getValues("email");
+      const password = getValues("password");
+      mutateSession({ email, password });
+    }
+  }, [submitUserData]);
+
+  useEffect(() => {
+    if (submitSessionData?.status === 200) {
+      const jwt = submitSessionData.data.jwt;
+      setJwtTokenLocalStorage(jwt);
+      navigate("/onboarding");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [submitSessionData]);
+
+  useEffect(() => {
     if (isApiError(submitUserError)) {
       handleApiErrorsForm(submitUserError, setError);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitUserError]);
 
   // *JSX
@@ -94,7 +128,9 @@ const RegisterForm = () => {
         </div>
 
         <div className="mt-[30px]">
-          <Button isLoading={submitUserIsLoading}>Register</Button>
+          <Button isLoading={submitUserIsLoading || submitSessionIsLoading}>
+            Register
+          </Button>
           <p className="mt-3 text-sm text-center">
             Already have an account?{" "}
             <Link to="/login" className="text-blue-500 underline">

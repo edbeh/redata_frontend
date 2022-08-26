@@ -2,8 +2,14 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import { getYupIsRequired, isApiError, handleApiErrorsForm } from "utils";
+import {
+  getYupIsRequired,
+  isApiError,
+  handleApiErrorsForm,
+  setJwtTokenLocalStorage,
+} from "utils";
 import { FormInput, Button } from "components";
 import { useSubmitSession } from "hooks";
 
@@ -11,6 +17,8 @@ import { schema } from "./LoginForm.schema";
 import { ILoginFormFields } from "./LoginForm.model";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+
   // *Form
   const {
     register,
@@ -23,6 +31,7 @@ const LoginForm = () => {
 
   // *Queries
   const {
+    data: submitSessionData,
     mutate: mutateSession,
     isLoading: submitSessionIsLoading,
     error: submitSessionError,
@@ -34,6 +43,15 @@ const LoginForm = () => {
   };
 
   // *Effects
+  useEffect(() => {
+    if (submitSessionData?.status === 200) {
+      const jwt = submitSessionData.data.jwt;
+      setJwtTokenLocalStorage(jwt);
+      navigate("/onboarding");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [submitSessionData]);
+
   useEffect(() => {
     if (isApiError(submitSessionError)) {
       handleApiErrorsForm(submitSessionError, setError);

@@ -4,12 +4,15 @@ import { useMutation } from "react-query";
 
 import { USERS_API_KEY, USERS_API_ENDPOINT } from "const";
 import { IRegisterFormFields } from "pages/Auth/Register/RegisterForm/RegisterForm.model";
+import { ApiSubmitUserModel } from "models/api/ApiSubmitUserModel";
 
 const submitUser = async (data: IRegisterFormFields) => {
-  return axios.post(USERS_API_ENDPOINT, data).catch((error) => {
-    toast.error(error.response.statusText);
-    throw error;
-  });
+  return axios
+    .post<ApiSubmitUserModel.ApiResponse>(USERS_API_ENDPOINT, data)
+    .catch((error) => {
+      toast.error(error.response.statusText);
+      throw error;
+    });
 };
 
 export const useSubmitUser = () => {
