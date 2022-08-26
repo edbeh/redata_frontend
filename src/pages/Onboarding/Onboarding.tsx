@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { BaseLayout } from "components";
-import { useLayoutEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
-import { ProgressBar, Button } from "components";
+import { ProgressBar, Button, Modal } from "components";
+import { imgScientistMicroscope } from "assets";
 
 import { getOnboardingSteps } from "./Onboarding.utils";
 import OnboardingIndicator from "./OnboardingIndicator/OnboardingIndicator";
@@ -19,6 +20,8 @@ const Onboarding = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [initialProgress, setInitialProgress] = useState<string>("0%");
   const [currentProgress, setCurrentProgress] = useState<string>("0%");
+  const [isIntroModalVisible, setIsIntroModalVisible] =
+    useState<boolean>(false);
 
   // *Methods
   const handleNextStep = () => {
@@ -51,9 +54,45 @@ const Onboarding = () => {
     }
   }, [step, onboardingSteps]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsIntroModalVisible(true);
+    }, 500);
+  }, []);
+
   // *JSX
   return (
     <BaseLayout withTopPadding>
+      <Modal
+        title="Welcome to ReData!"
+        content={
+          <div className="flex flex-col mb-2">
+            <img
+              className="self-center"
+              src={imgScientistMicroscope}
+              alt="scientist-microscope"
+              width={200}
+              height={200}
+            />
+            <p>
+              We'd love to know more about you! Complete your profile now by
+              filling up the following sections:
+            </p>
+            <ul className="my-3 ml-4 list-disc">
+              <li>Basic information & bio</li>
+              <li>Research interests</li>
+              <li>Patient pools</li>
+              <li>Publications (sync from PubMed)</li>
+            </ul>
+            <p>This whole process will take approximately 10 minutes.</p>
+          </div>
+        }
+        isVisible={isIntroModalVisible}
+        onDismiss={() => {
+          setIsIntroModalVisible(false);
+        }}
+      />
+
       <div className="flex w-full p-6">
         <div className="hidden md:flex flex-col mx-6 align-center min-w-[200px]">
           {onboardingSteps?.map((step, i) => {
