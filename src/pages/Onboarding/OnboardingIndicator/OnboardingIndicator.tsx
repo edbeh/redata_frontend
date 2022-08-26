@@ -16,7 +16,7 @@ const OnboardingIndicator = ({
       {index > 0 ? (
         <div
           className={`border-l-2 ${
-            isActive ? "border-primary-500" : "border-slate-400"
+            isActive ? "border-primary-400" : "border-slate-400"
           } h-[20px] absolute bottom-[28px] left-[21px] z-0`}
         />
       ) : (
@@ -25,15 +25,15 @@ const OnboardingIndicator = ({
       <p
         className={`flex justify-center border-2 rounded-full w-7 h-7 align-center ${
           isActive
-            ? "border-primary-500 text-primary-500"
+            ? "border-primary-400 text-primary-400"
             : "border-slate-400 text-slate-400"
         } z-1`}
       >
         {number}
       </p>
       <p
-        className={`text-sm ${
-          isActive ? "text-primary-500" : "text-slate-400"
+        className={`text-[13px] font-medium ${
+          isActive ? "text-primary-400" : "text-slate-400"
         }`}
       >
         {description}
