@@ -6,64 +6,65 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormInput } from "components";
 import { ImgPlusCircleOutline } from "assets";
 
-import { schema } from "./ResearchInterestsForm.schema";
-import { IResearchInterestsFormFields } from "./ResearchInterestsForm.model";
+import { schema } from "./PatientPopulationsForm.schema";
+import { IPatientPopulationsFormFields } from "./PatientPopulationsForm.model";
 
-const ResearchInterestsForm = () => {
+const PatientPopulationsForm = () => {
   // *Form
   const {
     register,
     control,
     formState: { errors: formErrors },
-  } = useForm<IResearchInterestsFormFields>({
+  } = useForm<IPatientPopulationsFormFields>({
     resolver: yupResolver(schema),
     mode: "onChange",
   });
 
   const {
-    fields: researchInterestFields,
-    append: appendResearchInterest,
-    remove: removeResearchInterest,
+    fields: patientPopulationFields,
+    append: appendPatientPopulation,
+    remove: removePatientPopulation,
   } = useFieldArray({
     control,
-    name: "research_interests",
+    name: "patient_populations",
   });
 
+  // *Effects
   useEffect(() => {
     // min of 1 research interest required
-    if (researchInterestFields?.length === 0) {
-      appendResearchInterest({
-        research_interest: "",
+    if (patientPopulationFields?.length === 0) {
+      appendPatientPopulation({
+        patient_population: "",
       });
     }
-  }, [researchInterestFields]);
+  }, [patientPopulationFields]);
 
   // *JSX
   return (
     <div className="flex flex-col">
       <p className="mb-6">
-        Please keep your research interests succinct (e.g. Immune therapy for
-        leukemia)
+        A patient population refers to a patient group that you are currently
+        seeing in your clinic (e.g. Leukemia)
       </p>
 
-      {researchInterestFields.map((field, i) => {
+      {patientPopulationFields.map((field, i) => {
         return (
           <div className="flex items-end mb-4 space-x-4" key={field.id}>
             <FormInput
-              label={`Research Interest (${i + 1})`}
+              label={`Patient Population (${i + 1})`}
               key={field.id}
               register={register}
-              id={`research_interests[${i}].research_interest`}
-              name={`research_interests[${i}].research_interest`}
+              id={`patient_populations[${i}].patient_population`}
+              name={`patient_populations[${i}].patient_population`}
               error={
-                formErrors?.research_interests &&
-                formErrors?.research_interests[i]?.research_interest?.message
+                formErrors?.patient_populations &&
+                formErrors?.patient_populations[i]?.patient_population?.message
               }
               autoComplete="off"
               required
             />
             <button
-              onClick={() => removeResearchInterest(i)}
+              onClick={() => removePatientPopulation(i)}
               disabled={i < 1}
               className="mb-3 text-sm font-semibold rounded-lg text-primary-500 hover:text-primary-200 disabled:cursor-not-allowed disabled:text-disabled"
             >
@@ -75,8 +76,8 @@ const ResearchInterestsForm = () => {
 
       <div
         onClick={() =>
-          appendResearchInterest({
-            research_interest: "",
+          appendPatientPopulation({
+            patient_population: "",
           })
         }
         className="flex items-center mt-2 cursor-pointer"
@@ -92,4 +93,4 @@ const ResearchInterestsForm = () => {
   );
 };
 
-export default ResearchInterestsForm;
+export default PatientPopulationsForm;

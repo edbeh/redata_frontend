@@ -1,12 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useRef, useLayoutEffect, useMemo, useState } from "react";
 import { BaseLayout } from "components";
-import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import { ProgressBar, Button, Modal } from "components";
 import { imgScientistMicroscope } from "assets";
 import { useFetchAllUsers } from "hooks";
-import { BasicInfoForm, ResearchInterestsForm } from "pages";
+import {
+  BasicInfoForm,
+  ResearchInterestsForm,
+  PatientPopulationsForm,
+} from "pages";
 
 import { getOnboardingSteps } from "./Onboarding.utils";
 import OnboardingIndicator from "./OnboardingIndicator/OnboardingIndicator";
@@ -14,6 +18,8 @@ import OnboardingIndicator from "./OnboardingIndicator/OnboardingIndicator";
 const Onboarding = () => {
   const navigate = useNavigate();
   const { step } = useParams();
+
+  const basicInfoSubmitRef = useRef<HTMLButtonElement>(null);
 
   const onboardingSteps = useMemo(() => {
     return getOnboardingSteps();
@@ -30,6 +36,10 @@ const Onboarding = () => {
 
   // *Methods
   const handleNextStep = () => {
+    if (currentStep === 1) return basicInfoSubmitRef.current?.click(); // submit basic info form
+  };
+
+  const handleBasicInfoFormSuccess = () => {
     return navigate(`/onboarding/${currentStep + 1}`);
   };
 
@@ -124,8 +134,14 @@ const Onboarding = () => {
           />
 
           <div className="my-10">
-            {currentStep === 1 && <BasicInfoForm />}
+            {currentStep === 1 && (
+              <BasicInfoForm
+                ref={basicInfoSubmitRef}
+                onSuccess={handleBasicInfoFormSuccess}
+              />
+            )}
             {currentStep === 2 && <ResearchInterestsForm />}
+            {currentStep === 3 && <PatientPopulationsForm />}
           </div>
 
           <div className="flex self-end w-1/3 min-w-[275px] space-x-4">

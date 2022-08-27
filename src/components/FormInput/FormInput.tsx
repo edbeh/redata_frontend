@@ -21,7 +21,7 @@ const FormInput = ({ register, error, label, id, ...rest }: FormInputProps) => {
         outline-none p-[10px] rounded-md overflow-hidden 
         text-ellipsis text-sm disabled:opacity-50 disabled:cursor-not-allowed
         hover:border-primary-600 hover:ring-1 hover:ring-primary-600
-        ${error ? "border-red" : ""}`}
+        ${error ? "border-red hover:ring-red hover:border-red" : ""}`}
         {...register(id)}
         {...rest}
       />
