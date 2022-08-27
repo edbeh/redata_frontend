@@ -1,3 +1,5 @@
 export { default as Login } from "./Auth/Login/Login";
 export { default as Register } from "./Auth/Register/Register";
 export { default as Onboarding } from "./Onboarding/Onboarding";
+export { default as BasicInfoForm } from "./DataForms/BasicInfoForm/BasicInfoForm";
+export { default as ResearchInterestsForm } from "./DataForms/ResearchInterestsForm/ResearchInterestsForm";

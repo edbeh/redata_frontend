@@ -6,3 +6,4 @@ export { default as BaseLayout } from "./BaseLayout/BaseLayout";
 export { default as ProgressBar } from "./ProgressBar/ProgressBar";
 export { default as TopNav } from "./Nav/TopNav/TopNav";
 export { default as Modal } from "./Modal/Modal";
+export { default as FormTextArea } from "./FormTextArea/FormTextArea";

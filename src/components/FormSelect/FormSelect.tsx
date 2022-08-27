@@ -28,12 +28,13 @@ const FormSelect = ({
   isClearable,
   ...rest
 }: FormSelectProps) => {
-  const { placeholder = "Select value", disabled } = rest;
+  const { placeholder = "Select value", disabled, required } = rest;
 
   return (
-    <div className="flex flex-col">
-      <label htmlFor={id} className="flex flex-col text-[15px]">
+    <div className="flex flex-col w-full">
+      <label htmlFor={id} className="flex text-[15px]">
         {label}
+        {required && <span className="text-red">*</span>}
       </label>
 
       <Controller

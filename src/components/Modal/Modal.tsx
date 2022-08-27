@@ -10,7 +10,7 @@ interface ModalProps {
 const Modal = ({ title, content, isVisible, onDismiss }: ModalProps) => {
   return (
     <div
-      className={`transition-all duration-500 ${
+      className={`transition-all duration-500 z-50 ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
     >
@@ -25,7 +25,7 @@ const Modal = ({ title, content, isVisible, onDismiss }: ModalProps) => {
           isVisible
             ? "-translate-y-1/2 opacity-100"
             : "translate-y-full opacity-0"
-        } p-8 fixed m-0 min-w-[50vw] w-full md:w-auto max-h-[90vh] max-w-[90vw] md:max-w-[80vw] rounded-md z-50 bg-white overflow-scroll`}
+        } p-8 fixed m-0 min-w-[50vw] w-full md:w-auto max-h-[90vh] max-w-[90vw] md:max-w-[80vw] rounded-md z-50 bg-white overflow-auto`}
       >
         {title && (
           <h2 className="mb-2 text-3xl font-bold text-center">{title}</h2>

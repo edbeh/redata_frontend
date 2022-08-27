@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useMutation, UseMutationOptions } from "react-query";
+import { useMutation } from "react-query";
 
 import { SESSIONS_API_ENDPOINT } from "const";
 import { ApiErrorProps } from "utils";

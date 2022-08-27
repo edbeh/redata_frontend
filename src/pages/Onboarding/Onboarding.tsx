@@ -5,6 +5,8 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import { ProgressBar, Button, Modal } from "components";
 import { imgScientistMicroscope } from "assets";
+import { useFetchAllUsers } from "hooks";
+import { BasicInfoForm, ResearchInterestsForm } from "pages";
 
 import { getOnboardingSteps } from "./Onboarding.utils";
 import OnboardingIndicator from "./OnboardingIndicator/OnboardingIndicator";
@@ -22,6 +24,9 @@ const Onboarding = () => {
   const [currentProgress, setCurrentProgress] = useState<string>("0%");
   const [isIntroModalVisible, setIsIntroModalVisible] =
     useState<boolean>(false);
+
+  // *Queries
+  const { data, isLoading, error } = useFetchAllUsers();
 
   // *Methods
   const handleNextStep = () => {
@@ -54,11 +59,11 @@ const Onboarding = () => {
     }
   }, [step, onboardingSteps]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsIntroModalVisible(true);
-    }, 500);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setIsIntroModalVisible(true);
+  //   }, 500);
+  // }, []);
 
   // *JSX
   return (
@@ -118,7 +123,12 @@ const Onboarding = () => {
             showProgressInText
           />
 
-          <div className="flex self-end w-1/3 min-w-[275px] mt-11 space-x-4">
+          <div className="my-10">
+            {currentStep === 1 && <BasicInfoForm />}
+            {currentStep === 2 && <ResearchInterestsForm />}
+          </div>
+
+          <div className="flex self-end w-1/3 min-w-[275px] space-x-4">
             <Button
               variant="secondary"
               onClick={handlePrevStep}

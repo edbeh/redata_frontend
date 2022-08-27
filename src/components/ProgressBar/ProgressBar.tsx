@@ -11,7 +11,6 @@ const ProgressBar = ({
   progress,
   showProgressInText = false,
 }: ProgressBarProps) => {
-  console.log("progress", progress);
   return (
     <div className="flex items-center w-full space-x-2">
       <div className="w-full h-2 rounded-lg shadow-md bg-slate-300">

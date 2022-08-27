@@ -5,7 +5,13 @@ interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id: string;
 }
 
-const FormInput = ({ register, error, label, id, ...rest }: FormInputProps) => {
+const FormTextArea = ({
+  register,
+  error,
+  label,
+  id,
+  ...rest
+}: FormInputProps) => {
   const { required } = rest;
 
   return (
@@ -15,13 +21,13 @@ const FormInput = ({ register, error, label, id, ...rest }: FormInputProps) => {
         {required && <span className="text-red">*</span>}
       </label>
 
-      <input
+      <textarea
         id={id}
         className={`mt-0 border-[1px] border-borderGray 
-        outline-none p-[10px] rounded-md overflow-hidden 
-        text-ellipsis text-sm disabled:opacity-50 disabled:cursor-not-allowed
-        hover:border-primary-600 hover:ring-1 hover:ring-primary-600
-        ${error ? "border-red" : ""}`}
+          outline-none p-[10px] rounded-md overflow-hidden 
+          text-ellipsis text-sm disabled:opacity-50 disabled:cursor-not-allowed
+          hover:border-primary-600 hover:ring-1 hover:ring-primary-600
+          ${error ? "border-red" : ""}`}
         {...register(id)}
         {...rest}
       />
@@ -31,4 +37,4 @@ const FormInput = ({ register, error, label, id, ...rest }: FormInputProps) => {
   );
 };
 
-export default FormInput;
+export default FormTextArea;
