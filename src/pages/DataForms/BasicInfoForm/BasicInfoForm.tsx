@@ -15,6 +15,7 @@ interface BasicInfoFormProps {
 }
 
 const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
+  // ref for parent component to trigger submit form
   ({ onSuccess }, ref) => {
     // *Form
     const {
