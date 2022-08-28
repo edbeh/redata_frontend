@@ -56,7 +56,7 @@ const ResearchInterestsForm = React.forwardRef<
   // *JSX
   return (
     <div className="flex flex-col">
-      <p className="mb-6">
+      <p className="mb-6 -mt-3">
         Please keep your research interests succinct (e.g. Immune therapy for
         leukemia)
       </p>

@@ -1,9 +1,11 @@
 import * as yup from "yup";
 
+import { validationMessages } from "const";
+
 export const schema = yup.object({
   email: yup
     .string()
-    .email("Please enter a valid email")
-    .required("Email is required"),
-  password: yup.string().required("Password is required"),
+    .email(validationMessages.validate.email)
+    .required(validationMessages.require.email),
+  password: yup.string().required(validationMessages.require.password),
 });

@@ -88,23 +88,28 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
           </div>
 
           <div className="flex flex-col w-full mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
-            <FormSelect
-              label="Primary Subspecialty"
-              control={control}
-              options={subSpecialties}
-              id="primary_subspecialty"
-              name="primary_subspecialty"
-              required={getYupIsRequired(schema, "primary_subspecialty")}
-              error={formErrors?.primary_subspecialty?.message}
-            />
-            {/* <FormInput
-              label="Primary Subspecialty"
-              register={register}
-              id="primary_subspecialty"
-              name="primary_subspecialty"
-              required={getYupIsRequired(schema, "primary_subspecialty")}
-              error={formErrors?.primary_subspecialty?.message}
-            /> */}
+            <div className="w-full space-y-4">
+              <FormSelect
+                label="Primary Subspecialty"
+                control={control}
+                options={subSpecialties}
+                id="primary_subspecialty"
+                name="primary_subspecialty"
+                required={getYupIsRequired(schema, "primary_subspecialty")}
+                error={formErrors?.primary_subspecialty?.message}
+              />
+              <FormInput
+                label="Primary Subspecialty (Others)"
+                register={register}
+                id="primary_subspecialty_others"
+                name="primary_subspecialty_others"
+                required={getYupIsRequired(
+                  schema,
+                  "primary_subspecialty_others"
+                )}
+                error={formErrors?.primary_subspecialty_others?.message}
+              />
+            </div>
 
             <FormInput
               label="Secondary Subspecialty"

@@ -1,3 +1,4 @@
+import { validationMessages } from "const";
 import * as yup from "yup";
 
 export const schema = yup.object().shape({
@@ -5,8 +6,8 @@ export const schema = yup.object().shape({
     yup.object().shape({
       patient_population: yup
         .string()
-        .required("This field is required")
-        .max(50, "Please keep this field below 50 characters"),
+        .required(validationMessages.require.generic)
+        .max(50, validationMessages.validate.max50),
     })
   ),
 });

@@ -73,11 +73,11 @@ const Onboarding = () => {
     }
   }, [step, onboardingSteps]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setIsIntroModalVisible(true);
-    }, 500);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setIsIntroModalVisible(true);
+  //   }, 500);
+  // }, [currentStep]);
 
   // *JSX
   return (

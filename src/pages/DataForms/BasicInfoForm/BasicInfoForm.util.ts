@@ -19,4 +19,5 @@ export const subSpecialties = [
     label: "Immunosuppression Post-transplant",
     value: "immunosuppression_post_transplant",
   },
+  { label: "Others", value: "others" },
 ];

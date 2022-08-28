@@ -1,17 +1,23 @@
 import * as yup from "yup";
 
+import { validationMessages } from "const";
+
 export const schema = yup.object({
-  name: yup.string().required("Name is required"),
+  name: yup.string().required(validationMessages.require.name),
   email: yup
     .string()
-    .email("Please enter a valid email")
-    .required("Email is required"),
-  institution: yup.object().required("Institution is required"),
-  password: yup.string().required("Password is required"),
+    .email(validationMessages.validate.email)
+    .required(validationMessages.require.email),
+  institution: yup.object().required(validationMessages.require.institution),
+  password: yup.string().required(validationMessages.require.password),
   passwordConfirmation: yup
     .string()
-    .test("passwords-match", "Passwords must match", function (value) {
-      return this.parent.password === value;
-    })
-    .required("Confirm password is required"),
+    .test(
+      "passwords-match",
+      validationMessages.validate.confirmPassword,
+      function (value) {
+        return this.parent.password === value;
+      }
+    )
+    .required(validationMessages.require.confirmPassword),
 });

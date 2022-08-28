@@ -56,7 +56,7 @@ const PatientPopulationsForm = React.forwardRef<
   // *JSX
   return (
     <div className="flex flex-col">
-      <p className="mb-6">
+      <p className="mb-6 -mt-3">
         A patient population refers to a patient group that you are currently
         seeing in your clinic (e.g. Leukemia)
       </p>

@@ -79,7 +79,7 @@ const RegisterForm = () => {
 
   // *JSX
   return (
-    <div className="flex items-center justify-center flex-1">
+    <div className="flex items-center justify-center flex-1 overflow-auto">
       <form
         onSubmit={handleSubmit(handleSubmitForm)}
         className="w-full p-[12%] md:p-[18%]"
