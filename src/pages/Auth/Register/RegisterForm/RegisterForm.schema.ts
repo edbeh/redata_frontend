@@ -6,6 +6,7 @@ export const schema = yup.object({
     .string()
     .email("Please enter a valid email")
     .required("Email is required"),
+  institution: yup.object().required("Institution is required"),
   password: yup.string().required("Password is required"),
   passwordConfirmation: yup
     .string()

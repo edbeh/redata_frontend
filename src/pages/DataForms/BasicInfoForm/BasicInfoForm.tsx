@@ -7,7 +7,11 @@ import { getYupIsRequired } from "utils";
 
 import { IBasicInfoFormFields } from "./BasicInfoForm.model";
 import { schema } from "./BasicInfoForm.schema";
-import { designations, departments } from "./BasicInfoForm.util";
+import {
+  designations,
+  departments,
+  subSpecialties,
+} from "./BasicInfoForm.util";
 
 interface BasicInfoFormProps {
   /** callback if api call is successful */
@@ -32,7 +36,8 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
     // *Methods
     const handleSubmitForm = async (data: IBasicInfoFormFields) => {
-      if (onSuccess) onSuccess();
+      console.log(data);
+      // if (onSuccess) onSuccess();
     };
 
     // *JSX
@@ -83,14 +88,23 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
           </div>
 
           <div className="flex flex-col w-full mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
-            <FormInput
+            <FormSelect
+              label="Primary Subspecialty"
+              control={control}
+              options={subSpecialties}
+              id="primary_subspecialty"
+              name="primary_subspecialty"
+              required={getYupIsRequired(schema, "primary_subspecialty")}
+              error={formErrors?.primary_subspecialty?.message}
+            />
+            {/* <FormInput
               label="Primary Subspecialty"
               register={register}
               id="primary_subspecialty"
               name="primary_subspecialty"
               required={getYupIsRequired(schema, "primary_subspecialty")}
               error={formErrors?.primary_subspecialty?.message}
-            />
+            /> */}
 
             <FormInput
               label="Secondary Subspecialty"

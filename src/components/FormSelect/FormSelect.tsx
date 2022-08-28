@@ -31,7 +31,7 @@ const FormSelect = ({
   const { placeholder = "Select value", disabled, required } = rest;
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full hover:cursor-pointer">
       <label htmlFor={id} className="flex text-[15px]">
         {label}
         {required && <span className="text-red">*</span>}

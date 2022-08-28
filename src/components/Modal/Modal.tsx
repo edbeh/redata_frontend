@@ -16,7 +16,7 @@ const Modal = ({ title, content, isVisible, onDismiss }: ModalProps) => {
     >
       <div
         onClick={onDismiss}
-        className={`w-[100vw] top-0 left-0 h-[100vh] fixed opacity-50 bg-black z-40 ${
+        className={`w-[100vw] top-0 left-0 h-[100vh] fixed opacity-80 bg-black z-40 ${
           isVisible ? "pointer-events-auto" : "pointer-events-none"
         }`}
       />

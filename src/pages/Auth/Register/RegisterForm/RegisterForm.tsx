@@ -1,22 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
 
-import { FormInput, Button } from "components";
+import { FormInput, Button, FormSelect } from "components";
 import {
   getYupIsRequired,
   isApiError,
   handleApiErrorsForm,
   setJwtTokenLocalStorage,
 } from "utils";
-import { useSubmitUser } from "hooks/apis/useUsersQuery";
+import { useSubmitSession, useSubmitUser } from "hooks";
 
 import { schema } from "./RegisterForm.schema";
 import { IRegisterFormFields } from "./RegisterForm.model";
-import { useEffect } from "react";
-import { useSubmitSession } from "hooks";
+import { institutions } from "./RegisterForm.util";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -24,6 +24,7 @@ const RegisterForm = () => {
   // *Form
   const {
     register,
+    control,
     formState: { errors: formErrors },
     setError,
     handleSubmit,
@@ -104,6 +105,17 @@ const RegisterForm = () => {
             label="Email"
             error={formErrors?.email?.message as string}
             required={getYupIsRequired(schema, "email")}
+          />
+
+          <FormSelect
+            control={control}
+            options={institutions}
+            placeholder=""
+            id="institution"
+            name="institution"
+            label="Institution"
+            error={formErrors?.institution?.message as string}
+            required={getYupIsRequired(schema, "institution")}
           />
 
           <FormInput

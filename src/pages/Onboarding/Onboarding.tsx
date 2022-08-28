@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRef, useLayoutEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useLayoutEffect, useMemo, useState } from "react";
 import { BaseLayout } from "components";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -20,6 +20,8 @@ const Onboarding = () => {
   const { step } = useParams();
 
   const basicInfoSubmitRef = useRef<HTMLButtonElement>(null);
+  const researchInterestSubmitRef = useRef<HTMLButtonElement>(null);
+  const patientPopulationSubmitRef = useRef<HTMLButtonElement>(null);
 
   const onboardingSteps = useMemo(() => {
     return getOnboardingSteps();
@@ -37,9 +39,11 @@ const Onboarding = () => {
   // *Methods
   const handleNextStep = () => {
     if (currentStep === 1) return basicInfoSubmitRef.current?.click(); // submit basic info form
+    if (currentStep === 2) return researchInterestSubmitRef.current?.click(); // submit research interests form
+    if (currentStep === 3) return patientPopulationSubmitRef.current?.click(); // submit patient populations form
   };
 
-  const handleBasicInfoFormSuccess = () => {
+  const handleFormSubmitSuccess = () => {
     return navigate(`/onboarding/${currentStep + 1}`);
   };
 
@@ -69,11 +73,11 @@ const Onboarding = () => {
     }
   }, [step, onboardingSteps]);
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setIsIntroModalVisible(true);
-  //   }, 500);
-  // }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsIntroModalVisible(true);
+    }, 500);
+  }, []);
 
   // *JSX
   return (
@@ -137,11 +141,21 @@ const Onboarding = () => {
             {currentStep === 1 && (
               <BasicInfoForm
                 ref={basicInfoSubmitRef}
-                onSuccess={handleBasicInfoFormSuccess}
+                onSuccess={handleFormSubmitSuccess}
               />
             )}
-            {currentStep === 2 && <ResearchInterestsForm />}
-            {currentStep === 3 && <PatientPopulationsForm />}
+            {currentStep === 2 && (
+              <ResearchInterestsForm
+                ref={researchInterestSubmitRef}
+                onSuccess={handleFormSubmitSuccess}
+              />
+            )}
+            {currentStep === 3 && (
+              <PatientPopulationsForm
+                ref={patientPopulationSubmitRef}
+                onSuccess={handleFormSubmitSuccess}
+              />
+            )}
           </div>
 
           <div className="flex self-end w-1/3 min-w-[275px] space-x-4">

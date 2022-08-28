@@ -12,3 +12,11 @@ export const departments = [
   { label: "Haematology", value: "haematology" },
   { label: "Respiratory", value: "respiratory" },
 ];
+
+export const subSpecialties = [
+  { label: "Kidney Transplant", value: "kidney_transplant" },
+  {
+    label: "Immunosuppression Post-transplant",
+    value: "immunosuppression_post_transplant",
+  },
+];

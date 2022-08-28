@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -9,12 +9,20 @@ import { ImgPlusCircleOutline } from "assets";
 import { schema } from "./ResearchInterestsForm.schema";
 import { IResearchInterestsFormFields } from "./ResearchInterestsForm.model";
 
-const ResearchInterestsForm = () => {
+interface ResearchInterestsFormProps {
+  onSuccess?: () => void;
+}
+
+const ResearchInterestsForm = React.forwardRef<
+  HTMLButtonElement,
+  ResearchInterestsFormProps
+>(({ onSuccess }, ref) => {
   // *Form
   const {
     register,
     control,
     formState: { errors: formErrors },
+    handleSubmit,
   } = useForm<IResearchInterestsFormFields>({
     resolver: yupResolver(schema),
     mode: "onChange",
@@ -29,6 +37,13 @@ const ResearchInterestsForm = () => {
     name: "research_interests",
   });
 
+  // *Methods
+  const handleSubmitForm = async (data: IResearchInterestsFormFields) => {
+    console.log(data);
+    // if (onSuccess) onSuccess();
+  };
+
+  // *Effects
   useEffect(() => {
     // min of 1 research interest required
     if (researchInterestFields?.length === 0) {
@@ -46,50 +61,55 @@ const ResearchInterestsForm = () => {
         leukemia)
       </p>
 
-      {researchInterestFields.map((field, i) => {
-        return (
-          <div className="flex items-end mb-4 space-x-4" key={field.id}>
-            <FormInput
-              label={`Research Interest (${i + 1})`}
-              key={field.id}
-              register={register}
-              id={`research_interests[${i}].research_interest`}
-              name={`research_interests[${i}].research_interest`}
-              error={
-                formErrors?.research_interests &&
-                formErrors?.research_interests[i]?.research_interest?.message
-              }
-              autoComplete="off"
-              required
-            />
-            <button
-              onClick={() => removeResearchInterest(i)}
-              disabled={i < 1}
-              className="mb-3 text-sm font-semibold rounded-lg text-primary-500 hover:text-primary-200 disabled:cursor-not-allowed disabled:text-disabled"
-            >
-              REMOVE
-            </button>
-          </div>
-        );
-      })}
+      <form onSubmit={handleSubmit(handleSubmitForm)}>
+        {researchInterestFields.map((field, i) => {
+          return (
+            <div className="flex items-end mb-4 space-x-4" key={field.id}>
+              <FormInput
+                label={`Research Interest (${i + 1})`}
+                key={field.id}
+                register={register}
+                id={`research_interests[${i}].research_interest`}
+                name={`research_interests[${i}].research_interest`}
+                error={
+                  formErrors?.research_interests &&
+                  formErrors?.research_interests[i]?.research_interest?.message
+                }
+                autoComplete="off"
+                required
+              />
+              <button
+                onClick={() => removeResearchInterest(i)}
+                disabled={i < 1}
+                className="mb-3 text-sm font-semibold rounded-lg text-primary-500 hover:text-primary-200 disabled:cursor-not-allowed disabled:text-disabled"
+              >
+                REMOVE
+              </button>
+            </div>
+          );
+        })}
+        <div
+          onClick={() =>
+            appendResearchInterest({
+              research_interest: "",
+            })
+          }
+          className="flex items-center mt-2 cursor-pointer"
+        >
+          <ImgPlusCircleOutline
+            width={30}
+            height={30}
+            className=" stroke-green-500"
+          />
+          <p className="ml-1 text-sm">Add more</p>
+        </div>
 
-      <div
-        onClick={() =>
-          appendResearchInterest({
-            research_interest: "",
-          })
-        }
-        className="flex items-center mt-2 cursor-pointer"
-      >
-        <ImgPlusCircleOutline
-          width={30}
-          height={30}
-          className=" stroke-green-500"
-        />
-        <p className="ml-1 text-sm">Add more</p>
-      </div>
+        <button type="submit" ref={ref} className="hidden">
+          Submit
+        </button>
+      </form>
     </div>
   );
-};
+});
 
 export default ResearchInterestsForm;

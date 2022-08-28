@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -9,12 +9,20 @@ import { ImgPlusCircleOutline } from "assets";
 import { schema } from "./PatientPopulationsForm.schema";
 import { IPatientPopulationsFormFields } from "./PatientPopulationsForm.model";
 
-const PatientPopulationsForm = () => {
+interface PatientPopulationsFormProps {
+  onSuccess?: () => void;
+}
+
+const PatientPopulationsForm = React.forwardRef<
+  HTMLButtonElement,
+  PatientPopulationsFormProps
+>(({ onSuccess }, ref) => {
   // *Form
   const {
     register,
     control,
     formState: { errors: formErrors },
+    handleSubmit,
   } = useForm<IPatientPopulationsFormFields>({
     resolver: yupResolver(schema),
     mode: "onChange",
@@ -28,6 +36,12 @@ const PatientPopulationsForm = () => {
     control,
     name: "patient_populations",
   });
+
+  // *Methods
+  const handleSubmitForm = async (data: IPatientPopulationsFormFields) => {
+    console.log(data);
+    // if (onSuccess) onSuccess();
+  };
 
   // *Effects
   useEffect(() => {
@@ -47,50 +61,57 @@ const PatientPopulationsForm = () => {
         seeing in your clinic (e.g. Leukemia)
       </p>
 
-      {patientPopulationFields.map((field, i) => {
-        return (
-          <div className="flex items-end mb-4 space-x-4" key={field.id}>
-            <FormInput
-              label={`Patient Population (${i + 1})`}
-              key={field.id}
-              register={register}
-              id={`patient_populations[${i}].patient_population`}
-              name={`patient_populations[${i}].patient_population`}
-              error={
-                formErrors?.patient_populations &&
-                formErrors?.patient_populations[i]?.patient_population?.message
-              }
-              autoComplete="off"
-              required
-            />
-            <button
-              onClick={() => removePatientPopulation(i)}
-              disabled={i < 1}
-              className="mb-3 text-sm font-semibold rounded-lg text-primary-500 hover:text-primary-200 disabled:cursor-not-allowed disabled:text-disabled"
-            >
-              REMOVE
-            </button>
-          </div>
-        );
-      })}
+      <form onSubmit={handleSubmit(handleSubmitForm)}>
+        {patientPopulationFields.map((field, i) => {
+          return (
+            <div className="flex items-end mb-4 space-x-4" key={field.id}>
+              <FormInput
+                label={`Patient Population (${i + 1})`}
+                key={field.id}
+                register={register}
+                id={`patient_populations[${i}].patient_population`}
+                name={`patient_populations[${i}].patient_population`}
+                error={
+                  formErrors?.patient_populations &&
+                  formErrors?.patient_populations[i]?.patient_population
+                    ?.message
+                }
+                autoComplete="off"
+                required
+              />
+              <button
+                onClick={() => removePatientPopulation(i)}
+                disabled={i < 1}
+                className="mb-3 text-sm font-semibold rounded-lg text-primary-500 hover:text-primary-200 disabled:cursor-not-allowed disabled:text-disabled"
+              >
+                REMOVE
+              </button>
+            </div>
+          );
+        })}
 
-      <div
-        onClick={() =>
-          appendPatientPopulation({
-            patient_population: "",
-          })
-        }
-        className="flex items-center mt-2 cursor-pointer"
-      >
-        <ImgPlusCircleOutline
-          width={30}
-          height={30}
-          className=" stroke-green-500"
-        />
-        <p className="ml-1 text-sm">Add more</p>
-      </div>
+        <div
+          onClick={() =>
+            appendPatientPopulation({
+              patient_population: "",
+            })
+          }
+          className="flex items-center mt-2 cursor-pointer"
+        >
+          <ImgPlusCircleOutline
+            width={30}
+            height={30}
+            className=" stroke-green-500"
+          />
+          <p className="ml-1 text-sm">Add more</p>
+        </div>
+
+        <button type="submit" ref={ref} className="hidden">
+          Submit
+        </button>
+      </form>
     </div>
   );
-};
+});
 
 export default PatientPopulationsForm;
