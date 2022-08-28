@@ -12,6 +12,7 @@ import {
   departments,
   subSpecialties,
 } from "./BasicInfoForm.util";
+import { getValue } from "@testing-library/user-event/dist/utils";
 
 interface BasicInfoFormProps {
   /** callback if api call is successful */
@@ -27,6 +28,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       control,
       handleSubmit,
       formState: { errors: formErrors },
+      watch,
       trigger,
       setError,
     } = useForm<IBasicInfoFormFields>({
@@ -98,27 +100,39 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                 required={getYupIsRequired(schema, "primary_subspecialty")}
                 error={formErrors?.primary_subspecialty?.message}
               />
-              <FormInput
-                label="Primary Subspecialty (Others)"
-                register={register}
-                id="primary_subspecialty_others"
-                name="primary_subspecialty_others"
-                required={getYupIsRequired(
-                  schema,
-                  "primary_subspecialty_others"
-                )}
-                error={formErrors?.primary_subspecialty_others?.message}
-              />
+              {watch("primary_subspecialty")?.value === "others" && (
+                <FormInput
+                  label="Primary Subspecialty (Others)"
+                  register={register}
+                  id="primary_subspecialty_others"
+                  name="primary_subspecialty_others"
+                  required
+                  error={formErrors?.primary_subspecialty_others?.message}
+                />
+              )}
             </div>
 
-            <FormInput
-              label="Secondary Subspecialty"
-              register={register}
-              id="secondary_subspecialty"
-              name="secondary_subspecialty"
-              required={getYupIsRequired(schema, "secondary_subspecialty")}
-              error={formErrors?.secondary_subspecialty?.message}
-            />
+            <div className="w-full space-y-4">
+              <FormSelect
+                label="Secondary Subspecialty"
+                control={control}
+                options={subSpecialties}
+                id="secondary_subspecialty"
+                name="secondary_subspecialty"
+                required={getYupIsRequired(schema, "secondary_subspecialty")}
+                error={formErrors?.secondary_subspecialty?.message}
+              />
+              {watch("secondary_subspecialty")?.value === "others" && (
+                <FormInput
+                  label="Secondary Subspecialty (Others)"
+                  register={register}
+                  id="secondary_subspecialty_others"
+                  name="secondary_subspecialty_others"
+                  required
+                  error={formErrors?.secondary_subspecialty_others?.message}
+                />
+              )}
+            </div>
           </div>
 
           <div className="flex flex-col w-full mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">

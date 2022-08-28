@@ -19,14 +19,30 @@ export const schema = yup.object({
     .required(validationMessages.require.primarySpecialty),
   primary_subspecialty_others: yup
     .string()
-    .ensure()
-    .when("primary_subspecialty", {
-      is: { label: "Others", value: "others" },
-      then: yup.string().required(validationMessages.require.generic),
-    }),
+    .test(
+      "required",
+      validationMessages.require.generic,
+      function (value, context) {
+        return !(
+          context.parent.primary_subspecialty.value === "others" && value === ""
+        );
+      }
+    ),
   secondary_subspecialty: yup
     .object()
     .shape({ label: yup.string(), value: yup.string() }),
+  secondary_subspecialty_others: yup
+    .string()
+    .test(
+      "required",
+      validationMessages.require.generic,
+      function (value, context) {
+        return !(
+          context.parent.secondary_subspecialty.value === "others" &&
+          value === ""
+        );
+      }
+    ),
   mcr_no: yup.string(),
   bio: yup.string().max(150, validationMessages.validate.max150),
 });
