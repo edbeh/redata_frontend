@@ -8,6 +8,20 @@ module.exports = {
       xl: "1280px",
       "2xl": "1536px",
     },
+    // fontSize: {
+    //   xs: ".75rem",
+    //   sm: ".80rem",
+    //   tiny: ".85rem",
+    //   base: ".90rem",
+    //   lg: "1.00rem",
+    //   xl: "1.125rem",
+    //   "2xl": "1.35rem",
+    //   "3xl": "1.70rem",
+    //   "4xl": "2.00rem",
+    //   "5xl": "2.70rem",
+    //   "6xl": "3.60rem",
+    //   "7xl": "4.50rem",
+    // },
     extend: {
       colors: {
         primary: {

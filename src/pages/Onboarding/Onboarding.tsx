@@ -128,7 +128,7 @@ const Onboarding = () => {
         </div>
 
         <div className="flex flex-col w-full">
-          <h1 className="mb-4 text-4xl font-semibold tracking-tight">
+          <h1 className="mb-2 text-4xl font-semibold tracking-tight">
             {onboardingSteps[currentStep - 1].description}
           </h1>
           <ProgressBar

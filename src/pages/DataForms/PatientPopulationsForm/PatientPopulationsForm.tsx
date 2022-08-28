@@ -82,7 +82,7 @@ const PatientPopulationsForm = React.forwardRef<
               <button
                 onClick={() => removePatientPopulation(i)}
                 disabled={i < 1}
-                className="mb-3 text-sm font-semibold rounded-lg text-primary-500 hover:text-primary-200 disabled:cursor-not-allowed disabled:text-disabled"
+                className="mb-3 font-semibold rounded-lg text-primary-500 hover:text-primary-200 disabled:cursor-not-allowed disabled:text-disabled"
               >
                 REMOVE
               </button>
@@ -103,7 +103,7 @@ const PatientPopulationsForm = React.forwardRef<
             height={30}
             className=" stroke-green-500"
           />
-          <p className="ml-1 text-sm">Add more</p>
+          <p className="ml-1">Add more</p>
         </div>
 
         <button type="submit" ref={ref} className="hidden">

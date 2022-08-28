@@ -143,7 +143,7 @@ const RegisterForm = () => {
           <Button isLoading={submitUserIsLoading || submitSessionIsLoading}>
             Register
           </Button>
-          <p className="mt-3 text-sm text-center">
+          <p className="mt-3 text-center">
             Already have an account?{" "}
             <Link to="/login" className="text-blue-500 underline">
               Log in here

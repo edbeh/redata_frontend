@@ -92,7 +92,7 @@ const LoginForm = () => {
 
         <div className="mt-[30px]">
           <Button isLoading={submitSessionIsLoading}>Login</Button>
-          <p className="mt-3 text-sm text-center">
+          <p className="mt-3 text-center">
             Don't have an account?{" "}
             <Link to="/register" className="text-blue-500 underline">
               Create one here
