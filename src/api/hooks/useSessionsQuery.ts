@@ -2,14 +2,18 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useMutation } from "react-query";
 
-import { SESSIONS_API_ENDPOINT } from "const";
-import { ApiErrorProps } from "utils";
-import { ApiSubmitSessionModel } from "models";
 import { ILoginFormFields } from "pages/Auth/Login/LoginForm/LoginForm.model";
 
+import { SESSIONS_API_ENDPOINT } from "../endpoints";
+import { ApiErrorProps } from "../utils";
+import { PostSession } from "../models";
+
+/**
+ *  //*POST Session
+ */
 const submitSession = async (data: ILoginFormFields) => {
   return axios
-    .post<ApiSubmitSessionModel.ApiResponse>(SESSIONS_API_ENDPOINT, data)
+    .post<PostSession.ApiResponse>(SESSIONS_API_ENDPOINT, data)
     .catch((error) => {
       const { errors } = error.response?.data as ApiErrorProps;
       if (errors?.length > 0) {

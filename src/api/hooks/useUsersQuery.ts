@@ -2,10 +2,15 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useQuery, useMutation } from "react-query";
 
-import { USERS_API_KEY, USERS_API_ENDPOINT } from "const";
 import { IRegisterFormFields } from "pages/Auth/Register/RegisterForm/RegisterForm.model";
-import { ApiSubmitUserModel } from "models/api/ApiSubmitUserModel";
 
+import { USERS_API_KEY } from "../keys";
+import { USERS_API_ENDPOINT } from "../endpoints";
+import { PostUser } from "../models";
+
+/**
+ *  //*GET Users
+ */
 const fetchAllUsers = async () => {
   return axios.get(USERS_API_ENDPOINT).catch((error) => {
     toast.error(error.response.statusText);
@@ -17,9 +22,12 @@ export const useFetchAllUsers = () => {
   return useQuery([USERS_API_KEY, fetchAllUsers]);
 };
 
+/**
+ *  //*POST Users
+ */
 const submitUser = async (data: IRegisterFormFields) => {
   return axios
-    .post<ApiSubmitUserModel.ApiResponse>(USERS_API_ENDPOINT, data)
+    .post<PostUser.ApiResponse>(USERS_API_ENDPOINT, data)
     .catch((error) => {
       toast.error(error.response.statusText);
       throw error;

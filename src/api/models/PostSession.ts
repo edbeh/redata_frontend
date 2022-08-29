@@ -1,4 +1,4 @@
-export declare module ApiSubmitUserModel {
+export declare module PostSession {
   export interface Data {
     id: string;
     type: string;
@@ -8,6 +8,7 @@ export declare module ApiSubmitUserModel {
   }
 
   export interface ApiResponse {
+    jwt: string;
     data: Data;
   }
 }
