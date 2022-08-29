@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import axios from "axios";
 
 import { BASE_API_URL } from "const";
+import { getJwtTokenLocalStorage } from "utils";
+import { PUBLIC_ENDPOINTS } from "api/endpoints";
 
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
@@ -10,18 +12,20 @@ import "./index.css";
 
 axios.defaults.baseURL = BASE_API_URL;
 
-console.log("BASE_API_URL", BASE_API_URL);
+axios.interceptors.request.use(
+  (request: any) => {
+    if (PUBLIC_ENDPOINTS.find((route) => request?.url?.includes(route))) {
+      return request;
+    }
 
-// axios.interceptors.request.use(
-//   (request: any) => {
-//     // const token = getTokenLocalStorage();
-//     // request.headers["Authorization"] = `Bearer ${token}`;
-//     return request;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
+    const token = getJwtTokenLocalStorage();
+    request.headers["Authorization"] = `Bearer ${token}`;
+    return request;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 axios.interceptors.response.use(
   (response) => response,
