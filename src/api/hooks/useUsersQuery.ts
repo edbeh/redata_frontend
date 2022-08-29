@@ -19,7 +19,7 @@ const fetchAllUsers = async () => {
 };
 
 export const useFetchAllUsers = () => {
-  return useQuery([USERS_API_KEY, fetchAllUsers]);
+  return useQuery([USERS_API_KEY], fetchAllUsers);
 };
 
 /**

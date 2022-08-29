@@ -15,6 +15,7 @@ interface FormSelectProps
   options: FormSelectModel[];
   isSearchable?: boolean;
   isClearable?: boolean;
+  isLoading?: boolean;
 }
 
 const FormSelect = ({
@@ -26,6 +27,7 @@ const FormSelect = ({
   options,
   isSearchable,
   isClearable,
+  isLoading,
   ...rest
 }: FormSelectProps) => {
   const { placeholder = "Select value", disabled, required } = rest;
@@ -48,6 +50,9 @@ const FormSelect = ({
             isSearchable={isSearchable}
             isClearable={isClearable}
             isDisabled={disabled}
+            isLoading={isLoading}
+            getOptionLabel={(option) => option.name}
+            getOptionValue={(option) => option.id}
             {...field}
           />
         )}

@@ -5,12 +5,12 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import { ProgressBar, Button, Modal } from "components";
 import { imgScientistMicroscope } from "assets";
-import { useFetchAllUsers } from "hooks";
 import {
   BasicInfoForm,
   ResearchInterestsForm,
   PatientPopulationsForm,
 } from "pages";
+import { useFetchAllUsers } from "api/hooks";
 
 import { getOnboardingSteps } from "./Onboarding.utils";
 import OnboardingIndicator from "./OnboardingIndicator/OnboardingIndicator";

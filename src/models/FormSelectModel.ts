@@ -1,4 +1,5 @@
 export type FormSelectModel = {
-  label: string;
-  value: string;
+  id: string;
+  name: string;
+  type?: string;
 };

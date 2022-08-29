@@ -1,23 +1,23 @@
 export const designations = [
-  { label: "Medical Officer", value: "mo" },
-  { label: "Associate Consultant", value: "ac" },
-  { label: "Consultant", value: "c" },
-  { label: "Assistant Professor", value: "ap" },
-  { label: "Professor", value: "p" },
-  { label: "Researcher", value: "r" },
+  { name: "Medical Officer", id: "mo" },
+  { name: "Associate Consultant", id: "ac" },
+  { name: "Consultant", id: "c" },
+  { name: "Assistant Professor", id: "ap" },
+  { name: "Professor", id: "p" },
+  { name: "Researcher", id: "r" },
 ];
 
 export const departments = [
-  { label: "Renal Medicine", value: "renal_medicine" },
-  { label: "Haematology", value: "haematology" },
-  { label: "Respiratory", value: "respiratory" },
+  { name: "Renal Medicine", id: "renal_medicine" },
+  { name: "Haematology", id: "haematology" },
+  { name: "Respiratory", id: "respiratory" },
 ];
 
 export const subSpecialties = [
-  { label: "Kidney Transplant", value: "kidney_transplant" },
+  { name: "Kidney Transplant", id: "kidney_transplant" },
   {
-    label: "Immunosuppression Post-transplant",
-    value: "immunosuppression_post_transplant",
+    name: "Immunosuppression Post-transplant",
+    id: "immunosuppression_post_transplant",
   },
-  { label: "Others", value: "others" },
+  { name: "Others", id: "others" },
 ];

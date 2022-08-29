@@ -6,13 +6,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
 
 import { FormInput, Button, FormSelect } from "components";
+import { getYupIsRequired, setJwtTokenLocalStorage } from "utils";
+import { isApiError, handleApiErrorsForm } from "api/utils";
 import {
-  getYupIsRequired,
-  isApiError,
-  handleApiErrorsForm,
-  setJwtTokenLocalStorage,
-} from "utils";
-import { useSubmitSession, useSubmitUser } from "hooks";
+  useSubmitSession,
+  useSubmitUser,
+  useFetchMetadataInstitutions,
+} from "api/hooks";
 
 import { schema } from "./RegisterForm.schema";
 import { IRegisterFormFields } from "./RegisterForm.model";
@@ -35,6 +35,11 @@ const RegisterForm = () => {
   });
 
   // *Queries
+  const {
+    data: metadataInstitutionsData,
+    isLoading: fetchMetadataInstitutionsIsLoading,
+  } = useFetchMetadataInstitutions();
+
   const {
     data: submitUserData,
     mutate: mutateUser,
@@ -77,6 +82,7 @@ const RegisterForm = () => {
     }
   }, [submitUserError]);
 
+  console.log("metadataInstitutionsData", metadataInstitutionsData);
   // *JSX
   return (
     <div className="flex items-center justify-center flex-1 overflow-auto">
@@ -109,13 +115,14 @@ const RegisterForm = () => {
 
           <FormSelect
             control={control}
-            options={institutions}
+            options={metadataInstitutionsData?.data?.data || []}
             placeholder=""
             id="institution"
             name="institution"
             label="Institution"
             error={formErrors?.institution?.message as string}
             required={getYupIsRequired(schema, "institution")}
+            isLoading={fetchMetadataInstitutionsIsLoading}
           />
 
           <FormInput

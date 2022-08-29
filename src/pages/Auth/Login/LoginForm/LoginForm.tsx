@@ -4,14 +4,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import {
-  getYupIsRequired,
-  isApiError,
-  handleApiErrorsForm,
-  setJwtTokenLocalStorage,
-} from "utils";
+import { getYupIsRequired, setJwtTokenLocalStorage } from "utils";
 import { FormInput, Button } from "components";
-import { useSubmitSession } from "hooks";
+import { isApiError, handleApiErrorsForm } from "api/utils";
+import { useSubmitSession } from "api/hooks";
 
 import { schema } from "./LoginForm.schema";
 import { ILoginFormFields } from "./LoginForm.model";

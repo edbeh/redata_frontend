@@ -27,7 +27,9 @@ const fetchMetadataDesignations = async () => {
 };
 
 export const useFetchMetadataDesignations = () => {
-  return useQuery([METADATA_DESIGNATIONS_API_KEY, fetchMetadataDesignations]);
+  return useQuery([METADATA_DESIGNATIONS_API_KEY], fetchMetadataDesignations, {
+    staleTime: 1000 * 60 * 10, // 10 minutes
+  });
 };
 
 /**
@@ -45,5 +47,7 @@ const fetchMetadataInstitutions = async () => {
 };
 
 export const useFetchMetadataInstitutions = () => {
-  return useQuery([METADATA_INSTITUTIONS_API_KEY, fetchMetadataInstitutions]);
+  return useQuery([METADATA_INSTITUTIONS_API_KEY], fetchMetadataInstitutions, {
+    staleTime: 1000 * 60 * 10, // 10 minutes
+  });
 };

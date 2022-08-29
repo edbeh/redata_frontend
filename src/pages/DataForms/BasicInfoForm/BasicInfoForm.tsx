@@ -100,7 +100,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                 required={getYupIsRequired(schema, "primary_subspecialty")}
                 error={formErrors?.primary_subspecialty?.message}
               />
-              {watch("primary_subspecialty")?.value === "others" && (
+              {watch("primary_subspecialty")?.name === "Others" && (
                 <FormInput
                   label="Primary Subspecialty (Others)"
                   register={register}
@@ -122,7 +122,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                 required={getYupIsRequired(schema, "secondary_subspecialty")}
                 error={formErrors?.secondary_subspecialty?.message}
               />
-              {watch("secondary_subspecialty")?.value === "others" && (
+              {watch("secondary_subspecialty")?.name === "Others" && (
                 <FormInput
                   label="Secondary Subspecialty (Others)"
                   register={register}
