@@ -23,7 +23,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled || isLoading}
       {...rest}
     >
-      {isLoading ? <MoonLoader color="white" size={24} /> : children}
+      {isLoading ? <MoonLoader color="white" size={16} /> : children}
     </button>
   );
 };

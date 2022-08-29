@@ -32,6 +32,8 @@ const FormSelect = ({
 }: FormSelectProps) => {
   const { placeholder = "Select value", disabled, required } = rest;
 
+  console.log("error", error);
+
   return (
     <div className="flex flex-col w-full hover:cursor-pointer">
       <label htmlFor={id} className="flex">
@@ -45,6 +47,12 @@ const FormSelect = ({
         render={({ field }) => (
           <Select
             styles={selectStyles}
+            className={`border-[1px] border-borderGray rounded-lg hover:ring-1
+             ${
+               error
+                 ? "border-red hover:ring-red hover:border-red "
+                 : "hover:border-primary-600 hover:ring-primary-600"
+             } `}
             options={options}
             placeholder={placeholder}
             isSearchable={isSearchable}

@@ -28,10 +28,9 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       register,
       control,
       handleSubmit,
-      formState: { errors: formErrors },
+      formState: { errors: formErrors, isValid: formIsValid },
       watch,
       setValue,
-      trigger,
       setError,
     } = useForm<IBasicInfoFormFields>({
       resolver: yupResolver(schema),
@@ -54,7 +53,6 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
     // *Methods
     const handleSubmitForm = async (data: IBasicInfoFormFields) => {
-      console.log(data);
       // if (onSuccessCallback) onSuccessCallback();
     };
 
@@ -69,10 +67,14 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       }
     }, [fetchMeData]);
 
+    console.log("watch", watch());
+    console.log("formErrors", formErrors);
+    console.log("isValid", formIsValid);
+
     // *JSX
     return (
       <div>
-        <form onSubmit={handleSubmit(handleSubmitForm)}>
+        <form noValidate onSubmit={handleSubmit(handleSubmitForm)}>
           <div className="flex flex-col w-full mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
             <FormSelect
               label="Designation"

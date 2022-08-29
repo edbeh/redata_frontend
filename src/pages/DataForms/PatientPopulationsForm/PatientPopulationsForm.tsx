@@ -39,8 +39,7 @@ const PatientPopulationsForm = React.forwardRef<
 
   // *Methods
   const handleSubmitForm = async (data: IPatientPopulationsFormFields) => {
-    console.log(data);
-    // if (onSuccess) onSuccess();
+    if (onSuccessCallback) onSuccessCallback();
   };
 
   // *Effects
@@ -61,10 +60,18 @@ const PatientPopulationsForm = React.forwardRef<
         seeing in your clinic (e.g. Leukemia)
       </p>
 
-      <form onSubmit={handleSubmit(handleSubmitForm)}>
+      <form noValidate onSubmit={handleSubmit(handleSubmitForm)}>
         {patientPopulationFields.map((field, i) => {
           return (
-            <div className="flex items-end mb-4 space-x-4" key={field.id}>
+            <div
+              className={`flex mb-4 space-x-4 ${
+                formErrors?.patient_populations &&
+                formErrors?.patient_populations[i]?.patient_population?.message
+                  ? "items-center"
+                  : "items-end"
+              }`}
+              key={field.id}
+            >
               <FormInput
                 label={`Patient Population (${i + 1})`}
                 key={field.id}
@@ -82,7 +89,13 @@ const PatientPopulationsForm = React.forwardRef<
               <button
                 onClick={() => removePatientPopulation(i)}
                 disabled={i < 1}
-                className="mb-3 font-semibold rounded-lg text-primary-500 hover:text-primary-200 disabled:cursor-not-allowed disabled:text-disabled"
+                className={`font-semibold rounded-lg text-primary-500 hover:text-primary-200 disabled:cursor-not-allowed disabled:text-disabled ${
+                  formErrors?.patient_populations &&
+                  formErrors?.patient_populations[i]?.patient_population
+                    ?.message
+                    ? "mb-1"
+                    : "mb-4"
+                }`}
               >
                 REMOVE
               </button>

@@ -90,6 +90,7 @@ const RegisterForm = () => {
   return (
     <div className="flex items-center justify-center flex-1 overflow-auto">
       <form
+        noValidate
         onSubmit={handleSubmit(handleSubmitForm)}
         className="w-full p-[12%] md:p-[18%]"
       >

@@ -59,6 +59,7 @@ const LoginForm = () => {
   return (
     <div className="flex items-center justify-center flex-1">
       <form
+        noValidate
         onSubmit={handleSubmit(handleSubmitForm)}
         className="w-full p-[12%] md:p-[18%]"
       >
