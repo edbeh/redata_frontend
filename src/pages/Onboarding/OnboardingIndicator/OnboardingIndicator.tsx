@@ -17,10 +17,10 @@ const OnboardingIndicator = ({
         <div
           className={`border-l-2 ${
             isActive ? "border-primary-400" : "border-slate-400"
-          } h-[18px] absolute bottom-[24px] left-[19px] z-0`}
+          } h-[18px] absolute bottom-[24px] left-[18.5px] z-0`}
         />
       ) : (
-        <div className="h-[18px] absolute bottom-[24px] left-[19px] z-0" />
+        <div className="h-[18px] absolute bottom-[24px] left-[18.5px] z-0" />
       )}
       <p
         className={`flex justify-center border-2 rounded-full w-7 h-7 align-center ${
