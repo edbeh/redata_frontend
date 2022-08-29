@@ -1,15 +1,25 @@
+import PulseLoader from "react-spinners/PulseLoader";
+
 interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   register: any;
   error?: string;
   label?: string;
   id: string;
+  isLoading?: boolean;
 }
 
-const FormInput = ({ register, error, label, id, ...rest }: FormInputProps) => {
+const FormInput = ({
+  register,
+  error,
+  label,
+  id,
+  isLoading,
+  ...rest
+}: FormInputProps) => {
   const { required } = rest;
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="relative flex flex-col w-full">
       <label htmlFor={id} className="flex">
         {label}
         {required && <span className="text-red">*</span>}
@@ -25,6 +35,17 @@ const FormInput = ({ register, error, label, id, ...rest }: FormInputProps) => {
         {...register(id)}
         {...rest}
       />
+
+      {isLoading && (
+        <PulseLoader
+          className={`absolute right-4 ${
+            label || required ? "top-11" : "top-5"
+          }`}
+          size={4}
+          color="#D8D8D8"
+          speedMultiplier={0.7}
+        />
+      )}
 
       {error && <div className="mt-[2px] text-red">{error}</div>}
     </div>

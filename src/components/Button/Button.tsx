@@ -1,4 +1,4 @@
-import { SpinnerCircular } from "spinners-react";
+import MoonLoader from "react-spinners/MoonLoader";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary";
@@ -23,7 +23,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled || isLoading}
       {...rest}
     >
-      {isLoading ? <SpinnerCircular size={24} color="white" /> : children}
+      {isLoading ? <MoonLoader color="white" size={24} /> : children}
     </button>
   );
 };

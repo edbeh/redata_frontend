@@ -3,3 +3,4 @@ export * from "./PostUser";
 export * from "./GetMetadataDesignations";
 export * from "./GetMetadataInstitutions";
 export * from "./GetMe";
+export * from "./GetDepartmentById";

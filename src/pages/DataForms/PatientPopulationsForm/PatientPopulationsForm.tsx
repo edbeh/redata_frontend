@@ -10,13 +10,13 @@ import { schema } from "./PatientPopulationsForm.schema";
 import { IPatientPopulationsFormFields } from "./PatientPopulationsForm.model";
 
 interface PatientPopulationsFormProps {
-  onSuccess?: () => void;
+  onSuccessCallback?: () => void;
 }
 
 const PatientPopulationsForm = React.forwardRef<
   HTMLButtonElement,
   PatientPopulationsFormProps
->(({ onSuccess }, ref) => {
+>(({ onSuccessCallback }, ref) => {
   // *Form
   const {
     register,

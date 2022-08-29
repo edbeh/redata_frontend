@@ -1,27 +1,28 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { FormInput, FormSelect, FormTextArea } from "components";
 import { getYupIsRequired } from "utils";
+import {
+  useFetchMetadataDesignations,
+  useFetchMe,
+  useFetchDepartmentById,
+} from "api/hooks";
 
 import { IBasicInfoFormFields } from "./BasicInfoForm.model";
 import { schema } from "./BasicInfoForm.schema";
-import {
-  designations,
-  departments,
-  subSpecialties,
-} from "./BasicInfoForm.util";
-import { getValue } from "@testing-library/user-event/dist/utils";
+import { subSpecialties } from "./BasicInfoForm.util";
 
 interface BasicInfoFormProps {
   /** callback if api call is successful */
-  onSuccess?: () => void;
+  onSuccessCallback?: () => void;
 }
 
 const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
   // ref for parent component to trigger submit form
-  ({ onSuccess }, ref) => {
+  ({ onSuccessCallback }, ref) => {
     // *Form
     const {
       register,
@@ -29,6 +30,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       handleSubmit,
       formState: { errors: formErrors },
       watch,
+      setValue,
       trigger,
       setError,
     } = useForm<IBasicInfoFormFields>({
@@ -36,11 +38,36 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       mode: "onChange",
     });
 
+    // *Queries
+    const { data: fetchMeData, isLoading: fetchMeIsLoading } = useFetchMe();
+    const institutionId = fetchMeData?.data?.data?.institution?.id as string;
+
+    const {
+      data: fetchDepartmentByIdData,
+      isLoading: fetchDepartmentByIdDataIsLoading,
+    } = useFetchDepartmentById(institutionId, !!institutionId);
+
+    const {
+      data: fetchMetadataDesignationsData,
+      isLoading: fetchMetadataDesignationsIsLoading,
+    } = useFetchMetadataDesignations();
+
     // *Methods
     const handleSubmitForm = async (data: IBasicInfoFormFields) => {
       console.log(data);
-      // if (onSuccess) onSuccess();
+      // if (onSuccessCallback) onSuccessCallback();
     };
+
+    // *Effects
+    useEffect(() => {
+      if (fetchMeData) {
+        const name = fetchMeData?.data?.data?.name;
+        if (name) setValue("name", name);
+
+        const email = fetchMeData?.data?.data?.email;
+        if (email) setValue("email", email);
+      }
+    }, [fetchMeData]);
 
     // *JSX
     return (
@@ -52,7 +79,8 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               control={control}
               id="designation"
               name="designation"
-              options={designations}
+              options={fetchMetadataDesignationsData?.data?.data || []}
+              isLoading={fetchMetadataDesignationsIsLoading}
               required={getYupIsRequired(schema, "designation")}
               error={formErrors?.designation?.message}
             />
@@ -76,6 +104,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               name="email"
               required={getYupIsRequired(schema, "email")}
               error={formErrors?.email?.message}
+              isLoading={fetchMeIsLoading}
             />
 
             <FormSelect
@@ -83,7 +112,8 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               control={control}
               id="department"
               name="department"
-              options={departments}
+              options={fetchDepartmentByIdData?.data?.data || []}
+              isLoading={fetchDepartmentByIdDataIsLoading}
               required={getYupIsRequired(schema, "department")}
               error={formErrors?.department?.message}
             />

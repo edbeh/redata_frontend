@@ -10,13 +10,13 @@ import { schema } from "./ResearchInterestsForm.schema";
 import { IResearchInterestsFormFields } from "./ResearchInterestsForm.model";
 
 interface ResearchInterestsFormProps {
-  onSuccess?: () => void;
+  onSuccessCallback?: () => void;
 }
 
 const ResearchInterestsForm = React.forwardRef<
   HTMLButtonElement,
   ResearchInterestsFormProps
->(({ onSuccess }, ref) => {
+>(({ onSuccessCallback }, ref) => {
   // *Form
   const {
     register,

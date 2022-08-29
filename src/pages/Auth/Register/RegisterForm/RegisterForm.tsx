@@ -16,7 +16,7 @@ import {
 
 import { schema } from "./RegisterForm.schema";
 import { IRegisterFormFields } from "./RegisterForm.model";
-import { institutions } from "./RegisterForm.util";
+import { cleanUpData } from "./RegisterForm.util";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -29,6 +29,7 @@ const RegisterForm = () => {
     setError,
     handleSubmit,
     getValues,
+    watch,
   } = useForm<IRegisterFormFields>({
     mode: "onChange",
     resolver: yupResolver(schema),
@@ -36,7 +37,7 @@ const RegisterForm = () => {
 
   // *Queries
   const {
-    data: metadataInstitutionsData,
+    data: fetchMetadataInstitutionsData,
     isLoading: fetchMetadataInstitutionsIsLoading,
   } = useFetchMetadataInstitutions();
 
@@ -55,7 +56,8 @@ const RegisterForm = () => {
 
   // *Methods
   const handleSubmitForm = (data: IRegisterFormFields) => {
-    mutateUser(data);
+    const cleanData = cleanUpData(data);
+    mutateUser(cleanData);
   };
 
   // *Effects
@@ -82,7 +84,8 @@ const RegisterForm = () => {
     }
   }, [submitUserError]);
 
-  console.log("metadataInstitutionsData", metadataInstitutionsData);
+  console.log("watch()", watch());
+
   // *JSX
   return (
     <div className="flex items-center justify-center flex-1 overflow-auto">
@@ -115,7 +118,7 @@ const RegisterForm = () => {
 
           <FormSelect
             control={control}
-            options={metadataInstitutionsData?.data?.data || []}
+            options={fetchMetadataInstitutionsData?.data?.data || []}
             placeholder=""
             id="institution"
             name="institution"

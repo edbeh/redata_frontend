@@ -10,7 +10,6 @@ import {
   ResearchInterestsForm,
   PatientPopulationsForm,
 } from "pages";
-import { useFetchAllUsers } from "api/hooks";
 
 import { getOnboardingSteps } from "./Onboarding.utils";
 import OnboardingIndicator from "./OnboardingIndicator/OnboardingIndicator";
@@ -32,9 +31,6 @@ const Onboarding = () => {
   const [currentProgress, setCurrentProgress] = useState<string>("0%");
   const [isIntroModalVisible, setIsIntroModalVisible] =
     useState<boolean>(false);
-
-  // *Queries
-  const { data, isLoading, error } = useFetchAllUsers();
 
   // *Methods
   const handleNextStep = () => {
@@ -141,19 +137,19 @@ const Onboarding = () => {
             {currentStep === 1 && (
               <BasicInfoForm
                 ref={basicInfoSubmitRef}
-                onSuccess={handleFormSubmitSuccess}
+                onSuccessCallback={handleFormSubmitSuccess}
               />
             )}
             {currentStep === 2 && (
               <ResearchInterestsForm
                 ref={researchInterestSubmitRef}
-                onSuccess={handleFormSubmitSuccess}
+                onSuccessCallback={handleFormSubmitSuccess}
               />
             )}
             {currentStep === 3 && (
               <PatientPopulationsForm
                 ref={patientPopulationSubmitRef}
-                onSuccess={handleFormSubmitSuccess}
+                onSuccessCallback={handleFormSubmitSuccess}
               />
             )}
           </div>
