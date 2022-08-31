@@ -1,8 +1,6 @@
-export { default as AxiosErrorInterceptor } from "./AxiosErrorInterceptor/AxiosErrorInterceptor";
 export { default as Button } from "./Button/Button";
 export { default as FormInput } from "./FormInput/FormInput";
 export { default as FormSelect } from "./FormSelect/FormSelect";
-export { default as BaseLayout } from "./BaseLayout/BaseLayout";
 export { default as ProgressBar } from "./ProgressBar/ProgressBar";
 export { default as TopNav } from "./Nav/TopNav/TopNav";
 export { default as Modal } from "./Modal/Modal";

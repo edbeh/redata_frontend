@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useLayoutEffect, useMemo, useState } from "react";
-import { BaseLayout } from "components";
+import { BaseLayout } from "wrapper-components";
 import { useParams, useNavigate } from "react-router-dom";
 
 import { ProgressBar, Button, Modal } from "components";
@@ -9,6 +9,7 @@ import {
   BasicInfoForm,
   ResearchInterestsForm,
   PatientPopulationsForm,
+  PublicationsForm,
 } from "pages";
 
 import { getOnboardingSteps } from "./Onboarding.utils";
@@ -21,6 +22,7 @@ const Onboarding = () => {
   const basicInfoSubmitRef = useRef<HTMLButtonElement>(null);
   const researchInterestSubmitRef = useRef<HTMLButtonElement>(null);
   const patientPopulationSubmitRef = useRef<HTMLButtonElement>(null);
+  const publicationsSubmitRef = useRef<HTMLButtonElement>(null);
 
   const onboardingSteps = useMemo(() => {
     return getOnboardingSteps();
@@ -37,6 +39,7 @@ const Onboarding = () => {
     if (currentStep === 1) return basicInfoSubmitRef.current?.click(); // submit basic info form
     if (currentStep === 2) return researchInterestSubmitRef.current?.click(); // submit research interests form
     if (currentStep === 3) return patientPopulationSubmitRef.current?.click(); // submit patient populations form
+    if (currentStep === 4) return publicationsSubmitRef.current?.click(); // submit publications form
   };
 
   const handleFormSubmitSuccess = () => {
@@ -149,6 +152,12 @@ const Onboarding = () => {
             {currentStep === 3 && (
               <PatientPopulationsForm
                 ref={patientPopulationSubmitRef}
+                onSuccessCallback={handleFormSubmitSuccess}
+              />
+            )}
+            {currentStep === 4 && (
+              <PublicationsForm
+                ref={publicationsSubmitRef}
                 onSuccessCallback={handleFormSubmitSuccess}
               />
             )}

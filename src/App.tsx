@@ -3,7 +3,7 @@ import { AppRouter } from "router";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
 
-import { AxiosErrorInterceptor } from "components";
+import { AxiosErrorInterceptor } from "wrapper-components";
 
 // React query client
 const queryClient = new QueryClient();

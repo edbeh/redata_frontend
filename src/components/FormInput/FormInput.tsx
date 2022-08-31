@@ -4,6 +4,7 @@ interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   register: any;
   error?: string;
   label?: string;
+  helper?: string; // text displayed below the input for extra info
   id: string;
   isLoading?: boolean;
 }
@@ -12,6 +13,7 @@ const FormInput = ({
   register,
   error,
   label,
+  helper,
   id,
   isLoading,
   ...rest
@@ -50,6 +52,9 @@ const FormInput = ({
         />
       )}
 
+      {helper && (
+        <div className="mt-[2px] text-slate-500 text-sm">{helper}</div>
+      )}
       {error && <div className="mt-[2px] text-red">{error}</div>}
     </div>
   );

@@ -4,3 +4,4 @@ export { default as Onboarding } from "./Onboarding/Onboarding";
 export { default as BasicInfoForm } from "./DataForms/BasicInfoForm/BasicInfoForm";
 export { default as ResearchInterestsForm } from "./DataForms/ResearchInterestsForm/ResearchInterestsForm";
 export { default as PatientPopulationsForm } from "./DataForms/PatientPopulationsForm/PatientPopulationsForm";
+export { default as PublicationsForm } from "./DataForms/PublicationsForm/PublicationsForm";

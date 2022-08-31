@@ -72,9 +72,9 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
       if (fetchMeData) {
         const data = fetchMeData.data?.data;
-        setValue("designation", data.designation);
+        setValue("designation", data.designation || undefined);
+        setValue("department", data.department || undefined);
         setValue("name", data.name);
-        setValue("department", data.department);
       }
     }, [fetchMeData, fetchMetadataDesignationsData, fetchDepartmentByIdData]);
 
