@@ -5,44 +5,27 @@ import { validationMessages } from "const";
 export const schema = yup.object({
   designation: yup.object().required(validationMessages.require.designation),
   name: yup.string().required(validationMessages.require.name),
-  email: yup
-    .string()
-    .email(validationMessages.validate.email)
-    .required(validationMessages.require.email),
-  department: yup
-    .object()
-    .shape({ label: yup.string(), value: yup.string() })
-    .required(validationMessages.require.department),
+  department: yup.object().required(validationMessages.require.department),
   primary_subspecialty: yup
     .object()
-    .shape({ label: yup.string(), value: yup.string() })
     .required(validationMessages.require.primarySpecialty),
-  primary_subspecialty_others: yup
-    .string()
-    .test(
-      "required",
-      validationMessages.require.generic,
-      function (value, context) {
-        return !(
-          context.parent.primary_subspecialty.value === "others" && value === ""
-        );
-      }
-    ),
+  primary_subspecialty_others: yup.string().when("primary_subspecialty", {
+    is: (value: any) => {
+      return value?.id === "others";
+    },
+    then: yup.string().required(validationMessages.require.generic),
+    otherwise: yup.string(),
+  }),
   secondary_subspecialty: yup
     .object()
-    .shape({ label: yup.string(), value: yup.string() }),
-  secondary_subspecialty_others: yup
-    .string()
-    .test(
-      "required",
-      validationMessages.require.generic,
-      function (value, context) {
-        return !(
-          context.parent.secondary_subspecialty.value === "others" &&
-          value === ""
-        );
-      }
-    ),
+    .shape({ id: yup.string(), name: yup.string() }),
+  secondary_subspecialty_others: yup.string().when("secondary_subspecialty", {
+    is: (value: any) => {
+      return value?.id === "others";
+    },
+    then: yup.string().required(validationMessages.require.generic),
+    otherwise: yup.string(),
+  }),
   mcr_no: yup.string(),
   bio: yup.string().max(150, validationMessages.validate.max150),
 });

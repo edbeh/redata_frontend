@@ -32,8 +32,6 @@ const FormSelect = ({
 }: FormSelectProps) => {
   const { placeholder = "Select value", disabled, required } = rest;
 
-  console.log("error", error);
-
   return (
     <div className="flex flex-col w-full hover:cursor-pointer">
       <label htmlFor={id} className="flex">

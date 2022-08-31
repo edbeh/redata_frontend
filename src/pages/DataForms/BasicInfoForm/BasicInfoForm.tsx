@@ -30,12 +30,17 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       handleSubmit,
       formState: { errors: formErrors, isValid: formIsValid },
       watch,
+      getValues,
       setValue,
       setError,
+      clearErrors,
     } = useForm<IBasicInfoFormFields>({
       resolver: yupResolver(schema),
       mode: "onChange",
     });
+
+    const primarySubspecialty = watch("primary_subspecialty");
+    const secondarySubspecialty = watch("secondary_subspecialty");
 
     // *Queries
     const { data: fetchMeData, isLoading: fetchMeIsLoading } = useFetchMe();
@@ -52,24 +57,10 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     } = useFetchMetadataDesignations();
 
     // *Methods
+
     const handleSubmitForm = async (data: IBasicInfoFormFields) => {
-      // if (onSuccessCallback) onSuccessCallback();
+      if (onSuccessCallback) onSuccessCallback();
     };
-
-    // *Effects
-    useEffect(() => {
-      if (fetchMeData) {
-        const name = fetchMeData?.data?.data?.name;
-        if (name) setValue("name", name);
-
-        const email = fetchMeData?.data?.data?.email;
-        if (email) setValue("email", email);
-      }
-    }, [fetchMeData]);
-
-    console.log("watch", watch());
-    console.log("formErrors", formErrors);
-    console.log("isValid", formIsValid);
 
     // *JSX
     return (
@@ -98,17 +89,6 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
           </div>
 
           <div className="flex flex-col w-full mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
-            <FormInput
-              label="Email"
-              register={register}
-              id="email"
-              type="email"
-              name="email"
-              required={getYupIsRequired(schema, "email")}
-              error={formErrors?.email?.message}
-              isLoading={fetchMeIsLoading}
-            />
-
             <FormSelect
               label="Department"
               control={control}
@@ -118,6 +98,15 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               isLoading={fetchDepartmentByIdDataIsLoading}
               required={getYupIsRequired(schema, "department")}
               error={formErrors?.department?.message}
+            />
+
+            <FormInput
+              label="MCR Number"
+              register={register}
+              id="mcr_no"
+              name="mcr_no"
+              required={getYupIsRequired(schema, "mcr_no")}
+              error={formErrors?.mcr_no?.message}
             />
           </div>
 
@@ -132,13 +121,17 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                 required={getYupIsRequired(schema, "primary_subspecialty")}
                 error={formErrors?.primary_subspecialty?.message}
               />
-              {watch("primary_subspecialty")?.name === "Others" && (
+
+              {primarySubspecialty?.name === "Others" && (
                 <FormInput
                   label="Primary Subspecialty (Others)"
                   register={register}
                   id="primary_subspecialty_others"
                   name="primary_subspecialty_others"
-                  required
+                  required={getYupIsRequired(
+                    schema,
+                    "primary_subspecialty_others"
+                  )}
                   error={formErrors?.primary_subspecialty_others?.message}
                 />
               )}
@@ -154,30 +147,20 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                 required={getYupIsRequired(schema, "secondary_subspecialty")}
                 error={formErrors?.secondary_subspecialty?.message}
               />
-              {watch("secondary_subspecialty")?.name === "Others" && (
+              {secondarySubspecialty?.name === "Others" && (
                 <FormInput
                   label="Secondary Subspecialty (Others)"
                   register={register}
                   id="secondary_subspecialty_others"
                   name="secondary_subspecialty_others"
-                  required
+                  required={getYupIsRequired(
+                    schema,
+                    "secondary_subspecialty_others"
+                  )}
                   error={formErrors?.secondary_subspecialty_others?.message}
                 />
               )}
             </div>
-          </div>
-
-          <div className="flex flex-col w-full mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
-            <FormInput
-              label="MCR Number"
-              register={register}
-              id="mcr_no"
-              name="mcr_no"
-              required={getYupIsRequired(schema, "mcr_no")}
-              error={formErrors?.mcr_no?.message}
-            />
-
-            <div className="hidden w-full md:block" />
           </div>
 
           <div className="flex flex-col w-full mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
