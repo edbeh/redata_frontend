@@ -1,9 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { FormInput, FormSelect, FormTextArea } from "components";
+import {
+  FormInput,
+  FormSelect,
+  FormTextArea,
+  FullScreenLoader,
+} from "components";
 import { getYupIsRequired } from "utils";
 import {
   useFetchMetadataDesignations,
@@ -57,14 +62,29 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     } = useFetchMetadataDesignations();
 
     // *Methods
-
     const handleSubmitForm = async (data: IBasicInfoFormFields) => {
       if (onSuccessCallback) onSuccessCallback();
     };
 
+    // *Effects
+    useEffect(() => {
+      if (!fetchMetadataDesignationsData || !fetchDepartmentByIdData) return;
+
+      if (fetchMeData) {
+        const data = fetchMeData.data?.data;
+        setValue("designation", data.designation);
+        setValue("name", data.name);
+        setValue("department", data.department);
+      }
+    }, [fetchMeData, fetchMetadataDesignationsData, fetchDepartmentByIdData]);
+
     // *JSX
     return (
       <div>
+        {(fetchMeIsLoading ||
+          fetchDepartmentByIdDataIsLoading ||
+          fetchMetadataDesignationsIsLoading) && <FullScreenLoader />}
+
         <form noValidate onSubmit={handleSubmit(handleSubmitForm)}>
           <div className="flex flex-col w-full mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
             <FormSelect
