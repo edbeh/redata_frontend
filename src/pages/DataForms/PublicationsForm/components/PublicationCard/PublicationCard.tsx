@@ -1,10 +1,10 @@
-import { GetPubmedByIds } from "api/models";
+import { GetPubMedByIds } from "api/models";
 
 interface PublicationCardProps {
   index: number;
   namesToBold: string[];
-  publication: GetPubmedByIds.Publication;
-  handleSelectPublication: () => void;
+  publication: GetPubMedByIds.Publication;
+  handleSelectPublication: (id: string) => void;
   isSelected: boolean;
 }
 
@@ -17,14 +17,14 @@ const PublicationCard = ({
 }: PublicationCardProps) => {
   return (
     <div
-      className={`flex shadow-[3xl] p-4 border-[1px] rounded-lg cursor-pointer
+      className={`flex shadow-md p-4 border-[1px] rounded-lg cursor-pointer
       ${isSelected ? "border-primary-600 bg-primary-100" : "border-disabled"}`}
-      onClick={handleSelectPublication}
+      onClick={() => handleSelectPublication(publication.uid)}
     >
       <p className="mr-1">{index + 1}.</p>
 
-      <div className="space-y-1">
-        <p className="text-base">{publication.title}</p>
+      <div className="flex flex-col space-y-1">
+        <p className="text-[14px]">{publication.title}</p>
         <p className="text-[13px]">
           {publication.authors?.map((author, i) => {
             if (namesToBold.includes(author.name)) {

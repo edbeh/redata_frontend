@@ -1,4 +1,4 @@
-export declare module GetPubmedByIds {
+export declare module GetPubMedByIds {
   export interface Header {
     type: string;
     version: string;

@@ -12,7 +12,7 @@ export declare module PostUser {
     type: string;
     name: string;
     email: string;
-    pubmedNames: any[];
+    pubMedNames: any[];
   }
 
   export interface ApiResponse {

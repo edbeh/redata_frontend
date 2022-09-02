@@ -39,6 +39,7 @@ const PatientPopulationsForm = React.forwardRef<
 
   // *Methods
   const handleSubmitForm = async (data: IPatientPopulationsFormFields) => {
+    console.log(data);
     if (onSuccessCallback) onSuccessCallback();
   };
 

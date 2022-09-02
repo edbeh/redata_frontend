@@ -13,7 +13,7 @@ export declare module GetMe {
     institution: Institution;
     designation?: any;
     department?: any;
-    pubmedNames: any[];
+    pubMedNames: any[];
   }
 
   export interface ApiResponse {

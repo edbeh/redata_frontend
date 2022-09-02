@@ -63,6 +63,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
     // *Methods
     const handleSubmitForm = async (data: IBasicInfoFormFields) => {
+      console.log(data);
       if (onSuccessCallback) onSuccessCallback();
     };
 

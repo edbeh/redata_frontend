@@ -25,9 +25,9 @@ export const PUBLIC_ENDPOINTS = [
 export const BASE_PUBMED_API_URL =
   "https://eutils.ncbi.nlm.nih.gov/entrez/eutils";
 
-export const SEARCH_PUBMED_NAMES_PREFIX = "/esearch.fcgi?db=pubmed&term=";
+export const SEARCH_PUBMED_NAMES_PREFIX = "/esearch.fcgi?db=pubMed&term=";
 export const SEARCH_PUBMED_NAMES_SUFFIX =
   "%28singapore+general+hospital%5BAffiliation%5D%29&retmax=5000&format=json";
 
-export const SEARCH_PUBMED_IDS_PREFIX = "/esummary.fcgi?db=pubmed&id=";
+export const SEARCH_PUBMED_IDS_PREFIX = "/esummary.fcgi?db=pubMed&id=";
 export const SEARCH_PUBMED_IDS_SUFFIX = "&sort=pubdate&retmax=5000&format=json";

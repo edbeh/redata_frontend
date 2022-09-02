@@ -3,4 +3,4 @@ export * from "./useSessionsQuery";
 export * from "./useUsersQuery";
 export * from "./useDepartmentsQuery";
 export * from "./useMeQuery";
-export * from "./usePubmedQuery";
+export * from "./usePubMedQuery";

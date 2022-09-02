@@ -39,6 +39,7 @@ const ResearchInterestsForm = React.forwardRef<
 
   // *Methods
   const handleSubmitForm = async (data: IResearchInterestsFormFields) => {
+    console.log(data);
     if (onSuccessCallback) onSuccessCallback();
   };
 

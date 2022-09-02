@@ -10,18 +10,18 @@ import {
   SEARCH_PUBMED_NAMES_PREFIX,
   SEARCH_PUBMED_NAMES_SUFFIX,
 } from "../endpoints";
-import { GetPubmedByIds, GetPubmedByNames } from "../models";
+import { GetPubMedByIds, GetPubMedByNames } from "../models";
 
 /**
- * //*GET Pubmed by Names
+ * //*GET PubMed by Names
  */
-const fetchPubMedByNames = async (pubmedNames: string) => {
-  const endpoints = pubmedNames?.split(",").map((name) => {
+const fetchPubMedByNames = async (pubMedNames: string) => {
+  const endpoints = pubMedNames?.split(",").map((name) => {
     const updatedName = name.replace(" ", "%20").trim();
     return `${BASE_PUBMED_API_URL}${SEARCH_PUBMED_NAMES_PREFIX}${updatedName}${SEARCH_PUBMED_NAMES_SUFFIX}`;
   });
 
-  return Promise.all<GetPubmedByNames.ApiResponse>(
+  return Promise.all<GetPubMedByNames.ApiResponse>(
     endpoints.map((endpoint) => axios.get(endpoint))
   )
     .then((responses) => {
@@ -38,12 +38,12 @@ const fetchPubMedByNames = async (pubmedNames: string) => {
 };
 
 export const useFetchPubMedByNames = (
-  pubmedNames: string,
+  pubMedNames: string,
   enabled: boolean = false
 ) => {
   return useQuery(
-    [PUBMED_NAMES_API_KEY, pubmedNames],
-    () => fetchPubMedByNames(pubmedNames),
+    [PUBMED_NAMES_API_KEY, pubMedNames],
+    () => fetchPubMedByNames(pubMedNames),
     {
       enabled,
     }
@@ -51,22 +51,22 @@ export const useFetchPubMedByNames = (
 };
 
 /**
- * //*GET Pubmed by Ids
+ * //*GET PubMed by Ids
  */
-const fetchPubMedByIds = async (pubmedIdsStr: string) => {
+const fetchPubMedByIds = async (pubMedIdsStr: string) => {
   return axios
     .get(
-      `${BASE_PUBMED_API_URL}${SEARCH_PUBMED_IDS_PREFIX}${pubmedIdsStr}${SEARCH_PUBMED_IDS_SUFFIX}`
+      `${BASE_PUBMED_API_URL}${SEARCH_PUBMED_IDS_PREFIX}${pubMedIdsStr}${SEARCH_PUBMED_IDS_SUFFIX}`
     )
     .then((response) => {
       const results = response?.data?.result;
-      const publications: GetPubmedByIds.Publication[] = [];
+      const publications: GetPubMedByIds.Publication[] = [];
       Object.keys(results).forEach((key: string, _index) => {
         if (key === "uids") return;
-        const result: GetPubmedByIds.Publication = results[key];
+        const result: GetPubMedByIds.Publication = results[key];
         publications.push(result);
       });
-      return publications.reverse() as GetPubmedByIds.Publication[];
+      return publications.reverse() as GetPubMedByIds.Publication[];
     })
     .catch((error) => {
       toast.error(error.response.statusText);
@@ -78,11 +78,11 @@ export const useFetchPubMedByIds = (
   pubMedIds: string[],
   enabled: boolean = false
 ) => {
-  const pubmedIdsStr = pubMedIds.join(",");
+  const pubMedIdsStr = pubMedIds.join(",");
 
   return useQuery(
-    [PUBMED_NAMES_API_KEY, pubmedIdsStr],
-    () => fetchPubMedByIds(pubmedIdsStr),
+    [PUBMED_NAMES_API_KEY, pubMedIdsStr],
+    () => fetchPubMedByIds(pubMedIdsStr),
     {
       enabled,
     }

@@ -18,7 +18,16 @@ const FormInput = ({
   isLoading,
   ...rest
 }: FormInputProps) => {
-  const { required } = rest;
+  const { type, required } = rest;
+
+  if (type === "checkbox") {
+    return (
+      <div className="flex space-x-2">
+        <input id={id} {...register(id)} {...rest} />
+        <label htmlFor={id}>{label}</label>
+      </div>
+    );
+  }
 
   return (
     <div className="relative flex flex-col w-full">

@@ -4,7 +4,7 @@ export declare module PostSession {
     type: string;
     name: string;
     email: string;
-    pubmedNames: any[];
+    pubMedNames: any[];
   }
 
   export interface ApiResponse {
