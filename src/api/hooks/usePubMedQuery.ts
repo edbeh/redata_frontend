@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useQuery } from "react-query";
 
-import { DEPARTMENTS_API_KEY, PUBMED_NAMES_API_KEY } from "../keys";
+import { PUBMED_NAMES_API_KEY } from "../keys";
 import {
   BASE_PUBMED_API_URL,
   SEARCH_PUBMED_IDS_PREFIX,
