@@ -15,7 +15,7 @@ import { GetPubMedByIds } from "api/models";
 import { IPubMedNamesFormFields, Hash } from "./PublicationsForm.model";
 import { pubMedNamesSchema } from "./PublicationsForm.schema";
 import { findMaxOccurrence } from "./PublicationsForm.util";
-import PublicationCard from "./components/PublicationCard/PublicationCard";
+import PublicationCard from "./PublicationCard/PublicationCard";
 
 interface PublicationsFormProps {
   onSuccessCallback?: () => void;
@@ -90,7 +90,8 @@ const PublicationsForm = React.forwardRef<
 
   useEffect(() => {
     if (fetchPubMedByNamesData) {
-      setPubMedIdsToSearch(fetchPubMedByNamesData);
+      setPubMedIdsToSearch(fetchPubMedByNamesData.ids);
+      setNamesToBold(fetchPubMedByNamesData.namesToBold);
     }
   }, [fetchPubMedByNamesData]);
 
@@ -103,20 +104,20 @@ const PublicationsForm = React.forwardRef<
       }
 
       // bold pubMed name with most occurrence
-      const hash: Hash = {};
-      fetchPubMedByIdsData.map((publication) => {
-        const authors = publication.authors;
-        return authors.map((author) => {
-          if (!hash[author.name]) {
-            return (hash[author.name] = 1);
-          } else {
-            return (hash[author.name] = hash[author.name] + 1);
-          }
-        });
-      });
+      // const hash: Hash = {};
+      // fetchPubMedByIdsData.map((publication) => {
+      //   const authors = publication.authors;
+      //   return authors.map((author) => {
+      //     if (!hash[author.name]) {
+      //       return (hash[author.name] = 1);
+      //     } else {
+      //       return (hash[author.name] = hash[author.name] + 1);
+      //     }
+      //   });
+      // });
 
-      const namesToBold = findMaxOccurrence(hash);
-      setNamesToBold(namesToBold);
+      // const namesToBold = findMaxOccurrence(hash);
+      // setNamesToBold(namesToBold);
     }
   }, [fetchPubMedByIdsData]);
 

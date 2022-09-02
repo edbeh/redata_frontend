@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef, useLayoutEffect, useMemo, useState } from "react";
+import { useRef, useLayoutEffect, useMemo, useState } from "react";
 import { BaseLayout } from "wrapper-components";
 import { useParams, useNavigate } from "react-router-dom";
 

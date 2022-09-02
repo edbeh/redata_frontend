@@ -21,5 +21,7 @@ const fetchMe = async () => {
 };
 
 export const useFetchMe = () => {
-  return useQuery([ME_API_KEY], fetchMe);
+  return useQuery([ME_API_KEY], fetchMe, {
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
 };

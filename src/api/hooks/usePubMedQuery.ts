@@ -26,13 +26,33 @@ const fetchPubMedByNames = async (pubMedNames: string) => {
   )
     .then((responses) => {
       const ids: string[] = [];
+      const namesToBold: string[] = [];
+
       responses?.map((response) => {
+        const translation =
+          response?.data?.esearchresult?.querytranslation.includes(
+            "[Full Author Name]"
+          )
+            ? response?.data?.esearchresult?.querytranslation.split(
+                "[Full Author Name]"
+              )[0]
+            : response?.data?.esearchresult?.querytranslation.split(
+                "[author]"
+              )[0];
+        const splitTranslation = translation.split(", ");
+        const pubmedName =
+          splitTranslation?.length > 1
+            ? `${splitTranslation[0]} ${splitTranslation[1][0]}`
+            : `${splitTranslation[0]}`;
+
+        namesToBold.push(pubmedName);
         return ids.push(...response?.data?.esearchresult?.idlist);
       });
-      return ids;
+
+      return { ids, namesToBold };
     })
     .catch((error) => {
-      toast.error(error.response.statusText);
+      // toast.error(error.response.statusText);
       throw error;
     });
 };
@@ -69,7 +89,7 @@ const fetchPubMedByIds = async (pubMedIdsStr: string) => {
       return publications.reverse() as GetPubMedByIds.Publication[];
     })
     .catch((error) => {
-      toast.error(error.response.statusText);
+      // toast.error(error.response.statusText);
       throw error;
     });
 };
