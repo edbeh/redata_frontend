@@ -28,6 +28,9 @@ export const useFetchDepartmentById = (
   return useQuery(
     [`${DEPARTMENTS_API_KEY}_${id}`],
     () => fetchDepartmentById(id),
-    { enabled }
+    {
+      enabled,
+      staleTime: 1000 * 60 * 10, // 10 minutes
+    }
   );
 };
