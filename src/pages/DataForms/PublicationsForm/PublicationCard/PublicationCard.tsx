@@ -19,7 +19,7 @@ const PublicationCard = ({
 }: PublicationCardProps) => {
   const nameComponent = (authorName: string, i: number): React.ReactNode => {
     const shouldBoldName = namesToBold.find((nameToBold) =>
-      authorName.includes(nameToBold)
+      authorName.toLowerCase().includes(nameToBold.toLowerCase())
     );
 
     if (shouldBoldName) {
