@@ -17,7 +17,7 @@ import { GetPubMedByIds, GetPubMedByNames } from "../models";
  */
 const fetchPubMedByNames = async (pubMedNames: string) => {
   const endpoints = pubMedNames?.split(",").map((name) => {
-    const updatedName = name.replace(" ", "%20").trim();
+    const updatedName = name.replace(" ", "%20").trim().concat("[author]");
     return `${BASE_PUBMED_API_URL}${SEARCH_PUBMED_NAMES_PREFIX}${updatedName}${SEARCH_PUBMED_NAMES_SUFFIX}`;
   });
 

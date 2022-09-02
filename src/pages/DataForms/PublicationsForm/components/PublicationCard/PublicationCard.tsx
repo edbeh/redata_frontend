@@ -29,13 +29,13 @@ const PublicationCard = ({
           {publication.authors?.map((author, i) => {
             if (namesToBold.includes(author.name)) {
               return (
-                <b>{`${author.name}${
+                <b key={author.name}>{`${author.name}${
                   i < publication.authors.length - 1 ? ", " : ""
                 }`}</b>
               );
             }
             return (
-              <span>{`${author.name}${
+              <span key={author.name}>{`${author.name}${
                 i < publication.authors.length - 1 ? ", " : ""
               }`}</span>
             );
