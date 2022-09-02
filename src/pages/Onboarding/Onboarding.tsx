@@ -163,7 +163,7 @@ const Onboarding = () => {
             )}
           </div>
 
-          <div className="flex self-end w-1/3 min-w-[275px] space-x-4">
+          <div className="flex self-center md:self-end w-1/3 min-w-[275px] space-x-4">
             <Button
               variant="secondary"
               onClick={handlePrevStep}
