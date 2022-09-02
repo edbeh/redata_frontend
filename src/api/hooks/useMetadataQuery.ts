@@ -1,6 +1,7 @@
-import axios from "axios";
 import { toast } from "react-toastify";
 import { useQuery } from "react-query";
+
+import { createAxiosInstance } from "api/utils/createAxiosInstance";
 
 import {
   METADATA_DESIGNATIONS_API_KEY,
@@ -12,18 +13,18 @@ import {
 } from "../endpoints";
 import { GetMetadataDesignations, GetMetadataInstitutions } from "../models";
 
+const QueryClient = createAxiosInstance();
+
 /**
  * //*GET Designations
  */
 const fetchMetadataDesignations = async () => {
-  return axios
-    .get<GetMetadataDesignations.ApiResponse>(
-      METADATA_DESIGNATIONS_API_ENDPOINT
-    )
-    .catch((error) => {
-      toast.error(error.response.statusText);
-      throw error;
-    });
+  return QueryClient.get<GetMetadataDesignations.ApiResponse>(
+    METADATA_DESIGNATIONS_API_ENDPOINT
+  ).catch((error) => {
+    toast.error(error.response.statusText);
+    throw error;
+  });
 };
 
 export const useFetchMetadataDesignations = () => {
@@ -36,14 +37,12 @@ export const useFetchMetadataDesignations = () => {
  *  //*GET Institutions
  */
 const fetchMetadataInstitutions = async () => {
-  return axios
-    .get<GetMetadataInstitutions.ApiResponse>(
-      METADATA_INSTITUTIONS_API_ENDPOINT
-    )
-    .catch((error) => {
-      toast.error(error.response.statusText);
-      throw error;
-    });
+  return QueryClient.get<GetMetadataInstitutions.ApiResponse>(
+    METADATA_INSTITUTIONS_API_ENDPOINT
+  ).catch((error) => {
+    toast.error(error.response.statusText);
+    throw error;
+  });
 };
 
 export const useFetchMetadataInstitutions = () => {

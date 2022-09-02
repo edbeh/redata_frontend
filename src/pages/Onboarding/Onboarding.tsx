@@ -75,7 +75,7 @@ const Onboarding = () => {
   // useEffect(() => {
   //   setTimeout(() => {
   //     setIsIntroModalVisible(true);
-  //   }, 500);
+  //   }, 250);
   // }, [currentStep]);
 
   // *JSX

@@ -1,23 +1,24 @@
-import axios from "axios";
 import { toast } from "react-toastify";
-import { useQuery, UseQueryOptions } from "react-query";
+import { useQuery } from "react-query";
+
+import { createAxiosInstance } from "api/utils/createAxiosInstance";
 
 import { DEPARTMENTS_API_KEY } from "../keys";
 import { DEPARTMENTS_API_ENDPOINT } from "../endpoints";
 import { GetDepartmentById } from "../models";
 
+const QueryClient = createAxiosInstance();
+
 /**
  * //*GET Me
  */
 const fetchDepartmentById = async (id: string) => {
-  return axios
-    .get<GetDepartmentById.ApiResponse>(
-      `${DEPARTMENTS_API_ENDPOINT}?institution_id=${id}`
-    )
-    .catch((error) => {
-      toast.error(error.response.statusText);
-      throw error;
-    });
+  return QueryClient.get<GetDepartmentById.ApiResponse>(
+    `${DEPARTMENTS_API_ENDPOINT}?institution_id=${id}`
+  ).catch((error) => {
+    toast.error(error.response.statusText);
+    throw error;
+  });
 };
 
 export const useFetchDepartmentById = (

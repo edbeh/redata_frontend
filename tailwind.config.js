@@ -8,24 +8,13 @@ module.exports = {
       xl: "1280px",
       "2xl": "1536px",
     },
-    // fontSize: {
-    //   xs: ".75rem",
-    //   sm: ".80rem",
-    //   tiny: ".85rem",
-    //   base: ".90rem",
-    //   lg: "1.00rem",
-    //   xl: "1.125rem",
-    //   "2xl": "1.35rem",
-    //   "3xl": "1.70rem",
-    //   "4xl": "2.00rem",
-    //   "5xl": "2.70rem",
-    //   "6xl": "3.60rem",
-    //   "7xl": "4.50rem",
-    // },
     extend: {
+      boxShadow: {
+        "3xl": "0px 5px 14px rgb(0 0 0 / 5%)",
+      },
       colors: {
         primary: {
-          100: "#6da6f2",
+          100: "#e8f2ff",
           200: "#5999f1",
           300: "#448def",
           400: "#2f80ed",

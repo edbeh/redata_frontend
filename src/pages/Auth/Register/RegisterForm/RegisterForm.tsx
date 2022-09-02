@@ -84,8 +84,6 @@ const RegisterForm = () => {
     }
   }, [submitUserError]);
 
-  console.log("watch()", watch());
-
   // *JSX
   return (
     <div className="flex items-center justify-center flex-1 overflow-auto">
