@@ -35,7 +35,7 @@ const PatientPopulationsForm = React.forwardRef<
     remove: removePatientPopulation,
   } = useFieldArray({
     control,
-    name: "patient_populations",
+    name: "patientPopulations",
   });
 
   // *Methods
@@ -50,7 +50,7 @@ const PatientPopulationsForm = React.forwardRef<
     // min of 1 research interest required
     if (patientPopulationFields?.length === 0) {
       appendPatientPopulation({
-        patient_population: "",
+        patientPopulation: "",
       });
     }
   }, [patientPopulationFields]);
@@ -68,8 +68,8 @@ const PatientPopulationsForm = React.forwardRef<
           return (
             <div
               className={`flex mb-4 space-x-4 ${
-                formErrors?.patient_populations &&
-                formErrors?.patient_populations[i]?.patient_population?.message
+                formErrors?.patientPopulations &&
+                formErrors?.patientPopulations[i]?.patientPopulation?.message
                   ? "items-center"
                   : "items-end"
               }`}
@@ -79,12 +79,11 @@ const PatientPopulationsForm = React.forwardRef<
                 label={`Patient Population (${i + 1})`}
                 key={field.id}
                 register={register}
-                id={`patient_populations[${i}].patient_population`}
-                name={`patient_populations[${i}].patient_population`}
+                id={`patientPopulations[${i}].patientPopulation`}
+                name={`patientPopulations[${i}].patientPopulation`}
                 error={
-                  formErrors?.patient_populations &&
-                  formErrors?.patient_populations[i]?.patient_population
-                    ?.message
+                  formErrors?.patientPopulations &&
+                  formErrors?.patientPopulations[i]?.patientPopulation?.message
                 }
                 autoComplete="off"
                 required
@@ -93,9 +92,8 @@ const PatientPopulationsForm = React.forwardRef<
                 onClick={() => removePatientPopulation(i)}
                 disabled={i < 1}
                 className={`font-semibold rounded-lg text-primary-500 hover:text-primary-200 disabled:cursor-not-allowed disabled:text-disabled ${
-                  formErrors?.patient_populations &&
-                  formErrors?.patient_populations[i]?.patient_population
-                    ?.message
+                  formErrors?.patientPopulations &&
+                  formErrors?.patientPopulations[i]?.patientPopulation?.message
                     ? "mb-1"
                     : "mb-4"
                 }`}
@@ -109,7 +107,7 @@ const PatientPopulationsForm = React.forwardRef<
         <div
           onClick={() =>
             appendPatientPopulation({
-              patient_population: "",
+              patientPopulation: "",
             })
           }
           className="flex items-center mt-2 cursor-pointer"

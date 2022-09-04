@@ -14,11 +14,11 @@ export const cleanUpData = (data: IBasicInfoFormFields) => {
     designationId: data.designation.id,
     name: data.name,
     departmentId: data.department.id,
-    mcrNo: data.mcr_no,
-    primarySpecialty: data.primary_subspecialty.id,
-    primarySpecialtyOthers: data.primary_subspecialty_others,
-    secondarySpecialty: data.secondary_subspecialty.id,
-    secondarySpecialtyOthers: data.secondary_subspecialty_others,
+    mcrNo: data.mcrNo,
+    primarySpecialty: data.primarySubspecialty.id,
+    primarySpecialtyOthers: data.primarySubspecialtyOthers,
+    secondarySpecialty: data.secondarySubspecialty.id,
+    secondarySpecialtyOthers: data.secondarySubspecialtyOthers,
     bio: data.bio,
   };
 };

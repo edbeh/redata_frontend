@@ -4,10 +4,10 @@ export interface IBasicInfoFormFields {
   designation: FormSelectModel;
   name: string;
   department: FormSelectModel;
-  primary_subspecialty: FormSelectModel;
-  primary_subspecialty_others: string;
-  secondary_subspecialty: FormSelectModel;
-  secondary_subspecialty_others: string;
-  mcr_no: string;
+  primarySubspecialty: FormSelectModel;
+  primarySubspecialtyOthers: string;
+  secondarySubspecialty: FormSelectModel;
+  secondarySubspecialtyOthers: string;
+  mcrNo: string;
   bio: string;
 }

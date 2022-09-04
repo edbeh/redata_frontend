@@ -1,4 +1,4 @@
 export interface IPubMedNamesFormFields {
-  pubmed_names: string;
-  select_all: boolean;
+  pubMedNames: string;
+  selectAll: boolean;
 }

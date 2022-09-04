@@ -52,8 +52,8 @@ const PublicationsForm = React.forwardRef<
     mode: "onChange",
   });
 
-  const pubMedNames = watchPubMedNames("pubmed_names");
-  const selectAll = watchPubMedNames("select_all");
+  const pubMedNames = watchPubMedNames("pubMedNames");
+  const selectAll = watchPubMedNames("selectAll");
 
   // *Queries
   const fetchPubMedByNamesQuery: any = queryClient.getQueryData([
@@ -75,7 +75,7 @@ const PublicationsForm = React.forwardRef<
 
   // *Methods
   const handleSubmitFormPubMedNames = async (data: IPubMedNamesFormFields) => {
-    setPubMedNamesToSearch(data.pubmed_names);
+    setPubMedNamesToSearch(data.pubMedNames);
   };
 
   const handleUpdateSelectedPubMedIds = (id: string) => {
@@ -112,7 +112,7 @@ const PublicationsForm = React.forwardRef<
   useEffect(() => {
     if (fetchMeData) {
       const pubMedNames = fetchMeData.data?.data?.pubMedNames?.join(", ");
-      setValuePubMedNames("pubmed_names", pubMedNames);
+      setValuePubMedNames("pubMedNames", pubMedNames);
     }
   }, [fetchMeData]);
 
@@ -176,8 +176,8 @@ const PublicationsForm = React.forwardRef<
                   register={registerPubMedNames}
                   type="checkbox"
                   label="Select all"
-                  name="select_all"
-                  id="select_all"
+                  name="selectAll"
+                  id="selectAll"
                 />
               </div>
 
@@ -210,10 +210,10 @@ const PublicationsForm = React.forwardRef<
             label="PubMed Names or Aliases"
             placeholder="Doe John, Doe J"
             helper="Please separate your pubMed names with comma"
-            name="pubmed_names"
-            id="pubmed_names"
+            name="pubMedNames"
+            id="pubMedNames"
             autoComplete="off"
-            error={pubMedNamesErrors.pubmed_names?.message}
+            error={pubMedNamesErrors.pubMedNames?.message}
           />
 
           <div>

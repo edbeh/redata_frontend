@@ -1,7 +1,7 @@
 type PatientPopulation = {
-  patient_population: string;
+  patientPopulation: string;
 };
 
 export interface IPatientPopulationsFormFields {
-  patient_populations: PatientPopulation[];
+  patientPopulations: PatientPopulation[];
 }

@@ -44,8 +44,8 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       mode: "onChange",
     });
 
-    const primarySubspecialty = watch("primary_subspecialty");
-    const secondarySubspecialty = watch("secondary_subspecialty");
+    const primarySubspecialty = watch("primarySubspecialty");
+    const secondarySubspecialty = watch("secondarySubspecialty");
 
     // *Queries
     const { data: fetchMeData, isLoading: fetchMeIsLoading } = useFetchMe();
@@ -125,10 +125,10 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
             <FormInput
               label="MCR Number"
               register={register}
-              id="mcr_no"
-              name="mcr_no"
-              required={getYupIsRequired(schema, "mcr_no")}
-              error={formErrors?.mcr_no?.message}
+              id="mcrNo"
+              name="mcrNo"
+              required={getYupIsRequired(schema, "mcrNo")}
+              error={formErrors?.mcrNo?.message}
             />
           </div>
 
@@ -138,23 +138,23 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                 label="Primary Subspecialty"
                 control={control}
                 options={subSpecialties}
-                id="primary_subspecialty"
-                name="primary_subspecialty"
-                required={getYupIsRequired(schema, "primary_subspecialty")}
-                error={formErrors?.primary_subspecialty?.message}
+                id="primarySubspecialty"
+                name="primarySubspecialty"
+                required={getYupIsRequired(schema, "primarySubspecialty")}
+                error={formErrors?.primarySubspecialty?.message}
               />
 
               {primarySubspecialty?.name === "Others" && (
                 <FormInput
                   label="Primary Subspecialty (Others)"
                   register={register}
-                  id="primary_subspecialty_others"
-                  name="primary_subspecialty_others"
+                  id="primarySubspecialtyOthers"
+                  name="primarySubspecialtyOthers"
                   required={getYupIsRequired(
                     schema,
-                    "primary_subspecialty_others"
+                    "primarySubspecialtyOthers"
                   )}
-                  error={formErrors?.primary_subspecialty_others?.message}
+                  error={formErrors?.primarySubspecialtyOthers?.message}
                 />
               )}
             </div>
@@ -164,22 +164,22 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                 label="Secondary Subspecialty"
                 control={control}
                 options={subSpecialties}
-                id="secondary_subspecialty"
-                name="secondary_subspecialty"
-                required={getYupIsRequired(schema, "secondary_subspecialty")}
-                error={formErrors?.secondary_subspecialty?.message}
+                id="secondarySubspecialty"
+                name="secondarySubspecialty"
+                required={getYupIsRequired(schema, "secondarySubspecialty")}
+                error={formErrors?.secondarySubspecialty?.message}
               />
               {secondarySubspecialty?.name === "Others" && (
                 <FormInput
                   label="Secondary Subspecialty (Others)"
                   register={register}
-                  id="secondary_subspecialty_others"
-                  name="secondary_subspecialty_others"
+                  id="secondarySubspecialtyOthers"
+                  name="secondarySubspecialtyOthers"
                   required={getYupIsRequired(
                     schema,
-                    "secondary_subspecialty_others"
+                    "secondarySubspecialtyOthers"
                   )}
-                  error={formErrors?.secondary_subspecialty_others?.message}
+                  error={formErrors?.secondarySubspecialtyOthers?.message}
                 />
               )}
             </div>

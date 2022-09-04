@@ -35,7 +35,7 @@ const ResearchInterestsForm = React.forwardRef<
     remove: removeResearchInterest,
   } = useFieldArray({
     control,
-    name: "research_interests",
+    name: "researchInterests",
   });
 
   // *Methods
@@ -50,7 +50,7 @@ const ResearchInterestsForm = React.forwardRef<
     // min of 1 research interest required
     if (researchInterestFields?.length === 0) {
       appendResearchInterest({
-        research_interest: "",
+        researchInterest: "",
       });
     }
   }, [researchInterestFields]);
@@ -68,8 +68,8 @@ const ResearchInterestsForm = React.forwardRef<
           return (
             <div
               className={`flex mb-4 space-x-4 ${
-                formErrors?.research_interests &&
-                formErrors?.research_interests[i]?.research_interest?.message
+                formErrors?.researchInterests &&
+                formErrors?.researchInterests[i]?.researchInterest?.message
                   ? "items-center"
                   : "items-end"
               }`}
@@ -79,11 +79,11 @@ const ResearchInterestsForm = React.forwardRef<
                 label={`Research Interest (${i + 1})`}
                 key={field.id}
                 register={register}
-                id={`research_interests[${i}].research_interest`}
-                name={`research_interests[${i}].research_interest`}
+                id={`researchInterests[${i}].researchInterest`}
+                name={`researchInterests[${i}].researchInterest`}
                 error={
-                  formErrors?.research_interests &&
-                  formErrors?.research_interests[i]?.research_interest?.message
+                  formErrors?.researchInterests &&
+                  formErrors?.researchInterests[i]?.researchInterest?.message
                 }
                 autoComplete="off"
                 required
@@ -92,8 +92,8 @@ const ResearchInterestsForm = React.forwardRef<
                 onClick={() => removeResearchInterest(i)}
                 disabled={i < 1}
                 className={`font-semibold rounded-lg text-primary-500 hover:text-primary-200 disabled:cursor-not-allowed disabled:text-disabled ${
-                  formErrors?.research_interests &&
-                  formErrors?.research_interests[i]?.research_interest?.message
+                  formErrors?.researchInterests &&
+                  formErrors?.researchInterests[i]?.researchInterest?.message
                     ? "mb-1"
                     : "mb-4"
                 }`}
@@ -106,7 +106,7 @@ const ResearchInterestsForm = React.forwardRef<
         <div
           onClick={() =>
             appendResearchInterest({
-              research_interest: "",
+              researchInterest: "",
             })
           }
           className="flex items-center mt-2 cursor-pointer"
