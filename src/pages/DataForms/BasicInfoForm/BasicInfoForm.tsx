@@ -18,7 +18,7 @@ import {
 
 import { IBasicInfoFormFields } from "./BasicInfoForm.model";
 import { schema } from "./BasicInfoForm.schema";
-import { subSpecialties } from "./BasicInfoForm.util";
+import { cleanUpData, subSpecialties } from "./BasicInfoForm.util";
 
 interface BasicInfoFormProps {
   /** callback if api call is successful */
@@ -63,7 +63,8 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
     // *Methods
     const handleSubmitForm = async (data: IBasicInfoFormFields) => {
-      console.log(data);
+      const cleanData = cleanUpData(data);
+      console.log(cleanData);
       if (onSuccessCallback) onSuccessCallback();
     };
 

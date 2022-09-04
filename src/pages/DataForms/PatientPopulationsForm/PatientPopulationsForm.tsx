@@ -8,6 +8,7 @@ import { ImgPlusCircleOutline } from "assets";
 
 import { schema } from "./PatientPopulationsForm.schema";
 import { IPatientPopulationsFormFields } from "./PatientPopulationsForm.model";
+import { cleanUpData } from "./PatientPopulationsForm.util";
 
 interface PatientPopulationsFormProps {
   onSuccessCallback?: () => void;
@@ -39,7 +40,8 @@ const PatientPopulationsForm = React.forwardRef<
 
   // *Methods
   const handleSubmitForm = async (data: IPatientPopulationsFormFields) => {
-    console.log(data);
+    const cleanData = cleanUpData(data);
+    console.log(cleanData);
     if (onSuccessCallback) onSuccessCallback();
   };
 

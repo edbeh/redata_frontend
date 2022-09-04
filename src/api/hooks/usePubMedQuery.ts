@@ -1,5 +1,4 @@
 import axios from "axios";
-import { toast } from "react-toastify";
 import { useQuery } from "react-query";
 
 import { PUBMED_NAMES_API_KEY } from "../keys";
@@ -66,6 +65,8 @@ export const useFetchPubMedByNames = (
     () => fetchPubMedByNames(pubMedNames),
     {
       enabled,
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      keepPreviousData: true,
     }
   );
 };
@@ -105,6 +106,8 @@ export const useFetchPubMedByIds = (
     () => fetchPubMedByIds(pubMedIdsStr),
     {
       enabled,
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      keepPreviousData: true,
     }
   );
 };

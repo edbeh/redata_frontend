@@ -1,7 +1,7 @@
 import { FormSelectModel } from "models";
 
 export interface IBasicInfoFormFields {
-  designation: string;
+  designation: FormSelectModel;
   name: string;
   department: FormSelectModel;
   primary_subspecialty: FormSelectModel;

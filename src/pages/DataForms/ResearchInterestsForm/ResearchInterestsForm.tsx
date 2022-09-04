@@ -8,6 +8,7 @@ import { ImgPlusCircleOutline } from "assets";
 
 import { schema } from "./ResearchInterestsForm.schema";
 import { IResearchInterestsFormFields } from "./ResearchInterestsForm.model";
+import { cleanUpData } from "./ResearchInterestsForm.util";
 
 interface ResearchInterestsFormProps {
   onSuccessCallback?: () => void;
@@ -39,7 +40,8 @@ const ResearchInterestsForm = React.forwardRef<
 
   // *Methods
   const handleSubmitForm = async (data: IResearchInterestsFormFields) => {
-    console.log(data);
+    const cleanData = cleanUpData(data);
+    console.log(cleanData);
     if (onSuccessCallback) onSuccessCallback();
   };
 

@@ -1,5 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import { useQueryClient } from "react-query";
+import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -11,10 +13,10 @@ import {
   useFetchPubMedByNames,
 } from "api/hooks";
 import { GetPubMedByIds } from "api/models";
+import { PUBMED_NAMES_API_KEY } from "api/keys";
 
-import { IPubMedNamesFormFields, Hash } from "./PublicationsForm.model";
+import { IPubMedNamesFormFields } from "./PublicationsForm.model";
 import { pubMedNamesSchema } from "./PublicationsForm.schema";
-import { findMaxOccurrence } from "./PublicationsForm.util";
 import PublicationCard from "./PublicationCard/PublicationCard";
 
 interface PublicationsFormProps {
@@ -25,6 +27,8 @@ const PublicationsForm = React.forwardRef<
   HTMLButtonElement,
   PublicationsFormProps
 >(({ onSuccessCallback }, ref) => {
+  const queryClient = useQueryClient();
+
   const [pubMedNamesToSearch, setPubMedNamesToSearch] = useState<string>("");
   const [pubMedIdsToSearch, setPubMedIdsToSearch] = useState<string[]>([]);
   const [namesToBold, setNamesToBold] = useState<string[]>([]);
@@ -42,19 +46,28 @@ const PublicationsForm = React.forwardRef<
     handleSubmit: handleSubmitPubMedNames,
     setValue: setValuePubMedNames,
     watch: watchPubMedNames,
+    formState: { errors: pubMedNamesErrors, isValid: pubmedNamesIsValid },
   } = useForm<IPubMedNamesFormFields>({
     resolver: yupResolver(pubMedNamesSchema),
     mode: "onChange",
   });
 
-  const pubMedNames = watchPubMedNames("pubMed_names");
+  const pubMedNames = watchPubMedNames("pubmed_names");
+  const selectAll = watchPubMedNames("select_all");
 
   // *Queries
+  const fetchPubMedByNamesQuery: any = queryClient.getQueryData([
+    PUBMED_NAMES_API_KEY,
+    pubMedNamesToSearch,
+  ]);
+  console.log("fetchPubMedByNamesQuery", fetchPubMedByNamesQuery);
+
   const { data: fetchMeData, isLoading: fetchMeIsLoading } = useFetchMe();
 
   const {
     data: fetchPubMedByNamesData,
     isLoading: fetchPubMedByNamesIsLoading,
+    isFetching: fetchPubMedByNamesIsFetching,
   } = useFetchPubMedByNames(pubMedNamesToSearch, !!pubMedNamesToSearch);
 
   const { data: fetchPubMedByIdsData, isLoading: fetchPubMedByIdsIsLoading } =
@@ -62,7 +75,7 @@ const PublicationsForm = React.forwardRef<
 
   // *Methods
   const handleSubmitFormPubMedNames = async (data: IPubMedNamesFormFields) => {
-    setPubMedNamesToSearch(data.pubMed_names);
+    setPubMedNamesToSearch(data.pubmed_names);
   };
 
   const handleUpdateSelectedPubMedIds = (id: string) => {
@@ -72,24 +85,46 @@ const PublicationsForm = React.forwardRef<
     return setSelectedPubMedIds(updatedIds);
   };
 
+  const handleSelectAllPubMedIds = () => {
+    if (selectAll) {
+      const ids = publicationsFromPubMed.map((publication) => {
+        return publication.uid;
+      });
+      setSelectedPubMedIds(ids);
+    } else {
+      setSelectedPubMedIds([]);
+    }
+  };
+
   const handleSubmitSelectedPubMedIds = () => {
     const payload = {
       source: "pubmed",
-      pubmed_ids: selectedPubMedIds,
+      pubmedIds: selectedPubMedIds,
     };
     console.log(payload);
   };
 
   // *Effects
   useEffect(() => {
+    handleSelectAllPubMedIds();
+  }, [selectAll]);
+
+  useEffect(() => {
     if (fetchMeData) {
       const pubMedNames = fetchMeData.data?.data?.pubMedNames?.join(", ");
-      setValuePubMedNames("pubMed_names", pubMedNames);
+      setValuePubMedNames("pubmed_names", pubMedNames);
     }
   }, [fetchMeData]);
 
   useEffect(() => {
     if (fetchPubMedByNamesData) {
+      if (fetchPubMedByNamesData.ids?.length === 0) {
+        toast.error(
+          `There are no publications associated with this name in PubMed.`
+        );
+        return;
+      }
+
       setPubMedIdsToSearch(fetchPubMedByNamesData.ids);
       setNamesToBold(fetchPubMedByNamesData.namesToBold);
     }
@@ -102,22 +137,6 @@ const PublicationsForm = React.forwardRef<
       if (fetchPubMedByIdsData.length > 0) {
         setIsPublicationsModalVisible(true);
       }
-
-      // bold pubMed name with most occurrence
-      // const hash: Hash = {};
-      // fetchPubMedByIdsData.map((publication) => {
-      //   const authors = publication.authors;
-      //   return authors.map((author) => {
-      //     if (!hash[author.name]) {
-      //       return (hash[author.name] = 1);
-      //     } else {
-      //       return (hash[author.name] = hash[author.name] + 1);
-      //     }
-      //   });
-      // });
-
-      // const namesToBold = findMaxOccurrence(hash);
-      // setNamesToBold(namesToBold);
     }
   }, [fetchPubMedByIdsData]);
 
@@ -126,7 +145,8 @@ const PublicationsForm = React.forwardRef<
     <div className="flex flex-col">
       {(fetchMeIsLoading ||
         fetchPubMedByIdsIsLoading ||
-        fetchPubMedByNamesIsLoading) && <FullScreenLoader />}
+        fetchPubMedByNamesIsLoading ||
+        fetchPubMedByNamesIsFetching) && <FullScreenLoader />}
 
       <Modal
         title="Add Publications"
@@ -167,7 +187,11 @@ const PublicationsForm = React.forwardRef<
             </div>
           </div>
         }
-        isVisible={isPublicationsModalVisible}
+        isVisible={
+          isPublicationsModalVisible &&
+          !fetchPubMedByIdsIsLoading &&
+          !fetchPubMedByNamesIsLoading
+        }
         onDismiss={() => {
           setIsPublicationsModalVisible(false);
         }}
@@ -184,18 +208,18 @@ const PublicationsForm = React.forwardRef<
           <FormInput
             register={registerPubMedNames}
             label="PubMed Names or Aliases"
-            placeholder="Kim S, Kim SA"
+            placeholder="Doe John, Doe J"
             helper="Please separate your pubMed names with comma"
-            name="pubMed_names"
-            id="pubMed_names"
+            name="pubmed_names"
+            id="pubmed_names"
             autoComplete="off"
+            error={pubMedNamesErrors.pubmed_names?.message}
           />
 
           <div>
             <Button
               variant="secondary"
-              onClick={() => {}}
-              disabled={pubMedNames === ""}
+              disabled={pubMedNames === "" || !pubmedNamesIsValid}
             >
               Search PubMed
             </Button>

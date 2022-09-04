@@ -1,6 +1,7 @@
 export const validationMessages = {
   require: {
     confirmPassword: "Confirm password is required",
+    pubmedName: "PubMed name is required",
     department: "Department is required",
     designation: "Designation is required",
     email: "Email is required",
@@ -15,5 +16,6 @@ export const validationMessages = {
     email: "Please enter a valid email",
     max50: "Please keep this field below 50 characters",
     max150: "Please keep this field below 150 characters",
+    pubmedName: "Please enter at least 1 first and last name",
   },
 };
