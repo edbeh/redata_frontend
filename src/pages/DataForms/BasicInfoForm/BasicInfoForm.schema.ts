@@ -56,7 +56,6 @@ export const schema = yup.object({
       "duplicate-subspecialty",
       validationMessages.validate.duplicateSubSpecialty,
       function (value) {
-        console.log("value", value);
         return this.parent.primarySubspecialtyOthers !== value;
       }
     ),

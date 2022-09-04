@@ -8,7 +8,10 @@ import { ImgPlusCircleOutline } from "assets";
 
 import { schema } from "./PatientPopulationsForm.schema";
 import { IPatientPopulationsFormFields } from "./PatientPopulationsForm.model";
-import { cleanUpData } from "./PatientPopulationsForm.util";
+import {
+  cleanUpData,
+  validateDuplicateValues,
+} from "./PatientPopulationsForm.util";
 
 interface PatientPopulationsFormProps {
   onSuccessCallback?: () => void;
@@ -23,6 +26,8 @@ const PatientPopulationsForm = React.forwardRef<
     register,
     control,
     formState: { errors: formErrors },
+    setError,
+    clearErrors,
     handleSubmit,
   } = useForm<IPatientPopulationsFormFields>({
     resolver: yupResolver(schema),
@@ -40,7 +45,12 @@ const PatientPopulationsForm = React.forwardRef<
 
   // *Methods
   const handleSubmitForm = async (data: IPatientPopulationsFormFields) => {
+    clearErrors();
+    const { hasErrors } = validateDuplicateValues(data, setError);
+    if (hasErrors) return;
+
     const cleanData = cleanUpData(data);
+
     console.log(cleanData);
     if (onSuccessCallback) onSuccessCallback();
   };

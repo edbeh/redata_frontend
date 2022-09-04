@@ -8,7 +8,10 @@ import { ImgPlusCircleOutline } from "assets";
 
 import { schema } from "./ResearchInterestsForm.schema";
 import { IResearchInterestsFormFields } from "./ResearchInterestsForm.model";
-import { cleanUpData } from "./ResearchInterestsForm.util";
+import {
+  cleanUpData,
+  validateDuplicateValues,
+} from "./ResearchInterestsForm.util";
 
 interface ResearchInterestsFormProps {
   onSuccessCallback?: () => void;
@@ -23,6 +26,8 @@ const ResearchInterestsForm = React.forwardRef<
     register,
     control,
     formState: { errors: formErrors },
+    setError,
+    clearErrors,
     handleSubmit,
   } = useForm<IResearchInterestsFormFields>({
     resolver: yupResolver(schema),
@@ -40,8 +45,13 @@ const ResearchInterestsForm = React.forwardRef<
 
   // *Methods
   const handleSubmitForm = async (data: IResearchInterestsFormFields) => {
+    clearErrors();
+    const { hasErrors } = validateDuplicateValues(data, setError);
+    if (hasErrors) return;
+
     const cleanData = cleanUpData(data);
     console.log(cleanData);
+
     if (onSuccessCallback) onSuccessCallback();
   };
 
@@ -79,8 +89,8 @@ const ResearchInterestsForm = React.forwardRef<
                 label={`Research Interest (${i + 1})`}
                 key={field.id}
                 register={register}
-                id={`researchInterests[${i}].researchInterest`}
-                name={`researchInterests[${i}].researchInterest`}
+                id={`researchInterests.${i}.researchInterest`}
+                name={`researchInterests.${i}.researchInterest`}
                 error={
                   formErrors?.researchInterests &&
                   formErrors?.researchInterests[i]?.researchInterest?.message

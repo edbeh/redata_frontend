@@ -60,7 +60,6 @@ const PublicationsForm = React.forwardRef<
     PUBMED_NAMES_API_KEY,
     pubMedNamesToSearch,
   ]);
-  console.log("fetchPubMedByNamesQuery", fetchPubMedByNamesQuery);
 
   const { data: fetchMeData, isLoading: fetchMeIsLoading } = useFetchMe();
 

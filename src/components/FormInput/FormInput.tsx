@@ -1,6 +1,7 @@
 import PulseLoader from "react-spinners/PulseLoader";
 
 interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  key?: string;
   register: any;
   error?: string;
   label?: string;
