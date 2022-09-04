@@ -17,5 +17,6 @@ export const validationMessages = {
     max50: "Please keep this field below 50 characters",
     max150: "Please keep this field below 150 characters",
     pubmedName: "Please enter at least 1 first and last name",
+    duplicateSubSpecialty: "Please enter different sub-specialties",
   },
 };
