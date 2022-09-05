@@ -5,3 +5,4 @@ export { default as BasicInfoForm } from "./DataForms/BasicInfoForm/BasicInfoFor
 export { default as ResearchInterestsForm } from "./DataForms/ResearchInterestsForm/ResearchInterestsForm";
 export { default as PatientPopulationsForm } from "./DataForms/PatientPopulationsForm/PatientPopulationsForm";
 export { default as PublicationsForm } from "./DataForms/PublicationsForm/PublicationsForm";
+export { default as Home } from "./Dashboard/Home/Home";

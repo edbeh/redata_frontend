@@ -80,7 +80,7 @@ const Onboarding = () => {
 
   // *JSX
   return (
-    <BaseLayout withTopPadding>
+    <BaseLayout>
       <Modal
         title="Welcome to ReData!"
         content={

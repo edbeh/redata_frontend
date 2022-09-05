@@ -1,12 +1,30 @@
 import { ReactComponent as ImgXMarkOutline } from "./x-mark-outline.svg";
 import { ReactComponent as ImgPlusCircleOutline } from "./plus-circle-outline.svg";
+import { ReactComponent as ImgHomeOutline } from "./home-outline.svg";
+import { ReactComponent as ImgDocumentOutline } from "./document-outline.svg";
+import { ReactComponent as ImgSearchOutline } from "./search-outline.svg";
+import { ReactComponent as ImgSettingsOutline } from "./settings-outline.svg";
+import { ReactComponent as ImgPencilSquareOutline } from "./pencil-square-outline.svg";
+import { ReactComponent as ImgUserCircleOutline } from "./user-circle-outline.svg";
+import { ReactComponent as ImgUserPlusOutline } from "./user-plus-outline.svg";
 
 import imgScientistMicroscope from "./scientist-microscope.jpg";
 import imgNotFound from "./not-found.jpg";
+import imgProfileBackground from "./profile-background.webp";
+import imgJohnDoe from "./john-doe.jpeg";
 
 export {
   ImgXMarkOutline,
   ImgPlusCircleOutline,
   imgScientistMicroscope,
   imgNotFound,
+  ImgHomeOutline,
+  ImgDocumentOutline,
+  ImgSearchOutline,
+  ImgSettingsOutline,
+  ImgPencilSquareOutline,
+  ImgUserCircleOutline,
+  ImgUserPlusOutline,
+  imgProfileBackground,
+  imgJohnDoe,
 };
