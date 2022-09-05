@@ -10,7 +10,7 @@ const AxiosErrorInterceptor: React.FC<AxiosErrorInterceptorProps> = ({
 }) => {
   return (
     <>
-      <ToastContainer theme="colored" position="top-center" />
+      <ToastContainer theme="colored" position="bottom-right" />
       {children}
     </>
   );

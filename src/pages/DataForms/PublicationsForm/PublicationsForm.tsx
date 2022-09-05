@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -13,7 +12,6 @@ import {
   useFetchPubMedByNames,
 } from "api/hooks";
 import { GetPubMedByIds } from "api/models";
-import { PUBMED_NAMES_API_KEY } from "api/keys";
 
 import { IPubMedNamesFormFields } from "./PublicationsForm.model";
 import { pubMedNamesSchema } from "./PublicationsForm.schema";
@@ -27,8 +25,6 @@ const PublicationsForm = React.forwardRef<
   HTMLButtonElement,
   PublicationsFormProps
 >(({ onSuccessCallback }, ref) => {
-  const queryClient = useQueryClient();
-
   const [pubMedNamesToSearch, setPubMedNamesToSearch] = useState<string>("");
   const [pubMedIdsToSearch, setPubMedIdsToSearch] = useState<string[]>([]);
   const [namesToBold, setNamesToBold] = useState<string[]>([]);
@@ -39,6 +35,7 @@ const PublicationsForm = React.forwardRef<
   const [isPublicationsModalVisible, setIsPublicationsModalVisible] =
     useState<boolean>(false);
   const [selectedPubMedIds, setSelectedPubMedIds] = useState<string[]>([]);
+  const [refresh, setRefresh] = useState<boolean>(false);
 
   // *Form
   const {
@@ -56,11 +53,6 @@ const PublicationsForm = React.forwardRef<
   const selectAll = watchPubMedNames("selectAll");
 
   // *Queries
-  const fetchPubMedByNamesQuery: any = queryClient.getQueryData([
-    PUBMED_NAMES_API_KEY,
-    pubMedNamesToSearch,
-  ]);
-
   const { data: fetchMeData, isLoading: fetchMeIsLoading } = useFetchMe();
 
   const {
@@ -69,11 +61,15 @@ const PublicationsForm = React.forwardRef<
     isFetching: fetchPubMedByNamesIsFetching,
   } = useFetchPubMedByNames(pubMedNamesToSearch, !!pubMedNamesToSearch);
 
-  const { data: fetchPubMedByIdsData, isLoading: fetchPubMedByIdsIsLoading } =
-    useFetchPubMedByIds(pubMedIdsToSearch, pubMedIdsToSearch.length > 0);
+  const {
+    data: fetchPubMedByIdsData,
+    isLoading: fetchPubMedByIdsIsLoading,
+    isFetching: fetchPubMedByIdsIsFetching,
+  } = useFetchPubMedByIds(pubMedIdsToSearch, pubMedIdsToSearch.length > 0);
 
   // *Methods
   const handleSubmitFormPubMedNames = async (data: IPubMedNamesFormFields) => {
+    setRefresh((refresh) => !refresh);
     setPubMedNamesToSearch(data.pubMedNames);
   };
 
@@ -116,6 +112,8 @@ const PublicationsForm = React.forwardRef<
   }, [fetchMeData]);
 
   useEffect(() => {
+    if (fetchPubMedByNamesIsLoading || fetchPubMedByNamesIsFetching) return;
+
     if (fetchPubMedByNamesData) {
       if (fetchPubMedByNamesData.ids?.length === 0) {
         toast.error(
@@ -127,9 +125,16 @@ const PublicationsForm = React.forwardRef<
       setPubMedIdsToSearch(fetchPubMedByNamesData.ids);
       setNamesToBold(fetchPubMedByNamesData.namesToBold);
     }
-  }, [fetchPubMedByNamesData]);
+  }, [
+    fetchPubMedByNamesData,
+    fetchPubMedByNamesIsLoading,
+    fetchPubMedByNamesIsFetching,
+  ]);
 
   useEffect(() => {
+    if (fetchPubMedByNamesIsLoading || fetchPubMedByIdsIsLoading) return;
+    if (fetchPubMedByNamesIsFetching || fetchPubMedByIdsIsFetching) return;
+
     if (fetchPubMedByIdsData) {
       setPublicationsFromPubMed(fetchPubMedByIdsData);
 
@@ -137,7 +142,14 @@ const PublicationsForm = React.forwardRef<
         setIsPublicationsModalVisible(true);
       }
     }
-  }, [fetchPubMedByIdsData]);
+  }, [
+    refresh,
+    fetchPubMedByIdsData,
+    fetchPubMedByNamesIsLoading,
+    fetchPubMedByIdsIsLoading,
+    fetchPubMedByNamesIsFetching,
+    fetchPubMedByIdsIsFetching,
+  ]);
 
   // *JSX
   return (
@@ -186,11 +198,7 @@ const PublicationsForm = React.forwardRef<
             </div>
           </div>
         }
-        isVisible={
-          isPublicationsModalVisible &&
-          !fetchPubMedByIdsIsLoading &&
-          !fetchPubMedByNamesIsLoading
-        }
+        isVisible={isPublicationsModalVisible}
         onDismiss={() => {
           setIsPublicationsModalVisible(false);
         }}
@@ -203,7 +211,7 @@ const PublicationsForm = React.forwardRef<
         noValidate
         onSubmit={handleSubmitPubMedNames(handleSubmitFormPubMedNames)}
       >
-        <div className="flex flex-col items-center space-x-0 space-y-4 sm:space-x-4 sm:space-y-0 sm:flex-row">
+        <div className="flex flex-col space-x-0 space-y-4 sm:space-x-4 sm:space-y-0 sm:flex-row">
           <FormInput
             register={registerPubMedNames}
             label="PubMed Names or Aliases"
@@ -215,8 +223,9 @@ const PublicationsForm = React.forwardRef<
             error={pubMedNamesErrors.pubMedNames?.message}
           />
 
-          <div>
+          <div className="pt-0 sm:pt-6">
             <Button
+              type="submit"
               variant="secondary"
               disabled={pubMedNames === "" || !pubmedNamesIsValid}
             >
