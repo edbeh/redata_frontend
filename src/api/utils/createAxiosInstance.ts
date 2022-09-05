@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { getJwtTokenLocalStorage } from "utils";
+import { getJwtTokenLocalStorage, signOut } from "utils";
 import { PUBLIC_ENDPOINTS, BASE_API_URL } from "api/endpoints";
 
 export const createAxiosInstance = () => {
@@ -24,16 +24,13 @@ export const createAxiosInstance = () => {
   newInstance.interceptors.response.use(
     (response) => response,
     (error) => {
+      if (error && error.response.status === 401) {
+        signOut();
+      }
+
       if (error.response.status > 300) {
         throw error;
       }
-
-      if (error && error.response.status === 404) {
-        console.log("should sign out");
-        // signOut();
-      }
-
-      //   return Promise.reject(error);
     }
   );
 
