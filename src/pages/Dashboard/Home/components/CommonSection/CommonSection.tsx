@@ -11,7 +11,7 @@ const CommonSection = ({ title, data }: CommonSectionProps) => {
       <Card>
         <h2 className="mb-5 text-xl font-bold text-gray-700">{title}</h2>
 
-        <div className="flex space-x-4">
+        <div className="flex flex-wrap items-start justify-start gap-y-4 gap-x-4">
           {data.map((item) => (
             <Badge text={item} onClick={() => {}} />
           ))}

@@ -7,7 +7,7 @@ import { HeroSection, InfoSection, CommonSection } from "./components";
 const Home = () => {
   return (
     <BaseLayout withLeftNavigation>
-      <div className="w-full pb-12 pr-8">
+      <div className="w-full pb-12">
         <BreadCrumbs breadcrumbs={homeNav.breadcrumbs} />
         <h1 className="mb-2 text-4xl font-semibold tracking-tight text-white">
           Profile

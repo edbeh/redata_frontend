@@ -13,13 +13,15 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
     <>
       {withLeftNavigation && (
         <>
-          <div className="fixed w-full h-[14rem] -z-10 bg-gradient-to-r from-cyan-500 to-primary-500" />
-          <div className="fixed w-full h-[calc(100vh-14rem)] bg-slate-50 top-[14rem] -z-10" />
+          <div className="fixed w-full h-[13rem] -z-10 bg-gradient-to-r from-cyan-500 to-primary-500" />
+          <div className="fixed w-full h-[calc(100vh-13rem)] bg-slate-50 top-[13rem] -z-10" />
         </>
       )}
-      <div className={`flex max-w-screen-xl m-auto pt-6 min-h-[100vh]`}>
+      <div
+        className={`flex max-w-screen-xl m-auto px-6 pt-6 md:px-8 min-h-[100vh]`}
+      >
         {withLeftNavigation && (
-          <div className="w-[300px]">
+          <div className="min-w-0 hidden md:min-w-[220px] md:block">
             <LeftNavigation />
           </div>
         )}
