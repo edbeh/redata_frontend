@@ -1,3 +1,7 @@
+import { UseFormSetError } from "react-hook-form";
+
+import { validationMessages } from "const";
+
 import { IBasicInfoFormFields } from "./BasicInfoForm.model";
 
 export const subSpecialties = [
@@ -22,4 +26,43 @@ export const cleanUpData = (data: IBasicInfoFormFields) => {
     otherSpecialties: data.otherSubspecialties,
     bio: data.bio,
   };
+};
+
+type ValidationStatus = {
+  hasErrors: boolean;
+};
+
+export const validateDuplicateValues = (
+  data: IBasicInfoFormFields,
+  setError: UseFormSetError<IBasicInfoFormFields>
+): ValidationStatus => {
+  const hash: { [key: string]: number[] } = {};
+
+  data.otherSubspecialties.map((item, i) => {
+    // if (!hash[item.otherSubspecialty]) {
+    //   return (hash[item.researchInterest] = [i]);
+    // } else {
+    //   return (hash[item.researchInterest] = [
+    //     ...hash[item.researchInterest],
+    //     i,
+    //   ]);
+    // }
+  });
+
+  const status = {
+    hasErrors: false,
+  };
+
+  for (const key in hash) {
+    if (hash[key].length > 1) {
+      hash[key].map((index) => {
+        status.hasErrors = true;
+        return setError(`otherSubspecialties.${index}.otherSubspecialty`, {
+          message: validationMessages.validate.duplicateResearchInterest,
+        });
+      });
+    }
+  }
+
+  return status;
 };
