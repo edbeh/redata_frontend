@@ -6,3 +6,6 @@ export { default as ResearchInterestsForm } from "./DataForms/ResearchInterestsF
 export { default as PatientPopulationsForm } from "./DataForms/PatientPopulationsForm/PatientPopulationsForm";
 export { default as PublicationsForm } from "./DataForms/PublicationsForm/PublicationsForm";
 export { default as Home } from "./Dashboard/Home/Home";
+export { default as Publications } from "./Dashboard/Publications/Publications";
+export { default as Search } from "./Dashboard/Search/Search";
+export { default as Settings } from "./Dashboard/Settings/Settings";
