@@ -7,6 +7,7 @@ import { ReactComponent as ImgSettingsOutline } from "./settings-outline.svg";
 import { ReactComponent as ImgPencilSquareOutline } from "./pencil-square-outline.svg";
 import { ReactComponent as ImgUserCircleOutline } from "./user-circle-outline.svg";
 import { ReactComponent as ImgUserPlusOutline } from "./user-plus-outline.svg";
+import { ReactComponent as ImgBars4Outline } from "./bars-4-outline.svg";
 
 import imgScientistMicroscope from "./scientist-microscope.jpg";
 import imgNotFound from "./not-found.jpg";
@@ -26,5 +27,6 @@ export {
   ImgUserCircleOutline,
   ImgUserPlusOutline,
   imgProfileBackground,
+  ImgBars4Outline,
   imgJohnDoe,
 };

@@ -10,3 +10,4 @@ export { default as LeftNavigation } from "./LeftNavigation/LeftNavigation";
 export { default as BreadCrumbs } from "./BreadCrumbs/BreadCrumbs";
 export { default as Card } from "./Card/Card";
 export { default as Badge } from "./Badge/Badge";
+export { default as MobileLeftNavigation } from "./LeftNavigation/MobileLeftNavigation/MobileLeftNavigation";

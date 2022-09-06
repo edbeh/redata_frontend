@@ -4,7 +4,7 @@ const LeftNavigation = () => {
   const navItems = getNavigationItems();
 
   return (
-    <div className="fixed top-[50px] py-6 px-4 bg-white shadow-lg w-[190px] flex flex-col items-center rounded-xl h-fit">
+    <div className="fixed top-[50px] py-6 px-4 bg-white shadow-lg w-[190px] flex flex-col items-center rounded-xl h-fit z-50">
       <h1 className="text-xl font-bold">ReData</h1>
 
       <ul className="mt-6">
