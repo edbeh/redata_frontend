@@ -10,6 +10,8 @@ export const subSpecialties = [
 ];
 
 export const cleanUpData = (data: IBasicInfoFormFields) => {
+  console.log("data", data);
+
   return {
     designationId: data.designation.id,
     name: data.name,
@@ -17,8 +19,7 @@ export const cleanUpData = (data: IBasicInfoFormFields) => {
     mcrNo: data.mcrNo,
     primarySpecialty: data.primarySubspecialty.id,
     primarySpecialtyOthers: data.primarySubspecialtyOthers,
-    secondarySpecialty: data.secondarySubspecialty.id,
-    secondarySpecialtyOthers: data.secondarySubspecialtyOthers,
+    otherSpecialties: data.otherSubspecialties,
     bio: data.bio,
   };
 };

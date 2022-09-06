@@ -16,8 +16,6 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
   const scrollDirection = useScrollDirection();
   const [isMobileNavVisible, setIsMobileNavVisible] = useState<boolean>(false);
 
-  console.log("scroll", scrollDirection);
-
   return (
     <>
       {withLeftNavigation && (

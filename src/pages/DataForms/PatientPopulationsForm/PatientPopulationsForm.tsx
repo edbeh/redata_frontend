@@ -4,7 +4,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { FormInput } from "components";
-import { ImgPlusCircleOutline } from "assets";
+import { ImgPlusCircleOutline, ImgXMarkOutline } from "assets";
 
 import { schema } from "./PatientPopulationsForm.schema";
 import { IPatientPopulationsFormFields } from "./PatientPopulationsForm.model";
@@ -77,7 +77,7 @@ const PatientPopulationsForm = React.forwardRef<
         {patientPopulationFields.map((field, i) => {
           return (
             <div
-              className={`flex mb-4 space-x-4 ${
+              className={`flex mb-4 space-x-3 ${
                 formErrors?.patientPopulations &&
                 formErrors?.patientPopulations[i]?.patientPopulation?.message
                   ? "items-center"
@@ -86,7 +86,7 @@ const PatientPopulationsForm = React.forwardRef<
               key={field.id}
             >
               <FormInput
-                label={`Patient Population (${i + 1})`}
+                label={`Patient Population ${i + 1}`}
                 key={field.id}
                 register={register}
                 id={`patientPopulations[${i}].patientPopulation`}
@@ -101,14 +101,20 @@ const PatientPopulationsForm = React.forwardRef<
               <button
                 onClick={() => removePatientPopulation(i)}
                 disabled={i < 1}
-                className={`font-semibold rounded-lg text-primary-500 hover:text-primary-200 disabled:cursor-not-allowed disabled:text-disabled ${
+                className={`disabled:cursor-not-allowed ${
                   formErrors?.patientPopulations &&
                   formErrors?.patientPopulations[i]?.patientPopulation?.message
                     ? "mb-1"
                     : "mb-4"
                 }`}
               >
-                REMOVE
+                <ImgXMarkOutline
+                  width={20}
+                  height={20}
+                  className={`stroke-[3px] ${
+                    i < 1 ? "text-slate-300" : "text-red"
+                  }`}
+                />
               </button>
             </div>
           );

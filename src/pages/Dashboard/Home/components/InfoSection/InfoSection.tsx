@@ -33,7 +33,7 @@ const InfoSection = () => {
 
           <div className="flex flex-col justify-between space-x-0 space-y-1 sm:space-y-0 sm:space-x-4 sm:flex-row">
             <p className="font-semibold basis-1/3 min-w-[125px]">
-              Secondary Subspecialty:
+              Other Subspecialties:
             </p>
             <p className="basis-2/3">Transplant Immunosuppression</p>
           </div>

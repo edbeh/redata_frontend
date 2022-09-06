@@ -4,7 +4,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { FormInput } from "components";
-import { ImgPlusCircleOutline } from "assets";
+import { ImgPlusCircleOutline, ImgXMarkOutline } from "assets";
 
 import { schema } from "./ResearchInterestsForm.schema";
 import { IResearchInterestsFormFields } from "./ResearchInterestsForm.model";
@@ -77,7 +77,7 @@ const ResearchInterestsForm = React.forwardRef<
         {researchInterestFields.map((field, i) => {
           return (
             <div
-              className={`flex mb-4 space-x-4 ${
+              className={`flex mb-4 space-x-3 ${
                 formErrors?.researchInterests &&
                 formErrors?.researchInterests[i]?.researchInterest?.message
                   ? "items-center"
@@ -86,7 +86,7 @@ const ResearchInterestsForm = React.forwardRef<
               key={field.id}
             >
               <FormInput
-                label={`Research Interest (${i + 1})`}
+                label={`Research Interest ${i + 1}`}
                 key={field.id}
                 register={register}
                 id={`researchInterests.${i}.researchInterest`}
@@ -98,21 +98,29 @@ const ResearchInterestsForm = React.forwardRef<
                 autoComplete="off"
                 required
               />
+
               <button
                 onClick={() => removeResearchInterest(i)}
                 disabled={i < 1}
-                className={`font-semibold rounded-lg text-primary-500 hover:text-primary-200 disabled:cursor-not-allowed disabled:text-disabled ${
+                className={`disabled:cursor-not-allowed ${
                   formErrors?.researchInterests &&
                   formErrors?.researchInterests[i]?.researchInterest?.message
                     ? "mb-1"
                     : "mb-4"
                 }`}
               >
-                REMOVE
+                <ImgXMarkOutline
+                  width={20}
+                  height={20}
+                  className={`stroke-[3px] ${
+                    i < 1 ? "text-slate-300" : "text-red"
+                  }`}
+                />
               </button>
             </div>
           );
         })}
+
         <div
           onClick={() =>
             appendResearchInterest({

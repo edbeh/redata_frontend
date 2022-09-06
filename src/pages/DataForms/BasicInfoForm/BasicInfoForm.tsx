@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useMemo } from "react";
-import { useForm } from "react-hook-form";
+import React, { useEffect } from "react";
+import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import {
@@ -9,6 +9,7 @@ import {
   FormTextArea,
   FullScreenLoader,
 } from "components";
+import { ImgPlusCircleOutline, ImgXMarkOutline } from "assets";
 import { getYupIsRequired } from "utils";
 import {
   useFetchMetadataDesignations,
@@ -33,9 +34,8 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       register,
       control,
       handleSubmit,
-      formState: { errors: formErrors, isValid: formIsValid },
+      formState: { errors: formErrors },
       watch,
-      getValues,
       setValue,
       setError,
       clearErrors,
@@ -44,8 +44,17 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       mode: "onChange",
     });
 
+    const {
+      fields: otherSubspecialtyFields,
+      append: appendOtherSubspecialty,
+      remove: removeOtherSubspecialty,
+    } = useFieldArray({
+      control,
+      name: "otherSubspecialties",
+    });
+
     const primarySubspecialty = watch("primarySubspecialty");
-    const secondarySubspecialty = watch("secondarySubspecialty");
+    // const secondarySubspecialty = watch("secondarySubspecialty");
 
     // *Queries
     const { data: fetchMeData, isLoading: fetchMeIsLoading } = useFetchMe();
@@ -64,8 +73,8 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     // *Methods
     const handleSubmitForm = async (data: IBasicInfoFormFields) => {
       const cleanData = cleanUpData(data);
-      console.log(cleanData);
-      if (onSuccessCallback) onSuccessCallback();
+      return console.log(cleanData);
+      // if (onSuccessCallback) onSuccessCallback();
     };
 
     // *Effects
@@ -133,59 +142,6 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
           </div>
 
           <div className="flex flex-col w-full mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
-            <div className="w-full space-y-4">
-              <FormSelect
-                label="Primary Subspecialty"
-                control={control}
-                options={subSpecialties}
-                id="primarySubspecialty"
-                name="primarySubspecialty"
-                required={getYupIsRequired(schema, "primarySubspecialty")}
-                error={formErrors?.primarySubspecialty?.message}
-              />
-
-              {primarySubspecialty?.name === "Others" && (
-                <FormInput
-                  label="Primary Subspecialty (Others)"
-                  register={register}
-                  id="primarySubspecialtyOthers"
-                  name="primarySubspecialtyOthers"
-                  required={getYupIsRequired(
-                    schema,
-                    "primarySubspecialtyOthers"
-                  )}
-                  error={formErrors?.primarySubspecialtyOthers?.message}
-                />
-              )}
-            </div>
-
-            <div className="w-full space-y-4">
-              <FormSelect
-                label="Secondary Subspecialty"
-                control={control}
-                options={subSpecialties}
-                id="secondarySubspecialty"
-                name="secondarySubspecialty"
-                required={getYupIsRequired(schema, "secondarySubspecialty")}
-                error={formErrors?.secondarySubspecialty?.message}
-              />
-              {secondarySubspecialty?.name === "Others" && (
-                <FormInput
-                  label="Secondary Subspecialty (Others)"
-                  register={register}
-                  id="secondarySubspecialtyOthers"
-                  name="secondarySubspecialtyOthers"
-                  required={getYupIsRequired(
-                    schema,
-                    "secondarySubspecialtyOthers"
-                  )}
-                  error={formErrors?.secondarySubspecialtyOthers?.message}
-                />
-              )}
-            </div>
-          </div>
-
-          <div className="flex flex-col w-full mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
             <FormTextArea
               label="Bio / Short Introduction"
               register={register}
@@ -194,6 +150,110 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               required={getYupIsRequired(schema, "bio")}
               error={formErrors?.bio?.message}
             />
+          </div>
+
+          <h2 className="mt-8 mb-4 text-xl font-semibold">Sub-specialties</h2>
+
+          <div className="flex flex-col w-full mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
+            <FormSelect
+              label="Primary Subspecialty"
+              control={control}
+              options={subSpecialties}
+              id="primarySubspecialty"
+              name="primarySubspecialty"
+              required={getYupIsRequired(schema, "primarySubspecialty")}
+              error={formErrors?.primarySubspecialty?.message}
+            />
+
+            {primarySubspecialty?.name === "Others" && (
+              <FormInput
+                label="Primary Subspecialty (Others)"
+                register={register}
+                id="primarySubspecialtyOthers"
+                name="primarySubspecialtyOthers"
+                required={getYupIsRequired(schema, "primarySubspecialtyOthers")}
+                error={formErrors?.primarySubspecialtyOthers?.message}
+              />
+            )}
+          </div>
+
+          {otherSubspecialtyFields.map((subspecialty, i) => {
+            return (
+              <div
+                className={`flex flex-col w-full mb-4 space-y-4 
+                            sm:space-y-0 sm:space-x-6 sm:flex-row
+                            ${
+                              formErrors?.otherSubspecialties &&
+                              formErrors?.otherSubspecialties[i]
+                                ?.otherSubspecialty?.message
+                                ? "items-center"
+                                : "items-end"
+                            }`}
+                key={subspecialty.id}
+              >
+                <FormSelect
+                  label={`Other Subspecialty ${i + 1}`}
+                  control={control}
+                  options={subSpecialties}
+                  id={`otherSubspecialties.${i}.otherSubspecialty`}
+                  name={`otherSubspecialties.${i}.otherSubspecialty`}
+                  error={
+                    formErrors?.otherSubspecialties &&
+                    formErrors?.otherSubspecialties[i]?.otherSubspecialty
+                      ?.message
+                  }
+                />
+
+                {watch(`otherSubspecialties.${i}.otherSubspecialty`)?.id ===
+                  "others" && (
+                  <FormInput
+                    label={`Other Subspecialty ${i + 1} (Others)`}
+                    register={register}
+                    id={`otherSubspecialties.${i}.otherSubspecialtyOthers`}
+                    name={`otherSubspecialties.${i}.otherSubspecialtyOthers`}
+                    error={
+                      formErrors?.otherSubspecialties &&
+                      formErrors?.otherSubspecialties[i]
+                        ?.otherSubspecialtyOthers?.message
+                    }
+                  />
+                )}
+
+                <button
+                  onClick={() => removeOtherSubspecialty(i)}
+                  className={`${
+                    formErrors?.otherSubspecialties &&
+                    formErrors?.otherSubspecialties[i]?.otherSubspecialty
+                      ?.message
+                      ? "!mb-1"
+                      : "!mb-4"
+                  }`}
+                >
+                  <ImgXMarkOutline
+                    width={20}
+                    height={20}
+                    className="stroke-[3px] text-red"
+                  />
+                </button>
+              </div>
+            );
+          })}
+
+          <div
+            onClick={() =>
+              appendOtherSubspecialty({
+                otherSubspecialty: undefined,
+                otherSubspecialtyOthers: undefined,
+              })
+            }
+            className="flex items-center my-4 cursor-pointer"
+          >
+            <ImgPlusCircleOutline
+              width={30}
+              height={30}
+              className="stroke-green-500"
+            />
+            <p className="ml-1">Add more subspecialties</p>
           </div>
 
           <button type="submit" ref={ref} className="hidden">
