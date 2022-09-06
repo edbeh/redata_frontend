@@ -19,7 +19,11 @@ import {
 
 import { IBasicInfoFormFields } from "./BasicInfoForm.model";
 import { schema } from "./BasicInfoForm.schema";
-import { cleanUpData, subSpecialties } from "./BasicInfoForm.util";
+import {
+  cleanUpData,
+  subSpecialties,
+  validateDuplicateValues,
+} from "./BasicInfoForm.util";
 
 interface BasicInfoFormProps {
   /** callback if api call is successful */
@@ -72,9 +76,13 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
     // *Methods
     const handleSubmitForm = async (data: IBasicInfoFormFields) => {
+      clearErrors();
+      const { hasErrors } = validateDuplicateValues(data, setError);
+      if (hasErrors) return;
+
       const cleanData = cleanUpData(data);
-      return console.log(cleanData);
-      // if (onSuccessCallback) onSuccessCallback();
+      console.log(cleanData);
+      if (onSuccessCallback) onSuccessCallback();
     };
 
     // *Effects
@@ -88,6 +96,8 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
         setValue("name", data.name);
       }
     }, [fetchMeData, fetchMetadataDesignationsData, fetchDepartmentByIdData]);
+
+    console.log("watch", watch());
 
     // *JSX
     return (
@@ -182,13 +192,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               <div
                 className={`flex flex-col w-full mb-4 space-y-4 
                             sm:space-y-0 sm:space-x-6 sm:flex-row
-                            ${
-                              formErrors?.otherSubspecialties &&
-                              formErrors?.otherSubspecialties[i]
-                                ?.otherSubspecialty?.message
-                                ? "items-center"
-                                : "items-end"
-                            }`}
+                            items-start`}
                 key={subspecialty.id}
               >
                 <FormSelect
@@ -197,6 +201,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                   options={subSpecialties}
                   id={`otherSubspecialties.${i}.otherSubspecialty`}
                   name={`otherSubspecialties.${i}.otherSubspecialty`}
+                  required
                   error={
                     formErrors?.otherSubspecialties &&
                     formErrors?.otherSubspecialties[i]?.otherSubspecialty
@@ -221,13 +226,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
                 <button
                   onClick={() => removeOtherSubspecialty(i)}
-                  className={`${
-                    formErrors?.otherSubspecialties &&
-                    formErrors?.otherSubspecialties[i]?.otherSubspecialty
-                      ?.message
-                      ? "!mb-1"
-                      : "!mb-4"
-                  }`}
+                  className="!mt-8"
                 >
                   <ImgXMarkOutline
                     width={20}

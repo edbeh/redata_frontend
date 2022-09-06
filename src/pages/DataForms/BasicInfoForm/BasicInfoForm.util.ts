@@ -14,8 +14,6 @@ export const subSpecialties = [
 ];
 
 export const cleanUpData = (data: IBasicInfoFormFields) => {
-  console.log("data", data);
-
   return {
     designationId: data.designation.id,
     name: data.name,
@@ -36,17 +34,49 @@ export const validateDuplicateValues = (
   data: IBasicInfoFormFields,
   setError: UseFormSetError<IBasicInfoFormFields>
 ): ValidationStatus => {
-  const hash: { [key: string]: number[] } = {};
+  const hash: { [key: string]: string[] } = {};
+
+  if (
+    data.primarySubspecialty?.name &&
+    data.primarySubspecialty.id !== "others"
+  ) {
+    const lowercase = data.primarySubspecialty.name.toLowerCase();
+    hash[lowercase] = [`primarySubspecialty`];
+  }
+  if (data.primarySubspecialtyOthers) {
+    const lowercase = data.primarySubspecialtyOthers.toLowerCase();
+    hash[lowercase] = [...hash[lowercase], `primarySubspecialtyOthers`];
+  }
 
   data.otherSubspecialties.map((item, i) => {
-    // if (!hash[item.otherSubspecialty]) {
-    //   return (hash[item.researchInterest] = [i]);
-    // } else {
-    //   return (hash[item.researchInterest] = [
-    //     ...hash[item.researchInterest],
-    //     i,
-    //   ]);
-    // }
+    if (
+      item.otherSubspecialty?.name &&
+      item.otherSubspecialty.id !== "others"
+    ) {
+      const lowercase = item.otherSubspecialty.name.toLowerCase();
+      if (!hash[lowercase]) {
+        hash[lowercase] = [`otherSubspecialties.${i}.otherSubspecialty`];
+      } else {
+        hash[lowercase] = [
+          ...hash[lowercase],
+          `otherSubspecialties.${i}.otherSubspecialty`,
+        ];
+      }
+    }
+
+    if (item.otherSubspecialtyOthers) {
+      const lowercase = item.otherSubspecialtyOthers.toLowerCase();
+      if (!hash[lowercase]) {
+        hash[lowercase] = [`otherSubspecialties.${i}.otherSubspecialtyOthers`];
+      } else {
+        hash[lowercase] = [
+          ...hash[lowercase],
+          `otherSubspecialties.${i}.otherSubspecialtyOthers`,
+        ];
+      }
+    }
+
+    return null;
   });
 
   const status = {
@@ -55,9 +85,9 @@ export const validateDuplicateValues = (
 
   for (const key in hash) {
     if (hash[key].length > 1) {
-      hash[key].map((index) => {
+      hash[key].map((field: any) => {
         status.hasErrors = true;
-        return setError(`otherSubspecialties.${index}.otherSubspecialty`, {
+        return setError(field, {
           message: validationMessages.validate.duplicateResearchInterest,
         });
       });

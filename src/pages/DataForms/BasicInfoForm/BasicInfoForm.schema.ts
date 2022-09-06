@@ -3,8 +3,14 @@ import * as yup from "yup";
 import { validationMessages } from "const";
 
 export const otherSubspecialtySchema = {
-  otherSubspecialty: yup.object(),
-  otherSubspecialtyOthers: yup.string(),
+  otherSubspecialty: yup.object().required(),
+  otherSubspecialtyOthers: yup.string().when("otherSubspecialty", {
+    is: (value: any) => {
+      return value?.id === "others";
+    },
+    then: yup.string().required(validationMessages.require.generic),
+    otherwise: yup.string(),
+  }),
 };
 
 export const schema = yup.object({
@@ -14,14 +20,6 @@ export const schema = yup.object({
   primarySubspecialty: yup
     .object()
     .required(validationMessages.require.primarySpecialty),
-  // .test(
-  //   "duplicate-subspecialty",
-  //   validationMessages.validate.duplicateSubSpecialty,
-  //   function (value) {
-  //     if (value?.id === "others") return true;
-  //     return this.parent.secondarySubspecialty !== value;
-  //   }
-  // ),
   primarySubspecialtyOthers: yup.string().when("primarySubspecialty", {
     is: (value: any) => {
       return value?.id === "others";
@@ -29,13 +27,6 @@ export const schema = yup.object({
     then: yup.string().required(validationMessages.require.generic),
     otherwise: yup.string(),
   }),
-  // .test(
-  //   "duplicate-subspecialty",
-  //   validationMessages.validate.duplicateSubSpecialty,
-  //   function (value) {
-  //     return this.parent.secondarySubspecialtyOthers !== value;
-  //   }
-  // ),
   otherSubspecialties: yup
     .array()
     .of(yup.object().shape(otherSubspecialtySchema)),
