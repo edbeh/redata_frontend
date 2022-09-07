@@ -4,7 +4,7 @@ const InfoSection = () => {
   return (
     <div className="w-full">
       <Card>
-        <h2 className="mb-5 text-xl font-bold text-gray-700">About me</h2>
+        <h2 className="mb-5 text-xl font-semibold text-gray-700">About me</h2>
 
         <p>I'm a senior consultant specialising in renal transplant.</p>
 

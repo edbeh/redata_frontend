@@ -28,16 +28,15 @@ const fetchPubMedByNames = async (pubMedNames: string) => {
       const namesToBold: string[] = [];
 
       responses?.map((response) => {
-        const translation =
-          response?.data?.esearchresult?.querytranslation.includes(
-            "[Full Author Name]"
-          )
-            ? response?.data?.esearchresult?.querytranslation.split(
-                "[Full Author Name]"
-              )[0]
-            : response?.data?.esearchresult?.querytranslation.split(
-                "[author]"
-              )[0];
+        const translation = response?.data?.esearchresult?.querytranslation
+          ?.toLowerCase()
+          ?.includes("[full author name]")
+          ? response?.data?.esearchresult?.querytranslation
+              ?.toLowerCase()
+              ?.split("[full author name]")[0]
+          : response?.data?.esearchresult?.querytranslation
+              ?.toLowerCase()
+              ?.split("[author]")[0];
         const splitTranslation = translation.split(", ");
         const pubmedName =
           splitTranslation?.length > 1

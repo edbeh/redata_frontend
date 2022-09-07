@@ -1,19 +1,20 @@
 import { Card, Badge } from "components";
 
-interface CommonSectionProps {
-  title: string;
+interface PubMedNamesSectionProps {
   data: string[];
 }
 
-const CommonSection = ({ title, data }: CommonSectionProps) => {
+const PubMedNamesSection = ({ data }: PubMedNamesSectionProps) => {
   return (
     <div className="w-full">
       <Card>
-        <h2 className="mb-5 text-xl font-semibold text-gray-700">{title}</h2>
+        <h2 className="mb-5 text-xl font-semibold text-gray-700">
+          My PubMed Names
+        </h2>
 
         <div className="flex flex-wrap items-start justify-start gap-y-4 gap-x-4">
           {data.map((item) => (
-            <Badge key={item} text={item} onClick={() => {}} />
+            <Badge key={item} text={item} />
           ))}
         </div>
       </Card>
@@ -21,4 +22,4 @@ const CommonSection = ({ title, data }: CommonSectionProps) => {
   );
 };
 
-export default CommonSection;
+export default PubMedNamesSection;
