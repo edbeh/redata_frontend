@@ -24,7 +24,7 @@ const MobileLeftNavigation = ({
 
       <div
         className={`fixed transition-all duration-500 z-50 ${
-          isMobileNavVisible ? "left-5" : "-left-20"
+          isMobileNavVisible ? "right-[220px]" : "-right-[300px]"
         }`}
       >
         <LeftNavigation />
