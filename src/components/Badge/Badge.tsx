@@ -10,7 +10,7 @@ const Badge = ({ text, onClick }: BadgeProps) => {
                 overflow-hidden text-ellipsis whitespace-nowrap ${
                   typeof onClick === "function"
                     ? "cursor-pointer bg-primary-100 text-primary-900"
-                    : "bg-slate-100"
+                    : "bg-slate-100 cursor-not-allowed"
                 }`}
     >
       {text}
