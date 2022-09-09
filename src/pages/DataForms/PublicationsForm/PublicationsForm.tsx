@@ -7,11 +7,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { imgNotFound } from "assets";
 import { FormInput, FullScreenLoader, Button, Modal } from "components";
 import {
+  useFetchAllPublications,
   useFetchMe,
   useFetchPubMedByIds,
   useFetchPubMedByNames,
+  useSubmitPublicationsFromPubMed,
 } from "api/hooks";
 import { GetPubMedByIds } from "api/models";
+import { SinglePublication } from "pages/Dashboard/Publications/components";
 
 import { IPubMedNamesFormFields } from "./PublicationsForm.model";
 import { pubMedNamesSchema } from "./PublicationsForm.schema";
@@ -67,6 +70,20 @@ const PublicationsForm = React.forwardRef<
     isFetching: fetchPubMedByIdsIsFetching,
   } = useFetchPubMedByIds(pubMedIdsToSearch, pubMedIdsToSearch.length > 0);
 
+  const {
+    data: fetchAllPublicationsData,
+    isLoading: fetchAllPublicationsIsLoading,
+    isFetching: fetchAllPublicationsIsFetching,
+  } = useFetchAllPublications();
+
+  const publicationsData = fetchAllPublicationsData?.data?.data;
+
+  const {
+    data: submitPublicationsFromPubMedData,
+    mutate: mutatePublicationsFromPubMed,
+    isLoading: submitPublicationsFromPubMedIsLoading,
+  } = useSubmitPublicationsFromPubMed();
+
   // *Methods
   const handleSubmitFormPubMedNames = async (data: IPubMedNamesFormFields) => {
     setRefresh((refresh) => !refresh);
@@ -94,9 +111,10 @@ const PublicationsForm = React.forwardRef<
   const handleSubmitSelectedPubMedIds = () => {
     const payload = {
       source: "pubmed",
-      pubmedIds: selectedPubMedIds,
+      ids: selectedPubMedIds,
     };
-    console.log(payload);
+
+    mutatePublicationsFromPubMed(payload);
   };
 
   // *Effects
@@ -151,13 +169,21 @@ const PublicationsForm = React.forwardRef<
     fetchPubMedByIdsIsFetching,
   ]);
 
+  useEffect(() => {
+    if (submitPublicationsFromPubMedData) {
+      setIsPublicationsModalVisible(false);
+    }
+  }, []);
+
   // *JSX
   return (
     <div className="flex flex-col">
       {(fetchMeIsLoading ||
         fetchPubMedByIdsIsLoading ||
         fetchPubMedByNamesIsLoading ||
-        fetchPubMedByNamesIsFetching) && <FullScreenLoader />}
+        fetchPubMedByNamesIsFetching ||
+        fetchAllPublicationsIsLoading ||
+        fetchAllPublicationsIsFetching) && <FullScreenLoader />}
 
       <Modal
         title="Add Publications"
@@ -192,7 +218,10 @@ const PublicationsForm = React.forwardRef<
                 />
               </div>
 
-              <Button onClick={handleSubmitSelectedPubMedIds}>
+              <Button
+                onClick={handleSubmitSelectedPubMedIds}
+                isLoading={submitPublicationsFromPubMedIsLoading}
+              >
                 Add to Profile
               </Button>
             </div>
@@ -235,18 +264,27 @@ const PublicationsForm = React.forwardRef<
         </div>
       </form>
 
-      <div className="flex flex-col w-full mt-10">
-        <img
-          className="self-center"
-          src={imgNotFound}
-          alt="not-found"
-          width={200}
-          height={200}
-        />
-        <p className="self-center">
-          There are no publications in your profile yet
-        </p>
-      </div>
+      {publicationsData ? (
+        <div className="mt-6">
+          <p className="mb-2 font-semibold">Saved publications: </p>
+          {publicationsData.map((pub, i) => (
+            <SinglePublication publication={pub} i={i} namesToBold={[]} />
+          ))}
+        </div>
+      ) : (
+        <div className="flex flex-col w-full mt-10">
+          <img
+            className="self-center"
+            src={imgNotFound}
+            alt="not-found"
+            width={200}
+            height={200}
+          />
+          <p className="self-center">
+            There are no publications in your profile yet
+          </p>
+        </div>
+      )}
     </div>
   );
 });

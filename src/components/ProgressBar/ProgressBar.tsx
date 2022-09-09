@@ -15,7 +15,7 @@ const ProgressBar = ({
     <div className="flex items-center w-full space-x-2">
       <div className="w-full h-2 rounded-lg shadow-md bg-slate-300">
         <motion.div
-          className={`rounded-lg h-full bg-primary-500`}
+          className={`rounded-lg h-full  bg-gradient-to-r from-cyan-500 to-primary-500`}
           initial={{ width: initial || "0%" }}
           animate={{ width: progress }}
           transition={{ duration: 0.5 }}
