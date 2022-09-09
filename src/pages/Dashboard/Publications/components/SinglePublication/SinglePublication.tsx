@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 
-import { Publication } from "../../Publications.model";
+import { Publication } from "api/models";
 
 interface SinglePublicationProps {
   publication: Publication;
@@ -37,10 +37,10 @@ const SinglePublication = ({
     <div className="flex mb-6">
       <p className="min-w-[26px]">{i + 1}.</p>
       <div className="space-y-1">
-        {publication.elocationid?.includes("doi") ? (
+        {publication.elocationId?.includes("doi") ? (
           <a
             className="text-[15px] font-medium text-blue-500 hover:underline"
-            href={publication.elocationid.replace("doi: ", "https://doi.org/")}
+            href={publication.elocationId.replace("doi: ", "https://doi.org/")}
             target="_blank"
             rel="noreferrer"
           >
@@ -52,14 +52,14 @@ const SinglePublication = ({
 
         <p>
           {publication.authors?.map((author, i) => {
-            return nameComponent(author.name, i);
+            return nameComponent(author, i);
           })}
         </p>
         <p className="text-green-700">
           {`${publication.source}. ${publication.volume}(${
             publication.issue
           }):${publication.pages}. Published ${dayjs(
-            publication.sortpubdate
+            publication.publishedAt
           ).format("YYYY MMM")}`}
         </p>
       </div>

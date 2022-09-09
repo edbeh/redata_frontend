@@ -12,7 +12,7 @@ const PublicationsSectionLoading = () => {
         </h2>
 
         <div>
-          <Skeleton count={5} height={18} className="mb-2" />
+          <Skeleton count={3} height={18} className="mb-2" />
         </div>
       </Card>
     </div>

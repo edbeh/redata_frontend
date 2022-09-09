@@ -1,6 +1,10 @@
 import { BaseLayout } from "wrapper-components";
 import { BreadCrumbs } from "components";
-import { useFetchMe, useFetchPubMedByNames } from "api/hooks";
+import {
+  useFetchMe,
+  useFetchPubMedByNames,
+  useFetchAllPublications,
+} from "api/hooks";
 
 import { publicationsNav, mockData } from "./Publications.util";
 import { PubMedNamesSection, PublicationsSection } from "./components";
@@ -19,8 +23,14 @@ const Publications = () => {
     mockData.pubmedNames?.length > 0
   );
 
+  const {
+    data: fetchAllPublicationsData,
+    isLoading: fetchAllPublicationsIsLoading,
+    isFetching: fetchAllPublicationsIsFetching,
+  } = useFetchAllPublications();
+
   console.log("fetchMeData", fetchMeData);
-  console.log("fetchPubMedByNamesData", fetchPubMedByNamesData);
+  console.log("fetchAllPublicationsData", fetchAllPublicationsData);
 
   // *JSX
   return (
@@ -33,10 +43,10 @@ const Publications = () => {
 
         <div className="flex flex-col w-full mt-8 space-y-6">
           <PubMedNamesSection data={mockData.pubmedNames} />
-          {fetchPubMedByNamesData?.namesToBold ? (
+          {fetchAllPublicationsData?.data ? (
             <PublicationsSection
-              data={mockData.publications}
-              namesToBold={fetchPubMedByNamesData.namesToBold}
+              data={fetchAllPublicationsData?.data?.data || []}
+              namesToBold={fetchPubMedByNamesData?.namesToBold || []}
             />
           ) : (
             <PublicationsSectionLoading />
