@@ -16,10 +16,6 @@ const PublicationsSection = ({
   return (
     <div className="w-full">
       <Card>
-        <h2 className="mb-5 text-xl font-semibold text-gray-700">
-          My Publications
-        </h2>
-
         {data.length === 0 ? (
           <div className="flex flex-col w-full my-10">
             <img

@@ -16,7 +16,6 @@ export const publicationsNav: IBreadCrumbs = {
 };
 
 export const mockData = {
-  pubmedNames: ["Koh MS", "Mariko Koh", "Koh Mariko"],
   publications: [
     {
       title:

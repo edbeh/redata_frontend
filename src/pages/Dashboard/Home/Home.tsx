@@ -2,7 +2,12 @@ import { BreadCrumbs } from "components";
 import { BaseLayout } from "wrapper-components";
 
 import { homeNav, mockData } from "./Home.util";
-import { HeroSection, InfoSection, CommonSection } from "./components";
+import {
+  HeroSection,
+  InfoSection,
+  CommonSection,
+  PubMedNamesSection,
+} from "./components";
 
 const Home = () => {
   return (
@@ -24,6 +29,7 @@ const Home = () => {
             title="Patient Populations"
             data={mockData.patientPopulations}
           />
+          <PubMedNamesSection data={mockData.pubmedNames} />
         </div>
       </div>
     </BaseLayout>

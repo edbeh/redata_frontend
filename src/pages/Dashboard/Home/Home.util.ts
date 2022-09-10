@@ -22,4 +22,5 @@ export const mockData = {
     "Post-transplantation immunosuppression",
   ],
   patientPopulations: ["Kidney failure", "Dialysis", "Diabetes"],
+  pubmedNames: ["Koh MS", "Mariko Koh", "Koh Mariko"],
 };

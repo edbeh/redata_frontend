@@ -6,8 +6,9 @@ import {
   useFetchAllPublications,
 } from "api/hooks";
 
+import { mockData as mockDataHome } from "../Home/Home.util";
 import { publicationsNav, mockData } from "./Publications.util";
-import { PubMedNamesSection, PublicationsSection } from "./components";
+import { PublicationsSection } from "./components";
 import PublicationsSectionLoading from "./components/PublicationsSection/PublicationsSectionLoading";
 
 const Publications = () => {
@@ -19,8 +20,8 @@ const Publications = () => {
     isLoading: fetchPubMedByNamesIsLoading,
     isFetching: fetchPubMedByNamesIsFetching,
   } = useFetchPubMedByNames(
-    mockData.pubmedNames?.join(","),
-    mockData.pubmedNames?.length > 0
+    mockDataHome.pubmedNames?.join(","),
+    mockDataHome.pubmedNames?.length > 0
   );
 
   const {
@@ -42,7 +43,6 @@ const Publications = () => {
         </h1>
 
         <div className="flex flex-col w-full mt-8 space-y-6">
-          <PubMedNamesSection data={mockData.pubmedNames} />
           {fetchAllPublicationsData?.data ? (
             <PublicationsSection
               data={fetchAllPublicationsData?.data?.data || []}
