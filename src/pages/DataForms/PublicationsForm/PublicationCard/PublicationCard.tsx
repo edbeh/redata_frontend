@@ -8,6 +8,7 @@ interface PublicationCardProps {
   publication: GetPubMedByIds.Publication;
   handleSelectPublication: (id: string) => void;
   isSelected: boolean;
+  isDisabled: boolean;
 }
 
 const PublicationCard = ({
@@ -16,6 +17,7 @@ const PublicationCard = ({
   publication,
   handleSelectPublication,
   isSelected,
+  isDisabled,
 }: PublicationCardProps) => {
   const nameComponent = (authorName: string, i: number): React.ReactNode => {
     const shouldBoldName = namesToBold.find((nameToBold) =>
@@ -39,9 +41,17 @@ const PublicationCard = ({
 
   return (
     <div
-      className={`flex shadow-md p-4 border-[1px] rounded-lg cursor-pointer
-      ${isSelected ? "border-primary-600 bg-primary-100" : "border-disabled"}`}
-      onClick={() => handleSelectPublication(publication.uid)}
+      className={`flex shadow-md p-4 border-[1px] rounded-lg
+      ${isSelected ? "border-primary-600 bg-primary-100" : "border-disabled"}
+      ${
+        isDisabled
+          ? "cursor-not-allowed opacity-50 border-primary-200 bg-primary-100"
+          : "cursor-pointer"
+      }`}
+      onClick={() => {
+        if (isDisabled) return;
+        handleSelectPublication(publication.uid);
+      }}
     >
       <p className="mr-1">{index + 1}.</p>
 

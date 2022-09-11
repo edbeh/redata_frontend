@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRef, useLayoutEffect, useMemo, useState } from "react";
+import { useRef, useLayoutEffect, useMemo, useState, useEffect } from "react";
 import { BaseLayout } from "wrapper-components";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -72,11 +72,11 @@ const Onboarding = () => {
     }
   }, [step, onboardingSteps]);
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setIsIntroModalVisible(true);
-  //   }, 250);
-  // }, [currentStep]);
+  useEffect(() => {
+    // setTimeout(() => {
+    //   setIsIntroModalVisible(true);
+    // }, 250);
+  }, [currentStep]);
 
   // *JSX
   return (

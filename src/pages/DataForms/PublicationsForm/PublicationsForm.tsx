@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useQueryClient } from "react-query";
 
 import { imgNotFound } from "assets";
 import { FormInput, FullScreenLoader, Button, Modal } from "components";
@@ -13,6 +14,7 @@ import {
   useFetchPubMedByNames,
   useSubmitPublicationsFromPubMed,
 } from "api/hooks";
+import { PUBLICATIONS_API_KEY } from "api/keys";
 import { GetPubMedByIds } from "api/models";
 import { SinglePublication } from "pages/Dashboard/Publications/components";
 
@@ -28,6 +30,8 @@ const PublicationsForm = React.forwardRef<
   HTMLButtonElement,
   PublicationsFormProps
 >(({ onSuccessCallback }, ref) => {
+  const queryClient = useQueryClient();
+
   const [pubMedNamesToSearch, setPubMedNamesToSearch] = useState<string>("");
   const [pubMedIdsToSearch, setPubMedIdsToSearch] = useState<string[]>([]);
   const [namesToBold, setNamesToBold] = useState<string[]>([]);
@@ -39,6 +43,10 @@ const PublicationsForm = React.forwardRef<
     useState<boolean>(false);
   const [selectedPubMedIds, setSelectedPubMedIds] = useState<string[]>([]);
   const [refresh, setRefresh] = useState<boolean>(false);
+
+  const [savedPublicationIds, setSavedPublicationIds] = useState<{
+    [key: string]: number;
+  }>({});
 
   // *Form
   const {
@@ -82,7 +90,9 @@ const PublicationsForm = React.forwardRef<
     data: submitPublicationsFromPubMedData,
     mutate: mutatePublicationsFromPubMed,
     isLoading: submitPublicationsFromPubMedIsLoading,
-  } = useSubmitPublicationsFromPubMed();
+  } = useSubmitPublicationsFromPubMed(() => {
+    queryClient.invalidateQueries(PUBLICATIONS_API_KEY);
+  });
 
   // *Methods
   const handleSubmitFormPubMedNames = async (data: IPubMedNamesFormFields) => {
@@ -173,8 +183,21 @@ const PublicationsForm = React.forwardRef<
     if (submitPublicationsFromPubMedData) {
       setIsPublicationsModalVisible(false);
     }
-  }, []);
+  }, [submitPublicationsFromPubMedData]);
 
+  useEffect(() => {
+    // collect all saved publication keys in a hash for O(1) access
+    if (publicationsData) {
+      const object: { [key: string]: number } = {};
+      publicationsData.map((publication) => {
+        const externalId = publication.externalId;
+        return (object[externalId] = 1);
+      });
+      setSavedPublicationIds(object);
+    }
+  }, [publicationsData]);
+
+  console.log("savedIds", savedPublicationIds);
   // *JSX
   return (
     <div className="flex flex-col">
@@ -190,11 +213,13 @@ const PublicationsForm = React.forwardRef<
         content={
           <div className="flex flex-col mb-2 space-y-4">
             <p className="mt-2">
-              Select publications you'd like to add to your profile <br />
-              (publications already in your profile are disabled):
+              Select publications you'd like to add to your profile.
+              Publications already in your profile are disabled.
             </p>
 
             {publicationsFromPubMed.map((publication, i) => {
+              const disabled = savedPublicationIds[publication.uid] === 1;
+
               return (
                 <PublicationCard
                   index={i}
@@ -202,6 +227,7 @@ const PublicationsForm = React.forwardRef<
                   publication={publication}
                   handleSelectPublication={handleUpdateSelectedPubMedIds}
                   isSelected={selectedPubMedIds.includes(publication.uid)}
+                  isDisabled={disabled}
                   key={publication.uid}
                 />
               );
@@ -267,9 +293,11 @@ const PublicationsForm = React.forwardRef<
       {publicationsData ? (
         <div className="mt-6">
           <p className="mb-2 font-semibold">Saved publications: </p>
-          {publicationsData.map((pub, i) => (
-            <SinglePublication publication={pub} i={i} namesToBold={[]} />
-          ))}
+          {publicationsData.map((pub, i) => {
+            return (
+              <SinglePublication publication={pub} i={i} namesToBold={[]} />
+            );
+          })}
         </div>
       ) : (
         <div className="flex flex-col w-full mt-10">

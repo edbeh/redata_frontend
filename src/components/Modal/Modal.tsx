@@ -21,7 +21,7 @@ const Modal = ({ title, content, isVisible, onDismiss }: ModalProps) => {
         }`}
       />
       <div
-        className={`flex flex-col duration-500 left-1/2 top-1/2 -translate-x-1/2 transition-all ${
+        className={`shadow-lg flex flex-col duration-500 left-1/2 top-1/2 -translate-x-1/2 transition-all ${
           isVisible
             ? "pointer-events-auto -translate-y-1/2 opacity-100"
             : "pointer-events-none translate-y-full opacity-0"

@@ -44,8 +44,10 @@ const submitPublicationsFromPubMed = async (
   });
 };
 
-export const useSubmitPublicationsFromPubMed = () => {
-  return useMutation(submitPublicationsFromPubMed);
+export const useSubmitPublicationsFromPubMed = (onSuccess: () => void) => {
+  return useMutation(submitPublicationsFromPubMed, {
+    onSuccess,
+  });
 };
 
 /**
