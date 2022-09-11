@@ -13,13 +13,13 @@ import {
 } from "../endpoints";
 import { GetMetadataDesignations, GetMetadataInstitutions } from "../models";
 
-const QueryClient = createAxiosInstance();
+const AxiosInstance = createAxiosInstance();
 
 /**
  * //*GET Designations
  */
 const fetchMetadataDesignations = async () => {
-  return QueryClient.get<GetMetadataDesignations.ApiResponse>(
+  return AxiosInstance.get<GetMetadataDesignations.ApiResponse>(
     METADATA_DESIGNATIONS_API_ENDPOINT
   ).catch((error) => {
     toast.error(error.response.statusText);
@@ -37,7 +37,7 @@ export const useFetchMetadataDesignations = () => {
  *  //*GET Institutions
  */
 const fetchMetadataInstitutions = async () => {
-  return QueryClient.get<GetMetadataInstitutions.ApiResponse>(
+  return AxiosInstance.get<GetMetadataInstitutions.ApiResponse>(
     METADATA_INSTITUTIONS_API_ENDPOINT
   ).catch((error) => {
     toast.error(error.response.statusText);

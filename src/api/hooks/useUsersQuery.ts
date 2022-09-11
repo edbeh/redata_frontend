@@ -7,13 +7,13 @@ import { USERS_API_KEY } from "../keys";
 import { USERS_API_ENDPOINT } from "../endpoints";
 import { PostUser } from "../models";
 
-const QueryClient = createAxiosInstance();
+const AxiosInstance = createAxiosInstance();
 
 /**
  *  //*GET Users
  */
 const fetchAllUsers = async () => {
-  return QueryClient.get(USERS_API_ENDPOINT).catch((error) => {
+  return AxiosInstance.get(USERS_API_ENDPOINT).catch((error) => {
     toast.error(error.response.statusText);
     throw error;
   });
@@ -27,12 +27,13 @@ export const useFetchAllUsers = () => {
  *  //*POST Users
  */
 const submitUser = async (data: PostUser.PayLoad) => {
-  return QueryClient.post<PostUser.ApiResponse>(USERS_API_ENDPOINT, data).catch(
-    (error) => {
-      toast.error(error.response.statusText);
-      throw error;
-    }
-  );
+  return AxiosInstance.post<PostUser.ApiResponse>(
+    USERS_API_ENDPOINT,
+    data
+  ).catch((error) => {
+    toast.error(error.response.statusText);
+    throw error;
+  });
 };
 
 export const useSubmitUser = () => {

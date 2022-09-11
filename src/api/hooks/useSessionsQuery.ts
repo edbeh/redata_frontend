@@ -8,13 +8,13 @@ import { SESSIONS_API_ENDPOINT } from "../endpoints";
 import { ApiErrorProps } from "../utils";
 import { PostSession } from "../models";
 
-const QueryClient = createAxiosInstance();
+const AxiosInstance = createAxiosInstance();
 
 /**
  *  //*POST Session
  */
 const submitSession = async (data: ILoginFormFields) => {
-  return QueryClient.post<PostSession.ApiResponse>(
+  return AxiosInstance.post<PostSession.ApiResponse>(
     SESSIONS_API_ENDPOINT,
     data
   ).catch((error) => {

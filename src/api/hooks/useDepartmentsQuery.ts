@@ -7,13 +7,13 @@ import { DEPARTMENTS_API_KEY } from "../keys";
 import { DEPARTMENTS_API_ENDPOINT } from "../endpoints";
 import { GetDepartmentById } from "../models";
 
-const QueryClient = createAxiosInstance();
+const AxiosInstance = createAxiosInstance();
 
 /**
  * //*GET Me
  */
 const fetchDepartmentById = async (id: string) => {
-  return QueryClient.get<GetDepartmentById.ApiResponse>(
+  return AxiosInstance.get<GetDepartmentById.ApiResponse>(
     `${DEPARTMENTS_API_ENDPOINT}?institution_id=${id}`
   ).catch((error) => {
     toast.error(error.response.statusText);

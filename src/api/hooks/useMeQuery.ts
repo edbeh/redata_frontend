@@ -8,16 +8,18 @@ import { ME_API_KEY } from "../keys";
 import { ME_API_ENDPOINT } from "../endpoints";
 import { GetMe } from "../models";
 
-const QueryClient = createAxiosInstance();
+const AxiosInstance = createAxiosInstance();
 
 /**
  * //*GET Me
  */
 const fetchMe = async () => {
-  return QueryClient.get<GetMe.ApiResponse>(ME_API_ENDPOINT).catch((error) => {
-    toast.error(error.response.statusText);
-    throw error;
-  });
+  return AxiosInstance.get<GetMe.ApiResponse>(ME_API_ENDPOINT).catch(
+    (error) => {
+      toast.error(error.response.statusText);
+      throw error;
+    }
+  );
 };
 
 export const useFetchMe = () => {

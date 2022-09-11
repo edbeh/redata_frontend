@@ -11,13 +11,13 @@ import {
   GetPublications,
 } from "../models";
 
-const QueryClient = createAxiosInstance();
+const AxiosInstance = createAxiosInstance();
 
 /**
  *  //*GET Publications
  */
 const fetchAllPublications = async () => {
-  return QueryClient.get<GetPublications.ApiResponse>(
+  return AxiosInstance.get<GetPublications.ApiResponse>(
     PUBLICATIONS_API_ENDPOINT
   ).catch((error) => {
     toast.error(error.response.statusText);
@@ -35,7 +35,7 @@ export const useFetchAllPublications = () => {
 const submitPublicationsFromPubMed = async (
   data: PostPublicationsFromPubMed.PayLoad
 ) => {
-  return QueryClient.post<PostPublicationsFromPubMed.ApiResponse>(
+  return AxiosInstance.post<PostPublicationsFromPubMed.ApiResponse>(
     PUBLICATIONS_API_ENDPOINT,
     data
   ).catch((error) => {
@@ -52,7 +52,7 @@ export const useSubmitPublicationsFromPubMed = () => {
  *  //*DELETE Publications
  */
 const removePublications = async (data: DeletePublications.PayLoad) => {
-  return QueryClient.delete<DeletePublications.ApiResponse>(
+  return AxiosInstance.delete<DeletePublications.ApiResponse>(
     PUBLICATIONS_API_ENDPOINT,
     { data }
   ).catch((error) => {
