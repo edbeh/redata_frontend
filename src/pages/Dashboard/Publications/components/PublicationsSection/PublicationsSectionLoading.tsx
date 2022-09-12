@@ -8,7 +8,7 @@ const PublicationsSectionLoading = () => {
     <div className="w-full">
       <Card>
         <div>
-          <Skeleton count={5} height={18} className="mb-2" />
+          <Skeleton count={5} height={22} className="mb-2" />
         </div>
       </Card>
     </div>

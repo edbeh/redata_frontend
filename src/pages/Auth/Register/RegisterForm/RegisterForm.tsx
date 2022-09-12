@@ -93,7 +93,7 @@ const RegisterForm = () => {
         className="w-full p-[12%] md:p-[18%]"
       >
         <div className="flex flex-col space-y-4">
-          <h1 className="text-3xl font-bold text-blue-900">REGISTER</h1>
+          <h1 className="text-4xl font-bold text-blue-900">REGISTER</h1>
 
           <FormInput
             register={register}
