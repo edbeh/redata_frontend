@@ -28,6 +28,8 @@ const Onboarding = () => {
     return getOnboardingSteps();
   }, []);
 
+  const [isSubmissionLoading, setIsSubmissionLoading] =
+    useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [initialProgress, setInitialProgress] = useState<string>("0%");
   const [currentProgress, setCurrentProgress] = useState<string>("0%");
@@ -141,6 +143,7 @@ const Onboarding = () => {
               <BasicInfoForm
                 ref={basicInfoSubmitRef}
                 onSuccessCallback={handleFormSubmitSuccess}
+                setIsSubmissionLoading={setIsSubmissionLoading}
               />
             )}
             {currentStep === 2 && (
@@ -174,6 +177,7 @@ const Onboarding = () => {
             <Button
               onClick={handleNextStep}
               disabled={currentStep >= onboardingSteps?.length}
+              isLoading={isSubmissionLoading}
             >
               Next
             </Button>

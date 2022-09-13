@@ -1,12 +1,12 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useQuery } from "react-query";
+import { useQuery, useMutation } from "react-query";
 
 import { createAxiosInstance } from "api/utils/createAxiosInstance";
 
 import { ME_API_KEY } from "../keys";
 import { ME_API_ENDPOINT } from "../endpoints";
-import { GetMe } from "../models";
+import { GetMe, PutMe } from "../models";
 
 const AxiosInstance = createAxiosInstance();
 
@@ -25,5 +25,23 @@ const fetchMe = async () => {
 export const useFetchMe = () => {
   return useQuery([ME_API_KEY], fetchMe, {
     staleTime: 1000 * 60 * 5, // 5 minutes
+  });
+};
+
+/**
+ * //*PUT Me
+ */
+const updateMe = async (data: PutMe.PayLoad) => {
+  return AxiosInstance.put<PutMe.ApiResponse>(ME_API_ENDPOINT, data).catch(
+    (error) => {
+      toast.error(error.response.statusText);
+      throw error;
+    }
+  );
+};
+
+export const useUpdateMe = (onSuccess?: () => void) => {
+  return useMutation(updateMe, {
+    onSuccess,
   });
 };

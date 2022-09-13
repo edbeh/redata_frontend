@@ -134,7 +134,7 @@ const PublicationsForm = React.forwardRef<
 
   useEffect(() => {
     if (fetchMeData) {
-      const pubMedNames = fetchMeData.data?.data?.pubMedNames?.join(", ");
+      const pubMedNames = fetchMeData.data?.data?.pubmedNames?.join(", ");
       setValuePubMedNames("pubMedNames", pubMedNames);
     }
   }, [fetchMeData]);

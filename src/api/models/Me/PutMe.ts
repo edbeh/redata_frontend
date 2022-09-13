@@ -1,6 +1,16 @@
 import { FormSelectModel } from "models";
 
-export declare module GetMe {
+export declare module PutMe {
+  export interface PayLoad {
+    name?: string;
+    email?: string;
+    institution?: string;
+    designation?: string;
+    department?: string;
+    pubmedNames?: string[];
+    correctedPubmedNames?: string[];
+  }
+
   export interface Data {
     id: string;
     type: string;
@@ -8,7 +18,7 @@ export declare module GetMe {
     email: string;
     institution: FormSelectModel;
     designation?: FormSelectModel;
-    department?: FormSelectModel;
+    department?: string;
     pubmedNames: string[];
     correctedPubmedNames: string[];
   }

@@ -15,6 +15,7 @@ import {
   useFetchMetadataDesignations,
   useFetchMe,
   useFetchDepartmentById,
+  useUpdateMe,
 } from "api/hooks";
 
 import { IBasicInfoFormFields } from "./BasicInfoForm.model";
@@ -28,11 +29,14 @@ import {
 interface BasicInfoFormProps {
   /** callback if api call is successful */
   onSuccessCallback?: () => void;
+
+  /** display loading state parent component */
+  setIsSubmissionLoading?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
   // ref for parent component to trigger submit form
-  ({ onSuccessCallback }, ref) => {
+  ({ onSuccessCallback, setIsSubmissionLoading }, ref) => {
     // *Form
     const {
       register,
@@ -74,6 +78,12 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       isLoading: fetchMetadataDesignationsIsLoading,
     } = useFetchMetadataDesignations();
 
+    const {
+      mutate: mutateMe,
+      isLoading: updateMeIsLoading,
+      error: updateMeError,
+    } = useUpdateMe(onSuccessCallback);
+
     // *Methods
     const handleSubmitForm = async (data: IBasicInfoFormFields) => {
       clearErrors();
@@ -81,8 +91,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       if (hasErrors) return;
 
       const cleanData = cleanUpData(data);
-      console.log(cleanData);
-      if (onSuccessCallback) onSuccessCallback();
+      mutateMe(cleanData);
     };
 
     // *Effects
@@ -91,13 +100,19 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
       if (fetchMeData) {
         const data = fetchMeData.data?.data;
-        setValue("designation", data.designation || undefined);
-        setValue("department", data.department || undefined);
-        setValue("name", data.name);
+        if (data.designation) setValue("designation", data.designation);
+        if (data.department) setValue("department", data.department);
+        if (data.name) setValue("name", data.name);
+        if (data.pubmedNames)
+          setValue("pubMedNames", data.pubmedNames.join(", "));
       }
     }, [fetchMeData, fetchMetadataDesignationsData, fetchDepartmentByIdData]);
 
-    console.log("watch", watch());
+    useEffect(() => {
+      if (setIsSubmissionLoading) setIsSubmissionLoading(updateMeIsLoading);
+    }, [updateMeIsLoading]);
+
+    useEffect(() => {}, []);
 
     // *JSX
     return (
@@ -142,6 +157,18 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
             />
 
             <FormInput
+              label="PubMed Names"
+              register={register}
+              id="pubMedNames"
+              name="pubMedNames"
+              required={getYupIsRequired(schema, "pubMedNames")}
+              helper="Please separate your PubMed names with comma"
+              error={formErrors?.pubMedNames?.message}
+            />
+          </div>
+
+          <div className="flex flex-col w-full mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
+            <FormInput
               label="MCR Number"
               register={register}
               id="mcrNo"
@@ -149,6 +176,8 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               required={getYupIsRequired(schema, "mcrNo")}
               error={formErrors?.mcrNo?.message}
             />
+
+            <div className="w-full" />
           </div>
 
           <div className="flex flex-col w-full mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">

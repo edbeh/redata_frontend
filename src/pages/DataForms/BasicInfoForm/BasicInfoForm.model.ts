@@ -12,8 +12,7 @@ export interface IBasicInfoFormFields {
   primarySubspecialty: FormSelectModel;
   primarySubspecialtyOthers: string;
   otherSubspecialties: OtherSubspecialties[];
-  // secondarySubspecialty: FormSelectModel;
-  // secondarySubspecialtyOthers: string;
+  pubMedNames: string;
   mcrNo: string;
   bio: string;
 }

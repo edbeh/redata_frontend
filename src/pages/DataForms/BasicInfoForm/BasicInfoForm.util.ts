@@ -14,10 +14,15 @@ export const subSpecialties = [
 ];
 
 export const cleanUpData = (data: IBasicInfoFormFields) => {
+  const pubmedNamesArr = data.pubMedNames?.split(",").map((name) => {
+    return name.trim();
+  });
+
   return {
     designationId: data.designation.id,
     name: data.name,
     departmentId: data.department.id,
+    pubmedNames: pubmedNamesArr,
     mcrNo: data.mcrNo,
     primarySpecialty: data.primarySubspecialty.id,
     primarySpecialtyOthers: data.primarySubspecialtyOthers,

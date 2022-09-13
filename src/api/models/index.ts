@@ -3,6 +3,7 @@ export * from "./Sessions/PostUser";
 export * from "./Metadata/GetMetadataDesignations";
 export * from "./Metadata/GetMetadataInstitutions";
 export * from "./Me/GetMe";
+export * from "./Me/PutMe";
 export * from "./Departments/GetDepartmentById";
 export * from "./PubMed/GetPubMedByNames";
 export * from "./PubMed/GetPubMedByIds";
