@@ -30,16 +30,18 @@ const PublicationsSection = ({
             </p>
           </div>
         ) : (
-          data.map((publication, i) => {
-            return (
-              <SinglePublication
-                key={i}
-                publication={publication}
-                i={i}
-                namesToBold={namesToBold}
-              />
-            );
-          })
+          <div className="flex flex-col w-full m-0 sm:m-2">
+            {data.map((publication, i) => {
+              return (
+                <SinglePublication
+                  key={i}
+                  publication={publication}
+                  i={i}
+                  namesToBold={namesToBold}
+                />
+              );
+            })}
+          </div>
         )}
       </Card>
     </div>

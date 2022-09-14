@@ -222,21 +222,22 @@ const PublicationsForm = React.forwardRef<
               Publications already in your profile are disabled.
             </p>
 
-            {publicationsFromPubMed.map((publication, i) => {
-              const disabled = savedPublicationIds[publication.uid] === 1;
+            {fetchMeData &&
+              publicationsFromPubMed.map((publication, i) => {
+                const disabled = savedPublicationIds[publication.uid] === 1;
 
-              return (
-                <PublicationCard
-                  index={i}
-                  namesToBold={namesToBold}
-                  publication={publication}
-                  handleSelectPublication={handleUpdateSelectedPubMedIds}
-                  isSelected={selectedPubMedIds.includes(publication.uid)}
-                  isDisabled={disabled}
-                  key={publication.uid}
-                />
-              );
-            })}
+                return (
+                  <PublicationCard
+                    index={i}
+                    namesToBold={fetchMeData.data.data.correctedPubmedNames}
+                    publication={publication}
+                    handleSelectPublication={handleUpdateSelectedPubMedIds}
+                    isSelected={selectedPubMedIds.includes(publication.uid)}
+                    isDisabled={disabled}
+                    key={publication.uid}
+                  />
+                );
+              })}
 
             <div className="sticky flex h-[60px] bg-white -bottom-8 items-center justify-apart">
               <div className="w-full">
@@ -287,12 +288,16 @@ const PublicationsForm = React.forwardRef<
         </div>
       </form>
 
-      {publicationsData ? (
+      {fetchMeData && publicationsData ? (
         <div className="mt-8 max-h-[55vh] overflow-y-scroll">
           <p className="mb-2 font-semibold">Saved publications: </p>
           {publicationsData.map((pub, i) => {
             return (
-              <SinglePublication publication={pub} i={i} namesToBold={[]} />
+              <SinglePublication
+                publication={pub}
+                i={i}
+                namesToBold={fetchMeData.data.data.correctedPubmedNames}
+              />
             );
           })}
         </div>

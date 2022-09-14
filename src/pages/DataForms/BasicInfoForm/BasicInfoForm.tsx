@@ -166,9 +166,6 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       }
     }, [fetchPubMedByNamesData]);
 
-    console.log("fetchPubMedByNamesData", fetchPubMedByNamesData);
-    console.log("formErrors", formErrors);
-
     // *JSX
     return (
       <div>

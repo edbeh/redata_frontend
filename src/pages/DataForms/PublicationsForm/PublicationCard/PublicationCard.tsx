@@ -39,6 +39,8 @@ const PublicationCard = ({
     }
   };
 
+  console.log("from component", namesToBold);
+
   return (
     <div
       className={`flex shadow-md p-4 border-[1px] rounded-lg

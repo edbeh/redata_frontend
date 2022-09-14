@@ -1,37 +1,15 @@
 import { BaseLayout } from "wrapper-components";
 import { BreadCrumbs } from "components";
-import {
-  useFetchMe,
-  useFetchPubMedByNames,
-  useFetchAllPublications,
-} from "api/hooks";
+import { useFetchMe, useFetchAllPublications } from "api/hooks";
 
-import { mockData as mockDataHome } from "../Home/Home.util";
-import { publicationsNav, mockData } from "./Publications.util";
+import { publicationsNav } from "./Publications.util";
 import { PublicationsSection } from "./components";
 import PublicationsSectionLoading from "./components/PublicationsSection/PublicationsSectionLoading";
 
 const Publications = () => {
   // *Queries
-  const { data: fetchMeData, isLoading: fetchMeIsLoading } = useFetchMe();
-
-  const {
-    data: fetchPubMedByNamesData,
-    isLoading: fetchPubMedByNamesIsLoading,
-    isFetching: fetchPubMedByNamesIsFetching,
-  } = useFetchPubMedByNames(
-    mockDataHome.pubmedNames?.join(","),
-    mockDataHome.pubmedNames?.length > 0
-  );
-
-  const {
-    data: fetchAllPublicationsData,
-    isLoading: fetchAllPublicationsIsLoading,
-    isFetching: fetchAllPublicationsIsFetching,
-  } = useFetchAllPublications();
-
-  console.log("fetchMeData", fetchMeData);
-  console.log("fetchAllPublicationsData", fetchAllPublicationsData);
+  const { data: fetchMeData } = useFetchMe();
+  const { data: fetchAllPublicationsData } = useFetchAllPublications();
 
   // *JSX
   return (
@@ -43,10 +21,10 @@ const Publications = () => {
         </h1>
 
         <div className="flex flex-col w-full mt-8 space-y-6">
-          {fetchAllPublicationsData?.data ? (
+          {fetchMeData?.data && fetchAllPublicationsData?.data ? (
             <PublicationsSection
               data={fetchAllPublicationsData?.data?.data || []}
-              namesToBold={fetchPubMedByNamesData?.namesToBold || []}
+              namesToBold={fetchMeData?.data?.data?.correctedPubmedNames || []}
             />
           ) : (
             <PublicationsSectionLoading />

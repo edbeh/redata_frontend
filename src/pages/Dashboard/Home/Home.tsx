@@ -8,8 +8,11 @@ import {
   CommonSection,
   PubMedNamesSection,
 } from "./components";
+import { useFetchMe } from "api/hooks";
 
 const Home = () => {
+  const { data: fetchMeData } = useFetchMe();
+
   return (
     <BaseLayout withLeftNavigation>
       <div className="w-full pb-12">
@@ -29,7 +32,9 @@ const Home = () => {
             title="Patient Populations"
             data={mockData.patientPopulations}
           />
-          <PubMedNamesSection data={mockData.pubmedNames} />
+          <PubMedNamesSection
+            data={fetchMeData?.data?.data?.pubmedNames || []}
+          />
         </div>
       </div>
     </BaseLayout>
