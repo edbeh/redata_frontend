@@ -14,7 +14,11 @@ import {
 } from "./PatientPopulationsForm.util";
 
 interface PatientPopulationsFormProps {
+  /** callback if api call is successful */
   onSuccessCallback?: () => void;
+
+  /** display loading state parent component */
+  setIsSubmissionLoading?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const PatientPopulationsForm = React.forwardRef<

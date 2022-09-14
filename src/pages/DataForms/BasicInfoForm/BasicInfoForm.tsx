@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -16,6 +16,7 @@ import {
   useFetchMe,
   useFetchDepartmentById,
   useUpdateMe,
+  useFetchPubMedByNames,
 } from "api/hooks";
 
 import { IBasicInfoFormFields } from "./BasicInfoForm.model";
@@ -37,6 +38,8 @@ interface BasicInfoFormProps {
 const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
   // ref for parent component to trigger submit form
   ({ onSuccessCallback, setIsSubmissionLoading }, ref) => {
+    const [pubMedNamesToSearch, setPubMedNamesToSearch] = useState<string>("");
+
     // *Form
     const {
       register,
@@ -78,11 +81,14 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       isLoading: fetchMetadataDesignationsIsLoading,
     } = useFetchMetadataDesignations();
 
+    const { mutate: mutateMe, isLoading: updateMeIsLoading } =
+      useUpdateMe(onSuccessCallback);
+
     const {
-      mutate: mutateMe,
-      isLoading: updateMeIsLoading,
-      error: updateMeError,
-    } = useUpdateMe(onSuccessCallback);
+      data: fetchPubMedByNamesData,
+      isLoading: fetchPubMedByNamesIsLoading,
+      isFetching: fetchPubMedByNamesIsFetching,
+    } = useFetchPubMedByNames(pubMedNamesToSearch, !!pubMedNamesToSearch);
 
     // *Methods
     const handleSubmitForm = async (data: IBasicInfoFormFields) => {
@@ -131,6 +137,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               options={fetchMetadataDesignationsData?.data?.data || []}
               isLoading={fetchMetadataDesignationsIsLoading}
               required={getYupIsRequired(schema, "designation")}
+              autoComplete="off"
               error={formErrors?.designation?.message}
             />
 
@@ -140,6 +147,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               id="name"
               name="name"
               required={getYupIsRequired(schema, "name")}
+              autoComplete="off"
               error={formErrors?.name?.message}
             />
           </div>
@@ -153,6 +161,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               options={fetchDepartmentByIdData?.data?.data || []}
               isLoading={fetchDepartmentByIdDataIsLoading}
               required={getYupIsRequired(schema, "department")}
+              autoComplete="off"
               error={formErrors?.department?.message}
             />
 
@@ -163,6 +172,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               name="pubMedNames"
               required={getYupIsRequired(schema, "pubMedNames")}
               helper="Please separate your PubMed names with comma"
+              autoComplete="off"
               error={formErrors?.pubMedNames?.message}
             />
           </div>
@@ -174,6 +184,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               id="mcrNo"
               name="mcrNo"
               required={getYupIsRequired(schema, "mcrNo")}
+              autoComplete="off"
               error={formErrors?.mcrNo?.message}
             />
 
@@ -187,6 +198,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               id="bio"
               name="bio"
               required={getYupIsRequired(schema, "bio")}
+              autoComplete="off"
               error={formErrors?.bio?.message}
             />
           </div>
@@ -201,6 +213,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               id="primarySubspecialty"
               name="primarySubspecialty"
               required={getYupIsRequired(schema, "primarySubspecialty")}
+              autoComplete="off"
               error={formErrors?.primarySubspecialty?.message}
             />
 
@@ -211,6 +224,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                 id="primarySubspecialtyOthers"
                 name="primarySubspecialtyOthers"
                 required={getYupIsRequired(schema, "primarySubspecialtyOthers")}
+                autoComplete="off"
                 error={formErrors?.primarySubspecialtyOthers?.message}
               />
             )}
@@ -231,6 +245,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                   id={`otherSubspecialties.${i}.otherSubspecialty`}
                   name={`otherSubspecialties.${i}.otherSubspecialty`}
                   required
+                  autoComplete="off"
                   error={
                     formErrors?.otherSubspecialties &&
                     formErrors?.otherSubspecialties[i]?.otherSubspecialty
@@ -245,6 +260,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                     register={register}
                     id={`otherSubspecialties.${i}.otherSubspecialtyOthers`}
                     name={`otherSubspecialties.${i}.otherSubspecialtyOthers`}
+                    autoComplete="off"
                     error={
                       formErrors?.otherSubspecialties &&
                       formErrors?.otherSubspecialties[i]

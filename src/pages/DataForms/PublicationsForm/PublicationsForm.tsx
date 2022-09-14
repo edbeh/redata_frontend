@@ -23,7 +23,11 @@ import { pubMedNamesSchema } from "./PublicationsForm.schema";
 import PublicationCard from "./PublicationCard/PublicationCard";
 
 interface PublicationsFormProps {
+  /** callback if api call is successful */
   onSuccessCallback?: () => void;
+
+  /** display loading state parent component */
+  setIsSubmissionLoading?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const PublicationsForm = React.forwardRef<
@@ -197,7 +201,8 @@ const PublicationsForm = React.forwardRef<
     }
   }, [publicationsData]);
 
-  console.log("savedIds", savedPublicationIds);
+  console.log("fetchMeData", fetchMeData);
+
   // *JSX
   return (
     <div className="flex flex-col">
@@ -266,32 +271,33 @@ const PublicationsForm = React.forwardRef<
         noValidate
         onSubmit={handleSubmitPubMedNames(handleSubmitFormPubMedNames)}
       >
-        <div className="flex flex-col space-x-0 space-y-4 sm:space-x-4 sm:space-y-0 sm:flex-row">
-          <FormInput
+        <div className="flex flex-col space-x-0 space-y-4 sm:space-x-4 sm:space-y-0 sm:flex-row sm:items-center justify-between">
+          <div>
+            <p className="font-semibold capitalize">
+              {fetchMeData?.data?.data?.pubmedNames?.join(", ")}
+            </p>
+            <a href="/onboarding/1" className="text-blue-500 hover:underline">
+              Edit your PubMed names
+            </a>
+          </div>
+          {/* <FormInput
             register={registerPubMedNames}
-            label="PubMed Names or Aliases"
-            placeholder="Doe John, Doe J"
-            helper="Please separate your pubMed names with comma"
+            label="Your Registered PubMed Names"
             name="pubMedNames"
             id="pubMedNames"
             autoComplete="off"
             error={pubMedNamesErrors.pubMedNames?.message}
-          />
+            disabled
+          /> */}
 
-          <div className="pt-0 sm:pt-6">
-            <Button
-              type="submit"
-              variant="secondary"
-              disabled={pubMedNames === "" || !pubmedNamesIsValid}
-            >
-              Search PubMed
-            </Button>
+          <div>
+            <Button variant="secondary">Search PubMed</Button>
           </div>
         </div>
       </form>
 
       {publicationsData ? (
-        <div className="mt-6">
+        <div className="mt-8 max-h-[55vh] overflow-y-scroll">
           <p className="mb-2 font-semibold">Saved publications: </p>
           {publicationsData.map((pub, i) => {
             return (
