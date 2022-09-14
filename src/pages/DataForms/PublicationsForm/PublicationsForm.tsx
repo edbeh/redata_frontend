@@ -280,15 +280,6 @@ const PublicationsForm = React.forwardRef<
               Edit your PubMed names
             </a>
           </div>
-          {/* <FormInput
-            register={registerPubMedNames}
-            label="Your Registered PubMed Names"
-            name="pubMedNames"
-            id="pubMedNames"
-            autoComplete="off"
-            error={pubMedNamesErrors.pubMedNames?.message}
-            disabled
-          /> */}
 
           <div>
             <Button variant="secondary">Search PubMed</Button>

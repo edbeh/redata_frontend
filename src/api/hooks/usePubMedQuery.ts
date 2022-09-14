@@ -26,8 +26,30 @@ const fetchPubMedByNames = async (pubMedNames: string) => {
     .then((responses) => {
       const ids: string[] = [];
       const namesToBold: string[] = [];
+      const invalidPubMedNames: string[] = [];
 
       responses?.map((response) => {
+        if (response?.data?.esearchresult?.count === "0") {
+          const fullInvalidName =
+            response?.data?.esearchresult?.querytranslation
+              ?.toLowerCase()
+              ?.split("[author]")[0];
+
+          let finalInvalidName = fullInvalidName;
+          if (fullInvalidName.includes("[all fields]")) {
+            const invalidLastName =
+              fullInvalidName.split(" ")[fullInvalidName.split(" ").length - 1];
+            finalInvalidName = `${fullInvalidName
+              .split("[all fields]")[0]
+              .replace("(", "")} ${invalidLastName}`;
+          }
+
+          return invalidPubMedNames.push(
+            ...invalidPubMedNames,
+            finalInvalidName
+          );
+        }
+
         const translation = response?.data?.esearchresult?.querytranslation
           ?.toLowerCase()
           ?.includes("[full author name]")
@@ -47,7 +69,7 @@ const fetchPubMedByNames = async (pubMedNames: string) => {
         return ids.push(...response?.data?.esearchresult?.idlist);
       });
 
-      return { ids, namesToBold };
+      return { ids, namesToBold, invalidPubMedNames };
     })
     .catch((error) => {
       // toast.error(error.response.statusText);

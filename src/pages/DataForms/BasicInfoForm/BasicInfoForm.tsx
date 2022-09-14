@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useQueryClient } from "react-query";
 import React, { useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -18,6 +19,7 @@ import {
   useUpdateMe,
   useFetchPubMedByNames,
 } from "api/hooks";
+import { ME_API_KEY } from "api/keys";
 
 import { IBasicInfoFormFields } from "./BasicInfoForm.model";
 import { schema } from "./BasicInfoForm.schema";
@@ -25,6 +27,7 @@ import {
   cleanUpData,
   subSpecialties,
   validateDuplicateValues,
+  validatePubMedNames,
 } from "./BasicInfoForm.util";
 
 interface BasicInfoFormProps {
@@ -39,6 +42,8 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
   // ref for parent component to trigger submit form
   ({ onSuccessCallback, setIsSubmissionLoading }, ref) => {
     const [pubMedNamesToSearch, setPubMedNamesToSearch] = useState<string>("");
+    const [displayCheckForPubMedNames, setDisplayCheckForPubMedNames] =
+      useState<boolean>(false);
 
     // *Form
     const {
@@ -49,7 +54,6 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       watch,
       setValue,
       setError,
-      clearErrors,
     } = useForm<IBasicInfoFormFields>({
       resolver: yupResolver(schema),
       mode: "onChange",
@@ -65,9 +69,31 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     });
 
     const primarySubspecialty = watch("primarySubspecialty");
-    // const secondarySubspecialty = watch("secondarySubspecialty");
+
+    // *Methods
+    const handleSubmitForm = async (data: IBasicInfoFormFields) => {
+      const { hasErrors: hasDuplicateValueErrors } = validateDuplicateValues(
+        data,
+        setError
+      );
+      const { hasErrors: hasInvalidPubMedNames } = validatePubMedNames(
+        fetchPubMedByNamesData?.invalidPubMedNames || [],
+        setError
+      );
+      if (hasDuplicateValueErrors || hasInvalidPubMedNames) return;
+
+      const cleanData = cleanUpData(data);
+      mutateMe(cleanData);
+    };
+
+    const handleMutationSuccess = () => {
+      queryClient.invalidateQueries(ME_API_KEY);
+      if (onSuccessCallback) onSuccessCallback();
+    };
 
     // *Queries
+    const queryClient = useQueryClient();
+
     const { data: fetchMeData, isLoading: fetchMeIsLoading } = useFetchMe();
     const institutionId = fetchMeData?.data?.data?.institution?.id as string;
 
@@ -81,24 +107,15 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       isLoading: fetchMetadataDesignationsIsLoading,
     } = useFetchMetadataDesignations();
 
-    const { mutate: mutateMe, isLoading: updateMeIsLoading } =
-      useUpdateMe(onSuccessCallback);
+    const { mutate: mutateMe, isLoading: updateMeIsLoading } = useUpdateMe(
+      handleMutationSuccess
+    );
 
     const {
       data: fetchPubMedByNamesData,
       isLoading: fetchPubMedByNamesIsLoading,
       isFetching: fetchPubMedByNamesIsFetching,
     } = useFetchPubMedByNames(pubMedNamesToSearch, !!pubMedNamesToSearch);
-
-    // *Methods
-    const handleSubmitForm = async (data: IBasicInfoFormFields) => {
-      clearErrors();
-      const { hasErrors } = validateDuplicateValues(data, setError);
-      if (hasErrors) return;
-
-      const cleanData = cleanUpData(data);
-      mutateMe(cleanData);
-    };
 
     // *Effects
     useEffect(() => {
@@ -109,8 +126,10 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
         if (data.designation) setValue("designation", data.designation);
         if (data.department) setValue("department", data.department);
         if (data.name) setValue("name", data.name);
-        if (data.pubmedNames)
+        if (data.pubmedNames) {
           setValue("pubMedNames", data.pubmedNames.join(", "));
+          setPubMedNamesToSearch(data.pubmedNames.join(", "));
+        }
       }
     }, [fetchMeData, fetchMetadataDesignationsData, fetchDepartmentByIdData]);
 
@@ -118,7 +137,30 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       if (setIsSubmissionLoading) setIsSubmissionLoading(updateMeIsLoading);
     }, [updateMeIsLoading]);
 
-    useEffect(() => {}, []);
+    useEffect(() => {
+      setDisplayCheckForPubMedNames(false);
+    }, [pubMedNamesToSearch]);
+
+    useEffect(() => {
+      if (
+        fetchPubMedByNamesData &&
+        fetchPubMedByNamesData.invalidPubMedNames?.length > 0
+      ) {
+        setDisplayCheckForPubMedNames(false);
+        validatePubMedNames(
+          fetchPubMedByNamesData.invalidPubMedNames,
+          setError
+        );
+        return;
+      }
+
+      if (fetchPubMedByNamesData) {
+        return setDisplayCheckForPubMedNames(true);
+      }
+    }, [fetchPubMedByNamesData]);
+
+    console.log("fetchPubMedByNamesData", fetchPubMedByNamesData);
+    console.log("formErrors", formErrors);
 
     // *JSX
     return (
@@ -173,7 +215,27 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               required={getYupIsRequired(schema, "pubMedNames")}
               helper="Please separate your PubMed names with comma"
               autoComplete="off"
+              rightCheck={displayCheckForPubMedNames}
+              suggestion={
+                !formErrors?.pubMedNames?.message &&
+                !fetchPubMedByNamesIsLoading &&
+                !fetchPubMedByNamesIsLoading &&
+                fetchPubMedByNamesData &&
+                fetchPubMedByNamesData?.namesToBold?.length > 0 &&
+                fetchPubMedByNamesData?.namesToBold.join(", ") !==
+                  pubMedNamesToSearch.toLowerCase()
+                  ? `Suggestions: ${fetchPubMedByNamesData?.namesToBold.join(
+                      ", "
+                    )}`
+                  : ""
+              }
               error={formErrors?.pubMedNames?.message}
+              isLoading={
+                fetchPubMedByNamesIsLoading || fetchPubMedByNamesIsFetching
+              }
+              onBlur={(e) => {
+                setPubMedNamesToSearch(e.currentTarget.value);
+              }}
             />
           </div>
 

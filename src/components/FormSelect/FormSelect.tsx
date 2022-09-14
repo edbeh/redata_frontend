@@ -64,7 +64,7 @@ const FormSelect = ({
         )}
       />
 
-      {error && <div className="mt-[2px] text-red">{error}</div>}
+      {error && <div className="mt-[2px] text-red text-sm">{error}</div>}
     </div>
   );
 };

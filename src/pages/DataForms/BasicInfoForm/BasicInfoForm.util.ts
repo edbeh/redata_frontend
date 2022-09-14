@@ -35,6 +35,21 @@ type ValidationStatus = {
   hasErrors: boolean;
 };
 
+export const validatePubMedNames = (
+  data: string[],
+  setError: UseFormSetError<IBasicInfoFormFields>
+) => {
+  const status = { hasErrors: false };
+  if (!data || data.length === 0) return status;
+
+  status.hasErrors = true;
+  setError("pubMedNames", {
+    message: `The following PubMed names are invalid: ${data.join(", ")}`,
+  });
+
+  return status;
+};
+
 export const validateDuplicateValues = (
   data: IBasicInfoFormFields,
   setError: UseFormSetError<IBasicInfoFormFields>
