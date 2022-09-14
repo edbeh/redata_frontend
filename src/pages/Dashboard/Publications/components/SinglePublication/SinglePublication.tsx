@@ -7,7 +7,7 @@ interface SinglePublicationProps {
   namesToBold: string[];
   isEditable?: boolean;
   isSelected?: boolean;
-  handleSelectPublication?: () => void;
+  handleSelectPublication?: (id: string) => void;
 
   i: number;
 }
@@ -46,8 +46,14 @@ const SinglePublication = ({
         className={`flex flex-col items-center cursor-pointer ${
           isEditable ? "min-w-[20px] mt-[5px] mr-2 sm:mr-4" : "min-w-[35px]"
         }`}
+        onClick={() =>
+          handleSelectPublication &&
+          handleSelectPublication(publication.externalId)
+        }
       >
-        {isEditable && <input type="checkbox" className="scale-125" />}
+        {isEditable && (
+          <input type="checkbox" checked={isSelected} className="scale-125" />
+        )}
         <p className={` ${isEditable ? "text-center mt-2" : ""}`}>{i + 1}.</p>
       </div>
       <div className="space-y-1">

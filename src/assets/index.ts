@@ -16,6 +16,7 @@ import imgScientistMicroscope from "./scientist-microscope.jpg";
 import imgNotFound from "./not-found.jpg";
 import imgProfileBackground from "./profile-background.webp";
 import imgJohnDoe from "./john-doe.jpg";
+import imgDeleteFiles from "./delete-files.png";
 
 export {
   ImgXMarkOutline,
@@ -35,4 +36,5 @@ export {
   imgProfileBackground,
   imgNotFound,
   imgJohnDoe,
+  imgDeleteFiles,
 };

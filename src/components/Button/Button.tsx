@@ -1,7 +1,7 @@
 import MoonLoader from "react-spinners/MoonLoader";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "red";
   isLoading?: boolean;
 }
 
@@ -21,6 +21,8 @@ const Button: React.FC<ButtonProps> = ({
                   justify-center whitespace-nowrap ${
                     variant === "primary"
                       ? "bg-primary-600 text-white"
+                      : variant === "red"
+                      ? "bg-red-500 text-white border-red-500"
                       : "bg-white text-primary-600"
                   } ${disabled ? "bg-slate-200" : ""}
                   ${

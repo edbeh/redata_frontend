@@ -18,7 +18,7 @@ const FormTextArea = ({
     <div className="flex flex-col w-full">
       <label htmlFor={id} className="flex">
         {label}
-        {required && <span className="text-red">*</span>}
+        {required && <span className="text-red-500">*</span>}
       </label>
 
       <textarea
@@ -32,7 +32,7 @@ const FormTextArea = ({
         {...rest}
       />
 
-      {error && <div className="mt-[2px] text-red">{error}</div>}
+      {error && <div className="mt-[2px] text-red-500">{error}</div>}
     </div>
   );
 };

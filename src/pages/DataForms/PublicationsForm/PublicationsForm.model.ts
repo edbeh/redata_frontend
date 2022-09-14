@@ -1,4 +1,9 @@
 export interface IPubMedNamesFormFields {
   pubMedNames: string;
-  selectAll: boolean;
+  selectAllPublications: boolean;
+}
+
+export interface ISavedPublicationsFormFields {
+  selectedPublicationIds: string[];
+  selectAllSavedPublications: boolean;
 }

@@ -75,6 +75,8 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
     // *Methods
     const handleSubmitForm = async (data: IBasicInfoFormFields) => {
+      if (fetchPubMedByNamesIsLoading || fetchPubMedByNamesIsFetching) return;
+
       const { hasErrors: hasDuplicateValueErrors } = validateDuplicateValues(
         data,
         setError
@@ -329,7 +331,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                   <ImgXMarkOutline
                     width={20}
                     height={20}
-                    className="stroke-[3px] text-red"
+                    className="stroke-[3px] text-red-500"
                   />
                 </button>
               </div>

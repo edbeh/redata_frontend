@@ -36,7 +36,7 @@ const FormSelect = ({
     <div className="flex flex-col w-full hover:cursor-pointer">
       <label htmlFor={id} className="flex">
         {label}
-        {required && <span className="text-red">*</span>}
+        {required && <span className="text-red-500">*</span>}
       </label>
 
       <Controller
@@ -64,7 +64,7 @@ const FormSelect = ({
         )}
       />
 
-      {error && <div className="mt-[2px] text-red text-sm">{error}</div>}
+      {error && <div className="mt-[2px] text-red-500 text-sm">{error}</div>}
     </div>
   );
 };

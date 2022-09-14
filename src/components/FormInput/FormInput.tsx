@@ -29,7 +29,7 @@ const FormInput = ({
 
   if (type === "checkbox") {
     return (
-      <div className="flex space-x-2">
+      <div className="flex space-x-2 cursor-pointer">
         <input id={id} {...register(id)} {...rest} />
         <label htmlFor={id}>{label}</label>
       </div>
@@ -40,7 +40,7 @@ const FormInput = ({
     <div className="relative flex flex-col w-full">
       <label htmlFor={id} className="flex">
         {label}
-        {required && <span className="text-red">*</span>}
+        {required && <span className="text-red-500">*</span>}
       </label>
 
       <input
@@ -80,7 +80,7 @@ const FormInput = ({
       {suggestion && (
         <div className="mt-[2px] text-sm text-green-600">{suggestion}</div>
       )}
-      {error && <div className="mt-[2px] text-sm text-red">{error}</div>}
+      {error && <div className="mt-[2px] text-sm text-red-500">{error}</div>}
       {helper && (
         <div className="mt-[2px] text-slate-500 text-sm">{helper}</div>
       )}

@@ -2,24 +2,26 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useQueryClient } from "react-query";
 
-import { imgNotFound } from "assets";
+import { imgNotFound, ImgXCircleOutline, imgDeleteFiles } from "assets";
 import { FormInput, FullScreenLoader, Button, Modal } from "components";
 import {
   useFetchAllPublications,
   useFetchMe,
   useFetchPubMedByIds,
   useFetchPubMedByNames,
+  useRemovePublications,
   useSubmitPublicationsFromPubMed,
 } from "api/hooks";
 import { PUBLICATIONS_API_KEY } from "api/keys";
 import { GetPubMedByIds } from "api/models";
 import { SinglePublication } from "pages/Dashboard/Publications/components";
 
-import { IPubMedNamesFormFields } from "./PublicationsForm.model";
-import { pubMedNamesSchema } from "./PublicationsForm.schema";
+import {
+  IPubMedNamesFormFields,
+  ISavedPublicationsFormFields,
+} from "./PublicationsForm.model";
 import PublicationCard from "./PublicationCard/PublicationCard";
 
 interface PublicationsFormProps {
@@ -50,9 +52,12 @@ const PublicationsForm = React.forwardRef<
   const [savedPublicationIds, setSavedPublicationIds] = useState<{
     [key: string]: number;
   }>({});
-  const [selectedSavedPublicationIds, setSeletedSavedPublicationIds] = useState<
-    string[]
-  >([]);
+  const [selectedSavedPublicationIds, setSelectedSavedPublicationIds] =
+    useState<string[]>([]);
+  const [
+    isPublicationsRemovalModalVisible,
+    setIsPublicationsRemovalModalVisible,
+  ] = useState<boolean>(false);
 
   // *Form
   const {
@@ -61,11 +66,21 @@ const PublicationsForm = React.forwardRef<
     setValue: setValuePubMedNames,
     watch: watchPubMedNames,
   } = useForm<IPubMedNamesFormFields>({
-    resolver: yupResolver(pubMedNamesSchema),
     mode: "onChange",
   });
 
-  const selectAll = watchPubMedNames("selectAll");
+  const {
+    register: registerSavedPublicationIds,
+    handleSubmit: handleSubmitSavedPublicationIds,
+    watch: watchSavedPublicationIds,
+  } = useForm<ISavedPublicationsFormFields>({
+    mode: "onChange",
+  });
+
+  const selectAllPublications = watchPubMedNames("selectAllPublications");
+  const selectAllSavedPublications = watchSavedPublicationIds(
+    "selectAllSavedPublications"
+  );
 
   // *Queries
   const { data: fetchMeData, isLoading: fetchMeIsLoading } = useFetchMe();
@@ -98,6 +113,15 @@ const PublicationsForm = React.forwardRef<
     queryClient.invalidateQueries(PUBLICATIONS_API_KEY);
   });
 
+  const {
+    mutate: mutateSavedPublications,
+    isLoading: removePublicationsIsLoading,
+  } = useRemovePublications(() => {
+    setIsPublicationsRemovalModalVisible(false);
+    setSelectedSavedPublicationIds([]);
+    queryClient.invalidateQueries(PUBLICATIONS_API_KEY);
+  });
+
   // *Methods
   const handleSubmitFormPubMedNames = async (data: IPubMedNamesFormFields) => {
     setRefresh((refresh) => !refresh);
@@ -112,7 +136,7 @@ const PublicationsForm = React.forwardRef<
   };
 
   const handleSelectAllPubMedIds = () => {
-    if (selectAll) {
+    if (selectAllPublications) {
       const ids = publicationsFromPubMed.map((publication) => {
         return publication.uid;
       });
@@ -122,11 +146,30 @@ const PublicationsForm = React.forwardRef<
     }
   };
 
+  const handleUpdateSelectedSavedPublications = (id: string) => {
+    const updatedIds = selectedSavedPublicationIds.includes(id)
+      ? selectedSavedPublicationIds.filter((externalId) => externalId !== id)
+      : [...selectedSavedPublicationIds, id];
+    return setSelectedSavedPublicationIds(updatedIds);
+  };
+
   const handleSelectAllSavedPublicationIds = () => {
-    if (publicationsData) {
+    if (!publicationsData) return;
+
+    if (selectAllSavedPublications) {
       const ids = publicationsData.map((publication) => publication.externalId);
-      setSeletedSavedPublicationIds(ids);
+      setSelectedSavedPublicationIds(ids);
+    } else {
+      setSelectedSavedPublicationIds([]);
     }
+  };
+
+  const handleSubmitSelectedSavedPublications = () => {
+    const payload = {
+      ids: selectedSavedPublicationIds,
+    };
+
+    mutateSavedPublications(payload);
   };
 
   const handleSubmitSelectedPubMedIds = () => {
@@ -138,12 +181,14 @@ const PublicationsForm = React.forwardRef<
     mutatePublicationsFromPubMed(payload);
   };
 
-  console.log("saved", publicationsData);
-
   // *Effects
   useEffect(() => {
     handleSelectAllPubMedIds();
-  }, [selectAll]);
+  }, [selectAllPublications]);
+
+  useEffect(() => {
+    handleSelectAllSavedPublicationIds();
+  }, [selectAllSavedPublications]);
 
   useEffect(() => {
     if (fetchMeData) {
@@ -209,7 +254,7 @@ const PublicationsForm = React.forwardRef<
     }
   }, [publicationsData]);
 
-  console.log(selectedSavedPublicationIds);
+  console.log("publicationsData", publicationsData);
 
   // *JSX
   return (
@@ -253,8 +298,8 @@ const PublicationsForm = React.forwardRef<
                   register={registerPubMedNames}
                   type="checkbox"
                   label="Select all"
-                  name="selectAll"
-                  id="selectAll"
+                  name="selectAllPublications"
+                  id="selectAllPublications"
                 />
               </div>
 
@@ -273,8 +318,48 @@ const PublicationsForm = React.forwardRef<
         }}
       />
 
+      <Modal
+        title="Remove Publications"
+        content={
+          <div className="flex flex-col mb-2 space-y-4">
+            <img
+              className="self-center mt-2"
+              src={imgDeleteFiles}
+              alt="delete-files"
+              width={230}
+              height={230}
+            />
+
+            <div>
+              <p className="mt-2">
+                You are about to remove {selectedSavedPublicationIds.length}{" "}
+                publications. Are you sure you want to continue?
+              </p>
+              <p className="mt-2">
+                You can still save these publications from PubMed again if you
+                want to restore them in the future.
+              </p>
+            </div>
+
+            <div className="self-center w-full">
+              <Button
+                variant="red"
+                onClick={handleSubmitSavedPublicationIds(
+                  handleSubmitSelectedSavedPublications
+                )}
+                isLoading={removePublicationsIsLoading}
+              >
+                Remove Publications
+              </Button>
+            </div>
+          </div>
+        }
+        isVisible={isPublicationsRemovalModalVisible}
+        onDismiss={() => setIsPublicationsRemovalModalVisible(false)}
+      />
+
       <p className="mb-6">
-        Search PubMed with your aliases to add publications to your profile.
+        Search PubMed with your aliases to save publications to your profile.
       </p>
       <form
         noValidate
@@ -296,21 +381,35 @@ const PublicationsForm = React.forwardRef<
         </div>
       </form>
 
-      {fetchMeData && publicationsData ? (
+      {fetchMeData && publicationsData && publicationsData?.length > 0 ? (
         <div className="mt-8">
-          <div className="flex space-x-4 align-start mb-3">
-            <p className="font-semibold">Saved Publications: </p>
-            <div className="flex space-x-2 items-center">
-              <input
+          <div className="flex flex-wrap flex-col sm:flex-row space-x-0 sm:space-x-6 mb-3 sm:items-center">
+            <div className="flex space-x-6 items-center">
+              <p className="font-semibold">Saved Publications: </p>
+
+              <FormInput
+                register={registerSavedPublicationIds}
                 type="checkbox"
-                id="select_all"
-                name="select_all"
-                onClick={handleSelectAllSavedPublicationIds}
+                label="Select all"
+                name="selectAllSavedPublications"
+                id="selectAllSavedPublications"
               />
-              <label htmlFor="select_all" className="cursor-pointer">
-                Select all
-              </label>
             </div>
+            {selectedSavedPublicationIds.length > 0 && (
+              <div
+                className="flex space-x-1 items-center cursor-pointer"
+                onClick={() => setIsPublicationsRemovalModalVisible(true)}
+              >
+                <ImgXCircleOutline
+                  width={20}
+                  height={20}
+                  className="text-red-500"
+                />
+                <p className="text-red-500">
+                  Remove {selectedSavedPublicationIds.length} selected items
+                </p>
+              </div>
+            )}
           </div>
 
           {publicationsData.map((pub, i) => {
@@ -319,8 +418,10 @@ const PublicationsForm = React.forwardRef<
                 publication={pub}
                 namesToBold={fetchMeData.data.data.correctedPubmedNames}
                 isEditable
-                isSelected={false}
-                handleSelectPublication={() => {}}
+                isSelected={selectedSavedPublicationIds.includes(
+                  pub.externalId
+                )}
+                handleSelectPublication={handleUpdateSelectedSavedPublications}
                 key={i}
                 i={i}
               />

@@ -63,6 +63,8 @@ const removePublications = async (data: DeletePublications.PayLoad) => {
   });
 };
 
-export const useRemovePublications = () => {
-  return useMutation(removePublications);
+export const useRemovePublications = (onSuccess: () => void) => {
+  return useMutation(removePublications, {
+    onSuccess,
+  });
 };

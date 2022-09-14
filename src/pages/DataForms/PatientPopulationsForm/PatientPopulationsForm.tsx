@@ -116,7 +116,7 @@ const PatientPopulationsForm = React.forwardRef<
                   width={20}
                   height={20}
                   className={`stroke-[3px] ${
-                    i < 1 ? "text-slate-300" : "text-red"
+                    i < 1 ? "text-slate-300" : "text-red-500"
                   }`}
                 />
               </button>
