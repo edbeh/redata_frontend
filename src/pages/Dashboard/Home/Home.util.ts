@@ -5,7 +5,7 @@ export const homeNav: IBreadCrumbs = {
     {
       key: "dashboard",
       label: "Dashboard",
-      url: "/",
+      url: "/home",
     },
     {
       key: "profile",

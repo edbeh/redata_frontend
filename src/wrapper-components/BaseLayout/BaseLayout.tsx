@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { LeftNavigation, MobileLeftNavigation } from "components";
 import { ImgBars4Outline } from "assets";
@@ -15,6 +15,11 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
 }) => {
   const scrollDirection = useScrollDirection();
   const [isMobileNavVisible, setIsMobileNavVisible] = useState<boolean>(false);
+
+  useEffect(() => {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }, []);
 
   return (
     <>

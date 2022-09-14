@@ -1,5 +1,6 @@
 import { BreadCrumbs } from "components";
 import { BaseLayout } from "wrapper-components";
+import { ImgPencilSquareOutline } from "assets";
 
 import { homeNav, mockData } from "./Home.util";
 import {
@@ -17,9 +18,16 @@ const Home = () => {
     <BaseLayout withLeftNavigation>
       <div className="w-full pb-12">
         <BreadCrumbs breadcrumbs={homeNav.breadcrumbs} />
-        <h1 className="mb-2 text-4xl font-semibold tracking-tight text-white">
-          Profile
-        </h1>
+        <div className="flex space-x-3 items-center">
+          <h1 className="text-4xl font-semibold tracking-tight text-white">
+            Profile
+          </h1>
+          <ImgPencilSquareOutline
+            width={20}
+            height={20}
+            className="text-white cursor-pointer"
+          />
+        </div>
 
         <div className="flex flex-col w-full mt-8 space-y-6">
           <HeroSection />

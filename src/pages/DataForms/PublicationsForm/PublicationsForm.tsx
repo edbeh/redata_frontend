@@ -38,7 +38,6 @@ const PublicationsForm = React.forwardRef<
 
   const [pubMedNamesToSearch, setPubMedNamesToSearch] = useState<string>("");
   const [pubMedIdsToSearch, setPubMedIdsToSearch] = useState<string[]>([]);
-  const [namesToBold, setNamesToBold] = useState<string[]>([]);
   const [publicationsFromPubMed, setPublicationsFromPubMed] = useState<
     GetPubMedByIds.Publication[]
   >([]);
@@ -51,6 +50,9 @@ const PublicationsForm = React.forwardRef<
   const [savedPublicationIds, setSavedPublicationIds] = useState<{
     [key: string]: number;
   }>({});
+  const [selectedSavedPublicationIds, setSeletedSavedPublicationIds] = useState<
+    string[]
+  >([]);
 
   // *Form
   const {
@@ -58,13 +60,11 @@ const PublicationsForm = React.forwardRef<
     handleSubmit: handleSubmitPubMedNames,
     setValue: setValuePubMedNames,
     watch: watchPubMedNames,
-    formState: { errors: pubMedNamesErrors, isValid: pubmedNamesIsValid },
   } = useForm<IPubMedNamesFormFields>({
     resolver: yupResolver(pubMedNamesSchema),
     mode: "onChange",
   });
 
-  const pubMedNames = watchPubMedNames("pubMedNames");
   const selectAll = watchPubMedNames("selectAll");
 
   // *Queries
@@ -122,6 +122,13 @@ const PublicationsForm = React.forwardRef<
     }
   };
 
+  const handleSelectAllSavedPublicationIds = () => {
+    if (publicationsData) {
+      const ids = publicationsData.map((publication) => publication.externalId);
+      setSeletedSavedPublicationIds(ids);
+    }
+  };
+
   const handleSubmitSelectedPubMedIds = () => {
     const payload = {
       source: "pubmed",
@@ -130,6 +137,8 @@ const PublicationsForm = React.forwardRef<
 
     mutatePublicationsFromPubMed(payload);
   };
+
+  console.log("saved", publicationsData);
 
   // *Effects
   useEffect(() => {
@@ -155,7 +164,6 @@ const PublicationsForm = React.forwardRef<
       }
 
       setPubMedIdsToSearch(fetchPubMedByNamesData.ids);
-      setNamesToBold(fetchPubMedByNamesData.namesToBold);
     }
   }, [
     fetchPubMedByNamesData,
@@ -201,7 +209,7 @@ const PublicationsForm = React.forwardRef<
     }
   }, [publicationsData]);
 
-  console.log("fetchMeData", fetchMeData);
+  console.log(selectedSavedPublicationIds);
 
   // *JSX
   return (
@@ -265,7 +273,7 @@ const PublicationsForm = React.forwardRef<
         }}
       />
 
-      <p className="mb-6 -mt-3">
+      <p className="mb-6">
         Search PubMed with your aliases to add publications to your profile.
       </p>
       <form
@@ -289,14 +297,32 @@ const PublicationsForm = React.forwardRef<
       </form>
 
       {fetchMeData && publicationsData ? (
-        <div className="mt-8 max-h-[55vh] overflow-y-scroll">
-          <p className="mb-2 font-semibold">Saved publications: </p>
+        <div className="mt-8">
+          <div className="flex space-x-4 align-start mb-3">
+            <p className="font-semibold">Saved Publications: </p>
+            <div className="flex space-x-2 items-center">
+              <input
+                type="checkbox"
+                id="select_all"
+                name="select_all"
+                onClick={handleSelectAllSavedPublicationIds}
+              />
+              <label htmlFor="select_all" className="cursor-pointer">
+                Select all
+              </label>
+            </div>
+          </div>
+
           {publicationsData.map((pub, i) => {
             return (
               <SinglePublication
                 publication={pub}
-                i={i}
                 namesToBold={fetchMeData.data.data.correctedPubmedNames}
+                isEditable
+                isSelected={false}
+                handleSelectPublication={() => {}}
+                key={i}
+                i={i}
               />
             );
           })}

@@ -30,14 +30,14 @@ const PublicationsSection = ({
             </p>
           </div>
         ) : (
-          <div className="flex flex-col w-full m-0 sm:m-2">
+          <div className="flex flex-col w-full ml-[-10px] sm:mt-2 sm:ml-0">
             {data.map((publication, i) => {
               return (
                 <SinglePublication
-                  key={i}
                   publication={publication}
-                  i={i}
                   namesToBold={namesToBold}
+                  key={i}
+                  i={i}
                 />
               );
             })}

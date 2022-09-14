@@ -10,6 +10,7 @@ import { ReactComponent as ImgUserPlusOutline } from "./user-plus-outline.svg";
 import { ReactComponent as ImgBars4Outline } from "./bars-4-outline.svg";
 import { ReactComponent as ImgXCircleOutline } from "./x-circle-outline.svg";
 import { ReactComponent as ImgCheckCircleOutline } from "./check-circle-outline.svg";
+import { ReactComponent as ImgArrowUturnLeftOutline } from "./arrow-uturn-left-outline.svg";
 
 import imgScientistMicroscope from "./scientist-microscope.jpg";
 import imgNotFound from "./not-found.jpg";
@@ -30,6 +31,7 @@ export {
   ImgBars4Outline,
   ImgXCircleOutline,
   ImgCheckCircleOutline,
+  ImgArrowUturnLeftOutline,
   imgProfileBackground,
   imgNotFound,
   imgJohnDoe,

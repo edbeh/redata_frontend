@@ -5,13 +5,20 @@ import { Publication } from "api/models";
 interface SinglePublicationProps {
   publication: Publication;
   namesToBold: string[];
+  isEditable?: boolean;
+  isSelected?: boolean;
+  handleSelectPublication?: () => void;
+
   i: number;
 }
 
 const SinglePublication = ({
   publication,
-  i,
   namesToBold,
+  isEditable = false,
+  isSelected = false,
+  handleSelectPublication,
+  i,
 }: SinglePublicationProps) => {
   const nameComponent = (authorName: string, i: number): React.ReactNode => {
     const shouldBoldName = namesToBold.find((nameToBold) =>
@@ -35,7 +42,14 @@ const SinglePublication = ({
 
   return (
     <div className="flex mb-6">
-      <p className="min-w-[26px]">{i + 1}.</p>
+      <div
+        className={`flex flex-col items-center cursor-pointer ${
+          isEditable ? "min-w-[20px] mt-[5px] mr-2 sm:mr-4" : "min-w-[35px]"
+        }`}
+      >
+        {isEditable && <input type="checkbox" className="scale-125" />}
+        <p className={` ${isEditable ? "text-center mt-2" : ""}`}>{i + 1}.</p>
+      </div>
       <div className="space-y-1">
         {publication.elocationId?.includes("doi") ? (
           <a
