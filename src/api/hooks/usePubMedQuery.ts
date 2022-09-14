@@ -72,7 +72,6 @@ const fetchPubMedByNames = async (pubMedNames: string) => {
       return { ids, namesToBold, invalidPubMedNames };
     })
     .catch((error) => {
-      // toast.error(error.response.statusText);
       throw error;
     });
 };

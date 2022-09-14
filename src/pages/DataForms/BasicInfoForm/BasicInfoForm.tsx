@@ -42,6 +42,9 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
   // ref for parent component to trigger submit form
   ({ onSuccessCallback, setIsSubmissionLoading }, ref) => {
     const [pubMedNamesToSearch, setPubMedNamesToSearch] = useState<string>("");
+    const [correctedPubMedNames, setCorrectedPubMedNames] = useState<string[]>(
+      []
+    );
     const [displayCheckForPubMedNames, setDisplayCheckForPubMedNames] =
       useState<boolean>(false);
 
@@ -82,7 +85,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       );
       if (hasDuplicateValueErrors || hasInvalidPubMedNames) return;
 
-      const cleanData = cleanUpData(data);
+      const cleanData = cleanUpData(data, correctedPubMedNames);
       mutateMe(cleanData);
     };
 
@@ -154,7 +157,11 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
         return;
       }
 
-      if (fetchPubMedByNamesData) {
+      if (
+        fetchPubMedByNamesData &&
+        fetchPubMedByNamesData?.namesToBold?.length > 0
+      ) {
+        setCorrectedPubMedNames(fetchPubMedByNamesData.namesToBold);
         return setDisplayCheckForPubMedNames(true);
       }
     }, [fetchPubMedByNamesData]);
@@ -216,19 +223,6 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               helper="Please separate your PubMed names with comma"
               autoComplete="off"
               rightCheck={displayCheckForPubMedNames}
-              suggestion={
-                !formErrors?.pubMedNames?.message &&
-                !fetchPubMedByNamesIsLoading &&
-                !fetchPubMedByNamesIsLoading &&
-                fetchPubMedByNamesData &&
-                fetchPubMedByNamesData?.namesToBold?.length > 0 &&
-                fetchPubMedByNamesData?.namesToBold.join(", ") !==
-                  pubMedNamesToSearch.toLowerCase()
-                  ? `Suggestions: ${fetchPubMedByNamesData?.namesToBold.join(
-                      ", "
-                    )}`
-                  : ""
-              }
               error={formErrors?.pubMedNames?.message}
               isLoading={
                 fetchPubMedByNamesIsLoading || fetchPubMedByNamesIsFetching
