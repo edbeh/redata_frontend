@@ -26,34 +26,29 @@ const LoginForm = () => {
   });
 
   // *Queries
-  const {
-    data: submitSessionData,
-    mutate: mutateSession,
-    isLoading: submitSessionIsLoading,
-    error: submitSessionError,
-  } = useSubmitSession();
+  const submitSession = useSubmitSession();
 
   // *Methods
   const handleSubmitForm = (data: ILoginFormFields) => {
-    mutateSession(data);
+    submitSession.mutate(data);
   };
 
   // *Effects
   useEffect(() => {
-    if (submitSessionData?.status === 200) {
-      const jwt = submitSessionData.data.jwt;
+    if (submitSession?.data?.status === 200) {
+      const jwt = submitSession?.data?.data?.jwt;
       setJwtTokenLocalStorage(jwt);
       navigate("/onboarding/1");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [submitSessionData]);
+  }, [submitSession.data]);
 
   useEffect(() => {
-    if (isApiError(submitSessionError)) {
-      handleApiErrorsForm(submitSessionError, setError);
+    if (isApiError(submitSession?.error)) {
+      handleApiErrorsForm(submitSession?.error, setError);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [submitSessionError]);
+  }, [submitSession.error]);
 
   // *JSX
   return (
@@ -88,7 +83,7 @@ const LoginForm = () => {
         </div>
 
         <div className="mt-[30px]">
-          <Button isLoading={submitSessionIsLoading}>Login</Button>
+          <Button isLoading={submitSession?.isLoading}>Login</Button>
           <p className="mt-3 text-center">
             Don't have an account?{" "}
             <Link to="/register" className="text-blue-500 underline">

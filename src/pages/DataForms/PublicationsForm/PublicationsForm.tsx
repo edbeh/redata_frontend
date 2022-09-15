@@ -83,40 +83,26 @@ const PublicationsForm = React.forwardRef<
   );
 
   // *Queries
-  const { data: fetchMeData, isLoading: fetchMeIsLoading } = useFetchMe();
+  const fetchMe = useFetchMe();
 
-  const {
-    data: fetchPubMedByNamesData,
-    isLoading: fetchPubMedByNamesIsLoading,
-    isFetching: fetchPubMedByNamesIsFetching,
-  } = useFetchPubMedByNames(pubMedNamesToSearch, !!pubMedNamesToSearch);
+  const fetchPubMedByNames = useFetchPubMedByNames(
+    pubMedNamesToSearch,
+    !!pubMedNamesToSearch
+  );
 
-  const {
-    data: fetchPubMedByIdsData,
-    isLoading: fetchPubMedByIdsIsLoading,
-    isFetching: fetchPubMedByIdsIsFetching,
-  } = useFetchPubMedByIds(pubMedIdsToSearch, pubMedIdsToSearch.length > 0);
+  const fetchPubMedByIds = useFetchPubMedByIds(
+    pubMedIdsToSearch,
+    pubMedIdsToSearch.length > 0
+  );
 
-  const {
-    data: fetchAllPublicationsData,
-    isLoading: fetchAllPublicationsIsLoading,
-    isFetching: fetchAllPublicationsIsFetching,
-  } = useFetchAllPublications();
+  const fetchAllPublications = useFetchAllPublications();
+  const publicationsData = fetchAllPublications?.data?.data?.data;
 
-  const publicationsData = fetchAllPublicationsData?.data?.data;
-
-  const {
-    data: submitPublicationsFromPubMedData,
-    mutate: mutatePublicationsFromPubMed,
-    isLoading: submitPublicationsFromPubMedIsLoading,
-  } = useSubmitPublicationsFromPubMed(() => {
+  const submitPublicationsFromPubMed = useSubmitPublicationsFromPubMed(() => {
     queryClient.invalidateQueries(PUBLICATIONS_API_KEY);
   });
 
-  const {
-    mutate: mutateSavedPublications,
-    isLoading: removePublicationsIsLoading,
-  } = useRemovePublications(() => {
+  const removePublications = useRemovePublications(() => {
     setIsPublicationsRemovalModalVisible(false);
     setSelectedSavedPublicationIds([]);
     queryClient.invalidateQueries(PUBLICATIONS_API_KEY);
@@ -170,7 +156,7 @@ const PublicationsForm = React.forwardRef<
       ids: selectedSavedPublicationIds,
     };
 
-    mutateSavedPublications(payload);
+    removePublications?.mutate(payload);
   };
 
   const handleSubmitSelectedPubMedIds = () => {
@@ -179,7 +165,7 @@ const PublicationsForm = React.forwardRef<
       ids: selectedPubMedIds,
     };
 
-    mutatePublicationsFromPubMed(payload);
+    submitPublicationsFromPubMed?.mutate(payload);
   };
 
   // *Effects
@@ -192,56 +178,56 @@ const PublicationsForm = React.forwardRef<
   }, [selectAllSavedPublications]);
 
   useEffect(() => {
-    if (fetchMeData) {
-      const pubMedNames = fetchMeData.data?.data?.pubmedNames?.join(", ");
+    if (fetchMe?.data) {
+      const pubMedNames = fetchMe?.data.data?.data?.pubmedNames?.join(", ");
       setValuePubMedNames("pubMedNames", pubMedNames);
     }
-  }, [fetchMeData]);
+  }, [fetchMe.data]);
 
   useEffect(() => {
-    if (fetchPubMedByNamesIsLoading || fetchPubMedByNamesIsFetching) return;
+    if (fetchPubMedByNames?.isLoading || fetchPubMedByNames?.isFetching) return;
 
-    if (fetchPubMedByNamesData) {
-      if (fetchPubMedByNamesData.ids?.length === 0) {
+    if (fetchPubMedByNames?.data) {
+      if (fetchPubMedByNames?.data?.ids?.length === 0) {
         toast.error(
           `There are no publications associated with this name in PubMed.`
         );
         return;
       }
 
-      setPubMedIdsToSearch(fetchPubMedByNamesData.ids);
+      setPubMedIdsToSearch(fetchPubMedByNames?.data?.ids);
     }
   }, [
-    fetchPubMedByNamesData,
-    fetchPubMedByNamesIsLoading,
-    fetchPubMedByNamesIsFetching,
+    fetchPubMedByNames?.data,
+    fetchPubMedByNames?.isLoading,
+    fetchPubMedByNames?.isFetching,
   ]);
 
   useEffect(() => {
-    if (fetchPubMedByNamesIsLoading || fetchPubMedByIdsIsLoading) return;
-    if (fetchPubMedByNamesIsFetching || fetchPubMedByIdsIsFetching) return;
+    if (fetchPubMedByNames?.isLoading || fetchPubMedByIds?.isLoading) return;
+    if (fetchPubMedByNames?.isFetching || fetchPubMedByIds?.isFetching) return;
 
-    if (fetchPubMedByIdsData) {
-      setPublicationsFromPubMed(fetchPubMedByIdsData);
+    if (fetchPubMedByIds?.data) {
+      setPublicationsFromPubMed(fetchPubMedByIds?.data);
 
-      if (fetchPubMedByIdsData.length > 0) {
+      if (fetchPubMedByIds?.data?.length > 0) {
         setIsPublicationsModalVisible(true);
       }
     }
   }, [
     refresh,
-    fetchPubMedByIdsData,
-    fetchPubMedByNamesIsLoading,
-    fetchPubMedByIdsIsLoading,
-    fetchPubMedByNamesIsFetching,
-    fetchPubMedByIdsIsFetching,
+    fetchPubMedByIds.data,
+    fetchPubMedByIds.isFetching,
+    fetchPubMedByIds.isLoading,
+    fetchPubMedByNames.isLoading,
+    fetchPubMedByNames.isFetching,
   ]);
 
   useEffect(() => {
-    if (submitPublicationsFromPubMedData) {
+    if (submitPublicationsFromPubMed?.data) {
       setIsPublicationsModalVisible(false);
     }
-  }, [submitPublicationsFromPubMedData]);
+  }, [submitPublicationsFromPubMed.data]);
 
   useEffect(() => {
     // collect all saved publication keys in a hash for O(1) access
@@ -260,12 +246,12 @@ const PublicationsForm = React.forwardRef<
   // *JSX
   return (
     <div className="flex flex-col">
-      {(fetchMeIsLoading ||
-        fetchPubMedByIdsIsLoading ||
-        fetchPubMedByNamesIsLoading ||
-        fetchPubMedByNamesIsFetching ||
-        fetchAllPublicationsIsLoading ||
-        fetchAllPublicationsIsFetching) && <FullScreenLoader />}
+      {(fetchMe?.isLoading ||
+        fetchPubMedByNames?.isLoading ||
+        fetchPubMedByNames?.isFetching ||
+        fetchPubMedByIds?.isLoading ||
+        fetchAllPublications?.isLoading ||
+        fetchAllPublications?.isFetching) && <FullScreenLoader />}
 
       <Modal
         title="Add Publications"
@@ -276,14 +262,16 @@ const PublicationsForm = React.forwardRef<
               Publications already in your profile are disabled.
             </p>
 
-            {fetchMeData &&
+            {fetchMe?.data &&
               publicationsFromPubMed.map((publication, i) => {
                 const disabled = savedPublicationIds[publication.uid] === 1;
 
                 return (
                   <PublicationCard
                     index={i}
-                    namesToBold={fetchMeData.data.data.correctedPubmedNames}
+                    namesToBold={
+                      fetchMe?.data?.data?.data?.correctedPubmedNames
+                    }
                     publication={publication}
                     handleSelectPublication={handleUpdateSelectedPubMedIds}
                     isSelected={selectedPubMedIds.includes(publication.uid)}
@@ -306,7 +294,7 @@ const PublicationsForm = React.forwardRef<
 
               <Button
                 onClick={handleSubmitSelectedPubMedIds}
-                isLoading={submitPublicationsFromPubMedIsLoading}
+                isLoading={submitPublicationsFromPubMed?.isLoading}
               >
                 Add to Profile
               </Button>
@@ -348,7 +336,7 @@ const PublicationsForm = React.forwardRef<
                 onClick={handleSubmitSavedPublicationIds(
                   handleSubmitSelectedSavedPublications
                 )}
-                isLoading={removePublicationsIsLoading}
+                isLoading={removePublications?.isLoading}
               >
                 Remove Publications
               </Button>
@@ -369,7 +357,7 @@ const PublicationsForm = React.forwardRef<
         <div className="flex flex-col space-x-0 space-y-4 sm:space-x-4 sm:space-y-0 sm:flex-row sm:items-center justify-between">
           <div>
             <p className="font-semibold capitalize">
-              {fetchMeData?.data?.data?.pubmedNames?.join(", ")}
+              {fetchMe?.data?.data?.data?.pubmedNames?.join(", ")}
             </p>
             <a href="/onboarding/1" className="text-blue-500 hover:underline">
               Edit your PubMed names
@@ -384,7 +372,7 @@ const PublicationsForm = React.forwardRef<
 
       <div className="border-b-[1px] border-b-slate-200 my-6" />
 
-      {fetchMeData && publicationsData && publicationsData?.length > 0 ? (
+      {fetchMe?.data && publicationsData && publicationsData?.length > 0 ? (
         <div>
           <div className="flex flex-wrap flex-col sm:flex-row space-x-0 sm:space-x-6 mb-3 sm:items-center">
             <div className="flex space-x-6 items-center">
@@ -414,7 +402,7 @@ const PublicationsForm = React.forwardRef<
             return (
               <SinglePublication
                 publication={pub}
-                namesToBold={fetchMeData.data.data.correctedPubmedNames}
+                namesToBold={fetchMe?.data?.data?.data?.correctedPubmedNames}
                 isEditable
                 isSelected={selectedSavedPublicationIds.includes(
                   pub.externalId

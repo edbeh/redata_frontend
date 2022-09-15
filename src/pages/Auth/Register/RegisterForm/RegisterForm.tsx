@@ -29,60 +29,45 @@ const RegisterForm = () => {
     setError,
     handleSubmit,
     getValues,
-    watch,
   } = useForm<IRegisterFormFields>({
     mode: "onChange",
     resolver: yupResolver(schema),
   });
 
   // *Queries
-  const {
-    data: fetchMetadataInstitutionsData,
-    isLoading: fetchMetadataInstitutionsIsLoading,
-  } = useFetchMetadataInstitutions();
-
-  const {
-    data: submitUserData,
-    mutate: mutateUser,
-    isLoading: submitUserIsLoading,
-    error: submitUserError,
-  } = useSubmitUser();
-
-  const {
-    data: submitSessionData,
-    mutate: mutateSession,
-    isLoading: submitSessionIsLoading,
-  } = useSubmitSession();
+  const fetchMetadataInstitutions = useFetchMetadataInstitutions();
+  const submitUser = useSubmitUser();
+  const submitSession = useSubmitSession();
 
   // *Methods
   const handleSubmitForm = (data: IRegisterFormFields) => {
     const cleanData = cleanUpData(data);
-    mutateUser(cleanData);
+    submitUser?.mutate(cleanData);
   };
 
   // *Effects
   useEffect(() => {
-    if (submitUserData) {
+    if (submitUser?.data) {
       const email = getValues("email");
       const password = getValues("password");
-      mutateSession({ email, password });
+      submitSession?.mutate({ email, password });
     }
-  }, [submitUserData]);
+  }, [submitUser.data]);
 
   useEffect(() => {
-    if (submitSessionData?.status === 200) {
-      const jwt = submitSessionData.data.jwt;
+    if (submitSession?.data?.status === 200) {
+      const jwt = submitSession?.data?.data?.jwt;
       setJwtTokenLocalStorage(jwt);
       navigate("/onboarding/1");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [submitSessionData]);
+  }, [submitSession.data]);
 
   useEffect(() => {
-    if (isApiError(submitUserError)) {
-      handleApiErrorsForm(submitUserError, setError);
+    if (isApiError(submitUser?.error)) {
+      handleApiErrorsForm(submitUser?.error, setError);
     }
-  }, [submitUserError]);
+  }, [submitUser.error]);
 
   // *JSX
   return (
@@ -117,14 +102,14 @@ const RegisterForm = () => {
 
           <FormSelect
             control={control}
-            options={fetchMetadataInstitutionsData?.data?.data || []}
+            options={fetchMetadataInstitutions?.data?.data?.data || []}
             placeholder=""
             id="institution"
             name="institution"
             label="Institution"
             error={formErrors?.institution?.message as string}
             required={getYupIsRequired(schema, "institution")}
-            isLoading={fetchMetadataInstitutionsIsLoading}
+            isLoading={fetchMetadataInstitutions?.isLoading}
           />
 
           <FormInput
@@ -149,7 +134,7 @@ const RegisterForm = () => {
         </div>
 
         <div className="mt-[30px]">
-          <Button isLoading={submitUserIsLoading || submitSessionIsLoading}>
+          <Button isLoading={submitUser?.isLoading || submitSession?.isLoading}>
             Register
           </Button>
           <p className="mt-3 text-center">

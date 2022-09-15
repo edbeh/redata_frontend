@@ -83,20 +83,21 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
     // *Methods
     const handleSubmitForm = async (data: IBasicInfoFormFields) => {
-      if (fetchPubMedByNamesIsLoading || fetchPubMedByNamesIsFetching) return;
+      if (fetchPubMedByNames?.isLoading || fetchPubMedByNames?.isFetching)
+        return;
 
       const { hasErrors: hasDuplicateValueErrors } = validateDuplicateValues(
         data,
         setError
       );
       const { hasErrors: hasInvalidPubMedNames } = validatePubMedNames(
-        fetchPubMedByNamesData?.invalidPubMedNames || [],
+        fetchPubMedByNames?.data?.invalidPubMedNames || [],
         setError
       );
       if (hasDuplicateValueErrors || hasInvalidPubMedNames) return;
 
       const cleanData = cleanUpData(data, correctedPubMedNames);
-      mutateMe(cleanData);
+      updateMe.mutate(cleanData);
     };
 
     const handleMutationSuccess = () => {
@@ -108,35 +109,26 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     // *Queries
     const queryClient = useQueryClient();
 
-    const { data: fetchMeData, isLoading: fetchMeIsLoading } = useFetchMe();
-    const institutionId = fetchMeData?.data?.data?.institution?.id as string;
+    const fetchMe = useFetchMe();
+    const institutionId = fetchMe?.data?.data?.data?.institution?.id as string;
 
-    const {
-      data: fetchDepartmentByIdData,
-      isLoading: fetchDepartmentByIdDataIsLoading,
-    } = useFetchDepartmentById(institutionId, !!institutionId);
-
-    const {
-      data: fetchMetadataDesignationsData,
-      isLoading: fetchMetadataDesignationsIsLoading,
-    } = useFetchMetadataDesignations();
-
-    const { mutate: mutateMe, isLoading: updateMeIsLoading } = useUpdateMe(
-      handleMutationSuccess
+    const fetchDepartmentById = useFetchDepartmentById(
+      institutionId,
+      !!institutionId
     );
-
-    const {
-      data: fetchPubMedByNamesData,
-      isLoading: fetchPubMedByNamesIsLoading,
-      isFetching: fetchPubMedByNamesIsFetching,
-    } = useFetchPubMedByNames(pubMedNamesToSearch, !!pubMedNamesToSearch);
+    const fetchMetaDataDesignations = useFetchMetadataDesignations();
+    const updateMe = useUpdateMe(handleMutationSuccess);
+    const fetchPubMedByNames = useFetchPubMedByNames(
+      pubMedNamesToSearch,
+      !!pubMedNamesToSearch
+    );
 
     // *Effects
     useEffect(() => {
-      if (!fetchMetadataDesignationsData || !fetchDepartmentByIdData) return;
+      if (!fetchMetaDataDesignations?.data || !fetchDepartmentById.data) return;
 
-      if (fetchMeData) {
-        const data = fetchMeData.data?.data;
+      if (fetchMe?.data) {
+        const data = fetchMe?.data?.data?.data;
         if (data.designation) setValue("designation", data.designation);
         if (data.department) setValue("department", data.department);
         if (data.name) setValue("name", data.name);
@@ -145,19 +137,23 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
           setPubMedNamesToSearch(data.pubmedNames.join(", "));
         }
       }
-    }, [fetchMeData, fetchMetadataDesignationsData, fetchDepartmentByIdData]);
+    }, [
+      fetchMe.data,
+      fetchMetaDataDesignations.data,
+      fetchDepartmentById.data,
+    ]);
 
     useEffect(() => {
       if (setIsSubmissionLoading) {
-        if (isOnboarding) return setIsSubmissionLoading(updateMeIsLoading);
+        if (isOnboarding) return setIsSubmissionLoading(updateMe?.isLoading);
 
         return setIsSubmissionLoading(
           (currentState: IsSubmissionLoadingType) => {
-            return { ...currentState, basicInfo: updateMeIsLoading };
+            return { ...currentState, basicInfo: updateMe?.isLoading };
           }
         );
       }
-    }, [updateMeIsLoading]);
+    }, [updateMe.isLoading]);
 
     useEffect(() => {
       setDisplayCheckForPubMedNames(false);
@@ -165,32 +161,32 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
     useEffect(() => {
       if (
-        fetchPubMedByNamesData &&
-        fetchPubMedByNamesData.invalidPubMedNames?.length > 0
+        fetchPubMedByNames?.data &&
+        fetchPubMedByNames?.data.invalidPubMedNames?.length > 0
       ) {
         setDisplayCheckForPubMedNames(false);
         validatePubMedNames(
-          fetchPubMedByNamesData.invalidPubMedNames,
+          fetchPubMedByNames?.data.invalidPubMedNames,
           setError
         );
         return;
       }
 
       if (
-        fetchPubMedByNamesData &&
-        fetchPubMedByNamesData?.namesToBold?.length > 0
+        fetchPubMedByNames?.data &&
+        fetchPubMedByNames?.data?.namesToBold?.length > 0
       ) {
-        setCorrectedPubMedNames(fetchPubMedByNamesData.namesToBold);
+        setCorrectedPubMedNames(fetchPubMedByNames?.data.namesToBold);
         return setDisplayCheckForPubMedNames(true);
       }
-    }, [fetchPubMedByNamesData]);
+    }, [fetchPubMedByNames?.data]);
 
     // *JSX
     return (
       <div>
-        {(fetchMeIsLoading ||
-          fetchDepartmentByIdDataIsLoading ||
-          fetchMetadataDesignationsIsLoading) && <FullScreenLoader />}
+        {(fetchMe?.isLoading ||
+          fetchDepartmentById?.isLoading ||
+          fetchMetaDataDesignations?.isLoading) && <FullScreenLoader />}
 
         <form noValidate onSubmit={handleSubmit(handleSubmitForm)}>
           <div className="flex flex-col w-full mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
@@ -199,8 +195,8 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               control={control}
               id="designation"
               name="designation"
-              options={fetchMetadataDesignationsData?.data?.data || []}
-              isLoading={fetchMetadataDesignationsIsLoading}
+              options={fetchMetaDataDesignations?.data?.data?.data || []}
+              isLoading={fetchMetaDataDesignations?.isLoading}
               required={getYupIsRequired(schema, "designation")}
               autoComplete="off"
               error={formErrors?.designation?.message}
@@ -223,8 +219,8 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               control={control}
               id="department"
               name="department"
-              options={fetchDepartmentByIdData?.data?.data || []}
-              isLoading={fetchDepartmentByIdDataIsLoading}
+              options={fetchDepartmentById?.data?.data?.data || []}
+              isLoading={fetchDepartmentById?.isLoading}
               required={getYupIsRequired(schema, "department")}
               autoComplete="off"
               error={formErrors?.department?.message}
@@ -241,7 +237,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               rightCheck={displayCheckForPubMedNames}
               error={formErrors?.pubMedNames?.message}
               isLoading={
-                fetchPubMedByNamesIsLoading || fetchPubMedByNamesIsFetching
+                fetchPubMedByNames?.isLoading || fetchPubMedByNames?.isFetching
               }
               onBlur={(e) => {
                 setPubMedNamesToSearch(e.currentTarget.value);

@@ -13,8 +13,8 @@ const Publications = () => {
   const navigate = useNavigate();
 
   // *Queries
-  const { data: fetchMeData } = useFetchMe();
-  const { data: fetchAllPublicationsData } = useFetchAllPublications();
+  const fetchMe = useFetchMe();
+  const fetchAllPublications = useFetchAllPublications();
 
   // *JSX
   return (
@@ -34,10 +34,12 @@ const Publications = () => {
         </div>
 
         <div className="flex flex-col w-full mt-8 space-y-6">
-          {fetchMeData?.data && fetchAllPublicationsData?.data ? (
+          {fetchMe?.data?.data && fetchAllPublications?.data?.data ? (
             <PublicationsSection
-              data={fetchAllPublicationsData?.data?.data || []}
-              namesToBold={fetchMeData?.data?.data?.correctedPubmedNames || []}
+              data={fetchAllPublications?.data?.data?.data || []}
+              namesToBold={
+                fetchMe?.data?.data?.data?.correctedPubmedNames || []
+              }
             />
           ) : (
             <PublicationsSectionLoading />

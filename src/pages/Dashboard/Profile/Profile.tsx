@@ -15,7 +15,7 @@ import { useFetchMe } from "api/hooks";
 
 const Profile = () => {
   const navigate = useNavigate();
-  const { data: fetchMeData } = useFetchMe();
+  const fetchMe = useFetchMe();
 
   return (
     <BaseLayout withLeftNavigation>
@@ -45,7 +45,7 @@ const Profile = () => {
             data={mockData.patientPopulations}
           />
           <PubMedNamesSection
-            data={fetchMeData?.data?.data?.pubmedNames || []}
+            data={fetchMe.data?.data?.data?.pubmedNames || []}
           />
         </div>
       </div>
