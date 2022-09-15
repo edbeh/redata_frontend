@@ -41,15 +41,18 @@ const SinglePublication = ({
   };
 
   return (
-    <div className="flex mb-6">
+    <div
+      className={`flex mb-6 ${isEditable ? "cursor-pointer" : ""}`}
+      onClick={() =>
+        isEditable &&
+        handleSelectPublication &&
+        handleSelectPublication(publication.externalId)
+      }
+    >
       <div
         className={`flex flex-col items-center cursor-pointer ${
           isEditable ? "min-w-[20px] mt-[5px] mr-2 sm:mr-4" : "min-w-[35px]"
         }`}
-        onClick={() =>
-          handleSelectPublication &&
-          handleSelectPublication(publication.externalId)
-        }
       >
         {isEditable && (
           <input type="checkbox" checked={isSelected} className="scale-125" />

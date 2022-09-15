@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 
-import { imgNotFound, ImgXCircleOutline, imgDeleteFiles } from "assets";
+import { imgNotFound, imgDeleteFiles } from "assets";
 import { FormInput, FullScreenLoader, Button, Modal } from "components";
 import {
   useFetchAllPublications,
@@ -397,15 +397,10 @@ const PublicationsForm = React.forwardRef<
             </div>
             {selectedSavedPublicationIds.length > 0 && (
               <div
-                className="flex space-x-1 items-center cursor-pointer"
+                className="flex text-red-500 space-x-1 mt-2 sm:mt-0 justify-center cursor-pointer p-2 rounded-lg border-[1px] border-red-500"
                 onClick={() => setIsPublicationsRemovalModalVisible(true)}
               >
-                <ImgXCircleOutline
-                  width={20}
-                  height={20}
-                  className="text-red-500"
-                />
-                <p className="text-red-500">
+                <p>
                   Remove {selectedSavedPublicationIds.length} selected items
                 </p>
               </div>
