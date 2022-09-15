@@ -15,6 +15,26 @@ export const homeNav: IBreadCrumbs = {
   ],
 };
 
+export const editHomeNav: IBreadCrumbs = {
+  breadcrumbs: [
+    {
+      key: "dashboard",
+      label: "Dashboard",
+      url: "/home",
+    },
+    {
+      key: "profile",
+      label: "Profile",
+      url: "/home",
+    },
+    {
+      key: "edit",
+      label: "Edit",
+      url: "/home/edit",
+    },
+  ],
+};
+
 export const mockData = {
   researchInterests: [
     "Kidney Transplant",

@@ -3,6 +3,7 @@ import { useQueryClient } from "react-query";
 import React, { useEffect, useState } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { toast } from "react-toastify";
 
 import {
   FormInput,
@@ -29,18 +30,25 @@ import {
   validateDuplicateValues,
   validatePubMedNames,
 } from "./BasicInfoForm.util";
+import { IsSubmissionLoadingType } from "../../Dashboard/Profile/components/EditProfile/EditProfile.model";
 
 interface BasicInfoFormProps {
   /** callback if api call is successful */
   onSuccessCallback?: () => void;
 
-  /** display loading state parent component */
-  setIsSubmissionLoading?: React.Dispatch<React.SetStateAction<boolean>>;
+  /** display loading state in parent component */
+  setIsSubmissionLoading?: React.Dispatch<React.SetStateAction<any>>;
+
+  /** determine if we're rendering this form from onboarding */
+  isOnboarding?: boolean;
 }
 
 const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
   // ref for parent component to trigger submit form
-  ({ onSuccessCallback, setIsSubmissionLoading }, ref) => {
+  (
+    { onSuccessCallback, setIsSubmissionLoading, isOnboarding = false },
+    ref
+  ) => {
     const [pubMedNamesToSearch, setPubMedNamesToSearch] = useState<string>("");
     const [correctedPubMedNames, setCorrectedPubMedNames] = useState<string[]>(
       []
@@ -94,6 +102,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     const handleMutationSuccess = () => {
       queryClient.invalidateQueries(ME_API_KEY);
       if (onSuccessCallback) onSuccessCallback();
+      if (!isOnboarding) toast.success("Update successful!");
     };
 
     // *Queries
@@ -139,7 +148,15 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     }, [fetchMeData, fetchMetadataDesignationsData, fetchDepartmentByIdData]);
 
     useEffect(() => {
-      if (setIsSubmissionLoading) setIsSubmissionLoading(updateMeIsLoading);
+      if (setIsSubmissionLoading) {
+        if (isOnboarding) return setIsSubmissionLoading(updateMeIsLoading);
+
+        return setIsSubmissionLoading(
+          (currentState: IsSubmissionLoadingType) => {
+            return { ...currentState, basicInfo: updateMeIsLoading };
+          }
+        );
+      }
     }, [updateMeIsLoading]);
 
     useEffect(() => {

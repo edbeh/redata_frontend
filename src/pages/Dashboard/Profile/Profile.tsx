@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
+
 import { BreadCrumbs } from "components";
 import { BaseLayout } from "wrapper-components";
 import { ImgPencilSquareOutline } from "assets";
 
-import { homeNav, mockData } from "./Home.util";
+import { homeNav, mockData } from "./Profile.util";
 import {
   HeroSection,
   InfoSection,
@@ -11,7 +13,8 @@ import {
 } from "./components";
 import { useFetchMe } from "api/hooks";
 
-const Home = () => {
+const Profile = () => {
+  const navigate = useNavigate();
   const { data: fetchMeData } = useFetchMe();
 
   return (
@@ -23,6 +26,7 @@ const Home = () => {
             Profile
           </h1>
           <ImgPencilSquareOutline
+            onClick={() => navigate("/home/edit")}
             width={20}
             height={20}
             className="text-white cursor-pointer"
@@ -49,4 +53,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Profile;

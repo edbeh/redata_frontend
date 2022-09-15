@@ -4,7 +4,8 @@ import {
   Login,
   Register,
   Onboarding,
-  Home,
+  Profile,
+  EditProfile,
   Publications,
   EditPublications,
   Search,
@@ -22,7 +23,8 @@ const AppRouter = () => {
         <Route path="/onboarding/:step" element={<Onboarding />} />
         <Route path="/onboarding" element={<Navigate to="/onboarding/1" />} />
 
-        <Route path="/home" element={<Home />} />
+        <Route path="/home" element={<Profile />} />
+        <Route path="/home/edit" element={<EditProfile />} />
         <Route path="/publications" element={<Publications />} />
         <Route path="/publications/edit" element={<EditPublications />} />
         <Route path="/search" element={<Search />} />

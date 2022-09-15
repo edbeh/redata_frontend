@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 
@@ -120,6 +120,7 @@ const PublicationsForm = React.forwardRef<
     setIsPublicationsRemovalModalVisible(false);
     setSelectedSavedPublicationIds([]);
     queryClient.invalidateQueries(PUBLICATIONS_API_KEY);
+    toast.success("Publications removed successfully!");
   });
 
   // *Methods
@@ -381,8 +382,10 @@ const PublicationsForm = React.forwardRef<
         </div>
       </form>
 
+      <div className="border-b-[1px] border-b-slate-200 my-6" />
+
       {fetchMeData && publicationsData && publicationsData?.length > 0 ? (
-        <div className="mt-8">
+        <div>
           <div className="flex flex-wrap flex-col sm:flex-row space-x-0 sm:space-x-6 mb-3 sm:items-center">
             <div className="flex space-x-6 items-center">
               <p className="font-semibold">Saved Publications: </p>

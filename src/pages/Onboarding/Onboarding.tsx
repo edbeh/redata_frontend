@@ -144,18 +144,21 @@ const Onboarding = () => {
                 ref={basicInfoSubmitRef}
                 onSuccessCallback={handleFormSubmitSuccess}
                 setIsSubmissionLoading={setIsSubmissionLoading}
+                isOnboarding
               />
             )}
             {currentStep === 2 && (
               <ResearchInterestsForm
                 ref={researchInterestSubmitRef}
                 onSuccessCallback={handleFormSubmitSuccess}
+                isOnboarding
               />
             )}
             {currentStep === 3 && (
               <PatientPopulationsForm
                 ref={patientPopulationSubmitRef}
                 onSuccessCallback={handleFormSubmitSuccess}
+                isOnboarding
               />
             )}
             {currentStep === 4 && (

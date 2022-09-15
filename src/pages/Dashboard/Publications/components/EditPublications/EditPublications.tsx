@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { BaseLayout } from "wrapper-components";
 import { BreadCrumbs, Card } from "components";
 import { ImgArrowUturnLeftOutline } from "assets";
+import { PublicationsForm } from "pages";
 
 import { editPublicationsNav } from "../../Publications.util";
-import PublicationsForm from "pages/DataForms/PublicationsForm/PublicationsForm";
 
 const EditPublications = () => {
   const navigate = useNavigate();
