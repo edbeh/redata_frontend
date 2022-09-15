@@ -9,6 +9,7 @@ import {
   Publications,
   EditPublications,
   Search,
+  Connections,
   Settings,
 } from "pages";
 import { PrivateRoute } from "wrapper-components";
@@ -28,6 +29,7 @@ const AppRouter = () => {
         <Route path="/publications" element={<Publications />} />
         <Route path="/publications/edit" element={<EditPublications />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/connections" element={<Connections />} />
         <Route path="/settings" element={<Settings />} />
       </Route>
 

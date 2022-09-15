@@ -3,6 +3,7 @@ import {
   ImgHomeOutline,
   ImgSearchOutline,
   ImgSettingsOutline,
+  ImgUserCircleOutline,
 } from "assets";
 
 import { INavigationItem } from "./LeftNavigation.model";
@@ -22,11 +23,18 @@ export const getNavigationItems = (): INavigationItem[] => {
       Icon: ImgDocumentOutline,
     },
     {
+      key: "connections",
+      label: "Connections",
+      route: "/connections",
+      Icon: ImgUserCircleOutline,
+    },
+    {
       key: "search",
       label: "Search",
       route: "/search",
       Icon: ImgSearchOutline,
     },
+
     {
       key: "settings",
       label: "Settings",

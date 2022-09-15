@@ -10,4 +10,5 @@ export { default as EditProfile } from "./Dashboard/Profile/components/EditProfi
 export { default as Publications } from "./Dashboard/Publications/Publications";
 export { default as EditPublications } from "./Dashboard/Publications/components/EditPublications/EditPublications";
 export { default as Search } from "./Dashboard/Search/Search";
+export { default as Connections } from "./Dashboard/Connections/Connections";
 export { default as Settings } from "./Dashboard/Settings/Settings";
