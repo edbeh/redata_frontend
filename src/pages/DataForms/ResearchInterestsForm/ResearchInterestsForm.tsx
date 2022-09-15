@@ -63,7 +63,7 @@ const ResearchInterestsForm = React.forwardRef<
       const cleanData = cleanUpData(data);
 
       console.log(cleanData);
-      console.log(JSON.stringify(cleanData));
+      console.log(JSON.stringify(cleanData, null, 2));
       if (onSuccessCallback) onSuccessCallback();
     };
 

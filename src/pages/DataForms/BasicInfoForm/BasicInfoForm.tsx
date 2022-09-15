@@ -98,7 +98,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
       const cleanData = cleanUpData(data, correctedPubMedNames);
       console.log(cleanData);
-      console.log(JSON.stringify(cleanData));
+      console.log(JSON.stringify(cleanData, null, 2));
       updateMe.mutate(cleanData);
     };
 
