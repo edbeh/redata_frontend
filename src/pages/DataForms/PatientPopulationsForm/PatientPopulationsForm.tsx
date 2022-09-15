@@ -63,6 +63,7 @@ const PatientPopulationsForm = React.forwardRef<
       const cleanData = cleanUpData(data);
 
       console.log(cleanData);
+      console.log(JSON.stringify(cleanData));
       if (onSuccessCallback) onSuccessCallback();
     };
 

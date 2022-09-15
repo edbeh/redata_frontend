@@ -424,7 +424,7 @@ const PublicationsForm = React.forwardRef<
             height={200}
           />
           <p className="self-center">
-            There are no publications in your profile yet
+            There are no saved publications in your profile yet
           </p>
         </div>
       )}

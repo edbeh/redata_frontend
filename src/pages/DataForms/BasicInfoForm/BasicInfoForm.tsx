@@ -97,6 +97,8 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       if (hasDuplicateValueErrors || hasInvalidPubMedNames) return;
 
       const cleanData = cleanUpData(data, correctedPubMedNames);
+      console.log(cleanData);
+      console.log(JSON.stringify(cleanData));
       updateMe.mutate(cleanData);
     };
 

@@ -28,7 +28,7 @@ const PublicationsSection = ({
               height={180}
             />
             <p className="self-center">
-              There are no publications in your profile yet
+              There are no saved publications in your profile yet
             </p>
           </div>
         ) : (
