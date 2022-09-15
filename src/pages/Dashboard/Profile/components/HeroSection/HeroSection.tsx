@@ -1,8 +1,14 @@
 import { Card } from "components";
 
 import { imgJohnDoe } from "assets";
+import { GetMe } from "api/models";
 
-const HeroSection = () => {
+interface HeroSectionProps {
+  data: GetMe.Data;
+}
+
+const HeroSection = ({ data }: HeroSectionProps) => {
+  console.log("data", data);
   return (
     <div className="w-full">
       <Card>

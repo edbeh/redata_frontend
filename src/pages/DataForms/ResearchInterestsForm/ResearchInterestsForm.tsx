@@ -66,8 +66,6 @@ const ResearchInterestsForm = React.forwardRef<
       if (onSuccessCallback) onSuccessCallback();
     };
 
-    console.log("shouldFocus", isOnboarding);
-
     // *Effects
     useEffect(() => {
       // min of 1 research interest required

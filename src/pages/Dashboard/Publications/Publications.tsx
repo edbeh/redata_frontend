@@ -6,8 +6,7 @@ import { ImgPencilSquareOutline } from "assets";
 import { useFetchMe, useFetchAllPublications } from "api/hooks";
 
 import { publicationsNav } from "./Publications.util";
-import { PublicationsSection } from "./components";
-import PublicationsSectionLoading from "./components/PublicationsSection/PublicationsSectionLoading";
+import { PublicationsSection, PublicationsSectionLoading } from "./components";
 
 const Publications = () => {
   const navigate = useNavigate();

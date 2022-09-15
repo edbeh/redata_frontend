@@ -1,6 +1,11 @@
 import { Card } from "components";
+import { GetMe } from "api/models";
 
-const InfoSection = () => {
+interface InfoSectionProps {
+  data: GetMe.Data;
+}
+
+const InfoSection = ({ data }: InfoSectionProps) => {
   return (
     <div className="w-full">
       <Card>

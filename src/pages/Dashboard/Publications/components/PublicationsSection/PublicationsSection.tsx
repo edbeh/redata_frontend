@@ -1,8 +1,10 @@
 import { Card } from "components";
 import { imgNotFound } from "assets";
 
-import SinglePublication from "../SinglePublication/SinglePublication";
 import { Publication } from "api/models";
+
+import SinglePublication from "../SinglePublication/SinglePublication";
+import SinglePublicationLoading from "../SinglePublication/SinglePublication.loading";
 
 interface PublicationsSectionProps {
   data: Publication[];

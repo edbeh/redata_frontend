@@ -1,11 +1,13 @@
+import { GetMe } from "api/models";
 import { Card, Badge } from "components";
-import { ImgPlusCircleOutline, ImgPencilSquareOutline } from "assets";
 
 interface PubMedNamesSectionProps {
-  data: string[];
+  data: GetMe.Data;
 }
 
 const PubMedNamesSection = ({ data }: PubMedNamesSectionProps) => {
+  if (!data?.pubmedNames) return null;
+
   return (
     <div className="w-full">
       <Card>
@@ -14,7 +16,7 @@ const PubMedNamesSection = ({ data }: PubMedNamesSectionProps) => {
         </h2>
 
         <div className="flex flex-wrap items-center justify-start gap-y-4 gap-x-4">
-          {data.map((item) => (
+          {data?.pubmedNames?.map((item) => (
             <Badge key={item} text={item} />
           ))}
         </div>

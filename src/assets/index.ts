@@ -14,7 +14,6 @@ import { ReactComponent as ImgArrowUturnLeftOutline } from "./arrow-uturn-left-o
 
 import imgScientistMicroscope from "./scientist-microscope.jpg";
 import imgNotFound from "./not-found.jpg";
-import imgProfileBackground from "./profile-background.webp";
 import imgJohnDoe from "./john-doe.jpg";
 import imgDeleteFiles from "./delete-files.png";
 
@@ -33,7 +32,6 @@ export {
   ImgXCircleOutline,
   ImgCheckCircleOutline,
   ImgArrowUturnLeftOutline,
-  imgProfileBackground,
   imgNotFound,
   imgJohnDoe,
   imgDeleteFiles,

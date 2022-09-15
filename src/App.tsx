@@ -1,6 +1,7 @@
 import { AppRouter } from "router";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
+import "react-loading-skeleton/dist/skeleton.css";
 
 import { AxiosErrorInterceptor } from "wrapper-components";
 

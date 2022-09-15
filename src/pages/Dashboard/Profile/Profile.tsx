@@ -10,13 +10,21 @@ import {
   InfoSection,
   CommonSection,
   PubMedNamesSection,
+  HeroSectionLoading,
+  InfoSectionLoading,
+  CommonSectionLoading,
 } from "./components";
 import { useFetchMe } from "api/hooks";
 
 const Profile = () => {
   const navigate = useNavigate();
+
+  // *Queries
   const fetchMe = useFetchMe();
 
+  console.log("fetchMe.data", fetchMe?.data);
+
+  // *JSX
   return (
     <BaseLayout withLeftNavigation>
       <div className="w-full pb-12">
@@ -34,19 +42,28 @@ const Profile = () => {
         </div>
 
         <div className="flex flex-col w-full mt-8 space-y-6">
-          <HeroSection />
-          <InfoSection />
-          <CommonSection
-            title="Research Interests"
-            data={mockData.researchInterests}
-          />
-          <CommonSection
-            title="Patient Populations"
-            data={mockData.patientPopulations}
-          />
-          <PubMedNamesSection
-            data={fetchMe.data?.data?.data?.pubmedNames || []}
-          />
+          {fetchMe?.data ? (
+            <>
+              <HeroSection data={fetchMe?.data?.data?.data} />
+              <InfoSection data={fetchMe?.data?.data?.data} />
+              <CommonSection
+                title="Research Interests"
+                data={mockData.researchInterests}
+              />
+              <CommonSection
+                title="Patient Populations"
+                data={mockData.patientPopulations}
+              />
+              <PubMedNamesSection data={fetchMe.data?.data?.data} />
+            </>
+          ) : (
+            <>
+              <HeroSectionLoading />
+              <InfoSectionLoading />
+              <CommonSectionLoading />
+              <CommonSectionLoading />
+            </>
+          )}
         </div>
       </div>
     </BaseLayout>
