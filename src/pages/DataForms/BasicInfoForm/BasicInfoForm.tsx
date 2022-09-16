@@ -108,7 +108,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     const handleMutationSuccess = () => {
       queryClient.invalidateQueries(ME_API_KEY);
       if (onSuccessCallback) onSuccessCallback();
-      if (!isOnboarding) toast.success("Update successful!");
+      if (!isOnboarding) toast.success("Data updated successfully!");
     };
 
     // *Queries

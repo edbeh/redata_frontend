@@ -79,6 +79,7 @@ const SearchForm = ({ useFormReturn }: SearchFormProps) => {
           error={formErrors?.keyword?.message as string}
           required={getYupIsRequired(schema, "keyword")}
           autoComplete="off"
+          placeholder="Type a keyword (e.g. Diabetes)"
         />
 
         <FormSelect
