@@ -254,8 +254,6 @@ const PublicationsForm = React.forwardRef<
       }
     }, [publicationsData]);
 
-    console.log("publicationsData", publicationsData);
-
     // *JSX
     return (
       <div className="flex flex-col">

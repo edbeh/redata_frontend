@@ -3,9 +3,10 @@ import { Card, Badge } from "components";
 interface CommonSectionProps {
   title: string;
   data: string[];
+  onClickBadge?: (item: string) => void;
 }
 
-const CommonSection = ({ title, data }: CommonSectionProps) => {
+const CommonSection = ({ title, data, onClickBadge }: CommonSectionProps) => {
   return (
     <div className="w-full">
       <Card>
@@ -13,7 +14,7 @@ const CommonSection = ({ title, data }: CommonSectionProps) => {
 
         <div className="flex flex-wrap items-start justify-start gap-y-4 gap-x-4">
           {data.map((item) => (
-            <Badge key={item} text={item} onClick={() => {}} />
+            <Badge key={item} text={item} onClick={onClickBadge} />
           ))}
         </div>
       </Card>

@@ -45,8 +45,12 @@ const SearchForm = ({ useFormReturn }: SearchFormProps) => {
 
   // *JSX
   return (
-    <div className="flex flex-col w-full space-y-4">
-      <form noValidate onSubmit={handleUpdateUrlQueryString}>
+    <div>
+      <form
+        noValidate
+        onSubmit={handleUpdateUrlQueryString}
+        className="flex flex-col w-full space-y-4"
+      >
         <FormInput
           register={register}
           id="keyword"

@@ -22,8 +22,6 @@ const Profile = () => {
   // *Queries
   const fetchMe = useFetchMe();
 
-  console.log("fetchMe.data", fetchMe?.data);
-
   // *JSX
   return (
     <BaseLayout withLeftNavigation>
@@ -49,10 +47,26 @@ const Profile = () => {
               <CommonSection
                 title="Research Interests"
                 data={mockData.researchInterests}
+                onClickBadge={(item: string) => {
+                  navigate({
+                    pathname: "/search",
+                    search: `?keyword=${encodeURIComponent(
+                      item
+                    )}&searchIn=researchInterests`,
+                  });
+                }}
               />
               <CommonSection
                 title="Patient Populations"
                 data={mockData.patientPopulations}
+                onClickBadge={(item: string) => {
+                  navigate({
+                    pathname: "/search",
+                    search: `?keyword=${encodeURIComponent(
+                      item
+                    )}&searchIn=patientPopulations`,
+                  });
+                }}
               />
               <PubMedNamesSection data={fetchMe.data?.data?.data} />
             </>

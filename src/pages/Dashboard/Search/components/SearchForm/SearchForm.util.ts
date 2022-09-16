@@ -44,7 +44,6 @@ export const updateUrlQueryString = (
 ) => {
   const searchInQuery = groupQueryString(data.searchIn);
 
-  console.log("searchInQuery", searchInQuery);
   const query = [];
 
   if (data?.keyword) query.push(`keyword=${data.keyword}`);
