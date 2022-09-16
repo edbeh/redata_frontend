@@ -7,7 +7,7 @@ export const selectStyles = {
     return {
       ...styles,
       borderRadius: 6,
-      height: 42,
+      minHeight: 42,
       border: "none",
       boxShadow: "none",
       overflow: "hidden",

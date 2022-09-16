@@ -4,7 +4,6 @@ import { imgNotFound } from "assets";
 import { Publication } from "api/models";
 
 import SinglePublication from "../SinglePublication/SinglePublication";
-import SinglePublicationLoading from "../SinglePublication/SinglePublication.loading";
 
 interface PublicationsSectionProps {
   data: Publication[];
@@ -24,10 +23,11 @@ const PublicationsSection = ({
               className="self-center"
               src={imgNotFound}
               alt="not-found"
-              width={180}
-              height={180}
+              width={210}
+              height={210}
             />
-            <p className="self-center">
+            <p className="self-center font-semibold">No publications found</p>
+            <p className="self-center mt-2">
               There are no saved publications in your profile yet
             </p>
           </div>

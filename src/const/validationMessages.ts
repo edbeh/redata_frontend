@@ -10,6 +10,7 @@ export const validationMessages = {
     name: "Name is required",
     password: "Password is required",
     primarySpecialty: "Primary specialty is required",
+    keyword: "Search keyword is required",
   },
   validate: {
     confirmPassword: "Passwords must match",
@@ -20,5 +21,6 @@ export const validationMessages = {
     duplicateSubSpecialty: "Please enter different sub-specialties",
     duplicateResearchInterest: "Please enter different research interests",
     duplicatePatientPopulation: "Please enter different patient populations",
+    searchIn: "Please select at least 1 field to search",
   },
 };

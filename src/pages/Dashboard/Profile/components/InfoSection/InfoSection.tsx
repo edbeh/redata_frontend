@@ -11,22 +11,22 @@ const InfoSection = ({ data }: InfoSectionProps) => {
       <Card>
         <h2 className="mb-5 text-xl font-semibold text-gray-700">About me</h2>
 
-        <p>I'm a senior consultant specialising in renal transplant.</p>
+        {/* <p>I'm a senior consultant specialising in renal transplant.</p> */}
 
         <div className="flex flex-col mt-4 space-y-4">
           <div className="flex flex-col justify-between space-x-0 space-y-1 sm:space-y-0 sm:space-x-4 sm:flex-row">
             <p className="font-semibold basis-1/3 min-w-[125px]">Full Name:</p>
-            <p className="basis-2/3">John Doe Sample</p>
+            <p className="basis-2/3">{data?.name}</p>
           </div>
 
           <div className="flex flex-col justify-between space-x-0 space-y-1 sm:space-y-0 sm:space-x-4 sm:flex-row">
             <p className="font-semibold basis-1/3 min-w-[125px]">Email:</p>
-            <p className="basis-2/3">john.doe@sgh.com.sg</p>
+            <p className="basis-2/3">{data?.email}</p>
           </div>
 
           <div className="flex flex-col justify-between space-x-0 space-y-1 sm:space-y-0 sm:space-x-4 sm:flex-row">
             <p className="font-semibold basis-1/3 min-w-[125px]">MCR No.:</p>
-            <p className="basis-2/3">M2045R</p>
+            <p className="basis-2/3">Mock data</p>
           </div>
 
           <div className="flex flex-col justify-between space-x-0 space-y-1 sm:space-y-0 sm:space-x-4 sm:flex-row">

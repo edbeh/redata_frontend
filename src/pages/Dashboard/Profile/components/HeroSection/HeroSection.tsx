@@ -8,7 +8,6 @@ interface HeroSectionProps {
 }
 
 const HeroSection = ({ data }: HeroSectionProps) => {
-  console.log("data", data);
   return (
     <div className="w-full">
       <Card>
@@ -20,11 +19,11 @@ const HeroSection = ({ data }: HeroSectionProps) => {
           />
 
           <div className="text-center sm:text-left mt-3 sm:mt-0">
-            <h1 className="text-2xl font-semibold">Dr. John Doe</h1>
-            <p className="pt-1">Senior Consultant</p>
+            <h1 className="text-2xl font-semibold">{data?.name}</h1>
+            <p className="pt-1">{data?.designation?.name}</p>
 
             <p className="pt-2 sm:pt-4 text-base">
-              Renal Department, Sample General Hospital
+              {`${data?.department?.name}, ${data?.institution?.name}`}
             </p>
           </div>
         </div>

@@ -16,6 +16,9 @@ interface FormSelectProps
   isSearchable?: boolean;
   isClearable?: boolean;
   isLoading?: boolean;
+  isMulti?: boolean;
+  closeMenuOnSelect?: boolean;
+  blurInputOnSelect?: boolean;
 }
 
 const FormSelect = ({
@@ -28,6 +31,9 @@ const FormSelect = ({
   isSearchable,
   isClearable,
   isLoading,
+  isMulti = false,
+  closeMenuOnSelect = true,
+  blurInputOnSelect = true,
   ...rest
 }: FormSelectProps) => {
   const { placeholder = "Select value", disabled, required } = rest;
@@ -50,7 +56,7 @@ const FormSelect = ({
                error
                  ? "border-red hover:ring-red hover:border-red "
                  : "hover:border-primary-600 hover:ring-primary-600"
-             } `}
+             }`}
             options={options}
             placeholder={placeholder}
             isSearchable={isSearchable}
@@ -59,6 +65,10 @@ const FormSelect = ({
             isLoading={isLoading}
             getOptionLabel={(option) => option.name}
             getOptionValue={(option) => option.id}
+            isMulti={isMulti}
+            closeMenuOnSelect={closeMenuOnSelect}
+            blurInputOnSelect={blurInputOnSelect}
+            hideSelectedOptions={false}
             {...field}
           />
         )}

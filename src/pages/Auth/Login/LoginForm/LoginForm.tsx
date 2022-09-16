@@ -38,7 +38,7 @@ const LoginForm = () => {
     if (submitSession?.data?.status === 200) {
       const jwt = submitSession?.data?.data?.jwt;
       setJwtTokenLocalStorage(jwt);
-      navigate("/onboarding/1");
+      navigate("/home");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitSession.data]);

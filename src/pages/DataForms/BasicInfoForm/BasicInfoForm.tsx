@@ -12,7 +12,7 @@ import {
   FullScreenLoader,
 } from "components";
 import { ImgPlusCircleOutline, ImgXMarkOutline } from "assets";
-import { getYupIsRequired } from "utils";
+import { getYupIsRequired, getSearchParams } from "utils";
 import {
   useFetchMetadataDesignations,
   useFetchMe,
@@ -49,6 +49,8 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     { onSuccessCallback, setIsSubmissionLoading, isOnboarding = false },
     ref
   ) => {
+    const searchParams = getSearchParams() as any;
+
     const [pubMedNamesToSearch, setPubMedNamesToSearch] = useState<string>("");
     const [correctedPubMedNames, setCorrectedPubMedNames] = useState<string[]>(
       []
@@ -64,6 +66,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       formState: { errors: formErrors },
       watch,
       setValue,
+      setFocus,
       setError,
     } = useForm<IBasicInfoFormFields>({
       resolver: yupResolver(schema),
@@ -126,6 +129,12 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     );
 
     // *Effects
+    useEffect(() => {
+      if (searchParams?.focus) {
+        setFocus(searchParams.focus);
+      }
+    }, [searchParams]);
+
     useEffect(() => {
       if (!fetchMetaDataDesignations?.data || !fetchDepartmentById.data) return;
 

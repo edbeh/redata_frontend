@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 
+import { ImgOpenNewTabOutline } from "assets";
 import { Publication } from "api/models";
 
 interface SinglePublicationProps {
@@ -67,7 +68,8 @@ const SinglePublication = ({
             target="_blank"
             rel="noreferrer"
           >
-            {publication.title}
+            {publication.title}{" "}
+            <ImgOpenNewTabOutline className="text-blue-500 inline w-4 h-4 mb-1" />
           </a>
         ) : (
           <p className="text-[15px]">{publication.title}</p>
