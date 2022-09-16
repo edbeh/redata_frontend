@@ -1,6 +1,5 @@
 import { Card } from "components";
-import { imgNotFound } from "assets";
-
+import { imgNoData } from "assets";
 import { Publication } from "api/models";
 
 import SinglePublication from "../SinglePublication/SinglePublication";
@@ -21,13 +20,15 @@ const PublicationsSection = ({
           <div className="flex flex-col w-full my-10">
             <img
               className="self-center"
-              src={imgNotFound}
+              src={imgNoData}
               alt="not-found"
-              width={210}
-              height={210}
+              width={130}
+              height={130}
             />
-            <p className="self-center font-semibold">No publications found</p>
-            <p className="self-center mt-2">
+            <p className="text-center font-semibold mt-4">
+              No publications found
+            </p>
+            <p className="text-center mt-2">
               There are no saved publications in your profile yet
             </p>
           </div>

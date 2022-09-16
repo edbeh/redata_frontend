@@ -18,6 +18,7 @@ import imgNotFound from "./not-found.jpg";
 import imgJohnDoe from "./john-doe.jpg";
 import imgDeleteFiles from "./delete-files.png";
 import imgProfileSearch from "./profile-search.svg";
+import imgNoData from "./no-data.svg";
 
 export {
   ImgXMarkOutline,
@@ -39,4 +40,5 @@ export {
   imgJohnDoe,
   imgDeleteFiles,
   imgProfileSearch,
+  imgNoData,
 };

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 
-import { imgNotFound, imgDeleteFiles } from "assets";
+import { imgDeleteFiles, imgNoData } from "assets";
 import { FormInput, FullScreenLoader, Button, Modal } from "components";
 import {
   useFetchAllPublications,
@@ -336,8 +336,8 @@ const PublicationsForm = React.forwardRef<
                   publications. Are you sure you want to continue?
                 </p>
                 <p className="mt-2">
-                  You can still save these publications from PubMed again if you
-                  want to restore them in the future.
+                  You can still save these publications from PubMed if you want
+                  to restore them in the future.
                 </p>
               </div>
 
@@ -438,12 +438,15 @@ const PublicationsForm = React.forwardRef<
           <div className="flex flex-col w-full mt-10">
             <img
               className="self-center"
-              src={imgNotFound}
+              src={imgNoData}
               alt="not-found"
-              width={200}
-              height={200}
+              width={130}
+              height={130}
             />
-            <p className="self-center">
+            <p className="text-center mt-4 font-semibold">
+              No publications found
+            </p>
+            <p className="text-center mt-2">
               There are no saved publications in your profile yet
             </p>
           </div>
