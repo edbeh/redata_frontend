@@ -5,7 +5,7 @@ import { objectIsEmpty } from "utils";
 
 import { ISearchFormFields } from "./SearchForm.model";
 
-export const SearchInOptions: FormSelectModel[] = [
+export const searchInOptions: FormSelectModel[] = [
   {
     id: "subSpecialties",
     name: "Sub-specialties",

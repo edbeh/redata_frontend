@@ -14,7 +14,7 @@ const CommonSection = ({ title, data, onClickBadge }: CommonSectionProps) => {
 
         <div className="flex flex-wrap items-start justify-start gap-y-4 gap-x-4">
           {data.map((item) => (
-            <Badge key={item} text={item} onClick={onClickBadge} />
+            <Badge key={item} text={item} onClickBadge={onClickBadge} />
           ))}
         </div>
       </Card>

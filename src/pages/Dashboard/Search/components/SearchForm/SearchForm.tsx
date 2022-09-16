@@ -1,12 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { FormInput, FormSelect, Button } from "components";
-import { getYupIsRequired } from "utils";
+import { getSearchParams, getYupIsRequired } from "utils";
 
 import { ISearchFormFields } from "./SearchForm.model";
 import { schema } from "./SearchForm.schema";
-import { SearchInOptions, updateUrlQueryString } from "./SearchForm.util";
+import { searchInOptions, updateUrlQueryString } from "./SearchForm.util";
 import { validationMessages } from "const";
 
 interface SearchFormProps {
@@ -15,6 +17,7 @@ interface SearchFormProps {
 
 const SearchForm = ({ useFormReturn }: SearchFormProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   // *Form
   const {
@@ -23,6 +26,7 @@ const SearchForm = ({ useFormReturn }: SearchFormProps) => {
     formState: { errors: formErrors },
     watch,
     setError,
+    setValue,
   } = useFormReturn;
 
   // *Methods
@@ -42,6 +46,22 @@ const SearchForm = ({ useFormReturn }: SearchFormProps) => {
 
     updateUrlQueryString(data, navigate);
   };
+
+  // *Effects
+  useEffect(() => {
+    const searchParams = getSearchParams() as any;
+
+    const keyword = searchParams?.keyword;
+    const searchIn = searchParams?.searchIn;
+
+    if (keyword) setValue("keyword", keyword);
+    if (searchIn) {
+      const options = searchIn?.split(",")?.map((item: string) => {
+        return searchInOptions.find((option) => option.id === item);
+      });
+      setValue("searchIn", options);
+    }
+  }, [location]);
 
   // *JSX
   return (
@@ -63,7 +83,7 @@ const SearchForm = ({ useFormReturn }: SearchFormProps) => {
 
         <FormSelect
           control={control}
-          options={SearchInOptions || []}
+          options={searchInOptions || []}
           placeholder=""
           id="searchIn"
           name="searchIn"
