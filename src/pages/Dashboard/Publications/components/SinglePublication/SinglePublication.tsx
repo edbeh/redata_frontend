@@ -56,7 +56,12 @@ const SinglePublication = ({
         }`}
       >
         {isEditable && (
-          <input type="checkbox" checked={isSelected} className="scale-125" />
+          <input
+            type="checkbox"
+            checked={isSelected}
+            className="scale-125"
+            readOnly
+          />
         )}
         <p className={` ${isEditable ? "text-center mt-2" : ""}`}>{i + 1}.</p>
       </div>

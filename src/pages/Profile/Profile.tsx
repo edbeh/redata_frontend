@@ -53,13 +53,15 @@ const Profile = () => {
                 });
               }}
             />
-            <PublicationsSection
-              data={fetchAllPublications?.data?.data?.data || []}
-              namesToBold={
-                fetchMe?.data?.data?.data?.correctedPubmedNames || []
-              }
-              withHeader
-            />
+            {fetchAllPublications?.data?.data?.data && (
+              <PublicationsSection
+                data={fetchAllPublications?.data?.data?.data || []}
+                namesToBold={
+                  fetchMe?.data?.data?.data?.correctedPubmedNames || []
+                }
+                withHeader
+              />
+            )}
           </>
         ) : (
           <>
