@@ -153,7 +153,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     useEffect(() => {
       if (
         !fetchMetaDataDesignations?.data ||
-        !fetchMetaDataSpecialties ||
+        !fetchMetaDataSpecialties?.data ||
         !fetchDepartmentById.data
       )
         return;
