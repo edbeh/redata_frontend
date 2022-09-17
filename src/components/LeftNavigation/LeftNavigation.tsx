@@ -36,7 +36,9 @@ const LeftNavigation = () => {
                 : ""
             }`}
                 key={item.key}
-                onClick={() => navigate(-1)}
+                onClick={() =>
+                  item.route ? navigate(item.route) : navigate(-1)
+                }
               >
                 <item.Icon className={`w-5 h-5 stroke-2`} /> <p>{item.label}</p>
               </li>

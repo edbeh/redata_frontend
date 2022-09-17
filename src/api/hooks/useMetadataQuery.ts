@@ -6,12 +6,18 @@ import { createAxiosInstance } from "api/utils/createAxiosInstance";
 import {
   METADATA_DESIGNATIONS_API_KEY,
   METADATA_INSTITUTIONS_API_KEY,
+  METADATA_SPECIALTIES_API_KEY,
 } from "../keys";
 import {
   METADATA_DESIGNATIONS_API_ENDPOINT,
   METADATA_INSTITUTIONS_API_ENDPOINT,
+  METADATA_SPECIALTIES_API_ENDPOINT,
 } from "../endpoints";
-import { GetMetadataDesignations, GetMetadataInstitutions } from "../models";
+import {
+  GetMetadataDesignations,
+  GetMetadataInstitutions,
+  GetMetadataSpecialties,
+} from "../models";
 
 const AxiosInstance = createAxiosInstance();
 
@@ -47,6 +53,24 @@ const fetchMetadataInstitutions = async () => {
 
 export const useFetchMetadataInstitutions = () => {
   return useQuery([METADATA_INSTITUTIONS_API_KEY], fetchMetadataInstitutions, {
+    staleTime: 1000 * 60 * 10, // 10 minutes
+  });
+};
+
+/**
+ *  //*GET Specialties
+ */
+const fetchMetadataSpecialties = async () => {
+  return AxiosInstance.get<GetMetadataSpecialties.ApiResponse>(
+    METADATA_SPECIALTIES_API_ENDPOINT
+  ).catch((error) => {
+    toast.error(error.response.statusText);
+    throw error;
+  });
+};
+
+export const useFetchMetadataSpecialties = () => {
+  return useQuery([METADATA_SPECIALTIES_API_KEY], fetchMetadataSpecialties, {
     staleTime: 1000 * 60 * 10, // 10 minutes
   });
 };

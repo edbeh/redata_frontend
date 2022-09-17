@@ -2,6 +2,7 @@ export * from "./Sessions/PostSession";
 export * from "./Sessions/PostUser";
 export * from "./Metadata/GetMetadataDesignations";
 export * from "./Metadata/GetMetadataInstitutions";
+export * from "./Metadata/GetMetadataSpecialties";
 export * from "./Me/GetMe";
 export * from "./Me/PutMe";
 export * from "./Departments/GetDepartmentById";

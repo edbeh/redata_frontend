@@ -1,16 +1,52 @@
 import { FormSelectModel } from "models";
 
 export declare module GetMe {
+  export interface Institution {
+    id: string;
+    type: string;
+    name: string;
+  }
+
+  export interface Designation {
+    id: string;
+    type: string;
+    name: string;
+  }
+
+  export interface Department {
+    id: string;
+    type: string;
+    name: string;
+  }
+
+  export interface PrimarySpecialty {
+    id: string;
+    type: string;
+    name: string;
+    variant: string;
+  }
+
+  export interface OtherSpecialty {
+    id: string;
+    type: string;
+    name: string;
+    variant: string;
+  }
+
   export interface Data {
     id: string;
     type: string;
-    name?: string;
+    name: string;
     email: string;
-    institution: FormSelectModel;
-    designation?: FormSelectModel;
-    department?: FormSelectModel;
-    pubmedNames: string[];
+    bio: string;
     correctedPubmedNames: string[];
+    institution: Institution;
+    designation: Designation;
+    department: Department;
+    primarySpecialty: PrimarySpecialty;
+    otherSpecialties: OtherSpecialty[];
+    mcrNumber?: any;
+    pubmedNames: string[];
   }
 
   export interface ApiResponse {

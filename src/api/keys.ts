@@ -6,6 +6,7 @@ export const DEPARTMENTS_API_KEY = "departments";
 
 export const METADATA_DESIGNATIONS_API_KEY = "metadata_designations";
 export const METADATA_INSTITUTIONS_API_KEY = "metadata_institutions";
+export const METADATA_SPECIALTIES_API_KEY = "metadata_specialties";
 
 export const PUBLICATIONS_API_KEY = "publications";
 

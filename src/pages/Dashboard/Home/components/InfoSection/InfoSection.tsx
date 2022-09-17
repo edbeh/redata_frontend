@@ -11,7 +11,7 @@ const InfoSection = ({ data }: InfoSectionProps) => {
       <Card>
         <h2 className="mb-5 text-xl font-semibold text-gray-700">About me</h2>
 
-        {/* <p>I'm a senior consultant specialising in renal transplant.</p> */}
+        {data?.bio && <p className="mb-4">{data.bio}</p>}
 
         <div className="flex flex-col mt-4 space-y-4">
           <div className="flex flex-col justify-between space-x-0 space-y-1 sm:space-y-0 sm:space-x-4 sm:flex-row">
