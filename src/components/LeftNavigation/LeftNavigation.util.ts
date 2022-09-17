@@ -4,15 +4,33 @@ import {
   ImgSearchOutline,
   ImgSettingsOutline,
   ImgUserCircleOutline,
+  ImgArrowUturnLeftOutline,
 } from "assets";
 
 import { INavigationItem } from "./LeftNavigation.model";
 
+export const getNavigationItemsLimited = (): INavigationItem[] => {
+  return [
+    {
+      key: "return",
+      label: "Go Back",
+      route: undefined,
+      Icon: ImgArrowUturnLeftOutline,
+    },
+    {
+      key: "settings",
+      label: "Settings",
+      route: "/settings",
+      Icon: ImgSettingsOutline,
+    },
+  ];
+};
+
 export const getNavigationItems = (): INavigationItem[] => {
   return [
     {
-      key: "profile",
-      label: "Profile",
+      key: "home",
+      label: "Home",
       route: "/home",
       Icon: ImgHomeOutline,
     },
@@ -34,7 +52,6 @@ export const getNavigationItems = (): INavigationItem[] => {
       route: "/search",
       Icon: ImgSearchOutline,
     },
-
     {
       key: "settings",
       label: "Settings",

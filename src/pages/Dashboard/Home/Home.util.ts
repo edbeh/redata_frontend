@@ -8,8 +8,8 @@ export const homeNav: IBreadCrumbs = {
       url: "/home",
     },
     {
-      key: "profile",
-      label: "Profile",
+      key: "home",
+      label: "Home",
       url: "/home",
     },
   ],
@@ -23,8 +23,8 @@ export const editHomeNav: IBreadCrumbs = {
       url: "/home",
     },
     {
-      key: "profile",
-      label: "Profile",
+      key: "home",
+      label: "Home",
       url: "/home",
     },
     {

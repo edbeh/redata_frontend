@@ -5,10 +5,11 @@ export { default as BasicInfoForm } from "./DataForms/BasicInfoForm/BasicInfoFor
 export { default as ResearchInterestsForm } from "./DataForms/ResearchInterestsForm/ResearchInterestsForm";
 export { default as PatientPopulationsForm } from "./DataForms/PatientPopulationsForm/PatientPopulationsForm";
 export { default as PublicationsForm } from "./DataForms/PublicationsForm/PublicationsForm";
-export { default as Profile } from "./Dashboard/Profile/Profile";
-export { default as EditProfile } from "./Dashboard/Profile/components/EditProfile/EditProfile";
+export { default as Home } from "./Dashboard/Home/Home";
+export { default as EditHome } from "./Dashboard/Home/components/EditHome/EditHome";
 export { default as Publications } from "./Dashboard/Publications/Publications";
 export { default as EditPublications } from "./Dashboard/Publications/components/EditPublications/EditPublications";
 export { default as Search } from "./Dashboard/Search/Search";
 export { default as Connections } from "./Dashboard/Connections/Connections";
 export { default as Settings } from "./Dashboard/Settings/Settings";
+export { default as Profile } from "./Profile/Profile";

@@ -21,11 +21,11 @@ export const searchInOptions: FormSelectModel[] = [
     name: "Patient Populations",
     type: "metadata",
   },
-  {
-    id: "publications",
-    name: "Publications",
-    type: "metadata",
-  },
+  // {
+  //   id: "publications",
+  //   name: "Publications",
+  //   type: "metadata",
+  // },
 ];
 
 const groupQueryString = (values: FormSelectModel[]) => {

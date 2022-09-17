@@ -7,15 +7,23 @@ import SinglePublication from "../SinglePublication/SinglePublication";
 interface PublicationsSectionProps {
   data: Publication[];
   namesToBold: string[];
+  withHeader?: boolean;
 }
 
 const PublicationsSection = ({
   data,
   namesToBold,
+  withHeader = false,
 }: PublicationsSectionProps) => {
   return (
     <div className="w-full">
       <Card>
+        {withHeader && (
+          <h2 className="mb-5 text-xl font-semibold text-gray-700">
+            Publications
+          </h2>
+        )}
+
         {data.length === 0 ? (
           <div className="flex flex-col w-full my-10">
             <img

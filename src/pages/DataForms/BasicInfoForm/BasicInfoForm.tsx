@@ -30,7 +30,7 @@ import {
   validateDuplicateValues,
   validatePubMedNames,
 } from "./BasicInfoForm.util";
-import { IsSubmissionLoadingType } from "../../Dashboard/Profile/components/EditProfile/EditProfile.model";
+import { IsSubmissionLoadingType } from "../../Dashboard/Home/components/EditHome/EditHome.model";
 
 interface BasicInfoFormProps {
   /** callback if api call is successful */

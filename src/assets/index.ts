@@ -16,6 +16,7 @@ import { ReactComponent as ImgOpenNewTabOutline } from "./open-new-tab-outline.s
 import imgScientistMicroscope from "./scientist-microscope.jpg";
 import imgNotFound from "./not-found.jpg";
 import imgJohnDoe from "./john-doe.jpg";
+import imgStockProfilePic from "./stock-profile-pic.jpg";
 import imgDeleteFiles from "./delete-files.png";
 import imgProfileSearch from "./profile-search.svg";
 import imgNoData from "./no-data.svg";
@@ -38,6 +39,7 @@ export {
   ImgOpenNewTabOutline,
   imgNotFound,
   imgJohnDoe,
+  imgStockProfilePic,
   imgDeleteFiles,
   imgProfileSearch,
   imgNoData,

@@ -4,7 +4,7 @@ import { BreadCrumbs } from "components";
 import { BaseLayout } from "wrapper-components";
 import { ImgPencilSquareOutline } from "assets";
 
-import { homeNav, mockData } from "./Profile.util";
+import { homeNav, mockData } from "./Home.util";
 import {
   HeroSection,
   InfoSection,
@@ -16,7 +16,7 @@ import {
 } from "./components";
 import { useFetchMe } from "api/hooks";
 
-const Profile = () => {
+const Home = () => {
   const navigate = useNavigate();
 
   // *Queries
@@ -84,4 +84,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Home;

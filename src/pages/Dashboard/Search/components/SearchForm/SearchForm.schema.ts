@@ -6,7 +6,7 @@ const searchInSchema = {
   subSpecialties: yup.object().required(),
   researchInterests: yup.object().required(),
   patientPopulations: yup.object().required(),
-  publications: yup.object().required(),
+  // publications: yup.object().required(),
 };
 
 export const schema = yup.object({

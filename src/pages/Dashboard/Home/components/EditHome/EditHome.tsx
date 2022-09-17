@@ -10,8 +10,8 @@ import {
   PatientPopulationsForm,
 } from "pages";
 
-import { editHomeNav } from "../../Profile.util";
-import { IsSubmissionLoadingType } from "./EditProfile.model";
+import { editHomeNav } from "../../Home.util";
+import { IsSubmissionLoadingType } from "./EditHome.model";
 
 const EditProfile = () => {
   const navigate = useNavigate();
