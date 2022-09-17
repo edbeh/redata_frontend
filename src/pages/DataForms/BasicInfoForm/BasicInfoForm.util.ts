@@ -65,11 +65,19 @@ export const validateDuplicateValues = (
     data.primarySubspecialty.id !== "others"
   ) {
     const lowercase = data.primarySubspecialty.name.toLowerCase();
-    hash[lowercase] = [`primarySubspecialty`];
+    if (!hash[lowercase]) {
+      hash[lowercase] = [`primarySubspecialty`];
+    } else {
+      hash[lowercase] = [...hash[lowercase], `primarySubspecialty`];
+    }
   }
   if (data.primarySubspecialtyOthers) {
     const lowercase = data.primarySubspecialtyOthers.toLowerCase();
-    hash[lowercase] = [...hash[lowercase], `primarySubspecialtyOthers`];
+    if (!hash[lowercase]) {
+      hash[lowercase] = [`primarySubspecialtyOthers`];
+    } else {
+      hash[lowercase] = [...hash[lowercase], `primarySubspecialtyOthers`];
+    }
   }
 
   data.otherSubspecialties.map((item, i) => {
