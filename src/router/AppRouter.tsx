@@ -36,7 +36,7 @@ const AppRouter = () => {
         <Route path="/profile/:id" element={<Profile />} />
       </Route>
 
-      <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/" element={<Navigate to="/home" />} />
     </Routes>
   );
 };
