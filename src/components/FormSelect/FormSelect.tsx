@@ -11,6 +11,7 @@ interface FormSelectProps
   id: string;
   name: string;
   label?: string;
+  helper?: string; // text displayed below the input for extra info
   error?: string;
   options: FormSelectModel[];
   isSearchable?: boolean;
@@ -26,6 +27,7 @@ const FormSelect = ({
   label,
   id,
   name,
+  helper,
   control,
   options,
   isSearchable,
@@ -75,6 +77,9 @@ const FormSelect = ({
       />
 
       {error && <div className="mt-[2px] text-red-500 text-sm">{error}</div>}
+      {helper && (
+        <div className="mt-[2px] text-slate-500 text-sm">{helper}</div>
+      )}
     </div>
   );
 };

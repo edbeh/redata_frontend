@@ -15,7 +15,7 @@ const SearchResults = () => {
     //   <p className="self-center font-semibold mt-4">No search term</p>
     //   <p className="self-center mt-2">Input your keywords to start searching</p>
     // </div>
-    <div className="mt-4 mb-10">
+    <div className="mt-8 mb-10">
       <p className="font-semibold">2 Search Results: </p>
       <SingleSearchResult i={0} />
       <SingleSearchResult i={1} />

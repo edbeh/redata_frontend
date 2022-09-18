@@ -5,10 +5,11 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import { FormInput, FormSelect, Button } from "components";
 import { getSearchParams, getYupIsRequired } from "utils";
+import { ImgMagnifyingGlassOutline } from "assets";
 
 import { ISearchFormFields } from "./SearchForm.model";
 import { schema } from "./SearchForm.schema";
-import { searchInOptions, updateUrlQueryString } from "./SearchForm.util";
+import { searchInOptions } from "./SearchForm.util";
 import { validationMessages } from "const";
 
 interface SearchFormProps {
@@ -29,37 +30,39 @@ const SearchForm = ({ useFormReturn }: SearchFormProps) => {
     setValue,
   } = useFormReturn;
 
+  const searchInValue = watch("searchIn");
+
   // *Methods
   const handleUpdateUrlQueryString = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const data = watch();
 
-    if (!data.keyword)
-      return setError("keyword", {
-        message: validationMessages.require.keyword,
+    if (!data.q)
+      return setError("q", {
+        message: validationMessages.require.generic,
       });
-    if (!data?.searchIn || data?.searchIn?.length === 0)
+    if (!data?.searchIn)
       return setError("searchIn", {
         message: validationMessages.validate.searchIn,
       });
 
-    updateUrlQueryString(data, navigate);
+    navigate({
+      pathname: "/search",
+      search: `?q=${data.q}&searchIn=${data.searchIn.id}`,
+    });
   };
 
   // *Effects
   useEffect(() => {
     const searchParams = getSearchParams() as any;
 
-    const keyword = searchParams?.keyword;
-    const searchIn = searchParams?.searchIn;
+    const q = searchParams?.q;
+    if (q) setValue("q", q);
 
-    if (keyword) setValue("keyword", keyword);
+    const searchIn = searchParams?.searchIn;
     if (searchIn) {
-      const options = searchIn?.split(",")?.map((item: string) => {
-        return searchInOptions.find((option) => option.id === item);
-      });
-      setValue("searchIn", options);
+      const option = searchInOptions.find((option) => option.id === searchIn);
+      if (option) setValue("searchIn", option);
     }
   }, [location]);
 
@@ -71,35 +74,48 @@ const SearchForm = ({ useFormReturn }: SearchFormProps) => {
         onSubmit={handleUpdateUrlQueryString}
         className="flex flex-col w-full space-y-4"
       >
-        <FormInput
-          register={register}
-          id="keyword"
-          name="keyword"
-          label="Keyword"
-          error={formErrors?.keyword?.message as string}
-          required={getYupIsRequired(schema, "keyword")}
-          autoComplete="off"
-          placeholder="Type a keyword (e.g. Diabetes)"
-        />
-
         <FormSelect
           control={control}
           options={searchInOptions || []}
           placeholder=""
           id="searchIn"
           name="searchIn"
-          label="Search In"
-          isMulti
-          closeMenuOnSelect={false}
-          blurInputOnSelect={false}
-          // error={formErrors?.institution?.message as string}
+          label="Search By"
           required={getYupIsRequired(schema, "searchIn")}
-          // isLoading={fetchMetadataInstitutions?.isLoading}
           error={formErrors?.searchIn?.message as string}
+          helper={
+            searchInValue?.id === "medicalKeywords"
+              ? "Search for keywords in sub-specialties, research interests & patient populations"
+              : searchInValue?.id === "publications"
+              ? "Search for keywords in publications"
+              : ""
+          }
         />
 
-        <div className="w-full sm:w-[150px] self-end pt-4 px-1">
-          <Button variant="secondary">Search</Button>
+        <div className="flex space-x-3">
+          <FormInput
+            register={register}
+            id="q"
+            name="q"
+            label={
+              searchInValue?.id === "researcherName"
+                ? "Partial or full name"
+                : "Keyword"
+            }
+            error={formErrors?.q?.message as string}
+            required={getYupIsRequired(schema, "q")}
+            autoComplete="off"
+          />
+
+          <div className="max-w-[50px] mt-6">
+            <Button variant="secondary">
+              <ImgMagnifyingGlassOutline
+                width={20}
+                height={20}
+                className="text-primary-500"
+              />
+            </Button>
+          </div>
         </div>
       </form>
     </div>

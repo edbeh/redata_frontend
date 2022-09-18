@@ -34,7 +34,7 @@ const SingleSearchResult = ({ i }: SingleSearchResultProps) => {
 
       <div>
         <div className="flex flex-col space-y-4">
-          {/* <div>
+          <div>
             <p className="font-semibold text-sm">Sub-Specialties:</p>
             <div className="flex flex-wrap items-start justify-start gap-y-2 gap-x-4">
               <Badge
@@ -44,7 +44,7 @@ const SingleSearchResult = ({ i }: SingleSearchResultProps) => {
               />
               <Badge text="Transplant Immunosuppression" variant="small" />
             </div>
-          </div> */}
+          </div>
 
           <div>
             <p className="font-semibold text-sm">Research Interests:</p>

@@ -10,7 +10,6 @@ export const validationMessages = {
     name: "Name is required",
     password: "Password is required",
     primarySpecialty: "Primary specialty is required",
-    keyword: "Search keyword is required",
   },
   validate: {
     confirmPassword: "Passwords must match",

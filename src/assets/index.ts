@@ -12,6 +12,7 @@ import { ReactComponent as ImgXCircleOutline } from "./x-circle-outline.svg";
 import { ReactComponent as ImgCheckCircleOutline } from "./check-circle-outline.svg";
 import { ReactComponent as ImgArrowUturnLeftOutline } from "./arrow-uturn-left-outline.svg";
 import { ReactComponent as ImgOpenNewTabOutline } from "./open-new-tab-outline.svg";
+import { ReactComponent as ImgMagnifyingGlassOutline } from "./magnifying-glass-outline.svg";
 
 import imgScientistMicroscope from "./scientist-microscope.jpg";
 import imgNotFound from "./not-found.jpg";
@@ -37,6 +38,7 @@ export {
   ImgCheckCircleOutline,
   ImgArrowUturnLeftOutline,
   ImgOpenNewTabOutline,
+  ImgMagnifyingGlassOutline,
   imgNotFound,
   imgJohnDoe,
   imgStockProfilePic,
