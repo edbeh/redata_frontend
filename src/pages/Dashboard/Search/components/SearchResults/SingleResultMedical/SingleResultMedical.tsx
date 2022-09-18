@@ -17,14 +17,14 @@ const SingleResultMedical = () => {
           alt="profile"
           className="self-center object-cover min-h-[80px] min-w-[80px] max-h-[80px] max-w-[80px] border-2 border-white rounded-full ring-cyan-500 ring-2"
         />
-        <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-          <p className="text-left sm:text-center font-semibold overflow-hidden text-ellipsis whitespace-nowrap text-blue-500">
+        <div>
+          <p className="sm:text-center font-semibold line-clamp-1 text-blue-500">
             {"John Doe"}
           </p>
-          <p className="text-left sm:text-center overflow-hidden text-ellipsis whitespace-nowrap">
-            Hematology
+          <p className="sm:text-center line-clamp-1">Hematology</p>
+          <p className="sm:text-center line-clamp-1">
+            Singapore General Hospital (SGH)
           </p>
-          <p className="text-left sm:text-center">SGH</p>
         </div>
       </div>
 

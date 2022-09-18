@@ -405,7 +405,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
                 <button
                   onClick={() => removeOtherSubspecialty(i)}
-                  className="!mt-8"
+                  className="sm:!mt-8 self-end sm:self-start"
                 >
                   <ImgXMarkOutline
                     width={20}
