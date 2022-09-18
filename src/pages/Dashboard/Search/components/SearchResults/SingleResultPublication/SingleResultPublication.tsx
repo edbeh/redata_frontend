@@ -33,9 +33,9 @@ const SingleResultPublication = () => {
           <div>
             <Highlighted
               text="Relationship between local weather, air pollution and hospital
-              attendances for urticaria in children: Time stratified analysis of
+              attendances for diabetes in children: Time stratified analysis of
               12,002 cases."
-              highlight="urticaria"
+              highlight="diabetes"
             />
 
             <p className="text-slate-500">
