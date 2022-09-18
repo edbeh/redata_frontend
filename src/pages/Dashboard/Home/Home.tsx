@@ -9,7 +9,6 @@ import {
   HeroSection,
   InfoSection,
   CommonSection,
-  PubMedNamesSection,
   HeroSectionLoading,
   InfoSectionLoading,
   CommonSectionLoading,
@@ -68,7 +67,6 @@ const Home = () => {
                   });
                 }}
               />
-              <PubMedNamesSection data={fetchMe.data?.data?.data} />
             </>
           ) : (
             <>

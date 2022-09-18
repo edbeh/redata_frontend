@@ -3,6 +3,7 @@ interface BadgeProps {
   onClickBadge?: (item: string) => void;
   variant?: "normal" | "small";
   isBolded?: boolean;
+  isLowerCase?: boolean;
 }
 
 const Badge = ({
@@ -10,20 +11,22 @@ const Badge = ({
   onClickBadge,
   variant = "normal",
   isBolded = false,
+  isLowerCase = false,
 }: BadgeProps) => {
   return (
     <div
       onClick={() => {
         typeof onClickBadge === "function" && onClickBadge(text);
       }}
-      className={`capitalize rounded-lg text-sm
+      className={`rounded-lg text-sm
                 overflow-hidden text-ellipsis whitespace-nowrap ${
                   typeof onClickBadge === "function"
                     ? "cursor-pointer bg-primary-100 text-primary-900"
                     : "bg-slate-100 cursor-not-allowed"
                 }
                 ${variant === "small" ? "p-2" : "p-3"}
-                ${isBolded ? "font-semibold" : "font-normal"}`}
+                ${isBolded ? "font-semibold" : "font-normal"}
+                ${isLowerCase ? "" : "capitalize"}`}
     >
       {text}
     </div>
