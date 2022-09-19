@@ -2,6 +2,7 @@ import { BaseLayout } from "wrapper-components";
 import { BreadCrumbs } from "components";
 
 import { connectionsNav } from "./Connections.util";
+import SingleConnection from "./SingleConnection/SingleConnection";
 
 const Connections = () => {
   return (
@@ -12,6 +13,14 @@ const Connections = () => {
           <h1 className="text-4xl font-semibold tracking-tight text-white">
             Connections
           </h1>
+        </div>
+
+        <div className="flex flex-col w-full mt-8 space-y-6">
+          <SingleConnection />
+          <SingleConnection />
+          <SingleConnection />
+          <SingleConnection />
+          <SingleConnection />
         </div>
       </div>
     </BaseLayout>
