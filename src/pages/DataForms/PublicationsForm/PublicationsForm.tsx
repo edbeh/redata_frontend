@@ -107,7 +107,7 @@ const PublicationsForm = React.forwardRef<
 
     const submitPublicationsFromPubMed = useSubmitPublicationsFromPubMed(() => {
       queryClient.invalidateQueries(PUBLICATIONS_API_KEY);
-      toast.success("Publications updated successfully!");
+      toast.success("Publications added successfully!");
     });
 
     const removePublications = useRemovePublications(() => {
