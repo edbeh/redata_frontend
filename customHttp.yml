@@ -19,4 +19,4 @@ customHeaders:
       - key: "Referrer-Policy"
         value: "no-referrer"
       - key: "Permissions-Policy":
-        value: "microphone=(), camera=()"
+        value: "geolocation=(self)"
