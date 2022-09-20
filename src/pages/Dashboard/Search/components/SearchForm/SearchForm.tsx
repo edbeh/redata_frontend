@@ -57,6 +57,7 @@ const SearchForm = ({ useFormReturn }: SearchFormProps) => {
     const searchParams = getSearchParams() as any;
 
     const q = searchParams?.q;
+
     if (q) setValue("q", q);
 
     const searchIn = searchParams?.searchIn;

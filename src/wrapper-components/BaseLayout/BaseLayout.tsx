@@ -27,9 +27,9 @@ const BaseLayout: React.FC<BaseLayoutProps> = ({
     <>
       {(withLeftNavigation || withBackdrop) && (
         <>
-          <div className="fixed w-full h-[15rem] -z-10 bg-gradient-to-r from-cyan-500 to-primary-600" />
+          <div className="fixed w-full h-[11.5rem] -z-10 bg-gradient-to-r from-cyan-500 to-primary-600" />
           {withLeftNavigation && (
-            <div className="fixed w-full h-[calc(100vh-13rem)] bg-slate-50 top-[13rem] -z-10" />
+            <div className="fixed w-full h-[calc(100vh-11.5rem)] bg-slate-50 top-[11.5rem] -z-10" />
           )}
         </>
       )}

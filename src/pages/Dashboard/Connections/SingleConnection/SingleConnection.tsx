@@ -9,7 +9,7 @@ const SingleConnection = () => {
   return (
     <Card>
       <div className="flex flex-col sm:flex-row justify-between space-x-0 sm:space-x-4 sm:items-center max-w-full">
-        <div className="flex space-x-8 items-center">
+        <div className="flex space-x-4 sm:space-x-8 items-center">
           <img
             src={imgJohnDoe}
             alt="profile"

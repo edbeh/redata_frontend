@@ -17,12 +17,12 @@ export const getNavigationItemsLimited = (): INavigationItem[] => {
       route: undefined,
       Icon: ImgArrowUturnLeftOutline,
     },
-    {
-      key: "settings",
-      label: "Settings",
-      route: "/settings",
-      Icon: ImgSettingsOutline,
-    },
+    // {
+    //   key: "settings",
+    //   label: "Settings",
+    //   route: "/settings",
+    //   Icon: ImgSettingsOutline,
+    // },
   ];
 };
 

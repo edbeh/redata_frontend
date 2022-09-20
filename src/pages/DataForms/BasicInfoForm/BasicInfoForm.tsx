@@ -352,7 +352,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
             {primarySubspecialty?.name === "Others" && (
               <FormInput
-                label="Primary Subspecialty (Others)"
+                label="Enter Subspecialty"
                 register={register}
                 id="primarySubspecialtyOthers"
                 name="primarySubspecialtyOthers"
@@ -390,7 +390,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                 {watch(`otherSubspecialties.${i}.otherSubspecialty`)?.id ===
                   "others" && (
                   <FormInput
-                    label={`Other Subspecialty ${i + 1} (Others)`}
+                    label="Enter Subspecialty"
                     register={register}
                     id={`otherSubspecialties.${i}.otherSubspecialtyOthers`}
                     name={`otherSubspecialties.${i}.otherSubspecialtyOthers`}

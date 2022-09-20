@@ -58,6 +58,7 @@ const EditProfile = () => {
                 isLoading={isSubmissionLoading.basicInfo}
                 onClick={() => {
                   basicInfoSubmitRef.current?.click();
+                  navigate("/home/edit");
                 }}
               >
                 Save Changes

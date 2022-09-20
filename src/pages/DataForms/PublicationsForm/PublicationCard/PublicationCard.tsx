@@ -56,7 +56,10 @@ const PublicationCard = ({
       <p className="mr-1">{index + 1}.</p>
 
       <div className="flex flex-col space-y-1">
-        <p className="text-[14px]">{publication.title}</p>
+        <p className="text-[14px]">
+          {/* remove html tags */}
+          {publication.title.replace(/(<([^>]+)>)/gi, "")}
+        </p>
         <p className="text-[13px]">
           {publication.authors?.map((author, i) => {
             return nameComponent(author.name, i);

@@ -73,7 +73,8 @@ const SinglePublication = ({
             target="_blank"
             rel="noreferrer"
           >
-            {publication.title}{" "}
+            {/* remove html tags */}
+            {publication.title.replace(/(<([^>]+)>)/gi, "")}{" "}
             <ImgOpenNewTabOutline className="text-blue-500 inline w-4 h-4 mb-1" />
           </a>
         ) : (
