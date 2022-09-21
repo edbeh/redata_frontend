@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
 
+import { Highlighted } from "components";
 import { ImgOpenNewTabOutline } from "assets";
+import { getSearchParams } from "utils";
 import { Publication } from "api/models";
 
 interface SinglePublicationProps {
@@ -21,6 +23,9 @@ const SinglePublication = ({
   handleSelectPublication,
   i,
 }: SinglePublicationProps) => {
+  const searchParams = getSearchParams() as any;
+
+  // *Methods
   const nameComponent = (authorName: string, i: number): React.ReactNode => {
     const shouldBoldName = namesToBold.find((nameToBold) =>
       authorName.toLowerCase().includes(nameToBold.toLowerCase())
@@ -41,6 +46,7 @@ const SinglePublication = ({
     }
   };
 
+  // *JSX
   return (
     <div
       className={`flex mb-6 ${isEditable ? "cursor-pointer" : ""}`}
@@ -74,11 +80,19 @@ const SinglePublication = ({
             rel="noreferrer"
           >
             {/* remove html tags */}
-            {publication.title.replace(/(<([^>]+)>)/gi, "")}{" "}
+            <Highlighted
+              text={publication.title?.replace(/(<([^>]+)>)/gi, "")}
+              highlight={searchParams?.highlight || ""}
+            />{" "}
             <ImgOpenNewTabOutline className="text-blue-500 inline w-4 h-4 mb-1" />
           </a>
         ) : (
-          <p className="text-[15px]">{publication.title}</p>
+          <p className="text-[15px]">
+            <Highlighted
+              text={publication.title?.replace(/(<([^>]+)>)/gi, "")}
+              highlight={searchParams?.highlight || ""}
+            />
+          </p>
         )}
 
         <p>

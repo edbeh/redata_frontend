@@ -1,12 +1,10 @@
 import { useNavigate } from "react-router-dom";
 
-import { Card } from "components";
 import { BaseLayout } from "wrapper-components";
 import { useFetchMe, useFetchAllPublications } from "api/hooks";
 
 import {
   HeroSection,
-  InfoSection,
   CommonSection,
   HeroSectionLoading,
   InfoSectionLoading,
@@ -14,7 +12,6 @@ import {
 } from "pages/Dashboard/Home/components";
 import { PublicationsSection } from "pages/Dashboard/Publications/components";
 import { mockData } from "pages/Dashboard/Home/Home.util";
-import Publications from "pages/Dashboard/Publications/Publications";
 
 const Profile = () => {
   const navigate = useNavigate();

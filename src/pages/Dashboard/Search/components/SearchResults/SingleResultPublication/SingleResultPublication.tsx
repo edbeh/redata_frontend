@@ -28,9 +28,9 @@ const SingleResultPublication = () => {
           <div>
             <Highlighted
               text="Relationship between local weather, air pollution and hospital
-              attendances for diabetes in children: Time stratified analysis of
+              attendances for asthma in children: Time stratified analysis of
               12,002 cases."
-              highlight="diabetes"
+              highlight="asthma"
             />
 
             <p className="text-slate-500 line-clamp-2">
@@ -47,7 +47,7 @@ const SingleResultPublication = () => {
             <Badge
               variant="small"
               text="...and 1 more"
-              onClickBadge={() => navigate("/profile/12?highlight=diabetes")}
+              onClickBadge={() => navigate("/profile/12?highlight=asthma")}
             />
           </div>
         </div>
