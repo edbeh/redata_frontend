@@ -24,6 +24,7 @@ module.exports = {
           800: "#215aa6",
           900: "#1c4d8e",
         },
+        faintBlue: "#EFF5FF",
         darkBlue: "#05195b",
         disabled: "#D7E2E8",
         white: "#FFFFFF",
