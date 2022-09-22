@@ -52,8 +52,6 @@ const Select = memo(
           name={name}
           control={control}
           render={({ field }) => {
-            console.log("field.value?.name", field.value?.name);
-
             return (
               <Combobox
                 value={field.value}
@@ -81,7 +79,7 @@ const Select = memo(
                       className={`w-full min-h-[42px] py-3 pl-3 pr-4 border-[1px] rounded-lg 
                                   hover:cursor-pointer border-borderGray hover:ring-1
                                   placeholder:${
-                                    field.value?.name
+                                    field.value
                                       ? "text-black"
                                       : "text-borderGray"
                                   }
