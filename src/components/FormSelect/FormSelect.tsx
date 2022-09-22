@@ -52,6 +52,8 @@ const Select = memo(
           name={name}
           control={control}
           render={({ field }) => {
+            console.log("field.value?.name", field.value?.name);
+
             return (
               <Combobox
                 value={field.value}
