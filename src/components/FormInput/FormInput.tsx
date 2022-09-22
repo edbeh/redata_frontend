@@ -67,7 +67,7 @@ const FormInput = ({
       {!isLoading && rightCheck && (
         <ImgCheckCircleOutline
           className={`absolute right-[8px] top-[30px] text-green-600 
-                      ${label || required ? "top-11" : "top-5"}`}
+                      ${label || required ? "top-9" : "top-5"}`}
           width={25}
           height={25}
         />

@@ -30,7 +30,7 @@ const Select = memo(
     isLoading,
     ...rest
   }: SelectProps) => {
-    const { placeholder = "Select value", disabled, required } = rest;
+    const { placeholder = "", disabled, required } = rest;
 
     const [query, setQuery] = useState<string>("");
 
