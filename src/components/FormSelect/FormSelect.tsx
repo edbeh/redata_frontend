@@ -78,10 +78,7 @@ const Select = memo(
                       autoComplete="off"
                       className={`w-full min-h-[42px] py-3 pl-3 pr-4 border-[1px] rounded-lg 
                                   hover:cursor-pointer border-borderGray hover:ring-1
-                                  placeholder:${
-                                    field.value
-                                      ? "text-black"
-                                      : "text-borderGray"
+                                  placeholder:text-black
                                   }
                                   ${
                                     error

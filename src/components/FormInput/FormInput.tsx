@@ -60,7 +60,7 @@ const FormInput = ({
           width={20}
           height={20}
           className={`animate-spin absolute right-[10px] top-[33px] text-primary-500
-                      ${label || required ? "top-11" : "top-5"}`}
+                      ${label || required ? "top-9" : "top-5"}`}
         />
       )}
 
