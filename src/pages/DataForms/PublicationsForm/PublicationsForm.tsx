@@ -307,6 +307,7 @@ const PublicationsForm = React.forwardRef<
                 <Button
                   onClick={handleSubmitSelectedPubMedIds}
                   isLoading={submitPublicationsFromPubMed?.isLoading}
+                  loadingText="Processing..."
                 >
                   Add to Profile
                 </Button>
@@ -349,6 +350,7 @@ const PublicationsForm = React.forwardRef<
                     handleSubmitSelectedSavedPublications
                   )}
                   isLoading={removePublications?.isLoading}
+                  loadingText="Removing..."
                 >
                   Remove Publications
                 </Button>
@@ -384,7 +386,9 @@ const PublicationsForm = React.forwardRef<
             </div>
 
             <div>
-              <Button variant="secondary">Search PubMed</Button>
+              <Button variant="secondary" loadingText="Searching...">
+                Search PubMed
+              </Button>
             </div>
           </div>
         </form>

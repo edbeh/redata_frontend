@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
 
-import { FormInput, FormSelect, Button, Select } from "components";
+import { FormInput, FormSelect, Button } from "components";
 import { getSearchParams, getYupIsRequired } from "utils";
 import { ImgMagnifyingGlassOutline } from "assets";
 
@@ -80,8 +80,6 @@ const SearchForm = ({ useFormReturn }: SearchFormProps) => {
     }
   }, [location]);
 
-  console.log(watch());
-
   // *JSX
   return (
     <div>
@@ -96,26 +94,9 @@ const SearchForm = ({ useFormReturn }: SearchFormProps) => {
           placeholder=""
           id="searchIn"
           name="searchIn"
-          label="Search By"
-          required={getYupIsRequired(schema, "searchIn")}
-          error={formErrors?.searchIn?.message as string}
-          helper={
-            searchInValue?.id === "medicalKeywords"
-              ? "Search for keywords in sub-specialties, research interests & patient populations"
-              : searchInValue?.id === "publications"
-              ? "Search for keywords in publications"
-              : ""
-          }
-        />
-
-        <Select
-          control={control}
-          options={searchInOptions || []}
-          placeholder=""
-          id="searchIn"
-          name="searchIn"
           label="Search by"
           required={getYupIsRequired(schema, "searchIn")}
+          error={formErrors?.searchIn?.message as string}
           helper={
             searchInValue?.id === "medicalKeywords"
               ? "Search for keywords in sub-specialties, research interests & patient populations"

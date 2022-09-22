@@ -134,7 +134,10 @@ const RegisterForm = () => {
         </div>
 
         <div className="mt-[30px]">
-          <Button isLoading={submitUser?.isLoading || submitSession?.isLoading}>
+          <Button
+            isLoading={submitUser?.isLoading || submitSession?.isLoading}
+            loadingText="Registering..."
+          >
             Register
           </Button>
           <p className="mt-3 text-center">

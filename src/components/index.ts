@@ -12,4 +12,3 @@ export { default as Card } from "./Card/Card";
 export { default as Badge } from "./Badge/Badge";
 export { default as MobileLeftNavigation } from "./LeftNavigation/MobileLeftNavigation/MobileLeftNavigation";
 export { default as Highlighted } from "./Highlighted/Highlighted";
-export { default as Select } from "./Select/Select";

@@ -83,7 +83,12 @@ const LoginForm = () => {
         </div>
 
         <div className="mt-[30px]">
-          <Button isLoading={submitSession?.isLoading}>Login</Button>
+          <Button
+            isLoading={submitSession?.isLoading}
+            loadingText="Logging In..."
+          >
+            Login
+          </Button>
           <p className="mt-3 text-center">
             Don't have an account?{" "}
             <Link to="/register" className="text-blue-500 underline">

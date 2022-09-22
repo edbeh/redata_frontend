@@ -1,13 +1,15 @@
-import MoonLoader from "react-spinners/MoonLoader";
+import { ImgCircleLoadingOutline } from "assets";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "red";
   isLoading?: boolean;
+  loadingText?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
   variant = "primary",
   isLoading = false,
+  loadingText = "",
   children,
   ...rest
 }) => {
@@ -35,7 +37,18 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled || isLoading}
       {...rest}
     >
-      {isLoading ? <MoonLoader color="black" size={16} /> : children}
+      {isLoading ? (
+        <div className="flex space-x-2 items-center">
+          <ImgCircleLoadingOutline
+            width={21}
+            height={21}
+            className="text-white animate-spin"
+          />
+          {loadingText && <p>{loadingText}</p>}
+        </div>
+      ) : (
+        children
+      )}
     </button>
   );
 };

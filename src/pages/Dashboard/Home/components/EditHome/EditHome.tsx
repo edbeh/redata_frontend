@@ -56,6 +56,7 @@ const EditProfile = () => {
             <div className="w-[180px] self-end mt-6">
               <Button
                 isLoading={isSubmissionLoading.basicInfo}
+                loadingText="Saving..."
                 onClick={() => {
                   basicInfoSubmitRef.current?.click();
                   navigate("/home/edit");
@@ -73,7 +74,7 @@ const EditProfile = () => {
             <ResearchInterestsForm ref={researchInterestSubmitRef} />
 
             <div className="w-[180px] self-end mt-6">
-              <Button>Save Changes</Button>
+              <Button loadingText="Saving...">Save Changes</Button>
             </div>
           </Card>
 
@@ -84,7 +85,7 @@ const EditProfile = () => {
             <PatientPopulationsForm ref={patientPopulationSubmitRef} />
 
             <div className="w-[180px] self-end mt-6">
-              <Button>Save Changes</Button>
+              <Button loadingText="Saving...">Save Changes</Button>
             </div>
           </Card>
         </div>

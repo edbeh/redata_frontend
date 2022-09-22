@@ -6,9 +6,10 @@ import { FormSelectModel } from "models";
 
 interface VirtualizedProps {
   options: FormSelectModel[];
+  activeId: string | undefined;
 }
 
-const Virtualized = ({ options }: VirtualizedProps) => {
+const Virtualized = ({ options, activeId }: VirtualizedProps) => {
   const parentRef = useRef<HTMLDivElement>(null);
 
   const rowVirtualizer = useVirtual({
@@ -43,15 +44,23 @@ const Virtualized = ({ options }: VirtualizedProps) => {
                 paddingLeft: 12,
                 paddingRight: 12,
               }}
-              className={({ active }) => (active ? `bg-faintBlue` : "")}
+              className={({ active }) =>
+                options?.[virtualRow.index].id === activeId
+                  ? "` bg-blue-500"
+                  : active
+                  ? `bg-faintBlue`
+                  : ""
+              }
               value={options?.[virtualRow.index]}
             >
-              {({ selected }) => {
+              {() => {
                 return (
                   <span
                     key={options?.[virtualRow.index].id}
                     className={`block truncate ${
-                      selected ? "`text-white bg-blue-500 border-blue-500" : ""
+                      options?.[virtualRow.index].id === activeId
+                        ? "text-white"
+                        : ""
                     }`}
                   >
                     {options?.[virtualRow.index].name}

@@ -1,6 +1,4 @@
-import PulseLoader from "react-spinners/PulseLoader";
-
-import { ImgCheckCircleOutline } from "assets";
+import { ImgCheckCircleOutline, ImgCircleLoadingOutline } from "assets";
 
 interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   key?: string;
@@ -58,13 +56,11 @@ const FormInput = ({
       />
 
       {isLoading && (
-        <PulseLoader
-          className={`absolute right-4 ${
-            label || required ? "top-11" : "top-5"
-          }`}
-          size={4}
-          color="#D8D8D8"
-          speedMultiplier={0.7}
+        <ImgCircleLoadingOutline
+          width={20}
+          height={20}
+          className={`animate-spin absolute right-[10px] top-[33px] text-primary-500
+                      ${label || required ? "top-11" : "top-5"}`}
         />
       )}
 
