@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useQuery, useMutation } from "react-query";
 
 import { createAxiosInstance } from "api/utils/createAxiosInstance";
 

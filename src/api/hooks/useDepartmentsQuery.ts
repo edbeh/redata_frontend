@@ -10,7 +10,7 @@ import { GetDepartmentById } from "../models";
 const AxiosInstance = createAxiosInstance();
 
 /**
- * //*GET Me
+ * //*GET Department by Id
  */
 const fetchDepartmentById = async (id: string) => {
   return AxiosInstance.get<GetDepartmentById.ApiResponse>(
