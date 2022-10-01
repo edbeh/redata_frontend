@@ -1,11 +1,6 @@
-import {
-  UseFormSetError,
-  UseFormSetValue,
-  UseFieldArrayAppend,
-} from "react-hook-form";
+import { UseFormSetError } from "react-hook-form";
 
 import { validationMessages } from "const";
-import { GetMe } from "api/models";
 
 import { IBasicInfoFormFields } from "./BasicInfoForm.model";
 
@@ -21,10 +16,10 @@ export const cleanUpData = (
     id:
       data.primarySubspecialty.id === "others"
         ? null
-        : data.primarySubspecialty.id,
+        : (data.primarySubspecialty.id as string),
     name:
       data.primarySubspecialty.id === "others"
-        ? data.primarySubspecialtyOthers
+        ? (data.primarySubspecialtyOthers as string)
         : null,
   };
 
@@ -32,10 +27,10 @@ export const cleanUpData = (
     id:
       item.otherSubspecialty?.id === "others"
         ? null
-        : item.otherSubspecialty?.id,
+        : (item.otherSubspecialty?.id as string),
     name:
       item.otherSubspecialty?.id === "others"
-        ? item.otherSubspecialtyOthers
+        ? (item.otherSubspecialtyOthers as string)
         : null,
   }));
 
@@ -137,7 +132,7 @@ export const validateDuplicateValues = (
       hash[key].map((field: any) => {
         status.hasErrors = true;
         return setError(field, {
-          message: validationMessages.validate.duplicateResearchInterest,
+          message: validationMessages.validate.duplicateSubSpecialty,
         });
       });
     }

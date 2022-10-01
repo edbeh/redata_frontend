@@ -1,5 +1,8 @@
+import { FormSelectModel } from "models";
+
 type ResearchInterest = {
-  researchInterest: string;
+  researchInterest: FormSelectModel | undefined;
+  researchInterestOthers: string | undefined;
 };
 
 export interface IResearchInterestsFormFields {

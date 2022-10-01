@@ -71,10 +71,22 @@ const EditProfile = () => {
             <h2 className="text-3xl font-semibold tracking-tight mb-6">
               Research Interests
             </h2>
-            <ResearchInterestsForm ref={researchInterestSubmitRef} />
+            <ResearchInterestsForm
+              ref={researchInterestSubmitRef}
+              setIsSubmissionLoading={setIsSubmissionLoading}
+            />
 
             <div className="w-[180px] self-end mt-6">
-              <Button loadingText="Saving...">Save Changes</Button>
+              <Button
+                isLoading={isSubmissionLoading.researchInterests}
+                loadingText="Saving..."
+                onClick={() => {
+                  researchInterestSubmitRef.current?.click();
+                  navigate("/home/edit");
+                }}
+              >
+                Save Changes
+              </Button>
             </div>
           </Card>
 

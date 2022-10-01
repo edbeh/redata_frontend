@@ -1,11 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useQueryClient } from "react-query";
+import { toast } from "react-toastify";
 
-import { FormInput } from "components";
+import { FormInput, FormSelect } from "components";
 import { ImgPlusCircleOutline, ImgXMarkOutline } from "assets";
+import { FormSelectModel } from "models";
 import { useMe } from "hooks";
+import { selectOthersField } from "const";
+import { ME_API_KEY } from "api/keys";
+import {
+  useFetchMe,
+  useFetchMetadataResearchInterests,
+  useUpdateMe,
+} from "api/hooks";
 
 import { schema } from "./ResearchInterestsForm.schema";
 import { IResearchInterestsFormFields } from "./ResearchInterestsForm.model";
@@ -13,14 +23,14 @@ import {
   cleanUpData,
   validateDuplicateValues,
 } from "./ResearchInterestsForm.util";
-import { useFetchMetadataResearchInterests } from "api/hooks";
+import { IsSubmissionLoadingType } from "../../Dashboard/Home/components/EditHome/EditHome.model";
 
 interface ResearchInterestsFormProps {
   /** callback if api call is successful */
   onSuccessCallback?: () => void;
 
   /** display loading state parent component */
-  setIsSubmissionLoading?: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSubmissionLoading?: React.Dispatch<React.SetStateAction<any>>;
 
   /** determine if we're rendering this form from onboarding */
   isOnboarding?: boolean;
@@ -35,6 +45,10 @@ const ResearchInterestsForm = React.forwardRef<
     ref
   ) => {
     const { departmentId } = useMe();
+    const isInitialRender = useRef(true);
+    const [researchInterestsOptions, setResearchInterestsOptions] = useState<
+      FormSelectModel[]
+    >([]);
 
     // *Form
     const {
@@ -42,8 +56,8 @@ const ResearchInterestsForm = React.forwardRef<
       control,
       formState: { errors: formErrors },
       setError,
-      clearErrors,
       handleSubmit,
+      watch,
     } = useForm<IResearchInterestsFormFields>({
       resolver: yupResolver(schema),
       mode: "onChange",
@@ -58,17 +72,8 @@ const ResearchInterestsForm = React.forwardRef<
       name: "researchInterests",
     });
 
-    // *Queries
-    const fetchMetadataResearchInterests = useFetchMetadataResearchInterests(
-      departmentId as string,
-      !!departmentId
-    );
-
-    console.log(fetchMetadataResearchInterests?.data?.data?.data);
-
     // *Methods
     const handleSubmitForm = async (data: IResearchInterestsFormFields) => {
-      clearErrors();
       const { hasErrors } = validateDuplicateValues(data, setError);
       if (hasErrors) return;
 
@@ -76,23 +81,103 @@ const ResearchInterestsForm = React.forwardRef<
 
       console.log(cleanData);
       console.log(JSON.stringify(cleanData, null, 2));
-      if (onSuccessCallback) onSuccessCallback();
+      updateMe.mutate(cleanData);
     };
 
+    const handleMutationSuccess = () => {
+      queryClient.invalidateQueries(ME_API_KEY);
+      if (onSuccessCallback) onSuccessCallback();
+      if (!isOnboarding) toast.success("Data updated successfully!");
+    };
+
+    // *Queries
+    const queryClient = useQueryClient();
+
+    const fetchMe = useFetchMe();
+
+    const fetchMetadataResearchInterests = useFetchMetadataResearchInterests(
+      departmentId as string,
+      !!departmentId
+    );
+
+    const updateMe = useUpdateMe(handleMutationSuccess);
+
     // *Effects
+    // useEffect(() => {
+    //   // min of 1 research interest required
+    //   if (!researchInterestsOptions) return;
+    //   if (researchInterestFields?.length === 0) {
+    //     appendResearchInterest(
+    //       {
+    //         researchInterest: undefined,
+    //         researchInterestOthers: undefined,
+    //       },
+    //       {
+    //         shouldFocus: isOnboarding,
+    //       }
+    //     );
+    //   }
+    // }, [researchInterestsOptions, researchInterestFields]);
+
     useEffect(() => {
-      // min of 1 research interest required
-      if (researchInterestFields?.length === 0) {
-        appendResearchInterest(
-          {
-            researchInterest: "",
-          },
-          {
-            shouldFocus: isOnboarding,
+      if (fetchMetadataResearchInterests?.data?.data?.data) {
+        const apiData = fetchMetadataResearchInterests?.data?.data?.data;
+        setResearchInterestsOptions([
+          ...apiData,
+          { id: "others", name: "Others" },
+        ]);
+      }
+    }, [fetchMetadataResearchInterests.data]);
+
+    useEffect(() => {
+      if (!fetchMetadataResearchInterests?.data || !fetchMe?.data) return;
+
+      // Pre-populate form fields
+      const data = fetchMe?.data?.data?.data;
+
+      if (isInitialRender.current) {
+        data.researchInterests?.map((interest) => {
+          if (interest.variant === "preset") {
+            const option = fetchMetadataResearchInterests.data.data.data.find(
+              (item) => item.id === interest.id
+            );
+            return appendResearchInterest(
+              {
+                researchInterest: option,
+                researchInterestOthers: undefined,
+              },
+              {
+                shouldFocus: isOnboarding,
+              }
+            );
+          } else {
+            return appendResearchInterest(
+              {
+                researchInterest: selectOthersField,
+                researchInterestOthers: interest.name,
+              },
+              {
+                shouldFocus: isOnboarding,
+              }
+            );
+          }
+        });
+
+        isInitialRender.current = false;
+      }
+    }, [fetchMetadataResearchInterests, fetchMe]);
+
+    useEffect(() => {
+      if (setIsSubmissionLoading) {
+        if (isOnboarding) return setIsSubmissionLoading(updateMe?.isLoading);
+
+        return setIsSubmissionLoading(
+          (currentState: IsSubmissionLoadingType) => {
+            return { ...currentState, researchInterests: updateMe?.isLoading };
           }
         );
       }
-    }, [researchInterestFields]);
+    }, [updateMe.isLoading]);
 
     // *JSX
     return (
@@ -106,44 +191,50 @@ const ResearchInterestsForm = React.forwardRef<
           {researchInterestFields.map((field, i) => {
             return (
               <div
-                className={`flex mb-4 space-x-3 ${
-                  formErrors?.researchInterests &&
-                  formErrors?.researchInterests[i]?.researchInterest?.message
-                    ? "items-center"
-                    : "items-end"
-                }`}
+                className={`flex flex-col w-full mb-4 space-y-4 
+                            sm:space-y-0 sm:space-x-6 sm:flex-row
+                            items-start`}
                 key={field.id}
               >
-                <FormInput
+                <FormSelect
                   label={`Research Interest ${i + 1}`}
-                  key={field.id}
-                  register={register}
+                  control={control}
+                  options={researchInterestsOptions}
+                  isLoading={fetchMetadataResearchInterests?.isLoading}
                   id={`researchInterests.${i}.researchInterest`}
                   name={`researchInterests.${i}.researchInterest`}
+                  required
+                  autoComplete="off"
                   error={
                     formErrors?.researchInterests &&
                     formErrors?.researchInterests[i]?.researchInterest?.message
                   }
-                  autoComplete="off"
-                  required
                 />
+
+                {watch(`researchInterests.${i}.researchInterest`)?.id ===
+                  "others" && (
+                  <FormInput
+                    label="Enter Research Interest"
+                    register={register}
+                    id={`researchInterests.${i}.researchInterestOthers`}
+                    name={`researchInterests.${i}.researchInterestOthers`}
+                    autoComplete="off"
+                    error={
+                      formErrors?.researchInterests &&
+                      formErrors?.researchInterests[i]?.researchInterestOthers
+                        ?.message
+                    }
+                  />
+                )}
 
                 <button
                   onClick={() => removeResearchInterest(i)}
-                  disabled={i < 1}
-                  className={`disabled:cursor-not-allowed ${
-                    formErrors?.researchInterests &&
-                    formErrors?.researchInterests[i]?.researchInterest?.message
-                      ? "mb-1"
-                      : "mb-4"
-                  }`}
+                  className="sm:!mt-8 self-end sm:self-start"
                 >
                   <ImgXMarkOutline
                     width={20}
                     height={20}
-                    className={`stroke-[3px] ${
-                      i < 1 ? "text-slate-300" : "text-red-500"
-                    }`}
+                    className="stroke-[3px] text-red-500"
                   />
                 </button>
               </div>
@@ -154,7 +245,8 @@ const ResearchInterestsForm = React.forwardRef<
             onClick={() =>
               appendResearchInterest(
                 {
-                  researchInterest: "",
+                  researchInterest: undefined,
+                  researchInterestOthers: undefined,
                 },
                 {
                   shouldFocus: isOnboarding,

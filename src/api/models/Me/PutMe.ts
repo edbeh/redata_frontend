@@ -1,6 +1,10 @@
 import { FormSelectModel } from "models";
 
 export declare module PutMe {
+  export interface PayLoadObject {
+    id: string | null;
+    name: string | null;
+  }
   export interface PayLoad {
     name?: string;
     email?: string;
@@ -9,6 +13,10 @@ export declare module PutMe {
     department?: string;
     pubmedNames?: string[];
     correctedPubmedNames?: string[];
+    primarySpecialty?: PayLoadObject;
+    otherSpecialties?: PayLoadObject[];
+    researchInterests?: PayLoadObject[];
+    patientPools?: PayLoadObject[];
   }
 
   export interface Data {

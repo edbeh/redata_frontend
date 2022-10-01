@@ -13,6 +13,8 @@ import {
 } from "components";
 import { ImgPlusCircleOutline, ImgXMarkOutline } from "assets";
 import { getYupIsRequired, getSearchParams } from "utils";
+import { FormSelectModel } from "models";
+import { selectOthersField } from "const";
 import {
   useFetchMetadataDesignations,
   useFetchMetadataSpecialties,
@@ -31,8 +33,6 @@ import {
   validatePubMedNames,
 } from "./BasicInfoForm.util";
 import { IsSubmissionLoadingType } from "../../Dashboard/Home/components/EditHome/EditHome.model";
-import { FormSelectModel } from "models";
-import { selectOthersField } from "const";
 
 interface BasicInfoFormProps {
   /** callback if api call is successful */
@@ -88,8 +88,8 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       name: "otherSubspecialties",
     });
 
-    const primarySubspecialty = watch("primarySubspecialty");
-    const department = watch("department");
+    const watchPrimarySubspecialty = watch("primarySubspecialty");
+    const watchDepartment = watch("department");
 
     // *Methods
     const handleSubmitForm = async (data: IBasicInfoFormFields) => {
@@ -131,8 +131,8 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
     const fetchMetaDataDesignations = useFetchMetadataDesignations();
     const fetchMetaDataSpecialties = useFetchMetadataSpecialties(
-      department?.id as string,
-      !!department?.id
+      watchDepartment?.id as string,
+      !!watchDepartment?.id
     );
     const fetchPubMedByNames = useFetchPubMedByNames(
       pubMedNamesToSearch,
@@ -144,9 +144,9 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     // *Effects
     useEffect(() => {
       if (searchParams?.focus) {
-        const allowedFields = ["name", "pubMedNames"];
+        // const allowedFields = ["name", "pubMedNames"];
         if (
-          !allowedFields.includes(searchParams.focus) ||
+          // !allowedFields.includes(searchParams.focus) ||
           searchParams.focus === ""
         )
           return;
@@ -161,21 +161,30 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       }
     }, [fetchMetaDataSpecialties.data]);
 
-    // pre-populate form fields
+    useEffect(() => {
+      if (fetchMe?.data) {
+        const data = fetchMe?.data?.data?.data;
+        if (isInitialRender.current && data.department) {
+          setValue("department", data.department);
+        }
+      }
+    }, [fetchMe.data]);
+
     useEffect(() => {
       if (
+        !fetchMe?.data ||
         !fetchMetaDataDesignations?.data ||
         !fetchMetaDataSpecialties?.data ||
-        !fetchDepartmentById.data
+        !fetchDepartmentById?.data
       )
         return;
 
+      // pre-populate form fields
       if (fetchMe?.data) {
         const data = fetchMe?.data?.data?.data;
 
         if (isInitialRender.current) {
           if (data.designation) setValue("designation", data.designation);
-          if (data.department) setValue("department", data.department);
           if (data.name) setValue("name", data.name);
           if (data.bio) setValue("bio", data.bio);
           if (data.pubmedNames) {
@@ -198,20 +207,30 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               const option = fetchMetaDataSpecialties?.data?.data.data.find(
                 (item) => item.id === specialty.id
               );
-              return appendOtherSubspecialty({
-                otherSubspecialty: option,
-                otherSubspecialtyOthers: undefined,
-              });
+              return appendOtherSubspecialty(
+                {
+                  otherSubspecialty: option,
+                  otherSubspecialtyOthers: undefined,
+                },
+                {
+                  shouldFocus: isOnboarding,
+                }
+              );
             } else {
-              return appendOtherSubspecialty({
-                otherSubspecialty: selectOthersField,
-                otherSubspecialtyOthers: specialty.name,
-              });
+              return appendOtherSubspecialty(
+                {
+                  otherSubspecialty: selectOthersField,
+                  otherSubspecialtyOthers: specialty.name,
+                },
+                {
+                  shouldFocus: isOnboarding,
+                }
+              );
             }
           });
-        }
 
-        isInitialRender.current = false;
+          isInitialRender.current = false;
+        }
       }
     }, [
       fetchMe.data,
@@ -363,7 +382,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               error={formErrors?.primarySubspecialty?.message}
             />
 
-            {primarySubspecialty?.name === "Others" && (
+            {watchPrimarySubspecialty?.name === "Others" && (
               <FormInput
                 label="Enter Subspecialty"
                 register={register}
@@ -432,10 +451,15 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
           <div
             onClick={() =>
-              appendOtherSubspecialty({
-                otherSubspecialty: undefined,
-                otherSubspecialtyOthers: undefined,
-              })
+              appendOtherSubspecialty(
+                {
+                  otherSubspecialty: undefined,
+                  otherSubspecialtyOthers: undefined,
+                },
+                {
+                  shouldFocus: isOnboarding,
+                }
+              )
             }
             className="flex items-center my-4 cursor-pointer"
           >

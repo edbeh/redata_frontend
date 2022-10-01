@@ -21,6 +21,8 @@ export const METADATA_SPECIALTIES_API_ENDPOINT = (departmentId: string) =>
 export const METADATA_RESEARCH_INTERESTS_API_ENDPOINT = (
   departmentId: string
 ) => `/research_interests/metadata?department_id=${departmentId}`;
+export const METADATA_PATIENT_POOLS_API_ENDPOINT = (departmentId: string) =>
+  `/patient_pools/metadata?department_id=${departmentId}`;
 
 export const PUBLIC_ENDPOINTS = [
   SESSIONS_API_ENDPOINT,

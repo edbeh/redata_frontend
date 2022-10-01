@@ -4,6 +4,7 @@ export * from "./Metadata/GetMetadataDesignations";
 export * from "./Metadata/GetMetadataInstitutions";
 export * from "./Metadata/GetMetadataSpecialties";
 export * from "./Metadata/GetMetadataResearchInterests";
+export * from "./Metadata/GetMetadataPatientPools";
 export * from "./Me/GetMe";
 export * from "./Me/PutMe";
 export * from "./Departments/GetDepartmentById";

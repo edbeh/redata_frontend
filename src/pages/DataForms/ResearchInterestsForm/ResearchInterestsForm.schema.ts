@@ -2,10 +2,14 @@ import { validationMessages } from "const";
 import * as yup from "yup";
 
 export const researchInterestSchema = {
-  researchInterest: yup
-    .string()
-    .required(validationMessages.require.generic)
-    .max(50, validationMessages.validate.max50),
+  researchInterest: yup.object().required(),
+  researchInterestOthers: yup.string().when("researchInterest", {
+    is: (value: any) => {
+      return value?.id === "others";
+    },
+    then: yup.string().required(validationMessages.require.generic),
+    otherwise: yup.string(),
+  }),
 };
 
 export const schema = yup.object().shape({

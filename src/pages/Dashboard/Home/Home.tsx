@@ -21,8 +21,6 @@ const Home = () => {
   // *Queries
   const fetchMe = useFetchMe();
 
-  console.log(fetchMe?.data);
-
   // *JSX
   return (
     <BaseLayout withLeftNavigation>
@@ -33,7 +31,7 @@ const Home = () => {
             Profile
           </h1>
           <ImgPencilSquareOutline
-            onClick={() => navigate("/home/edit?focus=name")}
+            onClick={() => navigate("/home/edit")}
             width={20}
             height={20}
             className="text-white cursor-pointer"
@@ -45,18 +43,24 @@ const Home = () => {
             <>
               <HeroSection data={fetchMe?.data?.data?.data} />
               <InfoSection data={fetchMe?.data?.data?.data} />
-              <CommonSection
-                title="Research Interests"
-                data={mockData.researchInterests}
-                onClickBadge={(item: string) => {
-                  navigate({
-                    pathname: "/search",
-                    search: `?keyword=${encodeURIComponent(
-                      item
-                    )}&searchIn=researchInterests`,
-                  });
-                }}
-              />
+
+              {fetchMe?.data?.data?.data?.researchInterests?.length > 0 && (
+                <CommonSection
+                  title="Research Interests"
+                  data={fetchMe.data.data.data.researchInterests.map(
+                    (interest) => interest.name
+                  )}
+                  onClickBadge={(item: string) => {
+                    navigate({
+                      pathname: "/search",
+                      search: `?keyword=${encodeURIComponent(
+                        item
+                      )}&searchIn=researchInterests`,
+                    });
+                  }}
+                />
+              )}
+
               <CommonSection
                 title="Patient Populations"
                 data={mockData.patientPopulations}
