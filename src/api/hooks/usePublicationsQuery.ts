@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { useQuery, useMutation } from "react-query";
 
-import { createAxiosInstance } from "api/utils/createAxiosInstance";
+import { createAxiosInstance, ApiErrorProps } from "api/utils";
 
 import { PUBLICATIONS_API_KEY } from "../keys";
 import { PUBLICATIONS_API_ENDPOINT } from "../endpoints";
@@ -20,7 +20,10 @@ const fetchAllPublications = async () => {
   return AxiosInstance.get<GetPublications.ApiResponse>(
     PUBLICATIONS_API_ENDPOINT
   ).catch((error) => {
-    toast.error(error.response.statusText);
+    const { errors } = error.response?.data as ApiErrorProps;
+    errors?.length > 0
+      ? toast.error(errors[0].detail)
+      : toast.error(error.response.statusText);
     throw error;
   });
 };
@@ -39,7 +42,10 @@ const submitPublicationsFromPubMed = async (
     PUBLICATIONS_API_ENDPOINT,
     data
   ).catch((error) => {
-    toast.error(error.response.statusText);
+    const { errors } = error.response?.data as ApiErrorProps;
+    errors?.length > 0
+      ? toast.error(errors[0].detail)
+      : toast.error(error.response.statusText);
     throw error;
   });
 };
@@ -58,7 +64,10 @@ const removePublications = async (data: DeletePublications.PayLoad) => {
     PUBLICATIONS_API_ENDPOINT,
     { data }
   ).catch((error) => {
-    toast.error(error.response.statusText);
+    const { errors } = error.response?.data as ApiErrorProps;
+    errors?.length > 0
+      ? toast.error(errors[0].detail)
+      : toast.error(error.response.statusText);
     throw error;
   });
 };

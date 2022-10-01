@@ -9,13 +9,15 @@ export const SESSIONS_API_ENDPOINT = `/session`;
 
 export const ME_API_ENDPOINT = `/me`;
 
-export const DEPARTMENTS_API_ENDPOINT = `/departments`;
+export const DEPARTMENTS_API_ENDPOINT = (institutionId: string) =>
+  `/departments?institution_id=${institutionId}`;
 
 export const PUBLICATIONS_API_ENDPOINT = `/publications`;
 
 export const METADATA_DESIGNATIONS_API_ENDPOINT = `/designations/metadata`;
 export const METADATA_INSTITUTIONS_API_ENDPOINT = `/institutions/metadata`;
-export const METADATA_SPECIALTIES_API_ENDPOINT = `/specialties/metadata`;
+export const METADATA_SPECIALTIES_API_ENDPOINT = (departmentId: string) =>
+  `/specialties/metadata?department_id=${departmentId}`;
 
 export const PUBLIC_ENDPOINTS = [
   SESSIONS_API_ENDPOINT,

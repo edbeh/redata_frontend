@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { useQuery } from "react-query";
 
-import { createAxiosInstance } from "api/utils/createAxiosInstance";
+import { createAxiosInstance, ApiErrorProps } from "api/utils";
 
 import {
   METADATA_DESIGNATIONS_API_KEY,
@@ -28,7 +28,10 @@ const fetchMetadataDesignations = async () => {
   return AxiosInstance.get<GetMetadataDesignations.ApiResponse>(
     METADATA_DESIGNATIONS_API_ENDPOINT
   ).catch((error) => {
-    toast.error(error.response.statusText);
+    const { errors } = error.response?.data as ApiErrorProps;
+    errors?.length > 0
+      ? toast.error(errors[0].detail)
+      : toast.error(error.response.statusText);
     throw error;
   });
 };
@@ -46,7 +49,10 @@ const fetchMetadataInstitutions = async () => {
   return AxiosInstance.get<GetMetadataInstitutions.ApiResponse>(
     METADATA_INSTITUTIONS_API_ENDPOINT
   ).catch((error) => {
-    toast.error(error.response.statusText);
+    const { errors } = error.response?.data as ApiErrorProps;
+    errors?.length > 0
+      ? toast.error(errors[0].detail)
+      : toast.error(error.response.statusText);
     throw error;
   });
 };
@@ -60,17 +66,27 @@ export const useFetchMetadataInstitutions = () => {
 /**
  *  //*GET Specialties
  */
-const fetchMetadataSpecialties = async () => {
+const fetchMetadataSpecialties = async (departmentId: string) => {
   return AxiosInstance.get<GetMetadataSpecialties.ApiResponse>(
-    METADATA_SPECIALTIES_API_ENDPOINT
+    METADATA_SPECIALTIES_API_ENDPOINT(departmentId)
   ).catch((error) => {
-    toast.error(error.response.statusText);
+    const { errors } = error.response?.data as ApiErrorProps;
+    errors?.length > 0
+      ? toast.error(errors[0].detail)
+      : toast.error(error.response.statusText);
     throw error;
   });
 };
 
-export const useFetchMetadataSpecialties = () => {
-  return useQuery([METADATA_SPECIALTIES_API_KEY], fetchMetadataSpecialties, {
-    staleTime: 1000 * 60 * 10, // 10 minutes
-  });
+export const useFetchMetadataSpecialties = (
+  departmentId: string,
+  enabled: boolean = false
+) => {
+  return useQuery(
+    [`${METADATA_SPECIALTIES_API_KEY}_${departmentId}`],
+    () => fetchMetadataSpecialties(departmentId),
+    {
+      staleTime: 1000 * 60 * 10, // 10 minutes
+    }
+  );
 };

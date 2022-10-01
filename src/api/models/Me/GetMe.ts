@@ -1,5 +1,3 @@
-import { FormSelectModel } from "models";
-
 export declare module GetMe {
   export interface Institution {
     id: string;
@@ -33,6 +31,20 @@ export declare module GetMe {
     variant: string;
   }
 
+  export interface ResearchInterests {
+    id: string;
+    type: string;
+    name: string;
+    variant: string;
+  }
+
+  export interface PatientPools {
+    id: string;
+    type: string;
+    name: string;
+    variant: string;
+  }
+
   export interface Data {
     id: string;
     type: string;
@@ -45,6 +57,8 @@ export declare module GetMe {
     department: Department;
     primarySpecialty: PrimarySpecialty;
     otherSpecialties: OtherSpecialty[];
+    researchInterests: ResearchInterests[];
+    patientPools: PatientPools[];
     mcrNumber?: any;
     pubmedNames: string[];
   }

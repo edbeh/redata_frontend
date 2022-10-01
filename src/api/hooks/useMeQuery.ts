@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { useQuery, useMutation } from "react-query";
 
-import { createAxiosInstance } from "api/utils/createAxiosInstance";
+import { ApiErrorProps, createAxiosInstance } from "api/utils";
 
 import { ME_API_KEY } from "../keys";
 import { ME_API_ENDPOINT } from "../endpoints";
@@ -15,7 +15,10 @@ const AxiosInstance = createAxiosInstance();
 const fetchMe = async () => {
   return AxiosInstance.get<GetMe.ApiResponse>(ME_API_ENDPOINT).catch(
     (error) => {
-      toast.error(error.response.statusText);
+      const { errors } = error.response?.data as ApiErrorProps;
+      errors?.length > 0
+        ? toast.error(errors[0].detail)
+        : toast.error(error.response.statusText);
       throw error;
     }
   );
@@ -33,7 +36,10 @@ export const useFetchMe = () => {
 const updateMe = async (data: PutMe.PayLoad) => {
   return AxiosInstance.put<PutMe.ApiResponse>(ME_API_ENDPOINT, data).catch(
     (error) => {
-      toast.error(error.response.statusText);
+      const { errors } = error.response?.data as ApiErrorProps;
+      errors?.length > 0
+        ? toast.error(errors[0].detail)
+        : toast.error(error.response.statusText);
       throw error;
     }
   );

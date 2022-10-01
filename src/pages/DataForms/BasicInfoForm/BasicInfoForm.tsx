@@ -89,6 +89,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     });
 
     const primarySubspecialty = watch("primarySubspecialty");
+    const department = watch("department");
 
     // *Methods
     const handleSubmitForm = async (data: IBasicInfoFormFields) => {
@@ -121,23 +122,34 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     const queryClient = useQueryClient();
 
     const fetchMe = useFetchMe();
-    const institutionId = fetchMe?.data?.data?.data?.institution?.id as string;
 
+    const institutionId = fetchMe?.data?.data?.data?.institution?.id as string;
     const fetchDepartmentById = useFetchDepartmentById(
       institutionId,
       !!institutionId
     );
+
     const fetchMetaDataDesignations = useFetchMetadataDesignations();
-    const fetchMetaDataSpecialties = useFetchMetadataSpecialties();
-    const updateMe = useUpdateMe(handleMutationSuccess);
+    const fetchMetaDataSpecialties = useFetchMetadataSpecialties(
+      department?.id as string,
+      !!department?.id
+    );
     const fetchPubMedByNames = useFetchPubMedByNames(
       pubMedNamesToSearch,
       !!pubMedNamesToSearch
     );
 
+    const updateMe = useUpdateMe(handleMutationSuccess);
+
     // *Effects
     useEffect(() => {
       if (searchParams?.focus) {
+        const allowedFields = ["name", "pubMedNames"];
+        if (
+          !allowedFields.includes(searchParams.focus) ||
+          searchParams.focus === ""
+        )
+          return;
         setFocus(searchParams.focus);
       }
     }, [searchParams]);
@@ -160,16 +172,17 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
       if (fetchMe?.data) {
         const data = fetchMe?.data?.data?.data;
-        if (data.designation) setValue("designation", data.designation);
-        if (data.department) setValue("department", data.department);
-        if (data.name) setValue("name", data.name);
-        if (data.bio) setValue("bio", data.bio);
-        if (data.pubmedNames) {
-          setValue("pubMedNames", data.pubmedNames.join(", "));
-          setPubMedNamesToSearch(data.pubmedNames.join(", "));
-        }
 
         if (isInitialRender.current) {
+          if (data.designation) setValue("designation", data.designation);
+          if (data.department) setValue("department", data.department);
+          if (data.name) setValue("name", data.name);
+          if (data.bio) setValue("bio", data.bio);
+          if (data.pubmedNames) {
+            setValue("pubMedNames", data.pubmedNames.join(", "));
+            setPubMedNamesToSearch(data.pubmedNames.join(", "));
+          }
+
           if (data.primarySpecialty.variant === "preset") {
             const option = fetchMetaDataSpecialties?.data?.data.data.find(
               (item) => item.id === data.primarySpecialty.id

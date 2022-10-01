@@ -28,15 +28,21 @@ const InfoSection = ({ data }: InfoSectionProps) => {
             <p className="font-semibold basis-1/3 min-w-[125px]">
               Primary Subspecialty:
             </p>
-            <p className="basis-2/3">Kidney Transplant</p>
+            <p className="basis-2/3 capitalize">
+              {data?.primarySpecialty?.name}
+            </p>
           </div>
 
-          <div className="flex flex-col justify-between space-x-0 space-y-1 sm:space-y-0 sm:space-x-4 sm:flex-row">
-            <p className="font-semibold basis-1/3 min-w-[125px]">
-              Other Subspecialties:
-            </p>
-            <p className="basis-2/3">Transplant Immunosuppression</p>
-          </div>
+          {data?.otherSpecialties?.length > 0 && (
+            <div className="flex flex-col justify-between space-x-0 space-y-1 sm:space-y-0 sm:space-x-4 sm:flex-row">
+              <p className="font-semibold basis-1/3 min-w-[125px]">
+                Other Subspecialties:
+              </p>
+              <p className="basis-2/3 capitalize">
+                {data.otherSpecialties.map((item) => item.name).join(", ")}
+              </p>
+            </div>
+          )}
 
           <div className="flex flex-col justify-between space-x-0 space-y-1 sm:space-y-0 sm:space-x-4 sm:flex-row">
             <p className="font-semibold basis-1/3 min-w-[125px]">

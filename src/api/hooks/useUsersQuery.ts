@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { useQuery, useMutation } from "react-query";
 
-import { createAxiosInstance } from "api/utils/createAxiosInstance";
+import { createAxiosInstance, ApiErrorProps } from "api/utils";
 
 import { USERS_API_KEY } from "../keys";
 import { USERS_API_ENDPOINT } from "../endpoints";
@@ -14,7 +14,10 @@ const AxiosInstance = createAxiosInstance();
  */
 const fetchAllUsers = async () => {
   return AxiosInstance.get(USERS_API_ENDPOINT).catch((error) => {
-    toast.error(error.response.statusText);
+    const { errors } = error.response?.data as ApiErrorProps;
+    errors?.length > 0
+      ? toast.error(errors[0].detail)
+      : toast.error(error.response.statusText);
     throw error;
   });
 };
@@ -31,7 +34,10 @@ const submitUser = async (data: PostUser.PayLoad) => {
     USERS_API_ENDPOINT,
     data
   ).catch((error) => {
-    toast.error(error.response.statusText);
+    const { errors } = error.response?.data as ApiErrorProps;
+    errors?.length > 0
+      ? toast.error(errors[0].detail)
+      : toast.error(error.response.statusText);
     throw error;
   });
 };

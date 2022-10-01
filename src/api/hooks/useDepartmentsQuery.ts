@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { useQuery } from "react-query";
 
-import { createAxiosInstance } from "api/utils/createAxiosInstance";
+import { ApiErrorProps, createAxiosInstance } from "api/utils";
 
 import { DEPARTMENTS_API_KEY } from "../keys";
 import { DEPARTMENTS_API_ENDPOINT } from "../endpoints";
@@ -14,9 +14,12 @@ const AxiosInstance = createAxiosInstance();
  */
 const fetchDepartmentById = async (id: string) => {
   return AxiosInstance.get<GetDepartmentById.ApiResponse>(
-    `${DEPARTMENTS_API_ENDPOINT}?institution_id=${id}`
+    DEPARTMENTS_API_ENDPOINT(id)
   ).catch((error) => {
-    toast.error(error.response.statusText);
+    const { errors } = error.response?.data as ApiErrorProps;
+    errors?.length > 0
+      ? toast.error(errors[0].detail)
+      : toast.error(error.response.statusText);
     throw error;
   });
 };
