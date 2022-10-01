@@ -31,7 +31,7 @@ const Home = () => {
             Profile
           </h1>
           <ImgPencilSquareOutline
-            onClick={() => navigate("/home/edit")}
+            onClick={() => navigate("/home/edit?focus=name")}
             width={20}
             height={20}
             className="text-white cursor-pointer"
