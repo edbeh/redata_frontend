@@ -18,6 +18,9 @@ export const METADATA_DESIGNATIONS_API_ENDPOINT = `/designations/metadata`;
 export const METADATA_INSTITUTIONS_API_ENDPOINT = `/institutions/metadata`;
 export const METADATA_SPECIALTIES_API_ENDPOINT = (departmentId: string) =>
   `/specialties/metadata?department_id=${departmentId}`;
+export const METADATA_RESEARCH_INTERESTS_API_ENDPOINT = (
+  departmentId: string
+) => `/research_interests/metadata?department_id=${departmentId}`;
 
 export const PUBLIC_ENDPOINTS = [
   SESSIONS_API_ENDPOINT,

@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { FormInput } from "components";
 import { ImgPlusCircleOutline, ImgXMarkOutline } from "assets";
+import { useMe } from "hooks";
 
 import { schema } from "./ResearchInterestsForm.schema";
 import { IResearchInterestsFormFields } from "./ResearchInterestsForm.model";
@@ -12,6 +13,7 @@ import {
   cleanUpData,
   validateDuplicateValues,
 } from "./ResearchInterestsForm.util";
+import { useFetchMetadataResearchInterests } from "api/hooks";
 
 interface ResearchInterestsFormProps {
   /** callback if api call is successful */
@@ -32,6 +34,8 @@ const ResearchInterestsForm = React.forwardRef<
     { onSuccessCallback, setIsSubmissionLoading, isOnboarding = false },
     ref
   ) => {
+    const { departmentId } = useMe();
+
     // *Form
     const {
       register,
@@ -53,6 +57,14 @@ const ResearchInterestsForm = React.forwardRef<
       control,
       name: "researchInterests",
     });
+
+    // *Queries
+    const fetchMetadataResearchInterests = useFetchMetadataResearchInterests(
+      departmentId as string,
+      !!departmentId
+    );
+
+    console.log(fetchMetadataResearchInterests?.data?.data?.data);
 
     // *Methods
     const handleSubmitForm = async (data: IResearchInterestsFormFields) => {

@@ -7,16 +7,19 @@ import {
   METADATA_DESIGNATIONS_API_KEY,
   METADATA_INSTITUTIONS_API_KEY,
   METADATA_SPECIALTIES_API_KEY,
+  METADATA_RESEARCH_INTERESTS_API_KEY,
 } from "../keys";
 import {
   METADATA_DESIGNATIONS_API_ENDPOINT,
   METADATA_INSTITUTIONS_API_ENDPOINT,
   METADATA_SPECIALTIES_API_ENDPOINT,
+  METADATA_RESEARCH_INTERESTS_API_ENDPOINT,
 } from "../endpoints";
 import {
   GetMetadataDesignations,
   GetMetadataInstitutions,
   GetMetadataSpecialties,
+  GetMetadataResearchInterests,
 } from "../models";
 
 const AxiosInstance = createAxiosInstance();
@@ -85,6 +88,34 @@ export const useFetchMetadataSpecialties = (
   return useQuery(
     [`${METADATA_SPECIALTIES_API_KEY}_${departmentId}`],
     () => fetchMetadataSpecialties(departmentId),
+    {
+      staleTime: 1000 * 60 * 10, // 10 minutes
+    }
+  );
+};
+
+/**
+ *  //*GET Research Interests
+ */
+const fetchMetadataResearchInterests = async (departmentId: string) => {
+  return AxiosInstance.get<GetMetadataResearchInterests.ApiResponse>(
+    METADATA_RESEARCH_INTERESTS_API_ENDPOINT(departmentId)
+  ).catch((error) => {
+    const { errors } = error.response?.data as ApiErrorProps;
+    errors?.length > 0
+      ? toast.error(errors[0].detail)
+      : toast.error(error.response.statusText);
+    throw error;
+  });
+};
+
+export const useFetchMetadataResearchInterests = (
+  departmentId: string,
+  enabled: boolean = false
+) => {
+  return useQuery(
+    [`${METADATA_RESEARCH_INTERESTS_API_KEY}_${departmentId}`],
+    () => fetchMetadataResearchInterests(departmentId),
     {
       staleTime: 1000 * 60 * 10, // 10 minutes
     }
