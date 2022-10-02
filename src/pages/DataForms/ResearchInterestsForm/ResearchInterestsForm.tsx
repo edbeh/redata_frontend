@@ -13,7 +13,7 @@ import { selectOthersField } from "const";
 import { ME_API_KEY } from "api/keys";
 import {
   useFetchMe,
-  useFetchMetadataResearchInterests,
+  useFetchMetadataResearchInterestsByDeptId,
   useUpdateMe,
 } from "api/hooks";
 
@@ -95,52 +95,52 @@ const ResearchInterestsForm = React.forwardRef<
 
     const fetchMe = useFetchMe();
 
-    const fetchMetadataResearchInterests = useFetchMetadataResearchInterests(
-      departmentId as string,
-      !!departmentId
-    );
+    const fetchMetadataResearchInterestsByDeptId =
+      useFetchMetadataResearchInterestsByDeptId(
+        departmentId as string,
+        !!departmentId
+      );
 
     const updateMe = useUpdateMe(handleMutationSuccess);
 
     // *Effects
-    // useEffect(() => {
-    //   // min of 1 research interest required
-    //   if (!researchInterestsOptions) return;
-    //   if (researchInterestFields?.length === 0) {
-    //     appendResearchInterest(
-    //       {
-    //         researchInterest: undefined,
-    //         researchInterestOthers: undefined,
-    //       },
-    //       {
-    //         shouldFocus: isOnboarding,
-    //       }
-    //     );
-    //   }
-    // }, [researchInterestsOptions, researchInterestFields]);
-
     useEffect(() => {
-      if (fetchMetadataResearchInterests?.data?.data?.data) {
-        const apiData = fetchMetadataResearchInterests?.data?.data?.data;
+      if (fetchMetadataResearchInterestsByDeptId?.data?.data?.data) {
+        const apiData =
+          fetchMetadataResearchInterestsByDeptId?.data?.data?.data;
         setResearchInterestsOptions([
           ...apiData,
           { id: "others", name: "Others" },
         ]);
       }
-    }, [fetchMetadataResearchInterests.data]);
+    }, [fetchMetadataResearchInterestsByDeptId.data]);
 
     useEffect(() => {
-      if (!fetchMetadataResearchInterests?.data || !fetchMe?.data) return;
+      if (!fetchMetadataResearchInterestsByDeptId?.data || !fetchMe?.data)
+        return;
 
       // Pre-populate form fields
       const data = fetchMe?.data?.data?.data;
 
       if (isInitialRender.current) {
+        if (data.researchInterests?.length === 0) {
+          appendResearchInterest(
+            {
+              researchInterest: undefined,
+              researchInterestOthers: undefined,
+            },
+            {
+              shouldFocus: isOnboarding,
+            }
+          );
+        }
+
         data.researchInterests?.map((interest) => {
           if (interest.variant === "preset") {
-            const option = fetchMetadataResearchInterests.data.data.data.find(
-              (item) => item.id === interest.id
-            );
+            const option =
+              fetchMetadataResearchInterestsByDeptId.data.data.data.find(
+                (item) => item.id === interest.id
+              );
             return appendResearchInterest(
               {
                 researchInterest: option,
@@ -165,7 +165,7 @@ const ResearchInterestsForm = React.forwardRef<
 
         isInitialRender.current = false;
       }
-    }, [fetchMetadataResearchInterests, fetchMe]);
+    }, [fetchMetadataResearchInterestsByDeptId, fetchMe]);
 
     useEffect(() => {
       if (setIsSubmissionLoading) {
@@ -183,8 +183,7 @@ const ResearchInterestsForm = React.forwardRef<
     return (
       <div className="flex flex-col">
         <p className="mb-6 -mt-3">
-          Please keep your research interests succinct (e.g. Immune therapy for
-          leukemia)
+          Please keep your research interests succinct
         </p>
 
         <form noValidate onSubmit={handleSubmit(handleSubmitForm)}>
@@ -200,7 +199,7 @@ const ResearchInterestsForm = React.forwardRef<
                   label={`Research Interest ${i + 1}`}
                   control={control}
                   options={researchInterestsOptions}
-                  isLoading={fetchMetadataResearchInterests?.isLoading}
+                  isLoading={fetchMetadataResearchInterestsByDeptId?.isLoading}
                   id={`researchInterests.${i}.researchInterest`}
                   name={`researchInterests.${i}.researchInterest`}
                   required
@@ -228,13 +227,20 @@ const ResearchInterestsForm = React.forwardRef<
                 )}
 
                 <button
-                  onClick={() => removeResearchInterest(i)}
+                  onClick={() => {
+                    removeResearchInterest(i);
+                  }}
+                  disabled={i === 0}
                   className="sm:!mt-8 self-end sm:self-start"
                 >
                   <ImgXMarkOutline
                     width={20}
                     height={20}
-                    className="stroke-[3px] text-red-500"
+                    className={`stroke-[3px] ${
+                      i === 0
+                        ? "text-disabled cursor-not-allowed"
+                        : "text-red-500"
+                    }`}
                   />
                 </button>
               </div>

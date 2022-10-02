@@ -13,7 +13,7 @@ import { ImgPlusCircleOutline, ImgXMarkOutline } from "assets";
 import {
   useFetchMe,
   useUpdateMe,
-  useFetchMetadataPatientPools,
+  useFetchMetadataPatientPoolsByDeptId,
 } from "api/hooks";
 import { ME_API_KEY } from "api/keys";
 
@@ -95,36 +95,50 @@ const PatientPopulationsForm = React.forwardRef<
 
     const fetchMe = useFetchMe();
 
-    const fetchMetadataPatientPools = useFetchMetadataPatientPools(
-      departmentId as string,
-      !!departmentId
-    );
+    const fetchMetadataPatientPoolsByDeptId =
+      useFetchMetadataPatientPoolsByDeptId(
+        departmentId as string,
+        !!departmentId
+      );
 
     const updateMe = useUpdateMe(handleMutationSuccess);
 
     // *Effects
     useEffect(() => {
-      if (fetchMetadataPatientPools?.data?.data?.data) {
-        const apiData = fetchMetadataPatientPools?.data?.data?.data;
+      if (fetchMetadataPatientPoolsByDeptId?.data?.data?.data) {
+        const apiData = fetchMetadataPatientPoolsByDeptId?.data?.data?.data;
         setPatientPopulationOptions([
           ...apiData,
           { id: "others", name: "Others" },
         ]);
       }
-    }, [fetchMetadataPatientPools.data]);
+    }, [fetchMetadataPatientPoolsByDeptId.data]);
 
     useEffect(() => {
-      if (!fetchMetadataPatientPools?.data || !fetchMe?.data) return;
+      if (!fetchMetadataPatientPoolsByDeptId?.data || !fetchMe?.data) return;
 
       // Pre-populate form fields
       const data = fetchMe?.data?.data?.data;
 
       if (isInitialRender.current) {
+        if (data.patientPools?.length === 0) {
+          appendPatientPopulation(
+            {
+              patientPopulation: undefined,
+              patientPopulationOthers: undefined,
+            },
+            {
+              shouldFocus: isOnboarding,
+            }
+          );
+        }
+
         data.patientPools?.map((pool) => {
           if (pool.variant === "preset") {
-            const option = fetchMetadataPatientPools.data.data.data.find(
-              (item) => item.id === pool.id
-            );
+            const option =
+              fetchMetadataPatientPoolsByDeptId.data.data.data.find(
+                (item) => item.id === pool.id
+              );
             return appendPatientPopulation(
               {
                 patientPopulation: option,
@@ -149,7 +163,7 @@ const PatientPopulationsForm = React.forwardRef<
 
         isInitialRender.current = false;
       }
-    }, [fetchMetadataPatientPools, fetchMe]);
+    }, [fetchMetadataPatientPoolsByDeptId, fetchMe]);
 
     useEffect(() => {
       if (setIsSubmissionLoading) {
@@ -184,7 +198,7 @@ const PatientPopulationsForm = React.forwardRef<
                   label={`Patient Population ${i + 1}`}
                   control={control}
                   options={patientPopulationOptions}
-                  isLoading={fetchMetadataPatientPools?.isLoading}
+                  isLoading={fetchMetadataPatientPoolsByDeptId?.isLoading}
                   id={`patientPopulations.${i}.patientPopulation`}
                   name={`patientPopulations.${i}.patientPopulation`}
                   required
@@ -213,13 +227,20 @@ const PatientPopulationsForm = React.forwardRef<
                 )}
 
                 <button
-                  onClick={() => removePatientPopulation(i)}
+                  onClick={() => {
+                    removePatientPopulation(i);
+                  }}
+                  disabled={i === 0}
                   className="sm:!mt-8 self-end sm:self-start"
                 >
                   <ImgXMarkOutline
                     width={20}
                     height={20}
-                    className="stroke-[3px] text-red-500"
+                    className={`stroke-[3px] ${
+                      i === 0
+                        ? "text-disabled cursor-not-allowed"
+                        : "text-red-500"
+                    }`}
                   />
                 </button>
               </div>

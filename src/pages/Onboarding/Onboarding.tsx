@@ -41,7 +41,7 @@ const Onboarding = () => {
     if (currentStep === 1) return basicInfoSubmitRef.current?.click(); // submit basic info form
     if (currentStep === 2) return researchInterestSubmitRef.current?.click(); // submit research interests form
     if (currentStep === 3) return patientPopulationSubmitRef.current?.click(); // submit patient populations form
-    if (currentStep === 4) return publicationsSubmitRef.current?.click(); // submit publications form
+    if (currentStep === 4) return navigate("/home");
   };
 
   const handleFormSubmitSuccess = () => {
@@ -151,6 +151,7 @@ const Onboarding = () => {
               <ResearchInterestsForm
                 ref={researchInterestSubmitRef}
                 onSuccessCallback={handleFormSubmitSuccess}
+                setIsSubmissionLoading={setIsSubmissionLoading}
                 isOnboarding
               />
             )}
@@ -158,6 +159,7 @@ const Onboarding = () => {
               <PatientPopulationsForm
                 ref={patientPopulationSubmitRef}
                 onSuccessCallback={handleFormSubmitSuccess}
+                setIsSubmissionLoading={setIsSubmissionLoading}
                 isOnboarding
               />
             )}
@@ -179,10 +181,10 @@ const Onboarding = () => {
             </Button>
             <Button
               onClick={handleNextStep}
-              disabled={currentStep >= onboardingSteps?.length}
+              disabled={currentStep > onboardingSteps?.length}
               isLoading={isSubmissionLoading}
             >
-              Next
+              {currentStep === onboardingSteps?.length ? "Done" : "Next"}
             </Button>
           </div>
         </div>

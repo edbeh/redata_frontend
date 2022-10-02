@@ -17,7 +17,7 @@ import { FormSelectModel } from "models";
 import { selectOthersField } from "const";
 import {
   useFetchMetadataDesignations,
-  useFetchMetadataSpecialties,
+  useFetchMetadataSpecialtiesByDeptId,
   useFetchMe,
   useFetchDepartmentById,
   useUpdateMe,
@@ -130,10 +130,11 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     );
 
     const fetchMetaDataDesignations = useFetchMetadataDesignations();
-    const fetchMetaDataSpecialties = useFetchMetadataSpecialties(
-      watchDepartment?.id as string,
-      !!watchDepartment?.id
-    );
+    const fetchMetaDataSpecialtiesByDeptId =
+      useFetchMetadataSpecialtiesByDeptId(
+        watchDepartment?.id as string,
+        !!watchDepartment?.id
+      );
     const fetchPubMedByNames = useFetchPubMedByNames(
       pubMedNamesToSearch,
       !!pubMedNamesToSearch
@@ -155,11 +156,11 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     }, [searchParams]);
 
     useEffect(() => {
-      if (fetchMetaDataSpecialties?.data?.data?.data) {
-        const apiData = fetchMetaDataSpecialties?.data?.data?.data;
+      if (fetchMetaDataSpecialtiesByDeptId?.data?.data?.data) {
+        const apiData = fetchMetaDataSpecialtiesByDeptId?.data?.data?.data;
         setSpecialtiesOptions([...apiData, { id: "others", name: "Others" }]);
       }
-    }, [fetchMetaDataSpecialties.data]);
+    }, [fetchMetaDataSpecialtiesByDeptId.data]);
 
     useEffect(() => {
       if (fetchMe?.data) {
@@ -174,7 +175,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       if (
         !fetchMe?.data ||
         !fetchMetaDataDesignations?.data ||
-        !fetchMetaDataSpecialties?.data ||
+        !fetchMetaDataSpecialtiesByDeptId?.data ||
         !fetchDepartmentById?.data
       )
         return;
@@ -192,21 +193,23 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
             setPubMedNamesToSearch(data.pubmedNames.join(", "));
           }
 
-          if (data.primarySpecialty.variant === "preset") {
-            const option = fetchMetaDataSpecialties?.data?.data.data.find(
-              (item) => item.id === data.primarySpecialty.id
-            );
+          if (data.primarySpecialty?.variant === "preset") {
+            const option =
+              fetchMetaDataSpecialtiesByDeptId?.data?.data.data.find(
+                (item) => item.id === data.primarySpecialty?.id
+              );
             setValue("primarySubspecialty", option as FormSelectModel);
           } else {
             setValue("primarySubspecialty", selectOthersField);
-            setValue("primarySubspecialtyOthers", data.primarySpecialty.name);
+            setValue("primarySubspecialtyOthers", data.primarySpecialty?.name);
           }
 
           data.otherSpecialties?.map((specialty) => {
             if (specialty.variant === "preset") {
-              const option = fetchMetaDataSpecialties?.data?.data.data.find(
-                (item) => item.id === specialty.id
-              );
+              const option =
+                fetchMetaDataSpecialtiesByDeptId?.data?.data.data.find(
+                  (item) => item.id === specialty.id
+                );
               return appendOtherSubspecialty(
                 {
                   otherSubspecialty: option,
@@ -234,7 +237,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       }
     }, [
       fetchMe.data,
-      fetchMetaDataSpecialties.data,
+      fetchMetaDataSpecialtiesByDeptId.data,
       fetchMetaDataDesignations.data,
       fetchDepartmentById.data,
     ]);
@@ -374,7 +377,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               label="Primary Subspecialty"
               control={control}
               options={specialtiesOptions}
-              isLoading={fetchMetaDataSpecialties?.isLoading}
+              isLoading={fetchMetaDataSpecialtiesByDeptId?.isLoading}
               id="primarySubspecialty"
               name="primarySubspecialty"
               required={getYupIsRequired(schema, "primarySubspecialty")}
@@ -418,7 +421,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                   label={`Other Subspecialty ${i + 1}`}
                   control={control}
                   options={specialtiesOptions}
-                  isLoading={fetchMetaDataSpecialties?.isLoading}
+                  isLoading={fetchMetaDataSpecialtiesByDeptId?.isLoading}
                   id={`otherSubspecialties.${i}.otherSubspecialty`}
                   name={`otherSubspecialties.${i}.otherSubspecialty`}
                   required

@@ -13,9 +13,9 @@ import {
 import {
   METADATA_DESIGNATIONS_API_ENDPOINT,
   METADATA_INSTITUTIONS_API_ENDPOINT,
-  METADATA_SPECIALTIES_API_ENDPOINT,
-  METADATA_RESEARCH_INTERESTS_API_ENDPOINT,
-  METADATA_PATIENT_POOLS_API_ENDPOINT,
+  METADATA_SPECIALTIES_BY_DEPT_API_ENDPOINT,
+  METADATA_RESEARCH_INTERESTS_BY_DEPT_API_ENDPOINT,
+  METADATA_PATIENT_POOLS_BY_DEPT_API_ENDPOINT,
 } from "../endpoints";
 import {
   GetMetadataDesignations,
@@ -72,9 +72,9 @@ export const useFetchMetadataInstitutions = () => {
 /**
  *  //*GET Specialties
  */
-const fetchMetadataSpecialties = async (departmentId: string) => {
+const fetchMetadataSpecialtiesByDeptId = async (departmentId: string) => {
   return AxiosInstance.get<GetMetadataSpecialties.ApiResponse>(
-    METADATA_SPECIALTIES_API_ENDPOINT(departmentId)
+    METADATA_SPECIALTIES_BY_DEPT_API_ENDPOINT(departmentId)
   ).catch((error) => {
     const { errors } = error.response?.data as ApiErrorProps;
     errors?.length > 0
@@ -84,13 +84,13 @@ const fetchMetadataSpecialties = async (departmentId: string) => {
   });
 };
 
-export const useFetchMetadataSpecialties = (
+export const useFetchMetadataSpecialtiesByDeptId = (
   departmentId: string,
   enabled: boolean = false
 ) => {
   return useQuery(
     [`${METADATA_SPECIALTIES_API_KEY}_${departmentId}`],
-    () => fetchMetadataSpecialties(departmentId),
+    () => fetchMetadataSpecialtiesByDeptId(departmentId),
     {
       staleTime: 1000 * 60 * 10, // 10 minutes
       enabled,
@@ -101,9 +101,9 @@ export const useFetchMetadataSpecialties = (
 /**
  *  //*GET Research Interests
  */
-const fetchMetadataResearchInterests = async (departmentId: string) => {
+const fetchMetadataResearchInterestsByDeptId = async (departmentId: string) => {
   return AxiosInstance.get<GetMetadataResearchInterests.ApiResponse>(
-    METADATA_RESEARCH_INTERESTS_API_ENDPOINT(departmentId)
+    METADATA_RESEARCH_INTERESTS_BY_DEPT_API_ENDPOINT(departmentId)
   ).catch((error) => {
     const { errors } = error.response?.data as ApiErrorProps;
     errors?.length > 0
@@ -113,13 +113,13 @@ const fetchMetadataResearchInterests = async (departmentId: string) => {
   });
 };
 
-export const useFetchMetadataResearchInterests = (
+export const useFetchMetadataResearchInterestsByDeptId = (
   departmentId: string,
   enabled: boolean = false
 ) => {
   return useQuery(
     [`${METADATA_RESEARCH_INTERESTS_API_KEY}_${departmentId}`],
-    () => fetchMetadataResearchInterests(departmentId),
+    () => fetchMetadataResearchInterestsByDeptId(departmentId),
     {
       staleTime: 1000 * 60 * 10, // 10 minutes
       enabled,
@@ -130,9 +130,9 @@ export const useFetchMetadataResearchInterests = (
 /**
  *  //*GET Patient Pools
  */
-const fetchMetadataPatientPools = async (departmentId: string) => {
+const fetchMetadataPatientPoolsByDeptId = async (departmentId: string) => {
   return AxiosInstance.get<GetMetadataPatientPools.ApiResponse>(
-    METADATA_PATIENT_POOLS_API_ENDPOINT(departmentId)
+    METADATA_PATIENT_POOLS_BY_DEPT_API_ENDPOINT(departmentId)
   ).catch((error) => {
     const { errors } = error.response?.data as ApiErrorProps;
     errors?.length > 0
@@ -142,13 +142,13 @@ const fetchMetadataPatientPools = async (departmentId: string) => {
   });
 };
 
-export const useFetchMetadataPatientPools = (
+export const useFetchMetadataPatientPoolsByDeptId = (
   departmentId: string,
   enabled: boolean = false
 ) => {
   return useQuery(
     [`${METADATA_PATIENT_POOLS_API_KEY}_${departmentId}`],
-    () => fetchMetadataPatientPools(departmentId),
+    () => fetchMetadataPatientPoolsByDeptId(departmentId),
     {
       staleTime: 1000 * 60 * 10, // 10 minutes
       enabled,

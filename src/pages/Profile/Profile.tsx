@@ -1,7 +1,7 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { BaseLayout } from "wrapper-components";
-import { useFetchMe, useFetchAllPublications } from "api/hooks";
+import { useFetchUserById, useFetchAllPublications } from "api/hooks";
 
 import {
   HeroSection,
@@ -14,21 +14,27 @@ import { PublicationsSection } from "pages/Dashboard/Publications/components";
 
 const Profile = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
 
   // *Queries
-  const fetchMe = useFetchMe();
+  const fetchUserById = useFetchUserById(id as string, !!id);
+  // TODO: fetch publications by id
   const fetchAllPublications = useFetchAllPublications();
 
+  // *JSX
   return (
     <BaseLayout withLeftNavigation withBackdrop>
       <div className="w-full space-y-6 pb-12 mt-0 sm:mt-[29px]">
-        {fetchMe?.data ? (
+        {fetchUserById?.data ? (
           <>
-            <HeroSection data={fetchMe?.data?.data?.data} withProfileDetails />
-            {fetchMe?.data?.data?.data?.researchInterests?.length > 0 && (
+            <HeroSection
+              data={fetchUserById?.data?.data?.data}
+              withProfileDetails
+            />
+            {fetchUserById?.data?.data?.data?.researchInterests?.length > 0 && (
               <CommonSection
                 title="Research Interests"
-                data={fetchMe.data.data.data.researchInterests.map(
+                data={fetchUserById.data.data.data.researchInterests.map(
                   (interest) => interest.name
                 )}
                 onClickBadge={(item: string) => {
@@ -42,10 +48,10 @@ const Profile = () => {
               />
             )}
 
-            {fetchMe?.data?.data?.data?.patientPools?.length > 0 && (
+            {fetchUserById?.data?.data?.data?.patientPools?.length > 0 && (
               <CommonSection
                 title="Patient Populations"
-                data={fetchMe.data.data.data.patientPools.map(
+                data={fetchUserById.data.data.data.patientPools.map(
                   (pool) => pool.name
                 )}
                 onClickBadge={(item: string) => {
@@ -63,7 +69,7 @@ const Profile = () => {
               <PublicationsSection
                 data={fetchAllPublications?.data?.data?.data || []}
                 namesToBold={
-                  fetchMe?.data?.data?.data?.correctedPubmedNames || []
+                  fetchUserById?.data?.data?.data?.correctedPubmedNames || []
                 }
                 withHeader
               />

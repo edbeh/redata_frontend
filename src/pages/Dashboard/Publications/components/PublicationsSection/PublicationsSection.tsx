@@ -37,7 +37,7 @@ const PublicationsSection = ({
               No publications found
             </p>
             <p className="text-center mt-2">
-              There are no saved publications in your profile yet
+              There are no saved publications in the profile yet
             </p>
           </div>
         ) : (

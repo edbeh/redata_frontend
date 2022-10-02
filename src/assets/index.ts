@@ -23,6 +23,7 @@ import imgStockProfilePic from "./stock-profile-pic.jpg";
 import imgDeleteFiles from "./delete-files.png";
 import imgProfileSearch from "./profile-search.svg";
 import imgNoData from "./no-data.svg";
+import imgNoUserFound from "./no-user-found.svg";
 
 export {
   ImgXMarkOutline,
@@ -49,4 +50,5 @@ export {
   imgDeleteFiles,
   imgProfileSearch,
   imgNoData,
+  imgNoUserFound,
 };

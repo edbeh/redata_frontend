@@ -1,10 +1,19 @@
 import { BaseLayout } from "wrapper-components";
-import { BreadCrumbs } from "components";
+import { BreadCrumbs, Card } from "components";
+import { imgNoUserFound } from "assets";
+import { useFetchConnections } from "api/hooks";
 
 import { connectionsNav } from "./Connections.util";
 import SingleConnection from "./SingleConnection/SingleConnection";
+import SingleConnectionLoading from "./SingleConnection/SingleConnection.loading";
 
 const Connections = () => {
+  // *Queries
+  const fetchConnections = useFetchConnections();
+
+  console.log(fetchConnections?.data?.data?.data);
+
+  // *JSX
   return (
     <BaseLayout withLeftNavigation>
       <div className="w-full pb-12">
@@ -16,11 +25,34 @@ const Connections = () => {
         </div>
 
         <div className="flex flex-col w-full mt-8 space-y-6">
-          <SingleConnection />
-          <SingleConnection />
-          <SingleConnection />
-          <SingleConnection />
-          <SingleConnection />
+          {fetchConnections?.isLoading && <SingleConnectionLoading />}
+
+          {fetchConnections?.data?.data?.data?.length === 0 && (
+            <Card>
+              <div className="flex flex-col w-full my-10 self-center max-w-[500px]">
+                <img
+                  className="self-center"
+                  src={imgNoUserFound}
+                  alt="no-user-found"
+                  width={180}
+                  height={180}
+                />
+                <p className="text-center font-semibold mt-4">
+                  No connections found
+                </p>
+                <p className="text-center mt-2">
+                  New connections will be automatically added in this page when
+                  colleagues in your department sign up for an account
+                </p>
+              </div>
+            </Card>
+          )}
+
+          {fetchConnections?.data?.data?.data &&
+            fetchConnections.data.data.data.length > 0 &&
+            fetchConnections.data?.data.data.map((connection) => (
+              <SingleConnection key={connection.id} connection={connection} />
+            ))}
         </div>
       </div>
     </BaseLayout>

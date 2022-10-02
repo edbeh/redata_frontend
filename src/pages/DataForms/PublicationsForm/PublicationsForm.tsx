@@ -385,11 +385,15 @@ const PublicationsForm = React.forwardRef<
               </a>
             </div>
 
-            <div>
-              <Button variant="secondary" loadingText="Searching...">
-                Search PubMed
-              </Button>
-            </div>
+            {fetchMe?.data?.data?.data?.pubmedNames &&
+              fetchMe?.data?.data?.data?.pubmedNames.length > 0 &&
+              fetchMe?.data?.data?.data?.pubmedNames[0] !== "" && (
+                <div>
+                  <Button variant="secondary" loadingText="Searching...">
+                    Search PubMed
+                  </Button>
+                </div>
+              )}
           </div>
         </form>
 
@@ -452,7 +456,7 @@ const PublicationsForm = React.forwardRef<
               No publications found
             </p>
             <p className="text-center mt-2">
-              There are no saved publications in your profile yet
+              There are no saved publications in the profile yet
             </p>
           </div>
         )}

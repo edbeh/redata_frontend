@@ -83,7 +83,7 @@ const SinglePublication = ({
             <Highlighted
               text={publication.title?.replace(/(<([^>]+)>)/gi, "")}
               highlight={searchParams?.highlight || ""}
-            />{" "}
+            />
             <ImgOpenNewTabOutline className="text-blue-500 inline w-4 h-4 mb-1" />
           </a>
         ) : (
