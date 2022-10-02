@@ -2,9 +2,9 @@ import {
   ImgDocumentOutline,
   ImgHomeOutline,
   ImgSearchOutline,
-  ImgSettingsOutline,
   ImgUserCircleOutline,
   ImgArrowUturnLeftOutline,
+  ImgSignOutOutline,
 } from "assets";
 
 import { INavigationItem } from "./LeftNavigation.model";
@@ -17,12 +17,12 @@ export const getNavigationItemsLimited = (): INavigationItem[] => {
       route: undefined,
       Icon: ImgArrowUturnLeftOutline,
     },
-    // {
-    //   key: "settings",
-    //   label: "Settings",
-    //   route: "/settings",
-    //   Icon: ImgSettingsOutline,
-    // },
+    {
+      key: "logout",
+      label: "Logout",
+      route: undefined,
+      Icon: ImgSignOutOutline,
+    },
   ];
 };
 
@@ -53,10 +53,10 @@ export const getNavigationItems = (): INavigationItem[] => {
       Icon: ImgSearchOutline,
     },
     {
-      key: "settings",
-      label: "Settings",
-      route: "/settings",
-      Icon: ImgSettingsOutline,
+      key: "logout",
+      label: "Logout",
+      route: undefined,
+      Icon: ImgSignOutOutline,
     },
   ];
 };

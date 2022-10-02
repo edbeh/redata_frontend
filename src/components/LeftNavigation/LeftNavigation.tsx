@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { Modal, Button } from "components";
+import { imgExitDoor } from "assets";
+import { signOut } from "utils";
+
 import {
   getNavigationItems,
   getNavigationItemsLimited,
@@ -12,6 +16,7 @@ const LeftNavigation = () => {
   const navItemsLimited = getNavigationItemsLimited();
 
   const [currentPathName, setCurrentPathName] = useState<string>("");
+  const [showLogOutModal, setShowLogOutModal] = useState<boolean>(false);
 
   const LIMITED_ACCESS_PATHS = "/profile";
 
@@ -22,6 +27,27 @@ const LeftNavigation = () => {
 
   return (
     <div className="fixed top-[50px] py-6 px-4 bg-white shadow-lg w-[190px] flex flex-col items-center rounded-xl h-fit z-50">
+      <Modal
+        content={
+          <div className="flex flex-col my-2">
+            <img
+              className="self-center"
+              src={imgExitDoor}
+              alt="confirm-logout"
+              width={200}
+              height={200}
+            />
+            <p className="self-center my-4">Are you sure you want to logout?</p>
+            <div className="w-[220px] self-center">
+              <Button onClick={signOut}>Confirm Logout</Button>
+            </div>
+          </div>
+        }
+        isVisible={showLogOutModal}
+        onDismiss={() => {
+          setShowLogOutModal(false);
+        }}
+      />
       <h1 className="text-xl font-bold">ReData</h1>
 
       {currentPathName.includes(LIMITED_ACCESS_PATHS) ? (
@@ -36,9 +62,11 @@ const LeftNavigation = () => {
                 : ""
             }`}
                 key={item.key}
-                onClick={() =>
-                  item.route ? navigate(item.route) : navigate(-1)
-                }
+                onClick={() => {
+                  if (item.route) return navigate(item.route);
+                  if (item.key === "return") return navigate(-1);
+                  if (item.key === "logout") return setShowLogOutModal(true);
+                }}
               >
                 <item.Icon className={`w-5 h-5 stroke-2`} /> <p>{item.label}</p>
               </li>
@@ -57,7 +85,10 @@ const LeftNavigation = () => {
                               : ""
                           }`}
                 key={item.key}
-                onClick={() => navigate(item.route as string)}
+                onClick={() => {
+                  if (item.route) return navigate(item.route);
+                  if (item.key === "logout") return setShowLogOutModal(true);
+                }}
               >
                 <item.Icon className={`w-5 h-5 stroke-2`} /> <p>{item.label}</p>
               </li>

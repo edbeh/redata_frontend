@@ -15,6 +15,7 @@ import { ReactComponent as ImgOpenNewTabOutline } from "./open-new-tab-outline.s
 import { ReactComponent as ImgMagnifyingGlassOutline } from "./magnifying-glass-outline.svg";
 import { ReactComponent as ImgChevronDownOutline } from "./chevron-down-outline.svg";
 import { ReactComponent as ImgCircleLoadingOutline } from "./circle-loading-outline.svg";
+import { ReactComponent as ImgSignOutOutline } from "./sign-out-outline.svg";
 
 import imgScientistMicroscope from "./scientist-microscope.jpg";
 import imgNotFound from "./not-found.jpg";
@@ -24,6 +25,7 @@ import imgDeleteFiles from "./delete-files.png";
 import imgProfileSearch from "./profile-search.svg";
 import imgNoData from "./no-data.svg";
 import imgNoUserFound from "./no-user-found.svg";
+import imgExitDoor from "./exit-door.svg";
 
 export {
   ImgXMarkOutline,
@@ -44,6 +46,7 @@ export {
   ImgMagnifyingGlassOutline,
   ImgChevronDownOutline,
   ImgCircleLoadingOutline,
+  ImgSignOutOutline,
   imgNotFound,
   imgJohnDoe,
   imgStockProfilePic,
@@ -51,4 +54,5 @@ export {
   imgProfileSearch,
   imgNoData,
   imgNoUserFound,
+  imgExitDoor,
 };
