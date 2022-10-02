@@ -4,7 +4,7 @@ import { BreadCrumbs } from "components";
 import { BaseLayout } from "wrapper-components";
 import { ImgPencilSquareOutline } from "assets";
 
-import { homeNav, mockData } from "./Home.util";
+import { homeNav } from "./Home.util";
 import {
   HeroSection,
   InfoSection,
@@ -61,18 +61,22 @@ const Home = () => {
                 />
               )}
 
-              <CommonSection
-                title="Patient Populations"
-                data={mockData.patientPopulations}
-                onClickBadge={(item: string) => {
-                  navigate({
-                    pathname: "/search",
-                    search: `?keyword=${encodeURIComponent(
-                      item
-                    )}&searchIn=patientPopulations`,
-                  });
-                }}
-              />
+              {fetchMe?.data?.data?.data?.patientPools?.length > 0 && (
+                <CommonSection
+                  title="Patient Populations"
+                  data={fetchMe.data.data.data.patientPools.map(
+                    (pool) => pool.name
+                  )}
+                  onClickBadge={(item: string) => {
+                    navigate({
+                      pathname: "/search",
+                      search: `?keyword=${encodeURIComponent(
+                        item
+                      )}&searchIn=patientPopulations`,
+                    });
+                  }}
+                />
+              )}
             </>
           ) : (
             <>

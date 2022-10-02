@@ -11,7 +11,6 @@ import {
   CommonSectionLoading,
 } from "pages/Dashboard/Home/components";
 import { PublicationsSection } from "pages/Dashboard/Publications/components";
-import { mockData } from "pages/Dashboard/Home/Home.util";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -26,30 +25,40 @@ const Profile = () => {
         {fetchMe?.data ? (
           <>
             <HeroSection data={fetchMe?.data?.data?.data} withProfileDetails />
-            <CommonSection
-              title="Research Interests"
-              data={mockData.researchInterests}
-              onClickBadge={(item: string) => {
-                navigate({
-                  pathname: "/search",
-                  search: `?keyword=${encodeURIComponent(
-                    item
-                  )}&searchIn=researchInterests`,
-                });
-              }}
-            />
-            <CommonSection
-              title="Patient Populations"
-              data={mockData.patientPopulations}
-              onClickBadge={(item: string) => {
-                navigate({
-                  pathname: "/search",
-                  search: `?keyword=${encodeURIComponent(
-                    item
-                  )}&searchIn=patientPopulations`,
-                });
-              }}
-            />
+            {fetchMe?.data?.data?.data?.researchInterests?.length > 0 && (
+              <CommonSection
+                title="Research Interests"
+                data={fetchMe.data.data.data.researchInterests.map(
+                  (interest) => interest.name
+                )}
+                onClickBadge={(item: string) => {
+                  navigate({
+                    pathname: "/search",
+                    search: `?keyword=${encodeURIComponent(
+                      item
+                    )}&searchIn=researchInterests`,
+                  });
+                }}
+              />
+            )}
+
+            {fetchMe?.data?.data?.data?.patientPools?.length > 0 && (
+              <CommonSection
+                title="Patient Populations"
+                data={fetchMe.data.data.data.patientPools.map(
+                  (pool) => pool.name
+                )}
+                onClickBadge={(item: string) => {
+                  navigate({
+                    pathname: "/search",
+                    search: `?keyword=${encodeURIComponent(
+                      item
+                    )}&searchIn=patientPopulations`,
+                  });
+                }}
+              />
+            )}
+
             {fetchAllPublications?.data?.data?.data && (
               <PublicationsSection
                 data={fetchAllPublications?.data?.data?.data || []}

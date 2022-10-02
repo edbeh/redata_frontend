@@ -1,5 +1,8 @@
+import { FormSelectModel } from "models";
+
 type PatientPopulation = {
-  patientPopulation: string;
+  patientPopulation: FormSelectModel | undefined;
+  patientPopulationOthers: string | undefined;
 };
 
 export interface IPatientPopulationsFormFields {

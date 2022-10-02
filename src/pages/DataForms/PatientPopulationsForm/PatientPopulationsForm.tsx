@@ -1,10 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useQueryClient } from "react-query";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { toast } from "react-toastify";
 
-import { FormInput } from "components";
+import { FormInput, FormSelect } from "components";
+import { useMe } from "hooks";
+import { FormSelectModel } from "models";
+import { selectOthersField } from "const";
 import { ImgPlusCircleOutline, ImgXMarkOutline } from "assets";
+import {
+  useFetchMe,
+  useUpdateMe,
+  useFetchMetadataPatientPools,
+} from "api/hooks";
+import { ME_API_KEY } from "api/keys";
 
 import { schema } from "./PatientPopulationsForm.schema";
 import { IPatientPopulationsFormFields } from "./PatientPopulationsForm.model";
@@ -12,13 +23,14 @@ import {
   cleanUpData,
   validateDuplicateValues,
 } from "./PatientPopulationsForm.util";
+import { IsSubmissionLoadingType } from "../../Dashboard/Home/components/EditHome/EditHome.model";
 
 interface PatientPopulationsFormProps {
   /** callback if api call is successful */
   onSuccessCallback?: () => void;
 
   /** display loading state parent component */
-  setIsSubmissionLoading?: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsSubmissionLoading?: React.Dispatch<React.SetStateAction<any>>;
 
   /** determine if we should focus on newly added fields based on whether it's onboarding */
   isOnboarding?: boolean;
@@ -32,13 +44,19 @@ const PatientPopulationsForm = React.forwardRef<
     { onSuccessCallback, setIsSubmissionLoading, isOnboarding = false },
     ref
   ) => {
+    const { departmentId } = useMe();
+    const isInitialRender = useRef(true);
+    const [patientPopulationOptions, setPatientPopulationOptions] = useState<
+      FormSelectModel[]
+    >([]);
+
     // *Form
     const {
       register,
       control,
       formState: { errors: formErrors },
       setError,
-      clearErrors,
+      watch,
       handleSubmit,
     } = useForm<IPatientPopulationsFormFields>({
       resolver: yupResolver(schema),
@@ -56,7 +74,6 @@ const PatientPopulationsForm = React.forwardRef<
 
     // *Methods
     const handleSubmitForm = async (data: IPatientPopulationsFormFields) => {
-      clearErrors();
       const { hasErrors } = validateDuplicateValues(data, setError);
       if (hasErrors) return;
 
@@ -64,23 +81,87 @@ const PatientPopulationsForm = React.forwardRef<
 
       console.log(cleanData);
       console.log(JSON.stringify(cleanData, null, 2));
-      if (onSuccessCallback) onSuccessCallback();
+      updateMe.mutate(cleanData);
     };
+
+    const handleMutationSuccess = () => {
+      queryClient.invalidateQueries(ME_API_KEY);
+      if (onSuccessCallback) onSuccessCallback();
+      if (!isOnboarding) toast.success("Data updated successfully!");
+    };
+
+    // *Queries
+    const queryClient = useQueryClient();
+
+    const fetchMe = useFetchMe();
+
+    const fetchMetadataPatientPools = useFetchMetadataPatientPools(
+      departmentId as string,
+      !!departmentId
+    );
+
+    const updateMe = useUpdateMe(handleMutationSuccess);
 
     // *Effects
     useEffect(() => {
-      // min of 1 research interest required
-      if (patientPopulationFields?.length === 0) {
-        appendPatientPopulation(
-          {
-            patientPopulation: "",
-          },
-          {
-            shouldFocus: isOnboarding,
+      if (fetchMetadataPatientPools?.data?.data?.data) {
+        const apiData = fetchMetadataPatientPools?.data?.data?.data;
+        setPatientPopulationOptions([
+          ...apiData,
+          { id: "others", name: "Others" },
+        ]);
+      }
+    }, [fetchMetadataPatientPools.data]);
+
+    useEffect(() => {
+      if (!fetchMetadataPatientPools?.data || !fetchMe?.data) return;
+
+      // Pre-populate form fields
+      const data = fetchMe?.data?.data?.data;
+
+      if (isInitialRender.current) {
+        data.patientPools?.map((pool) => {
+          if (pool.variant === "preset") {
+            const option = fetchMetadataPatientPools.data.data.data.find(
+              (item) => item.id === pool.id
+            );
+            return appendPatientPopulation(
+              {
+                patientPopulation: option,
+                patientPopulationOthers: undefined,
+              },
+              {
+                shouldFocus: isOnboarding,
+              }
+            );
+          } else {
+            return appendPatientPopulation(
+              {
+                patientPopulation: selectOthersField,
+                patientPopulationOthers: pool.name,
+              },
+              {
+                shouldFocus: isOnboarding,
+              }
+            );
+          }
+        });
+
+        isInitialRender.current = false;
+      }
+    }, [fetchMetadataPatientPools, fetchMe]);
+
+    useEffect(() => {
+      if (setIsSubmissionLoading) {
+        if (isOnboarding) return setIsSubmissionLoading(updateMe?.isLoading);
+
+        return setIsSubmissionLoading(
+          (currentState: IsSubmissionLoadingType) => {
+            return { ...currentState, patientPopulations: updateMe?.isLoading };
           }
         );
       }
-    }, [patientPopulationFields]);
+    }, [updateMe.isLoading]);
 
     // *JSX
     return (
@@ -94,45 +175,51 @@ const PatientPopulationsForm = React.forwardRef<
           {patientPopulationFields.map((field, i) => {
             return (
               <div
-                className={`flex mb-4 space-x-3 ${
-                  formErrors?.patientPopulations &&
-                  formErrors?.patientPopulations[i]?.patientPopulation?.message
-                    ? "items-center"
-                    : "items-end"
-                }`}
+                className={`flex flex-col w-full mb-4 space-y-4 
+                            sm:space-y-0 sm:space-x-6 sm:flex-row
+                            items-start`}
                 key={field.id}
               >
-                <FormInput
+                <FormSelect
                   label={`Patient Population ${i + 1}`}
-                  key={field.id}
-                  register={register}
-                  id={`patientPopulations[${i}].patientPopulation`}
-                  name={`patientPopulations[${i}].patientPopulation`}
+                  control={control}
+                  options={patientPopulationOptions}
+                  isLoading={fetchMetadataPatientPools?.isLoading}
+                  id={`patientPopulations.${i}.patientPopulation`}
+                  name={`patientPopulations.${i}.patientPopulation`}
+                  required
+                  autoComplete="off"
                   error={
                     formErrors?.patientPopulations &&
                     formErrors?.patientPopulations[i]?.patientPopulation
                       ?.message
                   }
-                  autoComplete="off"
-                  required
                 />
+
+                {watch(`patientPopulations.${i}.patientPopulation`)?.id ===
+                  "others" && (
+                  <FormInput
+                    label="Enter Patient Population"
+                    register={register}
+                    id={`patientPopulations.${i}.patientPopulationOthers`}
+                    name={`patientPopulations.${i}.patientPopulationOthers`}
+                    autoComplete="off"
+                    error={
+                      formErrors?.patientPopulations &&
+                      formErrors?.patientPopulations[i]?.patientPopulationOthers
+                        ?.message
+                    }
+                  />
+                )}
+
                 <button
                   onClick={() => removePatientPopulation(i)}
-                  disabled={i < 1}
-                  className={`disabled:cursor-not-allowed ${
-                    formErrors?.patientPopulations &&
-                    formErrors?.patientPopulations[i]?.patientPopulation
-                      ?.message
-                      ? "mb-1"
-                      : "mb-4"
-                  }`}
+                  className="sm:!mt-8 self-end sm:self-start"
                 >
                   <ImgXMarkOutline
                     width={20}
                     height={20}
-                    className={`stroke-[3px] ${
-                      i < 1 ? "text-slate-300" : "text-red-500"
-                    }`}
+                    className="stroke-[3px] text-red-500"
                   />
                 </button>
               </div>
@@ -143,7 +230,8 @@ const PatientPopulationsForm = React.forwardRef<
             onClick={() =>
               appendPatientPopulation(
                 {
-                  patientPopulation: "",
+                  patientPopulation: undefined,
+                  patientPopulationOthers: undefined,
                 },
                 {
                   shouldFocus: isOnboarding,

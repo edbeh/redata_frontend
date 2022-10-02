@@ -393,6 +393,17 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                 error={formErrors?.primarySubspecialtyOthers?.message}
               />
             )}
+
+            <button
+              disabled
+              className="sm:!mt-8 self-end sm:self-start cursor-not-allowed"
+            >
+              <ImgXMarkOutline
+                width={20}
+                height={20}
+                className="stroke-[3px] text-disabled"
+              />
+            </button>
           </div>
 
           {otherSubspecialtyFields.map((subspecialty, i) => {

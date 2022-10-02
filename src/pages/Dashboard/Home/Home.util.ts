@@ -34,12 +34,3 @@ export const editHomeNav: IBreadCrumbs = {
     },
   ],
 };
-
-export const mockData = {
-  researchInterests: [
-    "Kidney Transplant",
-    "Immunosuppression",
-    "Post-transplantation immunosuppression",
-  ],
-  patientPopulations: ["Kidney failure", "Dialysis", "Diabetes"],
-};
