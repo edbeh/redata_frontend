@@ -1,7 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
 
 import { BaseLayout } from "wrapper-components";
-import { useFetchUserById, useFetchAllPublications } from "api/hooks";
+import {
+  useFetchUserById,
+  useFetchAllPublications,
+  useFetchUserPublicationsById,
+} from "api/hooks";
 
 import {
   HeroSection,
@@ -18,8 +22,10 @@ const Profile = () => {
 
   // *Queries
   const fetchUserById = useFetchUserById(id as string, !!id);
-  // TODO: fetch publications by id
-  const fetchAllPublications = useFetchAllPublications();
+  const fetchUserPublicationsById = useFetchUserPublicationsById(
+    id as string,
+    !!id
+  );
 
   // *JSX
   return (
@@ -65,9 +71,9 @@ const Profile = () => {
               />
             )}
 
-            {fetchAllPublications?.data?.data?.data && (
+            {fetchUserPublicationsById?.data?.data?.data && (
               <PublicationsSection
-                data={fetchAllPublications?.data?.data?.data || []}
+                data={fetchUserPublicationsById?.data?.data?.data || []}
                 namesToBold={
                   fetchUserById?.data?.data?.data?.correctedPubmedNames || []
                 }

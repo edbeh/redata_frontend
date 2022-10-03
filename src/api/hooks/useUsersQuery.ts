@@ -3,9 +3,13 @@ import { useQuery, useMutation } from "react-query";
 
 import { createAxiosInstance, ApiErrorProps } from "api/utils";
 
-import { USERS_API_KEY } from "../keys";
-import { USERS_API_ENDPOINT, USERS_BY_ID_API_ENDPOINT } from "../endpoints";
-import { GetUserById, PostUser } from "../models";
+import { USERS_API_KEY, USERS_PUBLICATIONS_API_KEY } from "../keys";
+import {
+  USERS_API_ENDPOINT,
+  USERS_BY_ID_API_ENDPOINT,
+  USERS_PUBLICATIONS_BY_ID_API_ENDPOINT,
+} from "../endpoints";
+import { GetUserById, GetUserPublicationsById, PostUser } from "../models";
 
 const AxiosInstance = createAxiosInstance();
 
@@ -45,6 +49,34 @@ export const useFetchUserById = (userId: string, enabled = false) => {
   return useQuery([`${USERS_API_KEY}_${userId}`], () => fetchUserById(userId), {
     enabled,
   });
+};
+
+/**
+ *  //*GET User Publications By Id
+ */
+const fetchUserPublicationsById = async (userId: string) => {
+  return AxiosInstance.get<GetUserPublicationsById.ApiResponse>(
+    USERS_PUBLICATIONS_BY_ID_API_ENDPOINT(userId)
+  ).catch((error) => {
+    const { errors } = error.response?.data as ApiErrorProps;
+    errors?.length > 0
+      ? toast.error(errors[0].detail)
+      : toast.error(error.response.statusText);
+    throw error;
+  });
+};
+
+export const useFetchUserPublicationsById = (
+  userId: string,
+  enabled = false
+) => {
+  return useQuery(
+    [`${USERS_PUBLICATIONS_API_KEY}_${userId}`],
+    () => fetchUserPublicationsById(userId),
+    {
+      enabled,
+    }
+  );
 };
 
 /**

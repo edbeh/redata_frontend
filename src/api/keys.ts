@@ -1,4 +1,5 @@
 export const USERS_API_KEY = "users";
+export const USERS_PUBLICATIONS_API_KEY = "users_publications";
 
 export const ME_API_KEY = "me";
 
