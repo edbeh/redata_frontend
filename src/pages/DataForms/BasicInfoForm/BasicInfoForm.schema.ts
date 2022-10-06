@@ -32,5 +32,5 @@ export const schema = yup.object({
     .of(yup.object().shape(otherSubspecialtySchema)),
   pubMedNames: yup.string(),
   mcrNo: yup.string(),
-  bio: yup.string().max(150, validationMessages.validate.max150),
+  bio: yup.string().max(1500, validationMessages.validate.max1500),
 });

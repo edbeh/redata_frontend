@@ -26,10 +26,11 @@ export const DEPARTMENTS_API_ENDPOINT = (institutionId: string) =>
 export const PUBLICATIONS_API_ENDPOINT = `/publications/`;
 
 // *Search
+export const SEARCH_USERS_API_ENDPOINT = (q: string) => `/search/users?q=${q}`;
 export const SEARCH_MEDICAL_KEYWORDS_API_ENDPOINT = (q: string) =>
   `/search/medical_keywords?q=${q}`;
 export const SEARCH_PUBLICATIONS_API_ENDPOINT = (q: string) =>
-  `/search/publications/q=${q}`;
+  `/search/publications?q=${q}`;
 
 // *Metadata
 export const METADATA_DESIGNATIONS_API_ENDPOINT = `/designations/metadata/`;

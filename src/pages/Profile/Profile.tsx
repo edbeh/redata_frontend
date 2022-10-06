@@ -1,11 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
 
+import { Card } from "components";
 import { BaseLayout } from "wrapper-components";
-import {
-  useFetchUserById,
-  useFetchAllPublications,
-  useFetchUserPublicationsById,
-} from "api/hooks";
+import { useFetchUserById, useFetchUserPublicationsById } from "api/hooks";
 
 import {
   HeroSection,
@@ -37,6 +34,18 @@ const Profile = () => {
               data={fetchUserById?.data?.data?.data}
               withProfileDetails
             />
+
+            {fetchUserById?.data?.data?.data?.bio?.length > 0 && (
+              <Card>
+                <h2 className="mb-5 text-xl font-semibold text-gray-700">
+                  Bio
+                </h2>
+                <p className="whitespace-pre-wrap">
+                  {fetchUserById.data.data.data.bio}
+                </p>
+              </Card>
+            )}
+
             {fetchUserById?.data?.data?.data?.researchInterests?.length > 0 && (
               <CommonSection
                 title="Research Interests"

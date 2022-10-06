@@ -3,6 +3,7 @@ interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   label?: string;
   id: string;
+  rows?: string;
 }
 
 const FormTextArea = ({
@@ -10,6 +11,7 @@ const FormTextArea = ({
   error,
   label,
   id,
+  rows = "5",
   ...rest
 }: FormInputProps) => {
   const { required } = rest;
@@ -28,6 +30,7 @@ const FormTextArea = ({
           text-ellipsis disabled:opacity-50 disabled:cursor-not-allowed
           hover:border-primary-600 hover:ring-1 hover:ring-primary-600
           ${error ? "border-red hover:ring-red hover:border-red" : ""}`}
+        rows={rows}
         {...register(id)}
         {...rest}
       />

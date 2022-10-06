@@ -15,7 +15,7 @@ export const validationMessages = {
     confirmPassword: "Passwords must match",
     email: "Please enter a valid email",
     max50: "Please keep this field below 50 characters",
-    max150: "Please keep this field below 150 characters",
+    max1500: "Please keep this field below 1500 characters",
     pubmedName: "Please enter at least 1 first and last name",
     duplicateSubSpecialty: "Please enter different sub-specialties",
     duplicateResearchInterest: "Please enter different research interests",

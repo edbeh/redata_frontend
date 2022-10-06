@@ -362,6 +362,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
             <FormTextArea
               label="Bio / Short Introduction"
               register={register}
+              rows="10"
               id="bio"
               name="bio"
               required={getYupIsRequired(schema, "bio")}

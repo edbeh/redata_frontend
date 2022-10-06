@@ -16,7 +16,10 @@ const SingleResultMedical = ({ q, data }: SingleResultMedicalProps) => {
     <>
       {data.map((result) => {
         return (
-          <div className="flex flex-col sm:flex-row px-0 sm:px-0 py-6 border-b-[1px] space-y-2 sm:space-y-0 border-b-gray-200 space-x-0 sm:space-x-6">
+          <div
+            className="flex flex-col sm:flex-row px-0 sm:px-0 py-6 border-b-[1px] space-y-2 sm:space-y-0 border-b-gray-200 space-x-0 sm:space-x-6"
+            key={result.id}
+          >
             <div
               className="flex flex-row sm:flex-col space-y-2 space-x-4 sm:space-x-0 mb-3 sm:mb-0 w-full sm:min-w-[150px] sm:max-w-[150px] cursor-pointer"
               onClick={() => navigate(`/profile/${result.id}`)}
@@ -44,7 +47,7 @@ const SingleResultMedical = ({ q, data }: SingleResultMedicalProps) => {
                   <div className="flex flex-wrap items-start justify-start gap-y-2 gap-x-4">
                     {result?.specialties?.map((specialty) => {
                       return (
-                        <>
+                        <div key={specialty}>
                           <Badge
                             text={specialty}
                             variant="small"
@@ -52,7 +55,7 @@ const SingleResultMedical = ({ q, data }: SingleResultMedicalProps) => {
                               specialty?.toLowerCase() === q?.toLowerCase()
                             }
                           />
-                        </>
+                        </div>
                       );
                     })}
                   </div>
@@ -63,7 +66,7 @@ const SingleResultMedical = ({ q, data }: SingleResultMedicalProps) => {
                   <div className="flex flex-wrap items-start justify-start gap-y-2 gap-x-4">
                     {result?.researchInterests?.map((interest) => {
                       return (
-                        <>
+                        <div key={interest}>
                           <Badge
                             text={interest}
                             variant="small"
@@ -71,7 +74,7 @@ const SingleResultMedical = ({ q, data }: SingleResultMedicalProps) => {
                               interest?.toLowerCase() === q?.toLowerCase()
                             }
                           />
-                        </>
+                        </div>
                       );
                     })}
                   </div>
@@ -82,13 +85,13 @@ const SingleResultMedical = ({ q, data }: SingleResultMedicalProps) => {
                   <div className="flex flex-wrap items-start justify-start gap-y-2 gap-x-4">
                     {result?.patientPools?.map((pool) => {
                       return (
-                        <>
+                        <div key={pool}>
                           <Badge
                             text={pool}
                             variant="small"
                             isBolded={pool?.toLowerCase() === q?.toLowerCase()}
                           />
-                        </>
+                        </div>
                       );
                     })}
                   </div>
