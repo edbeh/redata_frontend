@@ -61,19 +61,6 @@ const SearchForm = ({ useFormReturn }: SearchFormProps) => {
       const option = searchInOptions.find((option) => option.id === searchIn);
       if (option) setValue("searchIn", option);
     }
-
-    if (q && searchIn) {
-      console.log(
-        JSON.stringify(
-          {
-            q,
-            category: searchIn,
-          },
-          null,
-          2
-        )
-      );
-    }
   }, [q, searchIn]);
 
   // *JSX

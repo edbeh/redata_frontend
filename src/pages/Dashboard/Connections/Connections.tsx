@@ -11,8 +11,6 @@ const Connections = () => {
   // *Queries
   const fetchConnections = useFetchConnections();
 
-  console.log(fetchConnections?.data?.data?.data);
-
   // *JSX
   return (
     <BaseLayout withLeftNavigation>

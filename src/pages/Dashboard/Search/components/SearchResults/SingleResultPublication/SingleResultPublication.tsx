@@ -38,12 +38,7 @@ const SingleResultPublication = ({ q, data }: SingleResultPublicationProps) => {
             <div>
               <div className="flex flex-col space-y-4">
                 <div>
-                  <Highlighted
-                    text="Relationship between local weather, air pollution and hospital
-            attendances for asthma in children: Time stratified analysis of
-            12,002 cases."
-                    highlight={q}
-                  />
+                  <Highlighted text={result?.publicationTitle} highlight={q} />
 
                   <p className="text-slate-500 line-clamp-2">
                     {result?.publicationAuthors?.join(", ")}
