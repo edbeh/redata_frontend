@@ -84,8 +84,6 @@ const Onboarding = () => {
     }
   }, [fetchMe.data]);
 
-  console.log("fetchMe", fetchMe?.data?.data?.data);
-
   // *JSX
   return (
     <BaseLayout>
