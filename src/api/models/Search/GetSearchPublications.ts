@@ -5,6 +5,12 @@ export declare module GetSearchPublications {
     name: string;
   }
 
+  export interface Department {
+    id: string;
+    type: string;
+    name: string;
+  }
+
   export interface Institution {
     id: string;
     type: string;
@@ -16,6 +22,7 @@ export declare module GetSearchPublications {
     type: string;
     name: string;
     designation: Designation;
+    department: Department;
     institution: Institution;
     publicationTitle: string;
     publicationAuthors: string[];

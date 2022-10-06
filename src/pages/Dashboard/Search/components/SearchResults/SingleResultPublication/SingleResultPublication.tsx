@@ -17,7 +17,10 @@ const SingleResultPublication = ({ q, data }: SingleResultPublicationProps) => {
     <>
       {data.map((result) => {
         return (
-          <div className="flex flex-col sm:flex-row px-0 sm:px-0 py-6 border-b-[1px] space-y-2 sm:space-y-0 border-b-gray-200 space-x-0 sm:space-x-6">
+          <div
+            className="flex flex-col sm:flex-row px-0 sm:px-0 py-6 border-b-[1px] space-y-2 sm:space-y-0 border-b-gray-200 space-x-0 sm:space-x-6"
+            key={result.id}
+          >
             <div className="flex flex-row sm:flex-col space-y-2 space-x-4 sm:space-x-0 mb-3 sm:mb-0 w-full sm:min-w-[150px] sm:max-w-[150px]">
               <img
                 src={imgNoProfilePic}
@@ -28,7 +31,9 @@ const SingleResultPublication = ({ q, data }: SingleResultPublicationProps) => {
                 <p className="sm:text-center font-semibold line-clamp-1">
                   {result?.name}
                 </p>
-                <p className="sm:text-center line-clamp-1">Mock Department</p>
+                <p className="sm:text-center line-clamp-1">
+                  {result?.department?.name}
+                </p>
                 <p className="sm:text-center line-clamp-1">
                   {result?.institution?.name}
                 </p>

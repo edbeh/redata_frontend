@@ -11,6 +11,7 @@ import {
   PatientPopulationsForm,
   PublicationsForm,
 } from "pages";
+import { useFetchMe } from "api/hooks";
 
 import { getOnboardingSteps } from "./Onboarding.utils";
 import OnboardingIndicator from "./OnboardingIndicator/OnboardingIndicator";
@@ -35,6 +36,9 @@ const Onboarding = () => {
   const [currentProgress, setCurrentProgress] = useState<string>("0%");
   const [isIntroModalVisible, setIsIntroModalVisible] =
     useState<boolean>(false);
+
+  // *Queries
+  const fetchMe = useFetchMe();
 
   // *Methods
   const handleNextStep = () => {
@@ -75,10 +79,12 @@ const Onboarding = () => {
   }, [step, onboardingSteps]);
 
   useEffect(() => {
-    // setTimeout(() => {
-    //   setIsIntroModalVisible(true);
-    // }, 250);
-  }, [currentStep]);
+    if (fetchMe?.data && fetchMe.data.data?.data?.department === null) {
+      setIsIntroModalVisible(true);
+    }
+  }, [fetchMe.data]);
+
+  console.log("fetchMe", fetchMe?.data?.data?.data);
 
   // *JSX
   return (
@@ -104,7 +110,7 @@ const Onboarding = () => {
               <li>Patient pools</li>
               <li>Publications (sync from PubMed)</li>
             </ul>
-            <p>This whole process will take approximately 10 minutes.</p>
+            <p>This whole process will take approximately 5-10 minutes.</p>
           </div>
         }
         isVisible={isIntroModalVisible}

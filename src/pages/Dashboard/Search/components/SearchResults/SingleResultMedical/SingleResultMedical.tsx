@@ -31,11 +31,13 @@ const SingleResultMedical = ({ q, data }: SingleResultMedicalProps) => {
               />
               <div>
                 <p className="sm:text-center font-semibold line-clamp-1 text-blue-500">
-                  {result.name}
+                  {result?.name}
                 </p>
-                <p className="sm:text-center line-clamp-1">Mock department</p>
                 <p className="sm:text-center line-clamp-1">
-                  {result.institution.name}
+                  {result?.department?.name}
+                </p>
+                <p className="sm:text-center line-clamp-1">
+                  {result?.institution?.name}
                 </p>
               </div>
             </div>
@@ -52,7 +54,12 @@ const SingleResultMedical = ({ q, data }: SingleResultMedicalProps) => {
                             text={specialty}
                             variant="small"
                             isBolded={
-                              specialty?.toLowerCase() === q?.toLowerCase()
+                              specialty
+                                ?.toLowerCase()
+                                .includes(q?.toLowerCase()) ||
+                              q
+                                ?.toLowerCase()
+                                .includes(specialty?.toLowerCase())
                             }
                           />
                         </div>
@@ -71,7 +78,10 @@ const SingleResultMedical = ({ q, data }: SingleResultMedicalProps) => {
                             text={interest}
                             variant="small"
                             isBolded={
-                              interest?.toLowerCase() === q?.toLowerCase()
+                              interest
+                                ?.toLowerCase()
+                                .includes(q?.toLowerCase()) ||
+                              q?.toLowerCase().includes(interest?.toLowerCase())
                             }
                           />
                         </div>
@@ -89,7 +99,10 @@ const SingleResultMedical = ({ q, data }: SingleResultMedicalProps) => {
                           <Badge
                             text={pool}
                             variant="small"
-                            isBolded={pool?.toLowerCase() === q?.toLowerCase()}
+                            isBolded={
+                              pool?.toLowerCase().includes(q?.toLowerCase()) ||
+                              q?.toLowerCase().includes(pool?.toLowerCase())
+                            }
                           />
                         </div>
                       );

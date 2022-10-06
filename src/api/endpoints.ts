@@ -59,7 +59,7 @@ export const BASE_PUBMED_API_URL =
 
 export const SEARCH_PUBMED_NAMES_PREFIX = "/esearch.fcgi?db=pubMed&term=";
 export const SEARCH_PUBMED_NAMES_SUFFIX =
-  "%28singapore+general+hospital%5BAffiliation%5D%29&retmax=5000&format=json";
+  "%28singapore%5BAffiliation%5D%29&retmax=5000&format=json";
 
 export const SEARCH_PUBMED_IDS_PREFIX = "/esummary.fcgi?db=pubMed&id=";
 export const SEARCH_PUBMED_IDS_SUFFIX = "&sort=pubdate&retmax=5000&format=json";
