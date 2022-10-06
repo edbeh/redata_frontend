@@ -46,7 +46,7 @@ const fetchUserById = async (userId: string) => {
 };
 
 export const useFetchUserById = (userId: string, enabled = false) => {
-  return useQuery([`${USERS_API_KEY}_${userId}`], () => fetchUserById(userId), {
+  return useQuery([USERS_API_KEY, userId], () => fetchUserById(userId), {
     enabled,
   });
 };
@@ -58,10 +58,7 @@ const fetchUserPublicationsById = async (userId: string) => {
   return AxiosInstance.get<GetUserPublicationsById.ApiResponse>(
     USERS_PUBLICATIONS_BY_ID_API_ENDPOINT(userId)
   ).catch((error) => {
-    const { errors } = error.response?.data as ApiErrorProps;
-    errors?.length > 0
-      ? toast.error(errors[0].detail)
-      : toast.error(error.response.statusText);
+    // do not display toast for this api, since the GET userById api would've toasted if api is down
     throw error;
   });
 };
@@ -71,7 +68,7 @@ export const useFetchUserPublicationsById = (
   enabled = false
 ) => {
   return useQuery(
-    [`${USERS_PUBLICATIONS_API_KEY}_${userId}`],
+    [USERS_PUBLICATIONS_API_KEY, userId],
     () => fetchUserPublicationsById(userId),
     {
       enabled,

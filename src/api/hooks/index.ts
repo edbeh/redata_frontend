@@ -6,3 +6,4 @@ export * from "./useMeQuery";
 export * from "./useConnectionsQuery";
 export * from "./usePubMedQuery";
 export * from "./usePublicationsQuery";
+export * from "./useSearchQuery";

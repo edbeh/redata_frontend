@@ -46,9 +46,9 @@ const Profile = () => {
                 onClickBadge={(item: string) => {
                   navigate({
                     pathname: "/search",
-                    search: `?keyword=${encodeURIComponent(
+                    search: `?q=${encodeURIComponent(
                       item
-                    )}&searchIn=researchInterests`,
+                    )}&searchIn=medicalKeywords`,
                   });
                 }}
               />
@@ -63,9 +63,9 @@ const Profile = () => {
                 onClickBadge={(item: string) => {
                   navigate({
                     pathname: "/search",
-                    search: `?keyword=${encodeURIComponent(
+                    search: `?q=${encodeURIComponent(
                       item
-                    )}&searchIn=patientPopulations`,
+                    )}&searchIn=medicalKeywords`,
                   });
                 }}
               />

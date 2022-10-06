@@ -17,3 +17,4 @@ export * from "./Publications/DeletePublications";
 export * from "./Publications/Publication";
 export * from "./Users/GetUserById";
 export * from "./Users/GetUserPublicationsById";
+export * from "./Search/GetSearchMedicalKeywords";

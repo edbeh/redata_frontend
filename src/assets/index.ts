@@ -26,6 +26,7 @@ import imgProfileSearch from "./profile-search.svg";
 import imgNoData from "./no-data.svg";
 import imgNoUserFound from "./no-user-found.svg";
 import imgExitDoor from "./exit-door.svg";
+import imgNoProfilePic from "./no-profile-pic.jpg";
 
 export {
   ImgXMarkOutline,
@@ -55,4 +56,5 @@ export {
   imgNoData,
   imgNoUserFound,
   imgExitDoor,
+  imgNoProfilePic,
 };

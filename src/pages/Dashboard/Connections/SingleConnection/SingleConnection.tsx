@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { imgJohnDoe } from "assets";
+import { imgNoProfilePic } from "assets";
 import { Button, Card } from "components";
 import { GetConnections } from "api/models";
 
@@ -16,7 +16,7 @@ const SingleConnection = ({ connection }: SingleConnectionProps) => {
       <div className="flex flex-col sm:flex-row justify-between space-x-0 sm:space-x-4 sm:items-center max-w-full">
         <div className="flex space-x-4 sm:space-x-8 items-center">
           <img
-            src={imgJohnDoe}
+            src={imgNoProfilePic}
             alt="profile"
             className="object-cover min-h-[80px] min-w-[80px] max-h-[80px] max-w-[80px] border-2 border-white rounded-full ring-cyan-500 ring-2"
           />

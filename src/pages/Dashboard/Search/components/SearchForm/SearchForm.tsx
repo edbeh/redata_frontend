@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { FormInput, FormSelect, Button } from "components";
 import { getSearchParams, getYupIsRequired } from "utils";
 import { ImgMagnifyingGlassOutline } from "assets";
+import { validationMessages } from "const";
 
 import { ISearchFormFields } from "./SearchForm.model";
 import { schema } from "./SearchForm.schema";
 import { searchInOptions } from "./SearchForm.util";
-import { validationMessages } from "const";
 
 interface SearchFormProps {
   useFormReturn: UseFormReturn<ISearchFormFields>;
@@ -18,7 +18,9 @@ interface SearchFormProps {
 
 const SearchForm = ({ useFormReturn }: SearchFormProps) => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const searchParams = getSearchParams() as any;
+  const q = searchParams?.q;
+  const searchIn = searchParams?.searchIn;
 
   // *Form
   const {
@@ -54,13 +56,7 @@ const SearchForm = ({ useFormReturn }: SearchFormProps) => {
 
   // *Effects
   useEffect(() => {
-    const searchParams = getSearchParams() as any;
-
-    const q = searchParams?.q;
-
     if (q) setValue("q", q);
-
-    const searchIn = searchParams?.searchIn;
     if (searchIn) {
       const option = searchInOptions.find((option) => option.id === searchIn);
       if (option) setValue("searchIn", option);
@@ -78,7 +74,7 @@ const SearchForm = ({ useFormReturn }: SearchFormProps) => {
         )
       );
     }
-  }, [location]);
+  }, [q, searchIn]);
 
   // *JSX
   return (
@@ -122,11 +118,11 @@ const SearchForm = ({ useFormReturn }: SearchFormProps) => {
           />
 
           <div className="max-w-[50px] mt-6">
-            <Button variant="secondary">
+            <Button variant="primary">
               <ImgMagnifyingGlassOutline
                 width={20}
                 height={20}
-                className="text-primary-500"
+                className="text-white"
               />
             </Button>
           </div>

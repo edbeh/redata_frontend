@@ -89,7 +89,7 @@ export const useFetchMetadataSpecialtiesByDeptId = (
   enabled: boolean = false
 ) => {
   return useQuery(
-    [`${METADATA_SPECIALTIES_API_KEY}_${departmentId}`],
+    [METADATA_SPECIALTIES_API_KEY, departmentId],
     () => fetchMetadataSpecialtiesByDeptId(departmentId),
     {
       staleTime: 1000 * 60 * 10, // 10 minutes
@@ -118,7 +118,7 @@ export const useFetchMetadataResearchInterestsByDeptId = (
   enabled: boolean = false
 ) => {
   return useQuery(
-    [`${METADATA_RESEARCH_INTERESTS_API_KEY}_${departmentId}`],
+    [METADATA_RESEARCH_INTERESTS_API_KEY, departmentId],
     () => fetchMetadataResearchInterestsByDeptId(departmentId),
     {
       staleTime: 1000 * 60 * 10, // 10 minutes
@@ -147,7 +147,7 @@ export const useFetchMetadataPatientPoolsByDeptId = (
   enabled: boolean = false
 ) => {
   return useQuery(
-    [`${METADATA_PATIENT_POOLS_API_KEY}_${departmentId}`],
+    [METADATA_PATIENT_POOLS_API_KEY, departmentId],
     () => fetchMetadataPatientPoolsByDeptId(departmentId),
     {
       staleTime: 1000 * 60 * 10, // 10 minutes

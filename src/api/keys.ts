@@ -7,6 +7,9 @@ export const CONNECTIONS_API_KEY = "connections";
 
 export const DEPARTMENTS_API_KEY = "departments";
 
+export const SEARCH_MEDICAL_KEYWORDS_API_KEY = "search_medical_keywords";
+export const SEARCH_PUBLICATIONS_API_KEY = "search_publications";
+
 export const METADATA_DESIGNATIONS_API_KEY = "metadata_designations";
 export const METADATA_INSTITUTIONS_API_KEY = "metadata_institutions";
 export const METADATA_SPECIALTIES_API_KEY = "metadata_specialties";

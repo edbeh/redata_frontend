@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { imgJohnDoe } from "assets";
+import { imgNoProfilePic } from "assets";
 import { Highlighted, Badge } from "components";
 
 const SingleResultPublication = () => {
@@ -10,7 +10,7 @@ const SingleResultPublication = () => {
     <div className="flex flex-col sm:flex-row px-0 sm:px-0 py-6 border-b-[1px] space-y-2 sm:space-y-0 border-b-gray-200 space-x-0 sm:space-x-6">
       <div className="flex flex-row sm:flex-col space-y-2 space-x-4 sm:space-x-0 mb-3 sm:mb-0 w-full sm:min-w-[150px] sm:max-w-[150px]">
         <img
-          src={imgJohnDoe}
+          src={imgNoProfilePic}
           alt="profile"
           className="self-center object-cover min-h-[80px] min-w-[80px] max-h-[80px] max-w-[80px] border-2 border-white rounded-full ring-cyan-500 ring-2"
         />
