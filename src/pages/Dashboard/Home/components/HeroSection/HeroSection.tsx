@@ -1,6 +1,6 @@
 import { Card } from "components";
 
-import { imgJohnDoe } from "assets";
+import { imgNoProfilePic } from "assets";
 import { GetMe } from "api/models";
 
 interface HeroSectionProps {
@@ -17,7 +17,7 @@ const HeroSection = ({
       <Card>
         <div className="flex items-center sm:items-start flex-col sm:flex-row p-2 space-x-0 sm:space-x-6">
           <img
-            src={imgJohnDoe}
+            src={imgNoProfilePic}
             alt="profile"
             className="object-cover min-h-[100px] min-w-[100px] max-h-[100px] max-w-[100px] border-2 border-white rounded-full ring-cyan-500 ring-2"
           />
