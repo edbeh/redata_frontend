@@ -27,6 +27,7 @@ export declare module GetSearchMedicalKeywords {
     specialties: string[];
     researchInterests: string[];
     patientPools: string[];
+    image: string | null;
   }
 
   export interface ApiResponse {

@@ -24,6 +24,7 @@ export declare module GetSearchUsers {
     designation: Designation;
     department: Department;
     institution: Institution;
+    image: string | null;
   }
 
   export interface ApiResponse {

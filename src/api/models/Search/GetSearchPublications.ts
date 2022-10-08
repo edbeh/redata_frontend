@@ -32,6 +32,7 @@ export declare module GetSearchPublications {
     publicationPages: string;
     publicationPublishedAt: Date;
     publicationCount: number;
+    image: string | null;
   }
 
   export interface ApiResponse {

@@ -59,6 +59,7 @@ export declare module GetConnections {
     otherSpecialties: OtherSpecialty[];
     researchInterests: ResearchInterest[];
     patientPools: PatientPool[];
+    image: string | null;
   }
 
   export interface ApiResponse {

@@ -25,7 +25,7 @@ const SingleResultMedical = ({ q, data }: SingleResultMedicalProps) => {
               onClick={() => navigate(`/profile/${result.id}`)}
             >
               <img
-                src={imgNoProfilePic}
+                src={result.image || imgNoProfilePic}
                 alt="profile"
                 className="self-center object-cover min-h-[80px] min-w-[80px] max-h-[80px] max-w-[80px] border-2 border-white rounded-full ring-cyan-500 ring-2"
               />

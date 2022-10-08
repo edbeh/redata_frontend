@@ -23,7 +23,7 @@ const SingleResultPublication = ({ q, data }: SingleResultPublicationProps) => {
           >
             <div className="flex flex-row sm:flex-col space-y-2 space-x-4 sm:space-x-0 mb-3 sm:mb-0 w-full sm:min-w-[150px] sm:max-w-[150px]">
               <img
-                src={imgNoProfilePic}
+                src={result.image || imgNoProfilePic}
                 alt="profile"
                 className="self-center object-cover min-h-[80px] min-w-[80px] max-h-[80px] max-w-[80px] border-2 border-white rounded-full ring-cyan-500 ring-2"
               />
