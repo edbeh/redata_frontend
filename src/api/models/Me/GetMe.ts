@@ -61,6 +61,7 @@ export declare module GetMe {
     patientPools: PatientPools[];
     mcrNumber?: any;
     pubmedNames: string[];
+    image: string | null;
   }
 
   export interface ApiResponse {
