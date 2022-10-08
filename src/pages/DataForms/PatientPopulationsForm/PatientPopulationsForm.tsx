@@ -128,7 +128,7 @@ const PatientPopulationsForm = React.forwardRef<
               patientPopulationOthers: undefined,
             },
             {
-              shouldFocus: isOnboarding,
+              shouldFocus: false,
             }
           );
         }
@@ -145,7 +145,7 @@ const PatientPopulationsForm = React.forwardRef<
                 patientPopulationOthers: undefined,
               },
               {
-                shouldFocus: isOnboarding,
+                shouldFocus: false,
               }
             );
           } else {
@@ -155,7 +155,7 @@ const PatientPopulationsForm = React.forwardRef<
                 patientPopulationOthers: pool.name,
               },
               {
-                shouldFocus: isOnboarding,
+                shouldFocus: false,
               }
             );
           }
@@ -255,7 +255,7 @@ const PatientPopulationsForm = React.forwardRef<
                   patientPopulationOthers: undefined,
                 },
                 {
-                  shouldFocus: isOnboarding,
+                  shouldFocus: false,
                 }
               )
             }

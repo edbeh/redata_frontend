@@ -188,6 +188,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
         const data = fetchMe?.data?.data?.data;
 
         if (isInitialRender.current) {
+          if (data.image) setProfileImage(data.image);
           if (data.designation) setValue("designation", data.designation);
           if (data.name) setValue("name", data.name);
           if (data.bio) setValue("bio", data.bio);
@@ -219,7 +220,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                   otherSubspecialtyOthers: undefined,
                 },
                 {
-                  shouldFocus: isOnboarding,
+                  shouldFocus: false,
                 }
               );
             } else {
@@ -229,7 +230,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                   otherSubspecialtyOthers: specialty.name,
                 },
                 {
-                  shouldFocus: isOnboarding,
+                  shouldFocus: false,
                 }
               );
             }
@@ -519,7 +520,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                   otherSubspecialtyOthers: undefined,
                 },
                 {
-                  shouldFocus: isOnboarding,
+                  shouldFocus: false,
                 }
               )
             }

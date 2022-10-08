@@ -130,7 +130,7 @@ const ResearchInterestsForm = React.forwardRef<
               researchInterestOthers: undefined,
             },
             {
-              shouldFocus: isOnboarding,
+              shouldFocus: false,
             }
           );
         }
@@ -147,7 +147,7 @@ const ResearchInterestsForm = React.forwardRef<
                 researchInterestOthers: undefined,
               },
               {
-                shouldFocus: isOnboarding,
+                shouldFocus: false,
               }
             );
           } else {
@@ -157,7 +157,7 @@ const ResearchInterestsForm = React.forwardRef<
                 researchInterestOthers: interest.name,
               },
               {
-                shouldFocus: isOnboarding,
+                shouldFocus: false,
               }
             );
           }
@@ -255,7 +255,7 @@ const ResearchInterestsForm = React.forwardRef<
                   researchInterestOthers: undefined,
                 },
                 {
-                  shouldFocus: isOnboarding,
+                  shouldFocus: false,
                 }
               )
             }
