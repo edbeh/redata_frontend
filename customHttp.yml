@@ -16,7 +16,7 @@ customHeaders:
 
       - key: "Content-Security-Policy"
         value: "default-src 'self';
-          img-src 'self' blob: data:;
+          img-src redata-staging.herokuapp.com 'self' blob: data: ;
           font-src fonts.gstatic.com;
           style-src 'self' fonts.googleapis.com fonts.gstatic.com;
           connect-src redata-staging.herokuapp.com eutils.ncbi.nlm.nih.gov esummary.ncbi.nlm.nih.gov;"
