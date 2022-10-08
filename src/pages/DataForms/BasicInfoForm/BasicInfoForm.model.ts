@@ -15,5 +15,5 @@ export interface IBasicInfoFormFields {
   pubMedNames: string;
   mcrNo: string;
   bio: string;
-  image: string;
+  image: FileList;
 }

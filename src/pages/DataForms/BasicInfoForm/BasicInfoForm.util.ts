@@ -8,44 +8,77 @@ export const cleanUpData = (
   data: IBasicInfoFormFields,
   correctedPubMedNames: string[]
 ) => {
-  const pubmedNamesArr = data.pubMedNames?.split(",").map((name) => {
-    return name.trim();
-  });
+  const appendPubmedNames = (form: FormData) => {
+    const arr = data.pubMedNames.split(", ");
+    if (arr.length === 0) return;
 
-  const primarySpecialty = {
-    id:
-      data.primarySubspecialty.id === "others"
-        ? null
-        : (data.primarySubspecialty.id as string),
-    name:
-      data.primarySubspecialty.id === "others"
-        ? (data.primarySubspecialtyOthers as string)
-        : null,
+    for (var i = 0; i < arr.length; i++) {
+      form.append("pubmedNames[]", arr[i]);
+    }
   };
 
-  const otherSpecialties = data.otherSubspecialties?.map((item) => ({
-    id:
-      item.otherSubspecialty?.id === "others"
-        ? null
-        : (item.otherSubspecialty?.id as string),
-    name:
-      item.otherSubspecialty?.id === "others"
-        ? (item.otherSubspecialtyOthers as string)
-        : null,
-  }));
+  const appendCorrectedPubmedNames = (form: FormData) => {
+    if (correctedPubMedNames.length === 0) return;
 
-  return {
-    designationId: data.designation.id,
-    name: data.name,
-    departmentId: data.department.id,
-    pubmedNames: pubmedNamesArr,
-    correctedPubmedNames: correctedPubMedNames,
-    mcrNo: data.mcrNo,
-    primarySpecialty,
-    otherSpecialties,
-    bio: data.bio,
-    image: data.image,
+    for (let i = 0; i < correctedPubMedNames.length; i++) {
+      form.append("correctedPubmedNames[]", correctedPubMedNames[i]);
+    }
   };
+
+  const appendPrimarySpecialty = (form: FormData) => {
+    console.log("data.primarySubspecialty", data.primarySubspecialty);
+    form.append(
+      "primarySpecialty[id]",
+      data.primarySubspecialty?.id === "others"
+        ? ""
+        : data.primarySubspecialty.id
+    );
+    form.append(
+      "primarySpecialty[name]",
+      data.primarySubspecialty?.id === "others"
+        ? data.primarySubspecialtyOthers
+        : ""
+    );
+  };
+
+  const appendOtherSpecialties = (form: FormData) => {
+    if (data.otherSubspecialties?.length === 0) return;
+
+    const otherSpecialties = data.otherSubspecialties.map((item) => ({
+      id:
+        item.otherSubspecialty?.id === "others"
+          ? null
+          : (item.otherSubspecialty?.id as string),
+      name:
+        item.otherSubspecialty?.id === "others"
+          ? (item.otherSubspecialtyOthers as string)
+          : null,
+    }));
+
+    for (let i = 0; i < otherSpecialties.length; i++) {
+      Object.entries(otherSpecialties[i]).map(([key, value]) =>
+        form.append(`otherSpecialties[][${key}]`, value || "")
+      );
+    }
+  };
+
+  const form = new FormData();
+  appendPubmedNames(form);
+  appendCorrectedPubmedNames(form);
+  appendPrimarySpecialty(form);
+  appendOtherSpecialties(form);
+
+  form.append("designationId", data.designation.id);
+  form.append("name", data.name);
+  form.append("departmentId", data.department.id);
+  form.append("mcrNumber", data.mcrNo);
+  form.append("bio", data.bio);
+  form.append(
+    "image",
+    data.image && data.image.length > 0 ? data.image[0] : ""
+  );
+
+  return form;
 };
 
 type ValidationStatus = {

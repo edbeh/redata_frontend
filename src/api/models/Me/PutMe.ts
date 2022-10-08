@@ -17,6 +17,8 @@ export declare module PutMe {
     otherSpecialties?: PayLoadObject[];
     researchInterests?: PayLoadObject[];
     patientPools?: PayLoadObject[];
+    mcrNumber?: string;
+    image?: any;
   }
 
   export interface Data {
