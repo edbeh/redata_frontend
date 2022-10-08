@@ -1,7 +1,7 @@
 import { ImgCircleLoadingOutline } from "assets";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "red";
+  variant?: "primary" | "secondary" | "red" | "small";
   isLoading?: boolean;
   loadingText?: string;
 }

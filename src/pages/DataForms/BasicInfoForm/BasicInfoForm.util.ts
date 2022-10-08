@@ -44,6 +44,7 @@ export const cleanUpData = (
     primarySpecialty,
     otherSpecialties,
     bio: data.bio,
+    image: data.image,
   };
 };
 

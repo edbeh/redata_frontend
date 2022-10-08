@@ -33,4 +33,5 @@ export const schema = yup.object({
   pubMedNames: yup.string(),
   mcrNo: yup.string(),
   bio: yup.string().max(1500, validationMessages.validate.max1500),
+  image: yup.mixed(),
 });

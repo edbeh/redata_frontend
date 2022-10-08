@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useQueryClient } from "react-query";
 import React, { useEffect, useState, useRef } from "react";
+import { useQueryClient } from "react-query";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
@@ -11,7 +11,7 @@ import {
   FormTextArea,
   FullScreenLoader,
 } from "components";
-import { ImgPlusCircleOutline, ImgXMarkOutline } from "assets";
+import { ImgPlusCircleOutline, ImgXMarkOutline, imgNoProfilePic } from "assets";
 import { getYupIsRequired, getSearchParams } from "utils";
 import { FormSelectModel } from "models";
 import { selectOthersField } from "const";
@@ -54,6 +54,9 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     const searchParams = getSearchParams() as any;
     const isInitialRender = useRef(true);
 
+    const [profileImage, setProfileImage] = useState<string | undefined>(
+      undefined
+    );
     const [specialtiesOptions, setSpecialtiesOptions] = useState<
       FormSelectModel[]
     >([]);
@@ -90,6 +93,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
     const watchPrimarySubspecialty = watch("primarySubspecialty");
     const watchDepartment = watch("department");
+    const watchImage = watch("image");
 
     // *Methods
     const handleSubmitForm = async (data: IBasicInfoFormFields) => {
@@ -107,6 +111,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       if (hasDuplicateValueErrors || hasInvalidPubMedNames) return;
 
       const cleanData = cleanUpData(data, correctedPubMedNames);
+
       console.log(cleanData);
       console.log(JSON.stringify(cleanData, null, 2));
       updateMe.mutate(cleanData);
@@ -145,12 +150,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     // *Effects
     useEffect(() => {
       if (searchParams?.focus) {
-        // const allowedFields = ["name", "pubMedNames"];
-        if (
-          // !allowedFields.includes(searchParams.focus) ||
-          searchParams.focus === ""
-        )
-          return;
+        if (searchParams.focus === "") return;
         setFocus(searchParams.focus);
       }
     }, [searchParams]);
@@ -280,6 +280,16 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
       }
     }, [fetchPubMedByNames?.data]);
 
+    useEffect(() => {
+      if (watchImage) {
+        if (typeof watchImage === "string") {
+          return setProfileImage(watchImage);
+        }
+        const image = Array.from(watchImage)[0] as any;
+        if (image) setProfileImage(URL.createObjectURL(image));
+      }
+    }, [watchImage]);
+
     // *JSX
     return (
       <div>
@@ -288,6 +298,40 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
           fetchMetaDataDesignations?.isLoading) && <FullScreenLoader />}
 
         <form noValidate onSubmit={handleSubmit(handleSubmitForm)}>
+          <div className="flex space-x-4 mb-4">
+            <img
+              src={profileImage || imgNoProfilePic}
+              alt="profile"
+              className="object-cover min-h-[100px] min-w-[100px] max-h-[100px] max-w-[100px] border-2 border-white rounded-full ring-cyan-500 ring-2"
+            />
+
+            <div>
+              <p>Profile picture</p>
+
+              <button
+                type="button"
+                className="border-[1px] border-borderGray p-2 rounded-md my-1 cursor-pointer"
+                onClick={() => document.getElementById("image")!.click()}
+              >
+                Choose file
+              </button>
+              <p className="text-sm">Supported formats: .jpg, .png</p>
+            </div>
+
+            {/* hidden input for upload image */}
+            <div className="hidden">
+              <FormInput
+                name="image"
+                register={register}
+                id="image"
+                type="file"
+                accept="image/png, image/jpg"
+                error={formErrors?.image?.message}
+                disabled={fetchMe.isLoading}
+              />
+            </div>
+          </div>
+
           <div className="flex flex-col w-full mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
             <FormSelect
               label="Designation"
