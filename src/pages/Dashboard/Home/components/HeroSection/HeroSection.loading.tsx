@@ -14,7 +14,7 @@ const HeroSectionLoading = () => {
             <Skeleton width={120} height={20} />
 
             <div className="pt-2 sm:pt-4">
-              <Skeleton width={300} height={20} />
+              <Skeleton width={280} height={20} />
             </div>
           </div>
         </div>
