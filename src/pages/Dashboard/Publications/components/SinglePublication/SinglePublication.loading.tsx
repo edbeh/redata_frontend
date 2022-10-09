@@ -8,7 +8,7 @@ const SinglePublicationLoading = () => {
       </div>
 
       <div className="flex flex-col space-y-1 w-full">
-        <Skeleton height={25} className="w-[calc(100%-40px)] sm:w-[320px]" />
+        <Skeleton height={25} className="w-[calc(100%-40px)] sm:w-[280px]" />
         <div>
           <Skeleton height={20} className="w-full" />
           <Skeleton height={20} className="w-[180px] sm:w-[280px]" />
