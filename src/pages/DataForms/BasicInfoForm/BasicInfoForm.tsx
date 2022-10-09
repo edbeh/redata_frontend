@@ -3,7 +3,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { useQueryClient } from "react-query";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { toast } from "react-toastify";
 
 import {
   FormInput,
@@ -123,7 +122,6 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     const handleMutationSuccess = () => {
       queryClient.invalidateQueries(ME_API_KEY);
       if (onSuccessCallback) onSuccessCallback();
-      if (!isOnboarding) toast.success("Data updated successfully!");
     };
 
     // *Queries

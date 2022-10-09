@@ -87,7 +87,6 @@ const ResearchInterestsForm = React.forwardRef<
     const handleMutationSuccess = () => {
       queryClient.invalidateQueries(ME_API_KEY);
       if (onSuccessCallback) onSuccessCallback();
-      if (!isOnboarding) toast.success("Data updated successfully!");
     };
 
     // *Queries

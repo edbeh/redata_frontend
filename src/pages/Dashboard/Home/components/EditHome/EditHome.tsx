@@ -12,6 +12,7 @@ import {
 
 import { editHomeNav } from "../../Home.util";
 import { IsSubmissionLoadingType } from "./EditHome.model";
+import { toast } from "react-toastify";
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -51,24 +52,13 @@ const EditProfile = () => {
             <BasicInfoForm
               ref={basicInfoSubmitRef}
               setIsSubmissionLoading={setIsSubmissionLoading}
+              onSuccessCallback={() => {
+                toast.success("Data updated successfully");
+                navigate("/home");
+              }}
             />
 
-            <div className="w-[180px] self-end mt-6">
-              <Button
-                isLoading={isSubmissionLoading.basicInfo}
-                loadingText="Saving..."
-                onClick={() => {
-                  basicInfoSubmitRef.current?.click();
-                  navigate("/home/edit");
-                }}
-              >
-                Save Changes
-              </Button>
-            </div>
-          </Card>
-
-          <Card>
-            <h2 className="text-3xl font-semibold tracking-tight mb-6">
+            <h2 className="text-3xl font-semibold tracking-tight my-6">
               Research Interests
             </h2>
             <ResearchInterestsForm
@@ -76,22 +66,7 @@ const EditProfile = () => {
               setIsSubmissionLoading={setIsSubmissionLoading}
             />
 
-            <div className="w-[180px] self-end mt-6">
-              <Button
-                isLoading={isSubmissionLoading.researchInterests}
-                loadingText="Saving..."
-                onClick={() => {
-                  researchInterestSubmitRef.current?.click();
-                  navigate("/home/edit");
-                }}
-              >
-                Save Changes
-              </Button>
-            </div>
-          </Card>
-
-          <Card>
-            <h2 className="text-3xl font-semibold tracking-tight mb-6">
+            <h2 className="text-3xl font-semibold tracking-tight mb-6 mt-12">
               Patient Populations
             </h2>
             <PatientPopulationsForm
@@ -99,13 +74,18 @@ const EditProfile = () => {
               setIsSubmissionLoading={setIsSubmissionLoading}
             />
 
-            <div className="w-[180px] self-end mt-6">
+            <div className="w-[180px] self-end mb-6 mt-12">
               <Button
-                isLoading={isSubmissionLoading.patientPopulations}
+                isLoading={
+                  isSubmissionLoading.basicInfo ||
+                  isSubmissionLoading.researchInterests ||
+                  isSubmissionLoading.patientPopulations
+                }
                 loadingText="Saving..."
                 onClick={() => {
+                  basicInfoSubmitRef.current?.click();
+                  researchInterestSubmitRef.current?.click();
                   patientPopulationSubmitRef.current?.click();
-                  navigate("/home/edit");
                 }}
               >
                 Save Changes
