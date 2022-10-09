@@ -1,6 +1,6 @@
 import { BaseLayout } from "wrapper-components";
 import { BreadCrumbs, Card } from "components";
-import { imgNoUserFound } from "assets";
+import { ImgInfoCircleOutline, imgNoUserFound } from "assets";
 import { useFetchConnections } from "api/hooks";
 
 import { connectionsNav } from "./Connections.util";
@@ -20,6 +20,11 @@ const Connections = () => {
           <h1 className="text-4xl font-semibold tracking-tight text-white">
             Connections
           </h1>
+          <ImgInfoCircleOutline
+            width={22}
+            height={22}
+            className="text-white cursor-pointer"
+          />
         </div>
 
         <div className="flex flex-col w-full mt-8 space-y-6">

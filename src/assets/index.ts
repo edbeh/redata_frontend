@@ -16,6 +16,7 @@ import { ReactComponent as ImgMagnifyingGlassOutline } from "./magnifying-glass-
 import { ReactComponent as ImgChevronDownOutline } from "./chevron-down-outline.svg";
 import { ReactComponent as ImgCircleLoadingOutline } from "./circle-loading-outline.svg";
 import { ReactComponent as ImgSignOutOutline } from "./sign-out-outline.svg";
+import { ReactComponent as ImgInfoCircleOutline } from "./info-circle-outline.svg";
 
 import imgScientistMicroscope from "./scientist-microscope.jpg";
 import imgNotFound from "./not-found.jpg";
@@ -48,6 +49,7 @@ export {
   ImgChevronDownOutline,
   ImgCircleLoadingOutline,
   ImgSignOutOutline,
+  ImgInfoCircleOutline,
   imgNotFound,
   imgJohnDoe,
   imgStockProfilePic,

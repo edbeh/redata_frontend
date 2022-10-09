@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ImgArrowUturnLeftOutline } from "assets";
@@ -11,7 +11,10 @@ import {
 } from "pages";
 
 import { editHomeNav } from "../../Home.util";
-import { IsSubmissionLoadingType } from "./EditHome.model";
+import {
+  IsSubmissionLoadingType,
+  IsSubmissionSuccessfulType,
+} from "./EditHome.model";
 import { toast } from "react-toastify";
 
 const EditProfile = () => {
@@ -26,6 +29,29 @@ const EditProfile = () => {
       researchInterests: false,
       patientPopulations: false,
     });
+  const [isSubmissionSuccessful, setIsSubmissionSuccessful] =
+    useState<IsSubmissionSuccessfulType>({
+      basicInfo: false,
+      researchInterests: false,
+      patientPopulations: false,
+    });
+
+  // *Effects
+  useEffect(() => {
+    if (
+      isSubmissionSuccessful.basicInfo &&
+      isSubmissionSuccessful.researchInterests &&
+      isSubmissionSuccessful.patientPopulations
+    ) {
+      toast.success("Data updated successfully");
+      navigate("/home");
+    }
+  }, [
+    isSubmissionSuccessful.basicInfo,
+    isSubmissionSuccessful.researchInterests,
+    isSubmissionSuccessful.patientPopulations,
+    navigate,
+  ]);
 
   // *JSX
   return (
@@ -53,8 +79,11 @@ const EditProfile = () => {
               ref={basicInfoSubmitRef}
               setIsSubmissionLoading={setIsSubmissionLoading}
               onSuccessCallback={() => {
-                toast.success("Data updated successfully");
-                navigate("/home");
+                setIsSubmissionSuccessful(
+                  (currentState: IsSubmissionSuccessfulType) => {
+                    return { ...currentState, basicInfo: true };
+                  }
+                );
               }}
             />
 
@@ -64,6 +93,13 @@ const EditProfile = () => {
             <ResearchInterestsForm
               ref={researchInterestSubmitRef}
               setIsSubmissionLoading={setIsSubmissionLoading}
+              onSuccessCallback={() => {
+                setIsSubmissionSuccessful(
+                  (currentState: IsSubmissionSuccessfulType) => {
+                    return { ...currentState, researchInterests: true };
+                  }
+                );
+              }}
             />
 
             <h2 className="text-3xl font-semibold tracking-tight mb-6 mt-12">
@@ -72,6 +108,13 @@ const EditProfile = () => {
             <PatientPopulationsForm
               ref={patientPopulationSubmitRef}
               setIsSubmissionLoading={setIsSubmissionLoading}
+              onSuccessCallback={() => {
+                setIsSubmissionSuccessful(
+                  (currentState: IsSubmissionSuccessfulType) => {
+                    return { ...currentState, patientPopulations: true };
+                  }
+                );
+              }}
             />
 
             <div className="w-[180px] self-end mb-6 mt-12">
