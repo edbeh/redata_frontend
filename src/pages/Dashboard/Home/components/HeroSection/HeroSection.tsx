@@ -12,8 +12,6 @@ const HeroSection = ({
   data,
   withProfileDetails = false,
 }: HeroSectionProps) => {
-  console.log("data", data);
-
   return (
     <div className="w-full">
       <Card>

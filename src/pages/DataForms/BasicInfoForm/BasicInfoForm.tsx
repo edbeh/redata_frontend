@@ -104,7 +104,6 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
         setError
       );
 
-      console.log("raw", data);
       const { hasErrors: hasInvalidPubMedNames } = validatePubMedNames(
         fetchPubMedByNames?.data?.invalidPubMedNames || [],
         setError

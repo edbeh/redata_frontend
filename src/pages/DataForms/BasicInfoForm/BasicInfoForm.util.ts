@@ -26,7 +26,6 @@ export const cleanUpData = (
   };
 
   const appendPrimarySpecialty = (form: FormData) => {
-    console.log("data.primarySubspecialty", data.primarySubspecialty);
     form.append(
       "primarySpecialty[id]",
       data.primarySubspecialty?.id === "others"

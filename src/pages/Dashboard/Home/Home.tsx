@@ -21,8 +21,6 @@ const Home = () => {
   // *Queries
   const fetchMe = useFetchMe();
 
-  console.log("fetchme", fetchMe?.data?.data?.data);
-
   // *JSX
   return (
     <BaseLayout withLeftNavigation>
