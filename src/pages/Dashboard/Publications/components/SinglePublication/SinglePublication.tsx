@@ -11,7 +11,6 @@ interface SinglePublicationProps {
   isEditable?: boolean;
   isSelected?: boolean;
   handleSelectPublication?: (id: string) => void;
-
   i: number;
 }
 
