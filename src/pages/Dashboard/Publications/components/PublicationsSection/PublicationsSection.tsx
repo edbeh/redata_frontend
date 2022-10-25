@@ -3,6 +3,7 @@ import { imgNoData } from "assets";
 import { Publication } from "api/models";
 
 import SinglePublication from "../SinglePublication/SinglePublication";
+import ExportPublications from "../ExportPublications/ExportPublications";
 
 interface PublicationsSectionProps {
   data: Publication[];
@@ -22,6 +23,10 @@ const PublicationsSection = ({
           <h2 className="mb-5 text-xl font-semibold text-gray-700">
             Publications
           </h2>
+        )}
+
+        {!withHeader && data.length > 0 && (
+          <ExportPublications publication={data[0]} />
         )}
 
         {data.length === 0 ? (

@@ -19,5 +19,6 @@ export const METADATA_RESEARCH_INTERESTS_API_KEY =
 export const METADATA_PATIENT_POOLS_API_KEY = "metadata_patient_pools";
 
 export const PUBLICATIONS_API_KEY = "publications";
+export const PUBLICATIONS_EXPORT_PDF_API_KEY = "publications_export_pdf";
 
 export const PUBMED_NAMES_API_KEY = "pubMed_names";

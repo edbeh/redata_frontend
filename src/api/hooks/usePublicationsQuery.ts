@@ -4,12 +4,16 @@ import { useQuery, useMutation } from "react-query";
 import { createAxiosInstance, ApiErrorProps } from "api/utils";
 
 import { PUBLICATIONS_API_KEY } from "../keys";
-import { PUBLICATIONS_API_ENDPOINT } from "../endpoints";
+import {
+  PUBLICATIONS_API_ENDPOINT,
+  PUBLICATIONS_EXPORT_PDF_API_ENDPOINT,
+} from "../endpoints";
 import {
   PostPublicationsFromPubMed,
   DeletePublications,
   GetPublications,
 } from "../models";
+import { PostPublicationsExportPdf } from "api/models/Publications/PostPublicationsExportPdf";
 
 const AxiosInstance = createAxiosInstance();
 
@@ -52,6 +56,30 @@ const submitPublicationsFromPubMed = async (
 
 export const useSubmitPublicationsFromPubMed = (onSuccess: () => void) => {
   return useMutation(submitPublicationsFromPubMed, {
+    onSuccess,
+  });
+};
+
+/**
+ *  //*POST Publications Export PDF
+ */
+const submitPublicationsExportPdf = async (
+  data: PostPublicationsExportPdf.PayLoad
+) => {
+  return AxiosInstance.post<PostPublicationsExportPdf.ApiResponse>(
+    PUBLICATIONS_EXPORT_PDF_API_ENDPOINT,
+    data
+  ).catch((error) => {
+    const { errors } = error.response?.data as ApiErrorProps;
+    errors?.length > 0
+      ? toast.error(errors[0].detail)
+      : toast.error(error.response.statusText);
+    throw error;
+  });
+};
+
+export const useSubmitPublicationsExportPdf = (onSuccess?: () => void) => {
+  return useMutation(submitPublicationsExportPdf, {
     onSuccess,
   });
 };

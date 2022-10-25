@@ -101,11 +101,11 @@ const SinglePublication = ({
           })}
         </p>
         <p className="text-green-700">
-          {`${publication.source}. ${publication.volume}(${
-            publication.issue
-          }):${publication.pages}. Published ${dayjs(
-            publication.publishedAt
-          ).format("YYYY MMM")}`}
+          {`${publication.source}. ${publication.volume}${
+            publication.issue ? "(" + publication.issue + ")" : ""
+          }${
+            publication.pages ? ":" + publication.pages + "." : ""
+          } Published ${dayjs(publication.publishedAt).format("YYYY MMM")}`}
         </p>
       </div>
     </div>
