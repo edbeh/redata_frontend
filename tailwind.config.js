@@ -29,6 +29,7 @@ module.exports = {
         disabled: "#D7E2E8",
         white: "#FFFFFF",
         borderGray: "#9D9D9C",
+        tooltipGray: "#7D7D7D",
       },
     },
   },

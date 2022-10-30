@@ -9,7 +9,7 @@ export const connectionsNav: IBreadCrumbs = {
     },
     {
       key: "connections",
-      label: "Connections",
+      label: "Colleagues",
       url: "/connections",
     },
   ],

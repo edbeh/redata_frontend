@@ -1,6 +1,6 @@
 import { BaseLayout } from "wrapper-components";
-import { BreadCrumbs, Card } from "components";
-import { ImgInfoCircleOutline, imgNoUserFound } from "assets";
+import { BreadCrumbs, Card, Tooltip } from "components";
+import { imgNoUserFound } from "assets";
 import { useFetchConnections } from "api/hooks";
 
 import { connectionsNav } from "./Connections.util";
@@ -18,13 +18,9 @@ const Connections = () => {
         <BreadCrumbs breadcrumbs={connectionsNav.breadcrumbs} />
         <div className="flex space-x-3 items-center">
           <h1 className="text-4xl font-semibold tracking-tight text-white">
-            Connections
+            Colleagues
           </h1>
-          <ImgInfoCircleOutline
-            width={22}
-            height={22}
-            className="text-white cursor-pointer"
-          />
+          <Tooltip content="Colleagues from your department will appear in this page when they set up their profile." />
         </div>
 
         <div className="flex flex-col w-full mt-8 space-y-6">

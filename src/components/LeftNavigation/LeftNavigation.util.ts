@@ -42,7 +42,7 @@ export const getNavigationItems = (): INavigationItem[] => {
     },
     {
       key: "connections",
-      label: "Connections",
+      label: "Colleagues",
       route: "/connections",
       Icon: ImgUserCircleOutline,
     },
