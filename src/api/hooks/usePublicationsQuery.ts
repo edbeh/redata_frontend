@@ -3,7 +3,7 @@ import { useQuery, useMutation } from "react-query";
 
 import { createAxiosInstance, ApiErrorProps } from "api/utils";
 
-import { PUBLICATIONS_API_KEY } from "../keys";
+import { PUBLICATIONS_API_KEY, PUBLICATIONS_EXPORT_PDF_API_KEY } from "../keys";
 import {
   PUBLICATIONS_API_ENDPOINT,
   PUBLICATIONS_EXPORT_PDF_API_ENDPOINT,
@@ -79,9 +79,13 @@ const submitPublicationsExportPdf = async (
 };
 
 export const useSubmitPublicationsExportPdf = (onSuccess?: () => void) => {
-  return useMutation(submitPublicationsExportPdf, {
-    onSuccess,
-  });
+  return useMutation(
+    [PUBLICATIONS_EXPORT_PDF_API_KEY],
+    submitPublicationsExportPdf,
+    {
+      onSuccess,
+    }
+  );
 };
 
 /**

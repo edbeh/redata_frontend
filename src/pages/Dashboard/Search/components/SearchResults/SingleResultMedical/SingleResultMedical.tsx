@@ -51,6 +51,14 @@ const SingleResultMedical = ({ q, data }: SingleResultMedicalProps) => {
                       return (
                         <div key={specialty}>
                           <Badge
+                            onClickBadge={(item: string) => {
+                              navigate({
+                                pathname: "/search",
+                                search: `?q=${encodeURIComponent(
+                                  item
+                                )}&searchIn=medicalKeywords`,
+                              });
+                            }}
                             text={specialty}
                             variant="small"
                             isBolded={
@@ -75,6 +83,14 @@ const SingleResultMedical = ({ q, data }: SingleResultMedicalProps) => {
                       return (
                         <div key={interest}>
                           <Badge
+                            onClickBadge={(item: string) => {
+                              navigate({
+                                pathname: "/search",
+                                search: `?q=${encodeURIComponent(
+                                  item
+                                )}&searchIn=medicalKeywords`,
+                              });
+                            }}
                             text={interest}
                             variant="small"
                             isBolded={
@@ -97,6 +113,14 @@ const SingleResultMedical = ({ q, data }: SingleResultMedicalProps) => {
                       return (
                         <div key={pool}>
                           <Badge
+                            onClickBadge={(item: string) => {
+                              navigate({
+                                pathname: "/search",
+                                search: `?q=${encodeURIComponent(
+                                  item
+                                )}&searchIn=medicalKeywords`,
+                              });
+                            }}
                             text={pool}
                             variant="small"
                             isBolded={

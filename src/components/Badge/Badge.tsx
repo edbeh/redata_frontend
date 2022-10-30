@@ -25,7 +25,11 @@ const Badge = ({
                     : "bg-slate-100 cursor-not-allowed"
                 }
                 ${variant === "small" ? "p-2" : "p-3"}
-                ${isBolded ? "font-semibold bg-yellow-100" : "font-normal"}
+                ${
+                  isBolded
+                    ? "font-semibold text-black bg-yellow-100"
+                    : "font-normal"
+                }
                 ${isLowerCase ? "" : "capitalize"}`}
     >
       {text}

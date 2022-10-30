@@ -1,11 +1,13 @@
 import dayjs from "dayjs";
 import { useState, Fragment, useEffect } from "react";
 import { Popover, Transition } from "@headlessui/react";
+import { useQueryClient } from "react-query";
 
 import { ImgChevronDownOutline } from "assets";
 import { Button } from "components";
 import { Publication } from "api/models";
 import { useSubmitPublicationsExportPdf } from "api/hooks";
+import { PUBLICATIONS_EXPORT_PDF_API_KEY } from "api/keys";
 
 import {
   getExportPublicationFormats,
@@ -22,6 +24,7 @@ const ExportPublications = ({ publication }: ExportPublicationsProps) => {
   const [selectedFormat, setSelectedFormat] = useState<string>("ama");
 
   // *Queries
+  const queryClient = useQueryClient();
   const submitPublicationsExportPdf = useSubmitPublicationsExportPdf();
 
   // *Methods
@@ -35,6 +38,7 @@ const ExportPublications = ({ publication }: ExportPublicationsProps) => {
     downloadLink.href = linkSource;
     downloadLink.download = fileName;
     downloadLink.click();
+    queryClient.removeQueries(PUBLICATIONS_EXPORT_PDF_API_KEY);
   };
 
   const handleSubmitExportPdf = () => {
@@ -51,9 +55,10 @@ const ExportPublications = ({ publication }: ExportPublicationsProps) => {
       downloadBase64(
         "pdf",
         data,
-        `pubs_export_${dayjs().format("YYYYMMDDTHH:mm:ss")}.pdf`
+        `publications_${dayjs().format("YYYYMMDD")}.pdf`
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitPublicationsExportPdf.data]);
 
   // *JSX
@@ -63,10 +68,18 @@ const ExportPublications = ({ publication }: ExportPublicationsProps) => {
         {({ open }) => (
           <>
             <Popover.Button as="div" className="w-[200px]">
-              <Button variant="secondary">Export Publications</Button>
+              <Button
+                variant="secondary"
+                onClick={handleSubmitExportPdf}
+                isLoading={submitPublicationsExportPdf?.isLoading}
+                loadingText="Processing..."
+              >
+                Download Publications
+              </Button>
             </Popover.Button>
 
-            <Transition
+            {/* To enable this section again if we support multiple formats for pdf download */}
+            {/* <Transition
               as={Fragment}
               enter="transition ease-out duration-200"
               enterFrom="opacity-0 translate-y-1"
@@ -83,7 +96,7 @@ const ExportPublications = ({ publication }: ExportPublicationsProps) => {
                   <div className="flex flex-col sm:flex-row justify-between mt-4 sm:items-center gap-y-4">
                     <Popover className="relative">
                       <Popover.Button as="div">
-                        <div className="flex space-x-1 items-center cursor-pointer">
+                        <div className="space-x-1 items-center cursor-pointer hidden">
                           <p>Format: {selectedFormat.toUpperCase()}</p>
                           <ImgChevronDownOutline className="w-4 h-4" />
                         </div>
@@ -118,7 +131,7 @@ const ExportPublications = ({ publication }: ExportPublicationsProps) => {
                   </div>
                 </div>
               </Popover.Panel>
-            </Transition>
+            </Transition> */}
           </>
         )}
       </Popover>

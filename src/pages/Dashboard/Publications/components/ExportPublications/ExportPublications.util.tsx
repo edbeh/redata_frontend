@@ -15,6 +15,10 @@ export const getExportPublicationFormats = () => {
       key: "mla",
       label: "MLA",
     },
+    {
+      key: "nlm",
+      label: "NLM",
+    },
   ];
 };
 
@@ -24,7 +28,7 @@ export const renderExportPreview = (
 ) => {
   if (format === "ama") {
     return (
-      <div className="w-full border-[1px] border-borderGray p-2">
+      <div className="w-full border-[1px] border-borderGray p-2 break-all">
         <p>{publication?.authors?.join(", ")}</p>
         <p>
           {`${publication?.title} ${publication?.source} ${dayjs(
