@@ -62,7 +62,7 @@ export const getFeatureContent = (): FeatureModel[] => [
           </div>
         </div>
 
-        <div className="mt-[60px] flex flex-col space-y-10 lg:space-y-0 lg:flex-row lg:space-x-10">
+        <div className="mt-[60px] lg:mt-[100px] flex flex-col space-y-10 lg:space-y-0 lg:flex-row-reverse lg:space-x-10">
           <div className="basis-1/2">
             <Window>
               <PublicationsSection
