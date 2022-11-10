@@ -5,6 +5,7 @@ import { useQueryClient } from "react-query";
 
 import { ImgChevronDownOutline } from "assets";
 import { Button } from "components";
+import { downloadBase64 } from "utils";
 import { Publication } from "api/models";
 import { useSubmitPublicationsExportPdf } from "api/hooks";
 import { PUBLICATIONS_EXPORT_PDF_API_KEY } from "api/keys";
@@ -28,18 +29,6 @@ const ExportPublications = ({ publication }: ExportPublicationsProps) => {
   const submitPublicationsExportPdf = useSubmitPublicationsExportPdf();
 
   // *Methods
-  const downloadBase64 = (
-    contentType: string,
-    base64Data: string,
-    fileName: string
-  ): void => {
-    const linkSource = `data:${contentType};base64,${base64Data}`;
-    const downloadLink = document.createElement("a");
-    downloadLink.href = linkSource;
-    downloadLink.download = fileName;
-    downloadLink.click();
-    queryClient.removeQueries(PUBLICATIONS_EXPORT_PDF_API_KEY);
-  };
 
   const handleSubmitExportPdf = () => {
     const payload = {
@@ -55,7 +44,8 @@ const ExportPublications = ({ publication }: ExportPublicationsProps) => {
       downloadBase64(
         "pdf",
         data,
-        `publications_${dayjs().format("YYYYMMDD")}.pdf`
+        `publications_${dayjs().format("YYYYMMDD")}.pdf`,
+        () => queryClient.removeQueries(PUBLICATIONS_EXPORT_PDF_API_KEY)
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

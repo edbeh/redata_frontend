@@ -16,6 +16,8 @@ const PublicationsSection = ({
   namesToBold,
   withHeader = false,
 }: PublicationsSectionProps) => {
+  console.log("data", data);
+  console.log("namesToBold", namesToBold);
   return (
     <div className="w-full">
       <Card>

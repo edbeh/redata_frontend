@@ -12,12 +12,14 @@ import {
   Connections,
   Settings,
   Profile,
+  About,
 } from "pages";
 import { PrivateRoute } from "wrapper-components";
 
 const AppRouter = () => {
   return (
     <Routes>
+      <Route path="/about" element={<About />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
 

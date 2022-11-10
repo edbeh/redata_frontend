@@ -20,7 +20,7 @@ const Button: React.FC<ButtonProps> = ({
       className={`transition duration-300 hover:scale-[1.03] border-primary-600 text-base p-3 
                   rounded-lg w-full box-border disabled:bg-disabled disabled:border-disabled 
                   border-[1px] disabled:text-white flex cursor-pointer
-                  justify-center whitespace-nowrap ${
+                  justify-center whitespace-nowrap font-medium ${
                     variant === "primary"
                       ? "bg-primary-600 text-white"
                       : variant === "red"

@@ -12,6 +12,9 @@ module.exports = {
       boxShadow: {
         "3xl": "0px 5px 14px rgb(0 0 0 / 5%)",
       },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+      },
       colors: {
         primary: {
           100: "#e8f2ff",
@@ -30,6 +33,15 @@ module.exports = {
         white: "#FFFFFF",
         borderGray: "#9D9D9C",
         tooltipGray: "#7D7D7D",
+        gradientBlueStart: "#007cf0",
+        gradientBlueEnd: "#00dfd8",
+        gradientPinkStart: "#7928ca",
+        gradientPinkEnd: "#ff0080",
+        gradientOrangeStart: "#ff0080",
+        gradientOrangeEnd: "#f9cb28",
+        macosRed: "#FF5F55",
+        macosYellow: "#FFBD2D",
+        macosGreen: "#25C93F",
       },
     },
   },

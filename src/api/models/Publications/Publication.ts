@@ -7,7 +7,7 @@ export interface Publication {
   authors: string[];
   sortFirstAuthor: string;
   elocationId: string;
-  publishedAt: Date;
+  publishedAt: Date | string;
   volume: string;
   issue: string;
   pages: string;
