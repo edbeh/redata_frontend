@@ -21,7 +21,7 @@ export declare module GetSearchMedicalKeywords {
     id: string;
     type: string;
     name: string;
-    designation: Designation;
+    // designation: Designation;
     department: Department;
     institution: Institution;
     specialties: string[];

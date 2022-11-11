@@ -29,6 +29,10 @@ import imgNoUserFound from "./no-user-found.svg";
 import imgExitDoor from "./exit-door.svg";
 import imgNoProfilePic from "./no-profile-pic.jpg";
 import imgStockPhoto from "./stock-photo.jpg";
+import imgStockPhoto2 from "./stock-photo-2.jpg";
+import imgStockPhoto3 from "./stock-photo-3.jpg";
+import imgStockPhoto4 from "./stock-photo-4.jpg";
+import imgCollaborate from "./collaborate.svg";
 
 export {
   ImgXMarkOutline,
@@ -61,4 +65,8 @@ export {
   imgExitDoor,
   imgNoProfilePic,
   imgStockPhoto,
+  imgStockPhoto2,
+  imgStockPhoto3,
+  imgStockPhoto4,
+  imgCollaborate,
 };

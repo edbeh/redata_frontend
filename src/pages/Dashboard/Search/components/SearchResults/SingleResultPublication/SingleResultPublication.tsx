@@ -8,9 +8,14 @@ import { GetSearchPublications } from "api/models";
 interface SingleResultPublicationProps {
   q: string;
   data: GetSearchPublications.Datum[];
+  disableLinks?: boolean;
 }
 
-const SingleResultPublication = ({ q, data }: SingleResultPublicationProps) => {
+const SingleResultPublication = ({
+  q,
+  data,
+  disableLinks = false,
+}: SingleResultPublicationProps) => {
   const navigate = useNavigate();
 
   return (
@@ -65,9 +70,10 @@ const SingleResultPublication = ({ q, data }: SingleResultPublicationProps) => {
                     <Badge
                       variant="small"
                       text={`...and ${result?.publicationCount - 1} more`}
-                      onClickBadge={() =>
-                        navigate(`/profile/${result?.id}?highlight=${q}`)
-                      }
+                      onClickBadge={() => {
+                        if (disableLinks) return;
+                        navigate(`/profile/${result?.id}?highlight=${q}`);
+                      }}
                     />
                   </div>
                 )}

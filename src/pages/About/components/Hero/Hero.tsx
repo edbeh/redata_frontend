@@ -70,8 +70,8 @@ const Hero = () => {
       </div>
 
       <p className="text-xl leading-relaxed lg:text-2xl lg:leading-relaxed mt-6 max-w-[800px] text-center w-full m-auto ">
-        ReData is a platform for clinical investigators to create their research
-        portfolio and connect with like-minded peers
+        ReData is a platform for clinical investigators to consolidate their
+        research portfolio and connect with like-minded peers
       </p>
 
       <div className="mt-[30px] lg:mt-[50px] w-[200px]">

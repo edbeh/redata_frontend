@@ -1,14 +1,26 @@
 import dayjs from "dayjs";
 
 import { Window, Button } from "components";
-import { imgStockPhoto } from "assets";
+import {
+  imgCollaborate,
+  imgStockPhoto,
+  imgStockPhoto2,
+  imgStockPhoto3,
+  imgStockPhoto4,
+} from "assets";
 import { downloadBase64 } from "utils";
-import { Publication } from "api/models";
+import {
+  GetSearchMedicalKeywords,
+  GetSearchPublications,
+  Publication,
+} from "api/models";
 
 import { CommonSection } from "pages/Dashboard/Home/components";
 import { PublicationsSection } from "pages/Dashboard/Publications/components";
 
 import { FeatureModel } from "./About.model";
+import SingleResultMedical from "pages/Dashboard/Search/components/SearchResults/SingleResultMedical/SingleResultMedical";
+import SingleResultPublication from "pages/Dashboard/Search/components/SearchResults/SingleResultPublication/SingleResultPublication";
 
 export const getFeatureContent = (): FeatureModel[] => [
   {
@@ -18,8 +30,19 @@ export const getFeatureContent = (): FeatureModel[] => [
     gradientStart: "gradientBlueStart",
     gradientEnd: "gradientBlueEnd",
     content: (
-      <div className="w-full max-w-[1100px] mt-[60px] ">
-        <div className="flex flex-col space-y-10 lg:space-y-0 lg:flex-row lg:space-x-10">
+      <div className="flex flex-col w-full max-w-[1100px] lg:mt-[60px] ">
+        <div className="flex flex-col mt-10 space-y-10 lg:space-y-0 lg:mt-0 lg:flex-row-reverse lg:space-x-10 lg:space-x-reverse">
+          <div className="basis-1/2 flex flex-col space-y-5 px-5">
+            <p className="text-center lg:text-left text-2xl font-semibold tracking-tight">
+              Curate your research interests and patient pools
+            </p>
+            <p className="text-center lg:text-left text-lg">
+              Populate your profile with your experience, research interests and
+              patient pools for other researchers to see for potential
+              connections
+            </p>
+          </div>
+
           <div className="basis-1/2">
             <Window>
               <div className="flex items-center sm:items-start flex-col sm:flex-row p-2 space-x-0 sm:space-x-6">
@@ -49,33 +72,16 @@ export const getFeatureContent = (): FeatureModel[] => [
               </div>
             </Window>
           </div>
-
-          <div className="basis-1/2 flex flex-col space-y-5">
-            <p className="text-center lg:text-left text-2xl font-semibold tracking-tight">
-              Curate your research interests and patient pools
-            </p>
-            <p className="text-center lg:text-left text-lg">
-              Populate your profile with your experience, research interests and
-              patient pools for other researchers to see for potential
-              connections
-            </p>
-          </div>
         </div>
 
-        <div className="mt-[60px] lg:mt-[100px] flex flex-col space-y-10 lg:space-y-0 lg:flex-row-reverse lg:space-x-10">
-          <div className="basis-1/2">
-            <Window>
-              <PublicationsSection
-                data={getSamplePublications()}
-                namesToBold={["chen dz"]}
-                withHeader
-              />
-            </Window>
-          </div>
+        <span
+          className={`w-[200px] my-[60px] lg:my-[60px] self-center text-white bg-black h-[1px] from-black to-white  bg-gradient-radial`}
+        />
 
-          <div className="basis-1/2 flex flex-col items-center lg:items-start space-y-5">
+        <div className="flex flex-col space-y-10 lg:space-y-0 lg:flex-row lg:space-x-10">
+          <div className="basis-1/2 flex px-5 flex-col items-center lg:items-start space-y-5">
             <p className="text-center lg:text-left text-2xl font-semibold tracking-tight">
-              Consolidate your publications from PubMed
+              Import your publications from PubMed
             </p>
             <p className="text-center lg:text-left text-lg">
               Sync your publications from PubMed by simply providing your PubMed
@@ -101,6 +107,16 @@ export const getFeatureContent = (): FeatureModel[] => [
               </Button>
             </div>
           </div>
+
+          <div className="basis-1/2">
+            <Window>
+              <PublicationsSection
+                data={getSamplePublications()}
+                namesToBold={["chen dz"]}
+                withHeader
+              />
+            </Window>
+          </div>
         </div>
       </div>
     ),
@@ -112,10 +128,113 @@ export const getFeatureContent = (): FeatureModel[] => [
     gradientStart: "gradientPinkStart",
     gradientEnd: "gradientPinkEnd",
     content: (
-      <div className="basis-1/2 pr-5">
-        <Window>
-          <div>Left content</div>
-        </Window>
+      <div className="flex flex-col w-full max-w-[1100px] lg:mt-[60px] ">
+        <div className="flex flex-col mt-10 space-y-10 lg:space-y-0 lg:mt-0 lg:flex-row-reverse lg:space-x-10 lg:space-x-reverse">
+          <div className="basis-1/2 flex flex-col space-y-5 px-5">
+            <p className="text-center lg:text-left text-2xl font-semibold tracking-tight">
+              Find your next project team
+            </p>
+            <p className="text-center lg:text-left text-lg">
+              Search for researchers with similar interest and desired expertise
+              to aid in your next research projects or clinical trials
+            </p>
+            <p className="text-center lg:text-left text-lg">
+              Gain insights into your department's research capabilities and
+              help create potential collaborations for budding researchers
+            </p>
+          </div>
+
+          <div className="basis-1/2">
+            <Window>
+              <div className="flex flex-col space-y-6">
+                <div className="flex flex-col space-y-2 sm:ml-6">
+                  <label>Search by medical keywords:</label>
+                  <input
+                    readOnly
+                    value="Glaucoma"
+                    className="mt-0 border-[1px] border-borderGray 
+                    outline-none p-[10px] pb-[11px] rounded-md hover:ring-1 max-w-[300px]"
+                  />
+                </div>
+                <SingleResultMedical
+                  q="glaucoma"
+                  data={getSampleMedicalKeywordResults()}
+                  disabledLinks
+                />
+              </div>
+            </Window>
+          </div>
+        </div>
+
+        <span
+          className={`w-[200px] my-[60px] lg:my-[60px] self-center text-white bg-black h-[1px] from-black to-white  bg-gradient-radial`}
+        />
+
+        <div className="flex flex-col space-y-10 lg:space-y-0 lg:flex-row lg:space-x-10">
+          <div className="basis-1/2 flex px-5 flex-col items-center lg:items-start space-y-5">
+            <p className="text-center lg:text-left text-2xl font-semibold tracking-tight">
+              Tap into existing knowledge base
+            </p>
+            <p className="text-center lg:text-left text-lg">
+              Search the database for researchers who have extensive experience
+              and numerous publications in a given field
+            </p>
+          </div>
+
+          <div className="basis-1/2">
+            <Window>
+              <div className="flex flex-col space-y-6">
+                <div className="flex flex-col space-y-2 sm:ml-6">
+                  <label>Search by keyword in publications:</label>
+                  <input
+                    readOnly
+                    value="Glaucoma"
+                    className="mt-0 border-[1px] border-borderGray 
+                    outline-none p-[10px] pb-[11px] rounded-md hover:ring-1 max-w-[300px]"
+                  />
+                </div>
+                <SingleResultPublication
+                  q="glaucoma"
+                  data={getSamplePublicationKeywordResults()}
+                  disableLinks
+                />
+              </div>
+            </Window>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    number: 3,
+    tagline: "Collaboration",
+    title: "Take your research to new heights",
+    gradientStart: "gradientOrangeStart",
+    gradientEnd: "gradientOrangeEnd",
+    content: (
+      <div className="flex flex-col w-full max-w-[1100px] lg:mt-[60px] ">
+        <div className="flex flex-col mt-10 space-y-10 lg:space-y-0 lg:mt-0 lg:flex-row-reverse lg:space-x-10 lg:space-x-reverse">
+          <div className="basis-1/2">
+            <div className="basis-1/2 flex px-5 flex-col items-center lg:items-start space-y-5">
+              <p className="text-center lg:text-left text-2xl font-semibold tracking-tight">
+                The right people for the right project
+              </p>
+              <p className="text-center lg:text-left text-lg">
+                Assemble an optimal team to give your research projects and
+                clinical trials the best chance to succeed
+              </p>
+            </div>
+          </div>
+
+          <div className="basis-1/2 flex flex-col space-y-5 px-5">
+            <img
+              src={imgCollaborate}
+              width="100%"
+              height="100%"
+              alt="collaborate"
+            />
+          </div>
+        </div>
       </div>
     ),
   },
@@ -257,3 +376,79 @@ const getSampleBase64 = () => {
     NTMgMDAwMDAgbiAKdHJhaWxlcgo8PCAvU2l6ZSAxMgovUm9vdCAyIDAgUgov
     SW5mbyAxIDAgUgo+PgpzdGFydHhyZWYKNDAzNwolJUVPRgo=`;
 };
+
+const getSampleMedicalKeywordResults = (): GetSearchMedicalKeywords.Datum[] => [
+  {
+    id: "1",
+    type: "searchMedicalKeywords",
+    name: "Jessica Koh",
+    image: imgStockPhoto3,
+    department: {
+      id: "3",
+      type: "department",
+      name: "Ophthalmology",
+    },
+    institution: {
+      id: "1",
+      type: "institution",
+      name: "ACME General Hospital",
+    },
+    specialties: ["Cataract", "Myotonic dystrophy"],
+    researchInterests: ["Glaucoma surgery", "Refractive surgery"],
+    patientPools: ["Cataract"],
+  },
+  {
+    id: "2",
+    type: "searchMedicalKeywords",
+    name: "Janice Wong",
+    image: imgStockPhoto2,
+    department: {
+      id: "3",
+      type: "department",
+      name: "Ophthalmology",
+    },
+    institution: {
+      id: "1",
+      type: "institution",
+      name: "ACME General Hospital",
+    },
+    specialties: ["Glaucoma", "Neuro-Ophthalmology"],
+    researchInterests: ["Trabecular Meshwork"],
+    patientPools: ["Glaucoma"],
+  },
+];
+
+const getSamplePublicationKeywordResults =
+  (): GetSearchPublications.Datum[] => [
+    {
+      id: "10",
+      type: "searchPublication",
+      name: "William Prince",
+      image: imgStockPhoto4,
+      department: {
+        id: "1",
+        type: "department",
+        name: "Ophthalmology",
+      },
+      institution: {
+        id: "1",
+        type: "institution",
+        name: "ACME General Hospital",
+      },
+      publicationTitle:
+        "Improvement in inner retinal function in glaucoma with nicotinamide (vitamin B3) supplementation: A crossover randomized clinical trial.",
+      publicationAuthors: [
+        "Hui F",
+        "Tang J",
+        "Willam PA",
+        "Casson RJ",
+        "Coote M",
+      ],
+      publicationSource: "Clin Exp Ophthalmol.",
+      publicationVolume: "",
+      publicationIssue: "",
+      publicationPages: "1-12",
+      publicationPublishedAt: "2022-09-13T16:00:00.000Z",
+      publicationCount: 25,
+    },
+  ];

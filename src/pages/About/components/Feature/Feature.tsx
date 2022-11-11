@@ -11,7 +11,7 @@ const Feature = ({
   content,
 }: FeatureProps) => {
   return (
-    <section className="w-full flex flex-col items-center mt-10 mb-[150px] lg:mb-[200px]">
+    <section className="w-full flex flex-col items-center mt-10 mb-[60px] lg:mb-[80px]">
       <span
         className={`h-[100px] text-white bg-black w-[1px] -mb-8 from-${gradientStart} to-white  bg-gradient-radial`}
       />

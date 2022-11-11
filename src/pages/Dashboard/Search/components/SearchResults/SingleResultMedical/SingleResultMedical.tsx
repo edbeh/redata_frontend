@@ -7,22 +7,30 @@ import { GetSearchMedicalKeywords } from "api/models";
 interface SingleResultMedicalProps {
   q: string;
   data: GetSearchMedicalKeywords.Datum[];
+  disabledLinks?: boolean;
 }
 
-const SingleResultMedical = ({ q, data }: SingleResultMedicalProps) => {
+const SingleResultMedical = ({
+  q,
+  data,
+  disabledLinks = false,
+}: SingleResultMedicalProps) => {
   const navigate = useNavigate();
 
   return (
     <>
-      {data.map((result) => {
+      {data.map((result, i) => {
         return (
           <div
             className="flex flex-col sm:flex-row px-0 sm:px-0 py-6 border-b-[1px] space-y-2 sm:space-y-0 border-b-gray-200 space-x-0 sm:space-x-6"
-            key={result.id}
+            key={`result_${result.id}_${i}`}
           >
             <div
               className="flex flex-row sm:flex-col space-y-2 space-x-4 sm:space-x-0 mb-3 sm:mb-0 w-full sm:min-w-[150px] sm:max-w-[150px] cursor-pointer"
-              onClick={() => navigate(`/profile/${result.id}`)}
+              onClick={() => {
+                if (disabledLinks) return;
+                navigate(`/profile/${result.id}`);
+              }}
             >
               <img
                 src={result.image || imgNoProfilePic}
@@ -47,29 +55,44 @@ const SingleResultMedical = ({ q, data }: SingleResultMedicalProps) => {
                 <div>
                   <p className="font-semibold text-sm">Sub-Specialties:</p>
                   <div className="flex flex-wrap items-start justify-start gap-y-2 gap-x-4">
-                    {result?.specialties?.map((specialty) => {
+                    {result?.specialties?.map((specialty, i) => {
                       return (
-                        <div key={specialty}>
-                          <Badge
-                            onClickBadge={(item: string) => {
-                              navigate({
-                                pathname: "/search",
-                                search: `?q=${encodeURIComponent(
-                                  item
-                                )}&searchIn=medicalKeywords`,
-                              });
-                            }}
-                            text={specialty}
-                            variant="small"
-                            isBolded={
-                              specialty
-                                ?.toLowerCase()
-                                .includes(q?.toLowerCase()) ||
-                              q
-                                ?.toLowerCase()
-                                .includes(specialty?.toLowerCase())
-                            }
-                          />
+                        <div key={`specialty_${specialty}_${i}`}>
+                          {disabledLinks ? (
+                            <Badge
+                              text={specialty}
+                              variant="small"
+                              isBolded={
+                                specialty
+                                  ?.toLowerCase()
+                                  .includes(q?.toLowerCase()) ||
+                                q
+                                  ?.toLowerCase()
+                                  .includes(specialty?.toLowerCase())
+                              }
+                            />
+                          ) : (
+                            <Badge
+                              onClickBadge={(item: string) => {
+                                navigate({
+                                  pathname: "/search",
+                                  search: `?q=${encodeURIComponent(
+                                    item
+                                  )}&searchIn=medicalKeywords`,
+                                });
+                              }}
+                              text={specialty}
+                              variant="small"
+                              isBolded={
+                                specialty
+                                  ?.toLowerCase()
+                                  .includes(q?.toLowerCase()) ||
+                                q
+                                  ?.toLowerCase()
+                                  .includes(specialty?.toLowerCase())
+                              }
+                            />
+                          )}
                         </div>
                       );
                     })}
@@ -79,27 +102,44 @@ const SingleResultMedical = ({ q, data }: SingleResultMedicalProps) => {
                 <div>
                   <p className="font-semibold text-sm">Research Interests:</p>
                   <div className="flex flex-wrap items-start justify-start gap-y-2 gap-x-4">
-                    {result?.researchInterests?.map((interest) => {
+                    {result?.researchInterests?.map((interest, i) => {
                       return (
-                        <div key={interest}>
-                          <Badge
-                            onClickBadge={(item: string) => {
-                              navigate({
-                                pathname: "/search",
-                                search: `?q=${encodeURIComponent(
-                                  item
-                                )}&searchIn=medicalKeywords`,
-                              });
-                            }}
-                            text={interest}
-                            variant="small"
-                            isBolded={
-                              interest
-                                ?.toLowerCase()
-                                .includes(q?.toLowerCase()) ||
-                              q?.toLowerCase().includes(interest?.toLowerCase())
-                            }
-                          />
+                        <div key={`interest_${interest}_${i}`}>
+                          {disabledLinks ? (
+                            <Badge
+                              text={interest}
+                              variant="small"
+                              isBolded={
+                                interest
+                                  ?.toLowerCase()
+                                  .includes(q?.toLowerCase()) ||
+                                q
+                                  ?.toLowerCase()
+                                  .includes(interest?.toLowerCase())
+                              }
+                            />
+                          ) : (
+                            <Badge
+                              onClickBadge={(item: string) => {
+                                navigate({
+                                  pathname: "/search",
+                                  search: `?q=${encodeURIComponent(
+                                    item
+                                  )}&searchIn=medicalKeywords`,
+                                });
+                              }}
+                              text={interest}
+                              variant="small"
+                              isBolded={
+                                interest
+                                  ?.toLowerCase()
+                                  .includes(q?.toLowerCase()) ||
+                                q
+                                  ?.toLowerCase()
+                                  .includes(interest?.toLowerCase())
+                              }
+                            />
+                          )}
                         </div>
                       );
                     })}
@@ -109,25 +149,40 @@ const SingleResultMedical = ({ q, data }: SingleResultMedicalProps) => {
                 <div>
                   <p className="font-semibold text-sm">Patient Populations:</p>
                   <div className="flex flex-wrap items-start justify-start gap-y-2 gap-x-4">
-                    {result?.patientPools?.map((pool) => {
+                    {result?.patientPools?.map((pool, i) => {
                       return (
-                        <div key={pool}>
-                          <Badge
-                            onClickBadge={(item: string) => {
-                              navigate({
-                                pathname: "/search",
-                                search: `?q=${encodeURIComponent(
-                                  item
-                                )}&searchIn=medicalKeywords`,
-                              });
-                            }}
-                            text={pool}
-                            variant="small"
-                            isBolded={
-                              pool?.toLowerCase().includes(q?.toLowerCase()) ||
-                              q?.toLowerCase().includes(pool?.toLowerCase())
-                            }
-                          />
+                        <div key={`pool_${pool}_${i}`}>
+                          {disabledLinks ? (
+                            <Badge
+                              text={pool}
+                              variant="small"
+                              isBolded={
+                                pool
+                                  ?.toLowerCase()
+                                  .includes(q?.toLowerCase()) ||
+                                q?.toLowerCase().includes(pool?.toLowerCase())
+                              }
+                            />
+                          ) : (
+                            <Badge
+                              onClickBadge={(item: string) => {
+                                navigate({
+                                  pathname: "/search",
+                                  search: `?q=${encodeURIComponent(
+                                    item
+                                  )}&searchIn=medicalKeywords`,
+                                });
+                              }}
+                              text={pool}
+                              variant="small"
+                              isBolded={
+                                pool
+                                  ?.toLowerCase()
+                                  .includes(q?.toLowerCase()) ||
+                                q?.toLowerCase().includes(pool?.toLowerCase())
+                              }
+                            />
+                          )}
                         </div>
                       );
                     })}

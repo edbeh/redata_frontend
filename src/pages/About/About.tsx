@@ -8,7 +8,7 @@ const About = () => {
   const featureContent = getFeatureContent();
 
   return (
-    <div className="px-6 pb-[200px]">
+    <div className="px-6 pb-[100px] lg:pb-[200px]">
       <TopNav />
       <Hero />
 
@@ -17,6 +17,7 @@ const About = () => {
           feature;
         return (
           <Feature
+            key={title}
             number={number}
             tagline={tagline}
             title={title}
@@ -26,6 +27,12 @@ const About = () => {
           />
         );
       })}
+
+      <div className="flex justify-center">
+        <p className="mt-[80px] lg:mt-[120px] text-sm font-bold text-gray-500 tracking-wider">
+          LET'S GET STARTED
+        </p>
+      </div>
     </div>
   );
 };

@@ -21,7 +21,7 @@ export declare module GetSearchPublications {
     id: string;
     type: string;
     name: string;
-    designation: Designation;
+    // designation: Designation;
     department: Department;
     institution: Institution;
     publicationTitle: string;
@@ -30,7 +30,7 @@ export declare module GetSearchPublications {
     publicationVolume: string;
     publicationIssue: string;
     publicationPages: string;
-    publicationPublishedAt: Date;
+    publicationPublishedAt: Date | string;
     publicationCount: number;
     image: string | null;
   }
