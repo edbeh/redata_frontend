@@ -13,6 +13,7 @@ import {
   Settings,
   Profile,
   About,
+  Sample,
 } from "pages";
 import { PrivateRoute } from "wrapper-components";
 
@@ -22,6 +23,7 @@ const AppRouter = () => {
       <Route path="/about" element={<About />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/sample" element={<Sample />} />
 
       <Route element={<PrivateRoute />}>
         <Route path="/onboarding/:step" element={<Onboarding />} />

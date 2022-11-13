@@ -14,3 +14,4 @@ export { default as Search } from "./Dashboard/Search/Search";
 export { default as Connections } from "./Dashboard/Connections/Connections";
 export { default as Settings } from "./Dashboard/Settings/Settings";
 export { default as Profile } from "./Profile/Profile";
+export { default as Sample } from "./Sample/Sample";

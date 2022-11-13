@@ -1,5 +1,7 @@
-import { Button } from "components";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+import { Button } from "components";
 
 const Hero = () => {
   const [activeSpan, setActiveSpan] = useState<number>(0);
@@ -75,7 +77,9 @@ const Hero = () => {
       </p>
 
       <div className="mt-[30px] lg:mt-[50px] w-[200px]">
-        <Button variant="secondary">View Sample Profile</Button>
+        <Link to="/sample" target="_blank" rel="noopener noreferrer">
+          <Button variant="secondary">View Sample Profile</Button>
+        </Link>
       </div>
 
       <p className="mt-[80px] lg:mt-[120px] text-sm font-bold text-gray-500 tracking-wider">
