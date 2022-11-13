@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
-import { ImgBars4Outline, ImgXMarkOutline } from "assets";
+import { ImgBars4Outline, ImgXMarkOutline, imgAppLogo } from "assets";
 
 const TopNav = () => {
   return (
@@ -9,9 +9,9 @@ const TopNav = () => {
         <div className="flex items-center justify-start lg:w-0 lg:flex-1">
           <a href="/about">
             <img
-              className="h-8 w-auto sm:h-10"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt=""
+              className="h-10 w-auto sm:h-12"
+              src={imgAppLogo}
+              alt="app_logo"
             />
           </a>
           <span className="ml-2 text-xl lg:text-2xl font-semibold">ReData</span>

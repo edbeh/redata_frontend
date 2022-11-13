@@ -33,6 +33,7 @@ import imgStockPhoto2 from "./stock-photo-2.jpg";
 import imgStockPhoto3 from "./stock-photo-3.jpg";
 import imgStockPhoto4 from "./stock-photo-4.jpg";
 import imgCollaborate from "./collaborate.svg";
+import imgAppLogo from "./app-logo.png";
 
 export {
   ImgXMarkOutline,
@@ -69,4 +70,5 @@ export {
   imgStockPhoto3,
   imgStockPhoto4,
   imgCollaborate,
+  imgAppLogo,
 };
