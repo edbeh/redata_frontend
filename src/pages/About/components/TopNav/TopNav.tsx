@@ -9,7 +9,7 @@ const TopNav = () => {
         <div className="flex items-center justify-start lg:w-0 lg:flex-1">
           <a href="/about">
             <img
-              className="h-10 w-auto sm:h-12"
+              className="h-10 w-auto sm:h-12 hover:rotate-[360deg] transition-all duration-1000"
               src={imgAppLogo}
               alt="app_logo"
             />
@@ -26,7 +26,7 @@ const TopNav = () => {
         <div className="hidden items-center justify-end md:flex md:flex-1 lg:w-0">
           <a
             href="/login"
-            className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-700"
+            className="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-primary-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-700 transition duration-300 hover:scale-[1.03]"
           >
             Sign In
           </a>
