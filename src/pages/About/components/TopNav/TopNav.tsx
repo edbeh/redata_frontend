@@ -50,12 +50,15 @@ const TopNav = () => {
           <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
             <div className="px-5 pt-5 pb-6">
               <div className="flex items-center justify-between">
-                <div>
+                <div className="flex space-x-2 items-center">
                   <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                    alt="Your Company"
+                    className="h-10 w-auto sm:h-12 hover:rotate-[360deg] transition-all duration-1000"
+                    src={imgAppLogo}
+                    alt="app_logo"
                   />
+                  <span className="ml-2 text-xl lg:text-2xl font-semibold">
+                    ReData
+                  </span>
                 </div>
                 <div className="-mr-2">
                   <Popover.Button className="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500">
@@ -67,16 +70,10 @@ const TopNav = () => {
             </div>
             <div className="py-6 px-5">
               <div className="mt-6">
-                <a
-                  href="/login"
-                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-primary-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-primary-700"
-                >
-                  Sign up
-                </a>
                 <p className="mt-6 text-center text-base font-medium text-gray-500">
                   Existing user?{" "}
                   <a
-                    href="/login"
+                    href={navigateToSubdomain("app", "/login")}
                     className="text-primary-600 hover:text-primary-500"
                   >
                     Sign in
