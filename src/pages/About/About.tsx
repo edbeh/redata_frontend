@@ -28,11 +28,11 @@ const About = () => {
         );
       })}
 
-      <div className="flex justify-center">
+      {/* <div className="flex justify-center">
         <p className="mt-[80px] lg:mt-[120px] text-sm font-bold text-gray-500 tracking-wider">
           LET'S GET STARTED
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };

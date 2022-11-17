@@ -18,29 +18,38 @@ import {
 import { PrivateRoute } from "wrapper-components";
 
 const AppRouter = () => {
+  const isApp = window.location.host.split(".")[0] === "app";
+
+  if (isApp) {
+    return (
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/sample" element={<Sample />} />
+
+        <Route element={<PrivateRoute />}>
+          <Route path="/onboarding/:step" element={<Onboarding />} />
+          <Route path="/onboarding" element={<Navigate to="/onboarding/1" />} />
+
+          <Route path="/home" element={<Home />} />
+          <Route path="/home/edit" element={<EditHome />} />
+          <Route path="/publications" element={<Publications />} />
+          <Route path="/publications/edit" element={<EditPublications />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/connections" element={<Connections />} />
+          <Route path="/settings" element={<Settings />} />
+
+          <Route path="/profile/:id" element={<Profile />} />
+        </Route>
+
+        <Route path="/" element={<Navigate to="/home" />} />
+      </Routes>
+    );
+  }
+
   return (
     <Routes>
-      <Route path="/about" element={<About />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/sample" element={<Sample />} />
-
-      <Route element={<PrivateRoute />}>
-        <Route path="/onboarding/:step" element={<Onboarding />} />
-        <Route path="/onboarding" element={<Navigate to="/onboarding/1" />} />
-
-        <Route path="/home" element={<Home />} />
-        <Route path="/home/edit" element={<EditHome />} />
-        <Route path="/publications" element={<Publications />} />
-        <Route path="/publications/edit" element={<EditPublications />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/connections" element={<Connections />} />
-        <Route path="/settings" element={<Settings />} />
-
-        <Route path="/profile/:id" element={<Profile />} />
-      </Route>
-
-      <Route path="/" element={<Navigate to="/home" />} />
+      <Route path="/" element={<About />} />
     </Routes>
   );
 };

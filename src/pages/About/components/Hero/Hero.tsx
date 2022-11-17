@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 import { Button } from "components";
+import { navigateToSubdomain } from "utils";
 
 const Hero = () => {
   const [activeSpan, setActiveSpan] = useState<number>(0);
@@ -77,9 +77,13 @@ const Hero = () => {
       </p>
 
       <div className="mt-[30px] lg:mt-[50px] w-[200px]">
-        <Link to="/sample" target="_blank" rel="noopener noreferrer">
+        <a
+          href={navigateToSubdomain("app", "/sample")}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <Button variant="secondary">View Sample Profile</Button>
-        </Link>
+        </a>
       </div>
 
       <p className="mt-[80px] lg:mt-[120px] text-sm font-bold text-gray-500 tracking-wider">
