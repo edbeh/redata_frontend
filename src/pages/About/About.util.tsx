@@ -217,7 +217,7 @@ export const getFeatureContent = (): FeatureModel[] => [
           <div className="basis-1/2">
             <div className="basis-1/2 flex px-5 flex-col items-center lg:items-start space-y-5">
               <p className="text-center lg:text-left text-2xl font-semibold tracking-tight">
-                The right people for the right project
+                Find the right people for the your projects
               </p>
               <p className="text-center lg:text-left text-lg">
                 Assemble an optimal team to give your research projects and
