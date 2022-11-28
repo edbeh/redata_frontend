@@ -14,3 +14,4 @@ export { default as MobileLeftNavigation } from "./LeftNavigation/MobileLeftNavi
 export { default as Highlighted } from "./Highlighted/Highlighted";
 export { default as Tooltip } from "./Tooltip/Tooltip";
 export { default as Window } from "./Window/Window";
+export { default as SampleFooter } from "./SampleFooter/SampleFooter";

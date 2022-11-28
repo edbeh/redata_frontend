@@ -7,14 +7,21 @@ const TopNav = () => {
   return (
     <Popover className="relative bg-white">
       <div className="flex items-center justify-between px-4 py-6 sm:px-6 md:justify-start md:space-x-10">
-        <div className="flex items-center justify-start lg:w-0 lg:flex-1">
-          <a href="/about">
-            <img
-              className="h-10 w-auto sm:h-12 hover:rotate-[360deg] transition-all duration-1000"
-              src={imgAppLogo}
-              alt="app_logo"
-            />
-          </a>
+        <div
+          className="flex items-center justify-start lg:w-0 lg:flex-1 cursor-pointer"
+          onClick={() => {
+            const url = window.location.href
+              .replace("app.", "")
+              .replace("/login", "");
+            return (window.location.href = url);
+          }}
+        >
+          <img
+            className="h-10 w-auto sm:h-12 hover:rotate-[360deg] transition-all duration-1000"
+            src={imgAppLogo}
+            alt="app_logo"
+          />
+
           <span className="ml-2 text-xl lg:text-2xl font-semibold">ReData</span>
         </div>
         <div className="-my-2 -mr-2 md:hidden">

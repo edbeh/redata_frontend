@@ -5,5 +5,5 @@ export const useMe = () => {
   const fetchMe = useFetchMe();
   const data = fetchMe?.data?.data?.data;
 
-  return { departmentId: data?.department?.id };
+  return { departmentId: data?.department?.id, email: data?.email };
 };

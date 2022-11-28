@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { LeftNavigation, MobileLeftNavigation } from "components";
 import { ImgBars4Outline } from "assets";
-import { useScrollDirection } from "hooks";
+import { useMe, useScrollDirection } from "hooks";
 
 interface BaseLayoutProps {
   withLeftNavigation?: boolean;

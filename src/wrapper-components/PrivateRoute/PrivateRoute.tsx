@@ -1,10 +1,20 @@
 import { useLayoutEffect, useState } from "react";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
+import { SampleFooter } from "components";
+import { useMe } from "hooks";
 import { getJwtTokenLocalStorage } from "utils";
 
 const PrivateRoute = () => {
+  const { email } = useMe();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+
+  const isSampleProfile = (email: string | undefined) => {
+    if (!email) return;
+
+    const regex = /sample.+@email.com/;
+    return email.match(regex);
+  };
 
   useLayoutEffect(() => {
     const token = getJwtTokenLocalStorage();
@@ -15,7 +25,17 @@ const PrivateRoute = () => {
     return <Navigate to="/login" replace />;
   }
 
-  return <Outlet />;
+  return (
+    <>
+      <Outlet />
+      {isSampleProfile(email) ? (
+        <>
+          <div className="h-[60px] sm:h-[40px]" />
+          <SampleFooter />
+        </>
+      ) : null}
+    </>
+  );
 };
 
 export default PrivateRoute;
