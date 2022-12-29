@@ -46,23 +46,33 @@ const HeroSection = ({
               <p className="basis-2/3">{data?.email}</p>
             </div>
 
-            <div className="flex flex-col justify-between space-x-0 space-y-1 sm:space-y-0 sm:space-x-4 sm:flex-row">
-              <p className="font-semibold basis-1/3 min-w-[125px]">MCR No.:</p>
-              <p className="basis-2/3">Mock data</p>
-            </div>
+            {data?.mcrNumber && (
+              <div className="flex flex-col justify-between space-x-0 space-y-1 sm:space-y-0 sm:space-x-4 sm:flex-row">
+                <p className="font-semibold basis-1/3 min-w-[125px]">
+                  MCR No.:
+                </p>
+                <p className="basis-2/3">{data.mcrNumber}</p>
+              </div>
+            )}
 
             <div className="flex flex-col justify-between space-x-0 space-y-1 sm:space-y-0 sm:space-x-4 sm:flex-row">
               <p className="font-semibold basis-1/3 min-w-[125px]">
                 Primary Subspecialty:
               </p>
-              <p className="basis-2/3">Mock data</p>
+              <p className="basis-2/3">
+                {data?.primarySpecialty?.name || "No data"}
+              </p>
             </div>
 
             <div className="flex flex-col justify-between space-x-0 space-y-1 sm:space-y-0 sm:space-x-4 sm:flex-row">
               <p className="font-semibold basis-1/3 min-w-[125px]">
                 Other Subspecialties:
               </p>
-              <p className="basis-2/3">Mock data</p>
+              <p className="basis-2/3">
+                {data?.otherSpecialties
+                  ?.map((speciality) => speciality.name)
+                  ?.join(", ") || "No data"}
+              </p>
             </div>
           </div>
         )}
