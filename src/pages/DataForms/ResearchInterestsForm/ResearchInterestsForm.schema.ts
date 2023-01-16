@@ -2,7 +2,7 @@ import { validationMessages } from "const";
 import * as yup from "yup";
 
 export const researchInterestSchema = {
-  researchInterest: yup.object().required(),
+  researchInterest: yup.object().required(validationMessages.require.generic),
   researchInterestOthers: yup.string().when("researchInterest", {
     is: (value: any) => {
       return value?.id === "others";

@@ -91,9 +91,14 @@ export const validatePubMedNames = (
   const status = { hasErrors: false };
   if (!data || data.length === 0) return status;
 
+  // filter duplicate names
+  const filtered = data.filter((name, index, self) => {
+    return self.indexOf(name) === index;
+  });
+
   status.hasErrors = true;
   setError("pubMedNames", {
-    message: `The following PubMed names are invalid: ${data.join(", ")}`,
+    message: `The following PubMed names are invalid: ${filtered.join(", ")}`,
   });
 
   return status;

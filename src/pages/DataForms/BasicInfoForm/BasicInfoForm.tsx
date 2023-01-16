@@ -95,6 +95,27 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     const watchImage = watch("image");
 
     // *Methods
+    const handlePubMedNamesOnBlur = (
+      e: React.FocusEvent<HTMLInputElement, Element>
+    ) => {
+      // remove non-alphabet, non-space and non-comma characters
+      let names = e.currentTarget.value
+        .trim()
+        .replace(new RegExp(/[^a-zA-Z\p{L}\s,']/i, "g"), "");
+
+      // if result ends with comma, remove it
+      if (names[names.length - 1] === ",") {
+        names = names.slice(0, names.length - 1);
+      }
+
+      // make sure all have commas separators with a space in front of it
+      names = names
+        .replace(new RegExp(/[,\s][\s,]/i, "g"), ",")
+        .replace(new RegExp(/[,]/i), ", ");
+
+      setPubMedNamesToSearch(names);
+    };
+
     const handleSubmitForm = async (data: IBasicInfoFormFields) => {
       if (fetchPubMedByNames?.isLoading || fetchPubMedByNames?.isFetching)
         return;
@@ -282,6 +303,12 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     }, [fetchPubMedByNames?.data]);
 
     useEffect(() => {
+      if (correctedPubMedNames) {
+        setValue("pubMedNames", correctedPubMedNames.join(", "));
+      }
+    }, [correctedPubMedNames]);
+
+    useEffect(() => {
       if (watchImage) {
         if (typeof watchImage === "string") {
           return setProfileImage(watchImage);
@@ -383,9 +410,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               isLoading={
                 fetchPubMedByNames?.isLoading || fetchPubMedByNames?.isFetching
               }
-              onBlur={(e) => {
-                setPubMedNamesToSearch(e.currentTarget.value);
-              }}
+              onBlur={handlePubMedNamesOnBlur}
             />
           </div>
 
@@ -423,6 +448,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               label="Primary Subspecialty"
               control={control}
               options={specialtiesOptions}
+              noOptionsText="Please select your department"
               isLoading={fetchMetaDataSpecialtiesByDeptId?.isLoading}
               id="primarySubspecialty"
               name="primarySubspecialty"
@@ -467,6 +493,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                   label={`Other Subspecialty ${i + 1}`}
                   control={control}
                   options={specialtiesOptions}
+                  noOptionsText="Please select your department"
                   isLoading={fetchMetaDataSpecialtiesByDeptId?.isLoading}
                   id={`otherSubspecialties.${i}.otherSubspecialty`}
                   name={`otherSubspecialties.${i}.otherSubspecialty`}

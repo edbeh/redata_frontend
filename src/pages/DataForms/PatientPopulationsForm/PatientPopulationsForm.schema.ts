@@ -2,7 +2,7 @@ import { validationMessages } from "const";
 import * as yup from "yup";
 
 export const patientPopulationSchema = {
-  patientPopulation: yup.object().required(),
+  patientPopulation: yup.object().required(validationMessages.require.generic),
   patientPopulationOthers: yup.string().when("patientPopulation", {
     is: (value: any) => {
       return value?.id === "others";

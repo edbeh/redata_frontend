@@ -11,11 +11,11 @@ const Login = () => {
     return !!getJwtTokenLocalStorage();
   };
 
-  useEffect(() => {
-    if (isLoggedIn()) {
-      navigate("/home");
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   if (isLoggedIn()) {
+  //     navigate("/home");
+  //   }
+  // }, [navigate]);
 
   return (
     <div className="flex w-[100vw] h-[100vh]">

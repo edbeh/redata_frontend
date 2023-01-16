@@ -16,6 +16,7 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   error?: string;
   options: FormSelectModel[];
   isLoading?: boolean;
+  noOptionsText?: string;
 }
 
 const Select = memo(
@@ -28,6 +29,7 @@ const Select = memo(
     error,
     options,
     isLoading,
+    noOptionsText = "No options",
     ...rest
   }: SelectProps) => {
     const { placeholder = "", disabled, required } = rest;
@@ -103,7 +105,7 @@ const Select = memo(
                   <Combobox.Options className="absolute inset-x-0 top-[42px] right-0 z-20 bg-white border-borderGray mt-2 max-h-[244px] py-1 w-fit min-w-full overflow-auto no-scrollbar rounded-lg border-[1px]">
                     {filteredOptionList?.length === 0 ? (
                       <p className="w-full text-center py-3 text-borderGray cursor-not-allowed">
-                        No options
+                        {noOptionsText}
                       </p>
                     ) : (
                       <Virtualized

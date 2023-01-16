@@ -15,7 +15,7 @@ import { GetPubMedByIds, GetPubMedByNames } from "../models";
  * //*GET PubMed by Names
  */
 const fetchPubMedByNames = async (pubMedNames: string) => {
-  const endpoints = pubMedNames?.split(",").map((name) => {
+  const endpoints = pubMedNames?.split(", ").map((name) => {
     const updatedName = name.replace(" ", "%20").trim().concat("[author]");
     return `${BASE_PUBMED_API_URL}${SEARCH_PUBMED_NAMES_PREFIX}${updatedName}${SEARCH_PUBMED_NAMES_SUFFIX}`;
   });
@@ -39,9 +39,10 @@ const fetchPubMedByNames = async (pubMedNames: string) => {
           if (fullInvalidName.includes("[all fields]")) {
             const invalidLastName =
               fullInvalidName.split(" ")[fullInvalidName.split(" ").length - 1];
+
             finalInvalidName = `${fullInvalidName
               .split("[all fields]")[0]
-              .replace("(", "")} ${invalidLastName}`;
+              .replace(/[(]|["]/gi, "")} ${invalidLastName}`;
           }
 
           return invalidPubMedNames.push(
@@ -59,11 +60,15 @@ const fetchPubMedByNames = async (pubMedNames: string) => {
           : response?.data?.esearchresult?.querytranslation
               ?.toLowerCase()
               ?.split("[author]")[0];
-        const splitTranslation = translation.split(", ");
+        const splitTranslation = translation?.split(",");
         const pubmedName =
           splitTranslation?.length > 1
-            ? `${splitTranslation[0]} ${splitTranslation[1][0]}`
-            : `${splitTranslation[0]}`;
+            ? `${splitTranslation[0]
+                .trimStart()
+                .replace(/[(]|["]/gi, "")} ${splitTranslation[1]
+                .trimStart()
+                .replace(/[(]|["]/gi, "")}`
+            : `${splitTranslation[0].trimStart().replace(/[(]|["]/gi, "")}`;
 
         namesToBold.push(pubmedName);
         return ids.push(...response?.data?.esearchresult?.idlist);
