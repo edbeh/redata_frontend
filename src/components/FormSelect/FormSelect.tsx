@@ -32,7 +32,7 @@ const Select = memo(
     noOptionsText = "No options",
     ...rest
   }: SelectProps) => {
-    const { placeholder = "", disabled, required } = rest;
+    const { placeholder = "", disabled, required, onChange } = rest;
 
     const [query, setQuery] = useState<string>("");
 
@@ -59,6 +59,7 @@ const Select = memo(
                 value={field.value}
                 onChange={(e) => {
                   setQuery("");
+                  if (onChange && typeof onChange === "function") onChange(e);
                   field.onChange(e);
                 }}
                 disabled={disabled}

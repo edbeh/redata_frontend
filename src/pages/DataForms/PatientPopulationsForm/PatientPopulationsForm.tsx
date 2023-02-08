@@ -56,6 +56,7 @@ const PatientPopulationsForm = React.forwardRef<
       control,
       formState: { errors: formErrors },
       setError,
+      setValue,
       watch,
       handleSubmit,
     } = useForm<IPatientPopulationsFormFields>({
@@ -79,7 +80,6 @@ const PatientPopulationsForm = React.forwardRef<
 
       const cleanData = cleanUpData(data);
 
-      console.log(cleanData);
       console.log(JSON.stringify(cleanData, null, 2));
       updateMe.mutate(cleanData);
     };
@@ -206,6 +206,12 @@ const PatientPopulationsForm = React.forwardRef<
                     formErrors?.patientPopulations &&
                     formErrors?.patientPopulations[i]?.patientPopulation
                       ?.message
+                  }
+                  onChange={() =>
+                    setValue(
+                      `patientPopulations.${i}.patientPopulationOthers`,
+                      ""
+                    )
                   }
                 />
 

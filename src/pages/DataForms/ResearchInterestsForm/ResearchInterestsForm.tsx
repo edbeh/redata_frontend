@@ -56,6 +56,7 @@ const ResearchInterestsForm = React.forwardRef<
       control,
       formState: { errors: formErrors },
       setError,
+      setValue,
       handleSubmit,
       watch,
     } = useForm<IResearchInterestsFormFields>({
@@ -79,7 +80,6 @@ const ResearchInterestsForm = React.forwardRef<
 
       const cleanData = cleanUpData(data);
 
-      console.log(cleanData);
       console.log(JSON.stringify(cleanData, null, 2));
       updateMe.mutate(cleanData);
     };
@@ -206,6 +206,12 @@ const ResearchInterestsForm = React.forwardRef<
                   error={
                     formErrors?.researchInterests &&
                     formErrors?.researchInterests[i]?.researchInterest?.message
+                  }
+                  onChange={() =>
+                    setValue(
+                      `researchInterests.${i}.researchInterestOthers`,
+                      ""
+                    )
                   }
                 />
 

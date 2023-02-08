@@ -133,7 +133,6 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
       const cleanData = cleanUpData(data, correctedPubMedNames);
 
-      console.log(cleanData);
       console.log(JSON.stringify(cleanData, null, 2));
       // @ts-expect-error
       updateMe.mutate(cleanData);
@@ -455,6 +454,7 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               required={getYupIsRequired(schema, "primarySubspecialty")}
               autoComplete="off"
               error={formErrors?.primarySubspecialty?.message}
+              onChange={() => setValue("primarySubspecialtyOthers", "")}
             />
 
             {watchPrimarySubspecialty?.name === "Others" && (
@@ -503,6 +503,12 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                     formErrors?.otherSubspecialties &&
                     formErrors?.otherSubspecialties[i]?.otherSubspecialty
                       ?.message
+                  }
+                  onChange={() =>
+                    setValue(
+                      `otherSubspecialties.${i}.otherSubspecialtyOthers`,
+                      ""
+                    )
                   }
                 />
 
