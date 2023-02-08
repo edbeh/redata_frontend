@@ -1,3 +1,4 @@
+import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 
 import { BreadCrumbs, Card } from "components";
@@ -14,12 +15,20 @@ import {
   CommonSectionLoading,
 } from "./components";
 import { useFetchMe } from "api/hooks";
+import { useEffect } from "react";
+import { ME_API_KEY } from "api/keys";
 
 const Home = () => {
   const navigate = useNavigate();
 
   // *Queries
+  const queryClient = useQueryClient();
   const fetchMe = useFetchMe();
+
+  // *Effects
+  useEffect(() => {
+    queryClient.invalidateQueries(ME_API_KEY);
+  }, [queryClient]);
 
   // *JSX
   return (

@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useRef } from "react";
-import { useQueryClient } from "react-query";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -139,13 +138,10 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     };
 
     const handleMutationSuccess = () => {
-      queryClient.invalidateQueries(ME_API_KEY);
       if (onSuccessCallback) onSuccessCallback();
     };
 
     // *Queries
-    const queryClient = useQueryClient();
-
     const fetchMe = useFetchMe();
 
     const institutionId = fetchMe?.data?.data?.data?.institution?.id as string;

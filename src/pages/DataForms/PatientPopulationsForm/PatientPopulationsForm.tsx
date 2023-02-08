@@ -85,13 +85,10 @@ const PatientPopulationsForm = React.forwardRef<
     };
 
     const handleMutationSuccess = () => {
-      queryClient.invalidateQueries(ME_API_KEY);
       if (onSuccessCallback) onSuccessCallback();
     };
 
     // *Queries
-    const queryClient = useQueryClient();
-
     const fetchMe = useFetchMe();
 
     const fetchMetadataPatientPoolsByDeptId =
