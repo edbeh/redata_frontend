@@ -34,7 +34,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "INLINE_RUNTIME_CHUNK=false react-scripts build && npm run report-build",
+    "build": "INLINE_RUNTIME_CHUNK=false react-scripts build && npm run bugsnag-source-maps",
     "report-build": "bugsnag-build-reporter -k 5984a70a690788253f53643d5b481dab -v '1.0.0'",
     "bugsnag-source-maps": "bugsnag-source-maps upload-browser --api-key 5984a70a690788253f53643d5b481dab --app-version 1.0.0 --base-url https://develop.getredata.com/ --directory build/static/js",
     "test": "react-scripts test",
