@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@bugsnag/js": "^7.20.0",
+    "@bugsnag/plugin-react": "^7.19.0",
     "@headlessui/react": "^1.7.2",
     "@hookform/resolvers": "^2.9.8",
     "@tailwindcss/line-clamp": "^0.4.2",
@@ -14,6 +16,7 @@
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "axios": "^0.27.2",
+    "bugsnag-build-reporter": "^2.0.0",
     "dayjs": "^1.11.5",
     "framer-motion": "^7.2.1",
     "react": "^18.2.0",
@@ -31,7 +34,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "INLINE_RUNTIME_CHUNK=false react-scripts build",
+    "build": "INLINE_RUNTIME_CHUNK=false react-scripts build && npm run report-build",
+    "report-build": "bugsnag-build-reporter -k 5984a70a690788253f53643d5b481dab -v '1.0.0'",
+    "bugsnag-source-maps": "bugsnag-source-maps upload-browser --api-key 5984a70a690788253f53643d5b481dab --app-version 1.0.0 --base-url https://develop.getredata.com/ --directory build/static/js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "codegen": "orval --config ./orval.config.js"
@@ -55,6 +60,7 @@
     ]
   },
   "devDependencies": {
+    "@bugsnag/source-maps": "^2.3.1",
     "autoprefixer": "^10.4.8",
     "postcss": "^8.4.16",
     "tailwindcss": "^3.1.8"
