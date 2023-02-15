@@ -30,7 +30,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "INLINE_RUNTIME_CHUNK=false react-scripts build && REACT_APP_VERSION=$(git rev-parse --short HEAD) REACT_APP_TIMESTAMP=$(git log -1 --pretty='%ad' --date=format:'%Y%m%d') REACT_APP_URL=http://localhost:/3000/ npm run bugsnag",
+    "build": "INLINE_RUNTIME_CHUNK=false react-scripts build && REACT_APP_VERSION=$(git rev-parse --short HEAD) REACT_APP_TIMESTAMP=$(git log -1 --pretty='%ad' --date=format:'%Y%m%d') npm run bugsnag",
     "bugsnag": "bugsnag-source-maps upload-browser --api-key $REACT_APP_BUGSNAG_API_KEY --app-version \"$REACT_APP_TIMESTAMP-$REACT_APP_VERSION\" --base-url $REACT_APP_URL --directory build/static/js --overwrite",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
