@@ -13,6 +13,7 @@ Bugsnag.start({
   plugins: [new BugsnagPluginReact()],
 });
 
+console.log(getAppVersion());
 console.log("bugsnag started");
 
 const plugin = Bugsnag.getPlugin("react") as BugsnagPluginReactResult;
