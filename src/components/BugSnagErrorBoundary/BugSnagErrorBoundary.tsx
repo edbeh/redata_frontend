@@ -11,6 +11,7 @@ Bugsnag.start({
   apiKey: process.env.REACT_APP_BUGSNAG_API_KEY as string,
   appVersion: getAppVersion(),
   plugins: [new BugsnagPluginReact()],
+  releaseStage: process.env.REACT_APP_BUGSNAG_RELEASE_STAGE as string,
 });
 
 console.log(getAppVersion());
