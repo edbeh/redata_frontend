@@ -5,3 +5,4 @@ export * from "./objectIsEmpty";
 export * from "./getSearchParams";
 export * from "./downloadBase64";
 export * from "./navigateToSubdomain";
+export * from "./getAppVersion";

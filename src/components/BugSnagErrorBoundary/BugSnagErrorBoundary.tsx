@@ -3,12 +3,13 @@ import Bugsnag from "@bugsnag/js";
 import BugsnagPluginReact, {
   BugsnagPluginReactResult,
 } from "@bugsnag/plugin-react";
-import { browser } from "@bugsnag/source-maps";
+
+import { getAppVersion } from "utils";
 
 // start service
 Bugsnag.start({
-  apiKey: "5984a70a690788253f53643d5b481dab",
-  appVersion: "1.0.0",
+  apiKey: process.env.REACT_APP_BUGSNAG_API_KEY as string,
+  appVersion: getAppVersion(),
   plugins: [new BugsnagPluginReact()],
 });
 
