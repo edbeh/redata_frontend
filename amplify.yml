@@ -6,8 +6,8 @@ frontend:
         - yarn install
     build:
       commands:
-        - REACT_APP_VERSION=$(git rev-parse --short HEAD)
-        - REACT_APP_TIMESTAMP=$(git log -1 --pretty='%ad' --date=format:'%Y%m%d')
+        - echo "REACT_APP_VERSION=$(git rev-parse --short HEAD)" >> .env
+        - echo "REACT_APP_TIMESTAMP=$(git log -1 --pretty='%ad' --date=format:'%Y%m%d')" >> .env
         - yarn run build
     postBuild:
       commands:
