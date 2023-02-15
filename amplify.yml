@@ -6,11 +6,11 @@ frontend:
         - yarn install
     build:
       commands:
+        - REACT_APP_VERSION=$(git rev-parse --short HEAD)
+        - REACT_APP_TIMESTAMP=$(git log -1 --pretty='%ad' --date=format:'%Y%m%d')
         - yarn run build
     postBuild:
       commands:
-        - REACT_APP_VERSION=$(git rev-parse --short HEAD)
-        - REACT_APP_TIMESTAMP=$(git log -1 --pretty='%ad' --date=format:'%Y%m%d')
   artifacts:
     baseDirectory: build
     files:
