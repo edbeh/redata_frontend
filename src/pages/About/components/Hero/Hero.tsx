@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Bugsnag from "@bugsnag/js";
 
 import { Button } from "components";
 import { navigateToSubdomain } from "utils";
@@ -83,12 +82,7 @@ const Hero = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Button
-            variant="secondary"
-            onClick={() => Bugsnag.notify(new Error("Test bugsnag error"))}
-          >
-            View Sample Profile
-          </Button>
+          <Button variant="secondary">View Sample Profile</Button>
         </a>
       </div>
 
