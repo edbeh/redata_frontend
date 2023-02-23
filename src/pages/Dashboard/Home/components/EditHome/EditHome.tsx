@@ -47,7 +47,7 @@ const EditProfile = () => {
     ) {
       toast.success("Data updated successfully");
       if (searchParams?.callbackUrl) {
-        navigate(searchParams.callbackUrl);
+        window.location.href = searchParams.callbackUrl;
       } else {
         navigate("/home");
       }

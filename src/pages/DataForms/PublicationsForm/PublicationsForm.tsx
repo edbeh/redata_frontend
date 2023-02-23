@@ -377,10 +377,10 @@ const PublicationsForm = React.forwardRef<
                 href={
                   isOnboarding
                     ? `/onboarding/1?focus=pubMedNames&callbackUrl=${encodeURIComponent(
-                        window.location.pathname
+                        window.location.href
                       )}`
                     : `/home/edit?focus=pubMedNames&callbackUrl=${encodeURIComponent(
-                        window.location.pathname
+                        window.location.href
                       )}`
                 }
                 className="text-blue-500 hover:underline"
