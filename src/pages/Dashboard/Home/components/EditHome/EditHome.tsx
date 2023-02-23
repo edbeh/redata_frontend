@@ -1,7 +1,9 @@
+import { toast } from "react-toastify";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ImgArrowUturnLeftOutline } from "assets";
+import { getSearchParams } from "utils";
 import { BreadCrumbs, Button, Card } from "components";
 import { BaseLayout } from "wrapper-components";
 import {
@@ -15,10 +17,10 @@ import {
   IsSubmissionLoadingType,
   IsSubmissionSuccessfulType,
 } from "./EditHome.model";
-import { toast } from "react-toastify";
 
 const EditProfile = () => {
   const navigate = useNavigate();
+  const searchParams = getSearchParams() as any;
   const basicInfoSubmitRef = useRef<HTMLButtonElement>(null);
   const researchInterestSubmitRef = useRef<HTMLButtonElement>(null);
   const patientPopulationSubmitRef = useRef<HTMLButtonElement>(null);
@@ -44,9 +46,14 @@ const EditProfile = () => {
       isSubmissionSuccessful.patientPopulations
     ) {
       toast.success("Data updated successfully");
-      navigate("/home");
+      if (searchParams?.callbackUrl) {
+        navigate(searchParams.callbackUrl);
+      } else {
+        navigate("/home");
+      }
     }
   }, [
+    searchParams,
     isSubmissionSuccessful.basicInfo,
     isSubmissionSuccessful.researchInterests,
     isSubmissionSuccessful.patientPopulations,

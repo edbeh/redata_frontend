@@ -14,7 +14,6 @@ Bugsnag.start({
   releaseStage: process.env.REACT_APP_BUGSNAG_RELEASE_STAGE as string,
 });
 
-console.log(getAppVersion());
 console.log("bugsnag started");
 
 const plugin = Bugsnag.getPlugin("react") as BugsnagPluginReactResult;

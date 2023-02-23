@@ -21,7 +21,6 @@ import {
   useUpdateMe,
   useFetchPubMedByNames,
 } from "api/hooks";
-import { ME_API_KEY } from "api/keys";
 
 import { IBasicInfoFormFields } from "./BasicInfoForm.model";
 import { schema } from "./BasicInfoForm.schema";
