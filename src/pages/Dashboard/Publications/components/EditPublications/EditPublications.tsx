@@ -18,12 +18,13 @@ const EditPublications = () => {
           <h1 className="text-4xl font-semibold tracking-tight text-white">
             Edit Publications
           </h1>
-          <ImgArrowUturnLeftOutline
+          <div
+            className="flex space-x-1 items-center text-white cursor-pointer"
             onClick={() => navigate("/publications")}
-            width={20}
-            height={20}
-            className="text-white cursor-pointer"
-          />
+          >
+            <ImgArrowUturnLeftOutline width={20} height={20} />
+            <p>Back</p>
+          </div>
         </div>
 
         <div className="flex flex-col w-full mt-8 space-y-6">

@@ -24,12 +24,13 @@ const Publications = () => {
           <h1 className="text-4xl font-semibold tracking-tight text-white">
             Publications
           </h1>
-          <ImgPencilSquareOutline
+          <div
+            className="flex space-x-1 items-center text-white cursor-pointer"
             onClick={() => navigate("/publications/edit")}
-            width={20}
-            height={20}
-            className="text-white cursor-pointer"
-          />
+          >
+            <ImgPencilSquareOutline width={20} height={20} />
+            <p>Edit</p>
+          </div>
         </div>
 
         <div className="flex flex-col w-full mt-8 space-y-6">
