@@ -31,6 +31,16 @@ export const schema = yup.object({
     .array()
     .of(yup.object().shape(otherSubspecialtySchema)),
   pubMedNames: yup.string(),
+  googleScholarUrl: yup.lazy((value) =>
+    !value
+      ? yup.string()
+      : yup
+          .string()
+          .matches(
+            /https:\/\/scholar.google.com\/citations\?/,
+            "This must be a valid google scholar url"
+          )
+  ),
   mcrNo: yup.string(),
   bio: yup.string().max(1500, validationMessages.validate.max1500),
   image: yup.mixed(),

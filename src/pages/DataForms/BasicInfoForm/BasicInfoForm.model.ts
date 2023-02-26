@@ -13,6 +13,7 @@ export interface IBasicInfoFormFields {
   primarySubspecialtyOthers: string;
   otherSubspecialties: OtherSubspecialties[];
   pubMedNames: string;
+  googleScholarUrl: string;
   mcrNo: string;
   bio: string;
   image: FileList;
