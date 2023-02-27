@@ -13,6 +13,7 @@ import {
   HeroSectionLoading,
   InfoSectionLoading,
   CommonSectionLoading,
+  CitationSection,
 } from "./components";
 import { useFetchMe } from "api/hooks";
 import { useEffect } from "react";
@@ -56,9 +57,7 @@ const Home = () => {
 
               {fetchMe?.data?.data?.data?.bio?.length > 0 && (
                 <Card>
-                  <h2 className="mb-5 text-xl font-semibold text-gray-700">
-                    Bio
-                  </h2>
+                  <h2 className="mb-6 text-xl font-bold text-gray-700">Bio</h2>
                   <p className="whitespace-pre-wrap">
                     {fetchMe.data.data.data.bio}
                   </p>
@@ -100,6 +99,7 @@ const Home = () => {
                   }}
                 />
               )}
+              <CitationSection />
             </>
           ) : (
             <>

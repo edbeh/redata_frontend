@@ -4,3 +4,4 @@ export { default as InfoSection } from "./InfoSection/InfoSection";
 export { default as InfoSectionLoading } from "./InfoSection/InfoSection.loading";
 export { default as CommonSection } from "./CommonSection/CommonSection";
 export { default as CommonSectionLoading } from "./CommonSection/CommonSection.loading";
+export { default as CitationSection } from "./CitationSection/CitationSection";

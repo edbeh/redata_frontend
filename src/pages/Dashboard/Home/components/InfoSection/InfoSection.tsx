@@ -9,7 +9,7 @@ const InfoSection = ({ data }: InfoSectionProps) => {
   return (
     <div className="w-full">
       <Card>
-        <h2 className="mb-5 text-xl font-semibold text-gray-700">About me</h2>
+        <h2 className="mb-6 text-xl font-bold text-gray-700">About me</h2>
 
         <div className="flex flex-col mt-4 space-y-4">
           <div className="flex flex-col justify-between space-x-0 space-y-1 sm:space-y-0 sm:space-x-4 sm:flex-row">

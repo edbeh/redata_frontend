@@ -134,8 +134,6 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
       const cleanData = cleanUpData(data, correctedPubMedNames);
 
-      console.log("clean", JSON.stringify(Object.fromEntries(cleanData)));
-
       console.log(JSON.stringify(cleanData, null, 2));
       // @ts-expect-error
       updateMe.mutate(cleanData);
