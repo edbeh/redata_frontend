@@ -36,18 +36,9 @@ export const schema = yup.object({
       ? yup.string()
       : yup
           .string()
-          // .matches(
-          //   /(https:\/\/scholar.google.com\/citations\?)*(user=)/,
-          //   "This must be a valid google scholar url"
-          // )
-          .test(
-            "googleScholarUrl",
-            "This must a valid google scholar url",
-            // @ts-ignore
-            (value) => {
-              value?.includes("https://scholar.google.com/citations?") &&
-                value.includes("user=");
-            }
+          .matches(
+            /https:\/\/scholar.google.com\/citations\?.*user=.*/,
+            "This must be a valid google scholar url"
           )
   ),
   mcrNo: yup.string(),

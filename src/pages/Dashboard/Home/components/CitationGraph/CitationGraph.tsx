@@ -10,16 +10,32 @@ import {
 import { GetMe, GetUserById } from "api/models";
 
 import CitationChartTooltip from "../CitationGraphTooltip/CitationGraphTooltip";
+import { useEffect, useState } from "react";
 
 interface CitationGraphProps {
   data: GetMe.Graph[] | GetUserById.Graph[];
 }
 
 const CitationGraph = ({ data }: CitationGraphProps) => {
-  const modifiedData = data?.map((item) => ({
-    year: parseInt(item.year),
-    citations: parseInt(item.citations),
-  }));
+  const [modifiedData, setModifiedData] = useState<
+    | {
+        year: number;
+        citations: number;
+      }[]
+    | null
+  >(null);
+
+  useEffect(() => {
+    const modified = data?.map((item) => ({
+      year: parseInt(item.year),
+      citations: parseInt(item.citations),
+    }));
+
+    setModifiedData(modified);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
+  if (!modifiedData) return null;
 
   return (
     <div className="flex flex-col max-h-[332px] w-full h-[332px] border-background">

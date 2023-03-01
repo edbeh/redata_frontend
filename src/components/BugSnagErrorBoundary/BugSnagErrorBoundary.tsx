@@ -7,16 +7,16 @@ import BugsnagPluginReact, {
 import { getAppVersion } from "utils";
 
 // start service if not in local development
-// if (process.env.NODE_ENV !== "development") {
-Bugsnag.start({
-  apiKey: process.env.REACT_APP_BUGSNAG_API_KEY as string,
-  appVersion: getAppVersion(),
-  plugins: [new BugsnagPluginReact()],
-  releaseStage: process.env.REACT_APP_BUGSNAG_RELEASE_STAGE as string,
-});
+if (process.env.NODE_ENV !== "development") {
+  Bugsnag.start({
+    apiKey: process.env.REACT_APP_BUGSNAG_API_KEY as string,
+    appVersion: getAppVersion(),
+    plugins: [new BugsnagPluginReact()],
+    releaseStage: process.env.REACT_APP_BUGSNAG_RELEASE_STAGE as string,
+  });
 
-console.log("bugsnag started");
-// }
+  console.log("bugsnag started");
+}
 
 const plugin = Bugsnag.getPlugin("react") as BugsnagPluginReactResult;
 const ErrorBoundary = plugin?.createErrorBoundary(React);
