@@ -37,9 +37,7 @@ const Profile = () => {
 
             {fetchUserById?.data?.data?.data?.bio?.length > 0 && (
               <Card>
-                <h2 className="mb-5 text-xl font-semibold text-gray-700">
-                  Bio
-                </h2>
+                <h2 className="mb-6 text-xl font-bold text-gray-800">Bio</h2>
                 <p className="whitespace-pre-wrap">
                   {fetchUserById.data.data.data.bio}
                 </p>

@@ -17,6 +17,41 @@ export declare module GetUserById {
     name: string;
   }
 
+  export interface Citations {
+    all: string;
+    since_2018: string;
+  }
+
+  export interface HIndex {
+    all: string;
+    since_2018: string;
+  }
+
+  export interface I10Index {
+    all: string;
+    since_2018: string;
+  }
+
+  export interface Table {
+    citations: Citations;
+    "h-index": HIndex;
+    "i10-index": I10Index;
+  }
+
+  export interface Graph {
+    year: string;
+    citations: string;
+  }
+
+  export interface GoogleScholar {
+    id: string;
+    type: string;
+    url: string;
+    name: string;
+    table: Table[];
+    graph: Graph[];
+  }
+
   export interface PrimarySpecialty {
     id: string;
     type: string;
@@ -31,14 +66,14 @@ export declare module GetUserById {
     variant: string;
   }
 
-  export interface ResearchInterests {
+  export interface ResearchInterest {
     id: string;
     type: string;
     name: string;
     variant: string;
   }
 
-  export interface PatientPools {
+  export interface PatientPool {
     id: string;
     type: string;
     name: string;
@@ -49,19 +84,18 @@ export declare module GetUserById {
     id: string;
     type: string;
     name: string;
-    email: string;
-    bio: string;
-    correctedPubmedNames: string[];
+    image: string;
     institution: Institution;
     designation: Designation;
     department: Department;
+    googleScholar: GoogleScholar;
     primarySpecialty: PrimarySpecialty;
     otherSpecialties: OtherSpecialty[];
-    researchInterests: ResearchInterests[];
-    patientPools: PatientPools[];
-    mcrNumber?: any;
-    pubmedNames: string[];
-    image: string | null;
+    researchInterests: ResearchInterest[];
+    patientPools: PatientPool[];
+    email: string;
+    bio: string;
+    correctedPubmedNames: string[];
   }
 
   export interface ApiResponse {

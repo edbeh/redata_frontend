@@ -3,6 +3,7 @@ import { UseFormSetError } from "react-hook-form";
 import { validationMessages } from "const";
 
 import { IBasicInfoFormFields } from "./BasicInfoForm.model";
+import { toast } from "react-toastify";
 
 export const cleanUpData = (
   data: IBasicInfoFormFields,
@@ -71,6 +72,7 @@ export const cleanUpData = (
   form.append("name", data.name);
   form.append("departmentId", data.department.id);
   form.append("mcrNumber", data.mcrNo);
+  form.append("googleScholarUrl", data.googleScholarUrl);
   form.append("bio", data.bio);
   form.append(
     "image",
@@ -100,6 +102,7 @@ export const validatePubMedNames = (
   setError("pubMedNames", {
     message: `The following PubMed names are invalid: ${filtered.join(", ")}`,
   });
+  toast.error("Please correct invalid PubMed names");
 
   return status;
 };

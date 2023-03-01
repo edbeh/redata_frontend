@@ -30,6 +30,7 @@ import {
   validatePubMedNames,
 } from "./BasicInfoForm.util";
 import { IsSubmissionLoadingType } from "../../Dashboard/Home/components/EditHome/EditHome.model";
+import { toast } from "react-toastify";
 
 interface BasicInfoFormProps {
   /** callback if api call is successful */
@@ -116,7 +117,9 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
 
     const handleSubmitForm = async (data: IBasicInfoFormFields) => {
       if (fetchPubMedByNames?.isLoading || fetchPubMedByNames?.isFetching)
-        return;
+        return toast.warn(
+          "Pubmed name validations were running, please try submitting your changes again"
+        );
 
       const { hasErrors: hasDuplicateValueErrors } = validateDuplicateValues(
         data,
@@ -204,6 +207,8 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
           if (data.designation) setValue("designation", data.designation);
           if (data.name) setValue("name", data.name);
           if (data.bio) setValue("bio", data.bio);
+          if (data.googleScholar?.url)
+            setValue("googleScholarUrl", data.googleScholar.url);
           if (data.pubmedNames) {
             setValue("pubMedNames", data.pubmedNames.join(", "));
             setPubMedNamesToSearch(data.pubmedNames.join(", "));
@@ -405,6 +410,19 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
                 fetchPubMedByNames?.isLoading || fetchPubMedByNames?.isFetching
               }
               onBlur={handlePubMedNamesOnBlur}
+            />
+          </div>
+
+          <div className="flex flex-col w-full mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row">
+            <FormInput
+              label="Google Scholar Url"
+              register={register}
+              id="googleScholarUrl"
+              name="googleScholarUrl"
+              required={getYupIsRequired(schema, "googleScholarUrl")}
+              helper="Please include the full url for your google scholar profile. This will be used to get your citation information."
+              autoComplete="off"
+              error={formErrors?.googleScholarUrl?.message}
             />
           </div>
 
