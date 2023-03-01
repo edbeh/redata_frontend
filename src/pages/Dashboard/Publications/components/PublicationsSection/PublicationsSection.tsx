@@ -20,7 +20,7 @@ const PublicationsSection = ({
     <div className="w-full">
       <Card>
         {withHeader && (
-          <h2 className="mb-6 text-xl font-bold text-gray-700">Publications</h2>
+          <h2 className="mb-6 text-xl font-bold text-gray-800">Publications</h2>
         )}
 
         {!withHeader && data.length > 0 && (

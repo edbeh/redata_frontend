@@ -6,23 +6,29 @@ import {
   BarChart,
   Bar,
 } from "recharts";
+
+import { GetMe, GetUserById } from "api/models";
+
 import CitationChartTooltip from "../CitationGraphTooltip/CitationGraphTooltip";
 
-import { Citation } from "../CitationSection/CitationSection.model";
-
 interface CitationGraphProps {
-  data: Citation.Graph[];
+  data: GetMe.Graph[] | GetUserById.Graph[];
 }
 
 const CitationGraph = ({ data }: CitationGraphProps) => {
+  const modifiedData = data?.map((item) => ({
+    year: parseInt(item.year),
+    citations: parseInt(item.citations),
+  }));
+
   return (
     <div className="flex flex-col max-h-[332px] w-full h-[332px] border-background">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           width={730}
           height={332}
-          margin={{ top: 5, right: 5, bottom: 5, left: -30 }}
-          data={data}
+          margin={{ top: 5, right: 5, bottom: 5, left: -25 }}
+          data={modifiedData}
         >
           <defs>
             <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">

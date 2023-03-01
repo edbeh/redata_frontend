@@ -207,6 +207,8 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
           if (data.designation) setValue("designation", data.designation);
           if (data.name) setValue("name", data.name);
           if (data.bio) setValue("bio", data.bio);
+          if (data.googleScholar?.url)
+            setValue("googleScholarUrl", data.googleScholar.url);
           if (data.pubmedNames) {
             setValue("pubMedNames", data.pubmedNames.join(", "));
             setPubMedNamesToSearch(data.pubmedNames.join(", "));

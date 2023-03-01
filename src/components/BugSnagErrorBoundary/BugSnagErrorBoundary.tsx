@@ -6,7 +6,8 @@ import BugsnagPluginReact, {
 
 import { getAppVersion } from "utils";
 
-// start service
+// start service if not in local development
+// if (process.env.NODE_ENV !== "development") {
 Bugsnag.start({
   apiKey: process.env.REACT_APP_BUGSNAG_API_KEY as string,
   appVersion: getAppVersion(),
@@ -15,6 +16,7 @@ Bugsnag.start({
 });
 
 console.log("bugsnag started");
+// }
 
 const plugin = Bugsnag.getPlugin("react") as BugsnagPluginReactResult;
 const ErrorBoundary = plugin?.createErrorBoundary(React);

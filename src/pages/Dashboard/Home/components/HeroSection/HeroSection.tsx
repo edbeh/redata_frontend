@@ -1,10 +1,10 @@
 import { Card } from "components";
 
 import { imgNoProfilePic } from "assets";
-import { GetMe } from "api/models";
+import { GetMe, GetUserById } from "api/models";
 
 interface HeroSectionProps {
-  data: GetMe.Data;
+  data: GetMe.Data | GetUserById.Data;
   withProfileDetails?: boolean;
 }
 
@@ -46,14 +46,14 @@ const HeroSection = ({
               <p className="basis-2/3">{data?.email}</p>
             </div>
 
-            {data?.mcrNumber && (
+            {/* {data?.mcrNumber && (
               <div className="flex flex-col justify-between space-x-0 space-y-1 sm:space-y-0 sm:space-x-4 sm:flex-row">
                 <p className="font-semibold basis-1/3 min-w-[125px]">
                   MCR No.:
                 </p>
                 <p className="basis-2/3">{data.mcrNumber}</p>
               </div>
-            )}
+            )} */}
 
             {data?.primarySpecialty && (
               <div className="flex flex-col justify-between space-x-0 space-y-1 sm:space-y-0 sm:space-x-4 sm:flex-row">

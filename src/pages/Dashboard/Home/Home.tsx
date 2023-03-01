@@ -57,7 +57,7 @@ const Home = () => {
 
               {fetchMe?.data?.data?.data?.bio?.length > 0 && (
                 <Card>
-                  <h2 className="mb-6 text-xl font-bold text-gray-700">Bio</h2>
+                  <h2 className="mb-6 text-xl font-bold text-gray-800">Bio</h2>
                   <p className="whitespace-pre-wrap">
                     {fetchMe.data.data.data.bio}
                   </p>
@@ -99,7 +99,10 @@ const Home = () => {
                   }}
                 />
               )}
-              <CitationSection />
+
+              {fetchMe?.data?.data?.data?.googleScholar && (
+                <CitationSection data={fetchMe.data.data.data.googleScholar} />
+              )}
             </>
           ) : (
             <>
