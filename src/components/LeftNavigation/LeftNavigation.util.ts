@@ -1,6 +1,7 @@
 import {
   ImgDocumentOutline,
   ImgHomeOutline,
+  ImgBeakerOutline,
   ImgSearchOutline,
   ImgUserCircleOutline,
   ImgArrowUturnLeftOutline,
@@ -33,6 +34,12 @@ export const getNavigationItems = (): INavigationItem[] => {
       label: "Home",
       route: "/home",
       Icon: ImgHomeOutline,
+    },
+    {
+      key: "research",
+      label: "Research",
+      route: "/research",
+      Icon: ImgBeakerOutline,
     },
     {
       key: "publications",

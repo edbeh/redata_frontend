@@ -10,6 +10,7 @@ import {
   HeroSectionLoading,
   InfoSectionLoading,
   CommonSectionLoading,
+  CitationSection,
 } from "pages/Dashboard/Home/components";
 import { PublicationsSection } from "pages/Dashboard/Publications/components";
 
@@ -75,6 +76,12 @@ const Profile = () => {
                     )}&searchIn=medicalKeywords`,
                   });
                 }}
+              />
+            )}
+
+            {fetchUserById?.data?.data?.data?.googleScholar && (
+              <CitationSection
+                data={fetchUserById.data.data.data.googleScholar}
               />
             )}
 
