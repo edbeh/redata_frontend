@@ -10,7 +10,7 @@ const SearchTrialsForm = () => {
   // *Queries
   const fetchTrialsByKeywords = useFetchTrialsByKeywords(
     searchKeywords,
-    !!setSearchKeywords
+    !!searchKeywords
   );
 
   // *Methods
