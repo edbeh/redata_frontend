@@ -19,7 +19,7 @@ customHeaders:
           img-src redata-images-dev.s3.ap-southeast-1.amazonaws.com staging-api.getredata.com 'self' blob: data: ;
           font-src fonts.gstatic.com;
           style-src 'self' fonts.googleapis.com fonts.gstatic.com;
-          connect-src staging-api.getredata.com eutils.ncbi.nlm.nih.gov esummary.ncbi.nlm.nih.gov clinicaltrials.gov/api https://*.bugsnag.com/;"
+          connect-src staging-api.getredata.com eutils.ncbi.nlm.nih.gov esummary.ncbi.nlm.nih.gov https://clinicaltrials.gov/api/* https://*.bugsnag.com/;"
 
       - key: "Referrer-Policy"
         value: "no-referrer"
