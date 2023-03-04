@@ -68,7 +68,8 @@ const LeftNavigation = () => {
                   if (item.key === "logout") return setShowLogOutModal(true);
                 }}
               >
-                <item.Icon className={`w-5 h-5 stroke-2`} /> <p>{item.label}</p>
+                <item.Icon className={`w-5 h-5 stroke-2`} />
+                <p>{item.label}</p>
               </li>
             );
           })}
