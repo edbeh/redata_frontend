@@ -77,6 +77,6 @@ const getStudyFields = [
 ];
 
 export const CLINICAL_TRIALS_GOV_API_URL = (keywords: string) =>
-  `https://clinicaltrials.gov/api/query/full_studies/?expr=${keywords}&fmt=json&fields=${getStudyFields.join(
+  `https://clinicaltrials.gov/api/query/study_fields/?expr=${keywords}&fmt=json&fields=${getStudyFields.join(
     ","
   )}`;
