@@ -55,12 +55,28 @@ export const PUBLIC_ENDPOINTS = [
 /**
  * *External Urls
  */
+// *PUBMED
 export const BASE_PUBMED_API_URL =
   "https://eutils.ncbi.nlm.nih.gov/entrez/eutils";
-
 export const SEARCH_PUBMED_NAMES_PREFIX = "/esearch.fcgi?db=pubMed&term=";
 export const SEARCH_PUBMED_NAMES_SUFFIX =
   "%28singapore%5BAffiliation%5D%29&retmax=5000&format=json";
-
 export const SEARCH_PUBMED_IDS_PREFIX = "/esummary.fcgi?db=pubMed&id=";
 export const SEARCH_PUBMED_IDS_SUFFIX = "&sort=pubdate&retmax=5000&format=json";
+
+// *CLINICALTRIALS.GOV
+const getStudyFields = [
+  "NCTId",
+  "OfficialTitle",
+  "OverallStatus",
+  "OrgStudyId",
+  "StudyType",
+  "ResponsiblePartyType",
+  "LeadSponsorName",
+  "ReferencePMID",
+];
+
+export const CLINICAL_TRIALS_GOV_API_URL = (keywords: string) =>
+  `https://clinicaltrials.gov/api/query/study_fields?expr=${keywords}&fmt=json&fields=${getStudyFields.join(
+    ","
+  )}`;
