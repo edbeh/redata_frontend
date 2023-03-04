@@ -77,6 +77,6 @@ const getStudyFields = [
 ];
 
 export const CLINICAL_TRIALS_GOV_API_URL = (keywords: string) =>
-  `https://clinicaltrials.gov/api/query/study_fields/?expr=${keywords}&fmt=json&fields=${getStudyFields.join(
+  `https://clinicaltrials.gov/api/query/study_fields/?expr=${keywords}+AND+SEARCH%5BLocation%5D+Singapore%0D%0A&fmt=json&fields=${getStudyFields.join(
     ","
   )}`;
