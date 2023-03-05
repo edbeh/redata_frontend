@@ -6,14 +6,16 @@ import { ApiErrorProps, createAxiosInstance } from "api/utils";
 
 import { CLINICAL_TRIALS_GOV_API_KEY } from "../keys";
 import { CLINICAL_TRIALS_GOV_API_URL } from "../endpoints";
-import { GetTrialsByKeywords } from "../models";
+import { GetStudiesByKeywords } from "../models";
 
 /**
- * //*GET Clinical Trials by Keywords
+ * //*GET Studies by Keywords
  */
-const fetchTrialsByKeywords = async (keywords: string) => {
+const fetchStudiesByKeywords = async (keywords: string) => {
   return axios
-    .get<GetTrialsByKeywords.ApiResponse>(CLINICAL_TRIALS_GOV_API_URL(keywords))
+    .get<GetStudiesByKeywords.ApiResponse>(
+      CLINICAL_TRIALS_GOV_API_URL(keywords)
+    )
     .catch((error) => {
       const { errors } = error.response?.data as ApiErrorProps;
       errors?.length > 0
@@ -23,13 +25,13 @@ const fetchTrialsByKeywords = async (keywords: string) => {
     });
 };
 
-export const useFetchTrialsByKeywords = (
+export const useFetchStudiesByKeywords = (
   keywords: string,
   enabled: boolean = false
 ) => {
   return useQuery(
     [CLINICAL_TRIALS_GOV_API_KEY, keywords],
-    () => fetchTrialsByKeywords(keywords),
+    () => fetchStudiesByKeywords(keywords),
     {
       enabled,
       staleTime: 1000 * 60 * 10, // 10 minutes

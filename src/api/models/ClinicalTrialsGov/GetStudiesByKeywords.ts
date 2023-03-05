@@ -1,4 +1,4 @@
-export declare module GetTrialsByKeywords {
+export declare module GetStudiesByKeywords {
   export interface StudyField {
     Rank: number;
     NCTId: string[];

@@ -21,4 +21,4 @@ export * from "./Users/GetUserPublicationsById";
 export * from "./Search/GetSearchUsers";
 export * from "./Search/GetSearchMedicalKeywords";
 export * from "./Search/GetSearchPublications";
-export * from "./ClinicalTrialsGov/GetTrialsByKeywords";
+export * from "./ClinicalTrialsGov/GetStudiesByKeywords";

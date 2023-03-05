@@ -1,20 +1,20 @@
 import { useNavigate } from "react-router-dom";
 
 import { BaseLayout } from "wrapper-components";
-import { BreadCrumbs, Card } from "components";
+import { BreadCrumbs, Card, Modal } from "components";
 import { ImgArrowUturnLeftOutline } from "assets";
 
-import { editResearchNav } from "../../Research.util";
+import { editStudyNav } from "../../Studies.util";
 
 import SearchTrialsForm from "pages/DataForms/SearchTrialsForm/SearchTrialsForm";
 
-const EditResearch = () => {
+const EditStudy = () => {
   const navigate = useNavigate();
 
   return (
     <BaseLayout withLeftNavigation>
       <div className="w-full pb-12">
-        <BreadCrumbs breadcrumbs={editResearchNav.breadcrumbs} />
+        <BreadCrumbs breadcrumbs={editStudyNav.breadcrumbs} />
         <div className="flex space-x-3 items-center">
           <h1 className="text-4xl font-semibold tracking-tight text-white">
             Edit Research
@@ -40,4 +40,4 @@ const EditResearch = () => {
   );
 };
 
-export default EditResearch;
+export default EditStudy;

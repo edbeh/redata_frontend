@@ -2,17 +2,17 @@ import { Card } from "components";
 import { imgNoData } from "assets";
 import { SingleResearch } from "api/models";
 
-interface ResearchSectionProps {
+interface StudiesSectionProps {
   data: SingleResearch[];
   withHeader?: boolean;
 }
 
-const ResearchSection = ({ data, withHeader }: ResearchSectionProps) => {
+const StudiesSection = ({ data, withHeader }: StudiesSectionProps) => {
   return (
     <div className="w-full">
       <Card>
         {withHeader && (
-          <h2 className="mb-6 text-xl font-bold text-gray-800">Research</h2>
+          <h2 className="mb-6 text-xl font-bold text-gray-800">Studies</h2>
         )}
 
         {data.length === 0 ? (
@@ -39,4 +39,4 @@ const ResearchSection = ({ data, withHeader }: ResearchSectionProps) => {
   );
 };
 
-export default ResearchSection;
+export default StudiesSection;

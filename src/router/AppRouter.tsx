@@ -6,7 +6,7 @@ import {
   Onboarding,
   Home,
   EditHome,
-  Research,
+  Studies,
   EditResearch,
   Publications,
   EditPublications,
@@ -35,7 +35,7 @@ const AppRouter = () => {
 
           <Route path="/home" element={<Home />} />
           <Route path="/home/edit" element={<EditHome />} />
-          <Route path="/research" element={<Research />} />
+          <Route path="/studies" element={<Studies />} />
           <Route path="/research/edit" element={<EditResearch />} />
           <Route path="/publications" element={<Publications />} />
           <Route path="/publications/edit" element={<EditPublications />} />

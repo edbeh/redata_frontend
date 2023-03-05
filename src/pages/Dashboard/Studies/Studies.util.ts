@@ -1,6 +1,6 @@
 import { IBreadCrumbs } from "components/BreadCrumbs/BreadCrumbs.model";
 
-export const researchNav: IBreadCrumbs = {
+export const studiesNav: IBreadCrumbs = {
   breadcrumbs: [
     {
       key: "dashboard",
@@ -8,14 +8,14 @@ export const researchNav: IBreadCrumbs = {
       url: "/home",
     },
     {
-      key: "research",
-      label: "Research",
-      url: "/research",
+      key: "studies",
+      label: "Studies",
+      url: "/studies",
     },
   ],
 };
 
-export const editResearchNav: IBreadCrumbs = {
+export const editStudyNav: IBreadCrumbs = {
   breadcrumbs: [
     {
       key: "dashboard",
@@ -23,14 +23,14 @@ export const editResearchNav: IBreadCrumbs = {
       url: "/home",
     },
     {
-      key: "research",
-      label: "Research",
-      url: "/research",
+      key: "studies",
+      label: "Studies",
+      url: "/studies",
     },
     {
       key: "edit",
       label: "Edit",
-      url: "/research/edit",
+      url: "/studies/edit",
     },
   ],
 };

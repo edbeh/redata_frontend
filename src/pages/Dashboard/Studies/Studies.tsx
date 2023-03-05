@@ -5,10 +5,10 @@ import { ImgPencilSquareOutline } from "assets";
 import { BaseLayout } from "wrapper-components";
 import { useFetchMe } from "api/hooks";
 
-import { researchNav } from "./Research.util";
-import ResearchSection from "./components/ResearchSection/ResearchSection";
+import { studiesNav } from "./Studies.util";
+import StudiesSection from "./components/StudiesSection/StudiesSection";
 
-const Research = () => {
+const Studies = () => {
   const navigate = useNavigate();
 
   // *Queries
@@ -18,10 +18,10 @@ const Research = () => {
   return (
     <BaseLayout withLeftNavigation>
       <div className="w-full pb-12">
-        <BreadCrumbs breadcrumbs={researchNav.breadcrumbs} />
+        <BreadCrumbs breadcrumbs={studiesNav.breadcrumbs} />
         <div className="flex space-x-3 items-center">
           <h1 className="text-4xl font-semibold tracking-tight text-white">
-            Research
+            Studies
           </h1>
           <div
             className="flex space-x-1 items-center text-white cursor-pointer"
@@ -33,11 +33,11 @@ const Research = () => {
         </div>
 
         <div className="flex flex-col w-full mt-8 space-y-6">
-          {fetchMe?.data?.data ? <ResearchSection data={[]} /> : <div />}
+          {fetchMe?.data?.data ? <StudiesSection data={[]} /> : <div />}
         </div>
       </div>
     </BaseLayout>
   );
 };
 
-export default Research;
+export default Studies;
