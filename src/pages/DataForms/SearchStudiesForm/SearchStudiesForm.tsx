@@ -1,7 +1,7 @@
 import { Button, Input, Modal } from "components";
 
 import { useFetchStudiesByKeywords } from "api/hooks/useClinicalTrialsGovQuery";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import StudyCard from "pages/Dashboard/Studies/components/StudyCard/StudyCard";
 
@@ -11,6 +11,9 @@ const SearchStudiesForm = () => {
   const [isAddResearchModalVisible, setIsAddResearchModalVisible] =
     useState<boolean>(false);
 
+  const [refresh, setRefresh] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+
   // *Queries
   const fetchStudiesByKeywords = useFetchStudiesByKeywords(
     searchKeywords,
@@ -19,8 +22,16 @@ const SearchStudiesForm = () => {
 
   // *Methods
   const handleSearchClinicalTrialsGov = () => {
+    setRefresh(!refresh);
     setSearchKeywords(keywords);
   };
+
+  // *Effects
+  useEffect(() => {
+    if (fetchStudiesByKeywords?.data?.data?.StudyFieldsResponse?.StudyFields) {
+      setIsAddResearchModalVisible(true);
+    }
+  }, [refresh, fetchStudiesByKeywords.data]);
 
   console.log(
     "data",
@@ -39,8 +50,13 @@ const SearchStudiesForm = () => {
         autoComplete="off"
         required
       />
-      <div className="pt-2">
+      <div className="pt-2 min-w-[200px]">
         <Button
+          isLoading={
+            fetchStudiesByKeywords?.isLoading ||
+            fetchStudiesByKeywords?.isFetching
+          }
+          disabled={keywords?.length === 0}
           variant="secondary"
           loadingText="Searching..."
           onClick={handleSearchClinicalTrialsGov}
@@ -50,15 +66,16 @@ const SearchStudiesForm = () => {
       </div>
 
       <Modal
-        title="Add Research Projects"
+        title="Add Studies"
         content={
           <div className="flex flex-col mb-2 space-y-4">
             <p className="mt-2">
-              Select research projects you'd like to add to your profile.
-              Projects already in your profile are disabled.
+              Select studies you'd like to add to your profile. Studies already
+              in your profile are disabled.
             </p>
 
-            {fetchStudiesByKeywords?.data &&
+            {fetchStudiesByKeywords?.data?.data?.StudyFieldsResponse
+              ?.StudyFields &&
               fetchStudiesByKeywords?.data?.data?.StudyFieldsResponse?.StudyFields.map(
                 (study, i) => {
                   return (

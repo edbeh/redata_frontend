@@ -6,7 +6,7 @@ import { ImgArrowUturnLeftOutline } from "assets";
 
 import { editStudyNav } from "../../Studies.util";
 
-import SearchTrialsForm from "pages/DataForms/SearchTrialsForm/SearchTrialsForm";
+import SearchTrialsForm from "pages/DataForms/SearchStudiesForm/SearchStudiesForm";
 
 const EditStudy = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const EditStudy = () => {
         <BreadCrumbs breadcrumbs={editStudyNav.breadcrumbs} />
         <div className="flex space-x-3 items-center">
           <h1 className="text-4xl font-semibold tracking-tight text-white">
-            Edit Research
+            Edit Studies
           </h1>
           <div
             className="flex space-x-1 items-center text-white cursor-pointer"

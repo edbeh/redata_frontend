@@ -24,11 +24,9 @@ const StudiesSection = ({ data, withHeader }: StudiesSectionProps) => {
               width={130}
               height={130}
             />
-            <p className="text-center font-semibold mt-4">
-              No research projects found
-            </p>
+            <p className="text-center font-semibold mt-4">No studies found</p>
             <p className="text-center mt-2">
-              There are no saved research projects in the profile yet
+              There are no saved studies in the profile yet
             </p>
           </div>
         ) : (

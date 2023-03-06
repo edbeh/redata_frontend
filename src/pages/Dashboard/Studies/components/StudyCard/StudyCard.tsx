@@ -15,6 +15,16 @@ const StudyCard = ({
   isSelected,
   isDisabled,
 }: StudyCardProps) => {
+  const {
+    LeadSponsorName,
+    NCTId,
+    OfficialTitle,
+    OrgStudyId,
+    OverallStatus,
+    ReferencePMID,
+    ResponsiblePartyType,
+    StudyType,
+  } = study;
   console.log("study", study);
 
   return <div />;

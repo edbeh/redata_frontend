@@ -21,5 +21,6 @@ export const validationMessages = {
     duplicateResearchInterest: "Please enter different research interests",
     duplicatePatientPopulation: "Please enter different patient populations",
     searchIn: "Please select at least 1 field to search",
+    tryAnotherKeyword: "There are no results associated with this keyword",
   },
 };

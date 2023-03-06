@@ -25,7 +25,7 @@ const Studies = () => {
           </h1>
           <div
             className="flex space-x-1 items-center text-white cursor-pointer"
-            onClick={() => navigate("/research/edit")}
+            onClick={() => navigate("/studies/edit")}
           >
             <ImgPencilSquareOutline width={20} height={20} />
             <p>Edit</p>

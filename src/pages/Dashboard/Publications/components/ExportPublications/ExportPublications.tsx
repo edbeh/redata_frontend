@@ -22,14 +22,13 @@ interface ExportPublicationsProps {
 const ExportPublications = ({ publication }: ExportPublicationsProps) => {
   const publicationFormats = getExportPublicationFormats();
 
-  const [selectedFormat, setSelectedFormat] = useState<string>("ama");
+  const [selectedFormat, setSelectedFormat] = useState<string>("standard");
 
   // *Queries
   const queryClient = useQueryClient();
   const submitPublicationsExportPdf = useSubmitPublicationsExportPdf();
 
   // *Methods
-
   const handleSubmitExportPdf = () => {
     const payload = {
       format: selectedFormat,
@@ -41,6 +40,7 @@ const ExportPublications = ({ publication }: ExportPublicationsProps) => {
   useEffect(() => {
     if (submitPublicationsExportPdf.data?.data?.data) {
       const data = submitPublicationsExportPdf.data.data.data;
+      console.log("data", data);
       downloadBase64(
         "pdf",
         data,
