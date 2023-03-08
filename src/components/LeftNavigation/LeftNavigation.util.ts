@@ -35,12 +35,12 @@ export const getNavigationItems = (): INavigationItem[] => {
       route: "/home",
       Icon: ImgHomeOutline,
     },
-    {
-      key: "studies",
-      label: "Studies",
-      route: "/studies",
-      Icon: ImgBeakerOutline,
-    },
+    // {
+    //   key: "studies",
+    //   label: "Studies",
+    //   route: "/studies",
+    //   Icon: ImgBeakerOutline,
+    // },
     {
       key: "publications",
       label: "Publications",
