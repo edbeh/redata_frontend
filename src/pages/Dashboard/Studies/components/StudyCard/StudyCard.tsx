@@ -125,7 +125,10 @@ const StudyCard = ({
           {ReferenceCitation?.length > 0 && (
             <div className="!mt-4 flex flex-col w-full text-[13px]">
               <p className="font-semibold">Publication:</p>
-              <p>{ReferenceCitation[0]}</p>
+              <p>
+                {ReferenceCitation[0]}{" "}
+                {ReferencePMID ? `PMID: ${ReferencePMID[0]}` : ""}
+              </p>
               <p className="mt-2 text-xs">
                 <u>Disclaimer</u>: The publication above was automatically
                 linked by ClinicalTrials.gov, it may or may not be about the
