@@ -106,6 +106,9 @@ const SearchStudiesForm = () => {
             }
           }}
           autoComplete="off"
+          helper={
+            "Try to include sponsor name or protocol ID in the keywords for more specific results"
+          }
           error={error}
           required
         />

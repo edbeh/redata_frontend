@@ -126,6 +126,11 @@ const StudyCard = ({
             <div className="!mt-4 flex flex-col w-full text-[13px]">
               <p className="font-semibold">Publication:</p>
               <p>{ReferenceCitation[0]}</p>
+              <p className="mt-2 text-xs">
+                <u>Disclaimer</u>: The publication above was automatically
+                linked by ClinicalTrials.gov, it may or may not be about the
+                study.
+              </p>
             </div>
           )}
         </div>
