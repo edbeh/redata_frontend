@@ -25,7 +25,7 @@ const Modal = ({ title, content, isVisible, onDismiss }: ModalProps) => {
           isVisible
             ? "pointer-events-auto -translate-y-1/2 opacity-100"
             : "pointer-events-none translate-y-full opacity-0"
-        } p-8 fixed m-0 min-w-[50vw] w-full md:w-auto max-h-[90vh] max-w-[90vw] md:max-w-[80vw] rounded-md z-50 bg-white overflow-auto`}
+        } p-8 fixed m-0 w-full md:w-auto max-h-[90vh] max-w-[90vw] md:min-w-[75vw] md:max-w-[80vw] lg:min-w-[50vw] rounded-md z-50 bg-white overflow-auto`}
       >
         {title && (
           <h2 className="mb-2 text-3xl font-bold text-center">{title}</h2>

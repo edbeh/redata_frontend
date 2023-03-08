@@ -4,6 +4,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   required?: boolean;
   error?: string;
   suggestion?: string;
+  helper?: string;
 }
 
 const Input = ({
@@ -12,6 +13,7 @@ const Input = ({
   required,
   error,
   suggestion,
+  helper,
   ...rest
 }: InputProps) => {
   return (
@@ -28,7 +30,7 @@ const Input = ({
                   text-ellipsis disabled:opacity-50 disabled:cursor-not-allowed hover:ring-1
                   ${
                     error
-                      ? "border-red hover:ring-red hover:border-red"
+                      ? "border-red-500 hover:ring-red-500 hover:border-red-500"
                       : "hover:border-primary-600 hover:ring-primary-600"
                   } `}
         {...rest}
@@ -36,6 +38,10 @@ const Input = ({
 
       {suggestion && (
         <div className="mt-[2px] text-sm text-green-600">{suggestion}</div>
+      )}
+      {error && <div className="mt-[2px] text-sm text-red-500">{error}</div>}
+      {helper && (
+        <div className="mt-[2px] text-slate-500 text-sm">{helper}</div>
       )}
     </div>
   );

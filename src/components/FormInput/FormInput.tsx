@@ -48,7 +48,7 @@ const FormInput = ({
                     text-ellipsis disabled:opacity-50 disabled:cursor-not-allowed hover:ring-1
                     ${
                       error
-                        ? "border-red hover:ring-red hover:border-red"
+                        ? "border-red-500 hover:ring-red-500 hover:border-red-500"
                         : "hover:border-primary-600 hover:ring-primary-600"
                     } ${rightCheck ? "pr-[35px]" : ""}`}
         {...register(id)}

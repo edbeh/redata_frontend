@@ -40,7 +40,6 @@ const ExportPublications = ({ publication }: ExportPublicationsProps) => {
   useEffect(() => {
     if (submitPublicationsExportPdf.data?.data?.data) {
       const data = submitPublicationsExportPdf.data.data.data;
-      console.log("data", data);
       downloadBase64(
         "pdf",
         data,

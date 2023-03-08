@@ -43,8 +43,6 @@ const PublicationsForm = React.forwardRef<
     { onSuccessCallback, setIsSubmissionLoading, isOnboarding = false },
     ref
   ) => {
-    const queryClient = useQueryClient();
-
     const [pubMedNamesToSearch, setPubMedNamesToSearch] = useState<string>("");
     const [pubMedIdsToSearch, setPubMedIdsToSearch] = useState<string[]>([]);
     const [publicationsFromPubMed, setPublicationsFromPubMed] = useState<
@@ -90,6 +88,8 @@ const PublicationsForm = React.forwardRef<
     );
 
     // *Queries
+    const queryClient = useQueryClient();
+
     const fetchMe = useFetchMe();
 
     const fetchPubMedByNames = useFetchPubMedByNames(

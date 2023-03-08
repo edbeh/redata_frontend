@@ -1,14 +1,25 @@
 export declare module GetStudiesByKeywords {
+  type OverallStatus =
+    | "Active, not recruiting"
+    | "Recruiting"
+    | "Terminated"
+    | "Completed"
+    | "Withdrawn"
+    | "Unknown Status";
+
   export interface StudyField {
     Rank: number;
     NCTId: string[];
     OfficialTitle: string[];
-    OverallStatus: string[];
+    OverallStatus: OverallStatus[];
     OrgStudyId: string[];
     StudyType: string[];
     ResponsiblePartyType: string[];
     LeadSponsorName: string[];
     ReferencePMID: string[];
+    ReferenceCitation: string[];
+    LocationCountry: string[];
+    LocationFacility: string[];
   }
 
   export interface StudyFieldsResponse {
