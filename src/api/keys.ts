@@ -21,6 +21,8 @@ export const METADATA_PATIENT_POOLS_API_KEY = "metadata_patient_pools";
 export const PUBLICATIONS_API_KEY = "publications";
 export const PUBLICATIONS_EXPORT_PDF_API_KEY = "publications_export_pdf";
 
+export const STUDIES_API_KEY = "studies";
+
 export const PUBMED_NAMES_API_KEY = "pubmed_names";
 
 export const CLINICAL_TRIALS_GOV_API_KEY = "clinical_trials_gov";

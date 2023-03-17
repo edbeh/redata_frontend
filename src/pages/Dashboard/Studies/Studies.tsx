@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { BreadCrumbs } from "components";
 import { ImgPencilSquareOutline } from "assets";
 import { BaseLayout } from "wrapper-components";
-import { useFetchMe } from "api/hooks";
+import { useFetchAllStudies, useFetchMe } from "api/hooks";
 
 import { studiesNav } from "./Studies.util";
 import StudiesSection from "./components/StudiesSection/StudiesSection";
@@ -12,7 +12,7 @@ const Studies = () => {
   const navigate = useNavigate();
 
   // *Queries
-  const fetchMe = useFetchMe();
+  const fetchAllStudies = useFetchAllStudies();
 
   // *JSX
   return (
@@ -33,7 +33,11 @@ const Studies = () => {
         </div>
 
         <div className="flex flex-col w-full mt-8 space-y-6">
-          {fetchMe?.data?.data ? <StudiesSection data={[]} /> : <div />}
+          {fetchAllStudies?.data?.data?.data ? (
+            <StudiesSection data={fetchAllStudies.data.data.data} />
+          ) : (
+            <div />
+          )}
         </div>
       </div>
     </BaseLayout>

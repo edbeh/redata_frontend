@@ -1,9 +1,10 @@
 import { Card } from "components";
 import { imgNoData } from "assets";
-import { SingleResearch } from "api/models";
+import { GetStudies } from "api/models";
+import SingleStudy from "../SingleStudy/SingleStudy";
 
 interface StudiesSectionProps {
-  data: SingleResearch[];
+  data: GetStudies.Datum[];
   withHeader?: boolean;
 }
 
@@ -30,7 +31,11 @@ const StudiesSection = ({ data, withHeader }: StudiesSectionProps) => {
             </p>
           </div>
         ) : (
-          <div className="flex flex-col w-full ml-[-10px] sm:mt-2 sm:ml-0"></div>
+          <div className="flex flex-col w-full ml-[-10px] sm:mt-2 sm:ml-0">
+            {data.map((study, i) => {
+              return <SingleStudy study={study} i={i} key={i} />;
+            })}
+          </div>
         )}
       </Card>
     </div>

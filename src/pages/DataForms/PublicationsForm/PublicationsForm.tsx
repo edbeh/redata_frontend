@@ -163,7 +163,7 @@ const PublicationsForm = React.forwardRef<
       }
     };
 
-    const handleSubmitSelectedSavedPublications = () => {
+    const handleDeleteSelectedSavedPublications = () => {
       const payload = {
         ids: selectedSavedPublicationIds,
       };
@@ -347,7 +347,7 @@ const PublicationsForm = React.forwardRef<
                 <Button
                   variant="red"
                   onClick={handleSubmitSavedPublicationIds(
-                    handleSubmitSelectedSavedPublications
+                    handleDeleteSelectedSavedPublications
                   )}
                   isLoading={removePublications?.isLoading}
                   loadingText="Removing..."

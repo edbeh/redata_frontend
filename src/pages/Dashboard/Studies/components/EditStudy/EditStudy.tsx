@@ -6,7 +6,7 @@ import { ImgArrowUturnLeftOutline } from "assets";
 
 import { editStudyNav } from "../../Studies.util";
 
-import SearchTrialsForm from "pages/DataForms/SearchStudiesForm/SearchStudiesForm";
+import StudiesForm from "pages/DataForms/StudiesForm/StudiesForm";
 
 const EditStudy = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const EditStudy = () => {
           </h1>
           <div
             className="flex space-x-1 items-center text-white cursor-pointer"
-            onClick={() => navigate("/research")}
+            onClick={() => navigate("/studies")}
           >
             <ImgArrowUturnLeftOutline width={20} height={20} />
             <p>Back</p>
@@ -31,7 +31,7 @@ const EditStudy = () => {
         <div className="flex flex-col w-full mt-8 space-y-6">
           <Card>
             <div className="w-full pb-4 pt-2 px-2">
-              <SearchTrialsForm />
+              <StudiesForm />
             </div>
           </Card>
         </div>

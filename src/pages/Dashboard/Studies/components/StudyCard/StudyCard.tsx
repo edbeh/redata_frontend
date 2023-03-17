@@ -66,7 +66,7 @@ const StudyCard = ({
         <div className="flex flex-col space-y-1">
           {OrgStudyId?.length > 0 && (
             <div className="flex flex-col sm:flex-row w-full text-[13px]">
-              <p className="font-semibold sm:min-w-[160px]">Protocol ID:</p>
+              <p className="font-semibold sm:min-w-[160px]">Study ID:</p>
               <p>{OrgStudyId[0]}</p>
             </div>
           )}

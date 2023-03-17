@@ -26,6 +26,9 @@ export const DEPARTMENTS_API_ENDPOINT = (institutionId: string) =>
 export const PUBLICATIONS_API_ENDPOINT = `/publications/`;
 export const PUBLICATIONS_EXPORT_PDF_API_ENDPOINT = `/publications/export_pdf/`;
 
+// *Studies
+export const STUDIES_API_ENDPOINT = `/studies`;
+
 // *Search
 export const SEARCH_USERS_API_ENDPOINT = (q: string) => `/search/users?q=${q}`;
 export const SEARCH_MEDICAL_KEYWORDS_API_ENDPOINT = (q: string) =>
