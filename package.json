@@ -1,6 +1,6 @@
 {
   "name": "redata_frontend",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@bugsnag/js": "^7.20.0",
