@@ -16,10 +16,10 @@ customHeaders:
 
       - key: "Content-Security-Policy"
         value: "default-src 'self';
-          img-src redata-images-dev.s3.ap-southeast-1.amazonaws.com staging-api.getredata.com 'self' blob: data: ;
+          img-src redata-images-dev.s3.ap-southeast-1.amazonaws.com api.getredata.com staging-api.getredata.com 'self' blob: data: ;
           font-src fonts.gstatic.com;
           style-src 'self' fonts.googleapis.com fonts.gstatic.com;
-          connect-src staging-api.getredata.com eutils.ncbi.nlm.nih.gov esummary.ncbi.nlm.nih.gov clinicaltrials.gov https://*.bugsnag.com/;"
+          connect-src api.getredata.com staging-api.getredata.com eutils.ncbi.nlm.nih.gov esummary.ncbi.nlm.nih.gov clinicaltrials.gov https://*.bugsnag.com/;"
 
       - key: "Referrer-Policy"
         value: "no-referrer"
