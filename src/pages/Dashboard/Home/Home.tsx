@@ -31,8 +31,6 @@ const Home = () => {
     queryClient.invalidateQueries(ME_API_KEY);
   }, [queryClient]);
 
-  console.log("in home");
-
   // *JSX
   return (
     <BaseLayout withLeftNavigation>
