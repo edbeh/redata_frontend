@@ -16,6 +16,7 @@ import {
   Profile,
   About,
   Sample,
+  PageNotFound,
 } from "pages";
 import { PrivateRoute } from "wrapper-components";
 
@@ -26,7 +27,7 @@ const AppRouter = () => {
     return (
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        {/* <Route path="/register" element={<Register />} /> */}
         <Route path="/sample" element={<Sample />} />
 
         <Route element={<PrivateRoute />}>
@@ -44,6 +45,7 @@ const AppRouter = () => {
           <Route path="/settings" element={<Settings />} />
 
           <Route path="/profile/:id" element={<Profile />} />
+          <Route path="*" element={<PageNotFound />} />
         </Route>
 
         <Route path="/" element={<Navigate to="/home" />} />

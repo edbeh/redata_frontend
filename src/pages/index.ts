@@ -17,3 +17,4 @@ export { default as Connections } from "./Dashboard/Connections/Connections";
 export { default as Settings } from "./Dashboard/Settings/Settings";
 export { default as Profile } from "./Dashboard/Profile/Profile";
 export { default as Sample } from "./Sample/Sample";
+export { default as PageNotFound } from "./Misc/PageNotFound";
