@@ -393,7 +393,9 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
               isLoading={fetchDepartmentById?.isLoading}
               required={getYupIsRequired(schema, "department")}
               autoComplete="off"
+              helper="Please inform CTRC admin if you are changing department"
               error={formErrors?.department?.message}
+              disabled
             />
 
             <FormInput
