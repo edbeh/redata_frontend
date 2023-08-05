@@ -12,8 +12,13 @@ import { imgAppLogo } from "assets";
 
 import { schema } from "./LoginForm.schema";
 import { ILoginFormFields } from "./LoginForm.model";
+import { LoginUserTypes } from "../Login.model";
 
-const LoginForm = () => {
+interface LoginFormProps {
+  userType: LoginUserTypes;
+}
+
+const LoginForm = ({ userType }: LoginFormProps) => {
   const navigate = useNavigate();
 
   // *Form
@@ -77,7 +82,9 @@ const LoginForm = () => {
           className="w-full p-[12%] md:p-[18%]"
         >
           <div className="flex flex-col space-y-4">
-            <h1 className="text-4xl font-bold text-blue-900">LOGIN</h1>
+            <h1 className="text-4xl font-bold text-blue-900">
+              {userType === "admin" ? "ADMIN LOGIN" : "LOGIN"}
+            </h1>
 
             <FormInput
               register={register}

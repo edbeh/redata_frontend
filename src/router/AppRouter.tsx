@@ -22,11 +22,20 @@ import { PrivateRoute } from "wrapper-components";
 
 const AppRouter = () => {
   const isApp = window.location.host.split(".")[0] === "app";
+  const isAdmin = window.location.host.split(".")[0] === "admin";
+
+  if (isAdmin) {
+    return (
+      <Routes>
+        <Route path="/login" element={<Login userType="admin" />} />
+      </Routes>
+    );
+  }
 
   if (isApp) {
     return (
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login userType="user" />} />
         <Route path="/register" element={<Register />} />
         <Route path="/sample" element={<Sample />} />
 

@@ -1,25 +1,15 @@
 import LoginForm from "./LoginForm/LoginForm";
 import Splash from "../Splash/Splash";
-import { getJwtTokenLocalStorage } from "utils";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { LoginUserTypes } from "./Login.model";
 
-const Login = () => {
-  const navigate = useNavigate();
+interface LoginProps {
+  userType: LoginUserTypes;
+}
 
-  const isLoggedIn = () => {
-    return !!getJwtTokenLocalStorage();
-  };
-
-  // useEffect(() => {
-  //   if (isLoggedIn()) {
-  //     navigate("/home");
-  //   }
-  // }, [navigate]);
-
+const Login = ({ userType }: LoginProps) => {
   return (
     <div className="flex w-[100vw] h-[100vh]">
-      <LoginForm />
+      <LoginForm userType={userType} />
       <Splash />
     </div>
   );
