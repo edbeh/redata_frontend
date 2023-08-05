@@ -159,9 +159,8 @@ const StudyCard = ({
               )}
 
               <p className="mt-2 text-xs">
-                <u>Disclaimer</u>: The publication above was automatically
-                linked by ClinicalTrials.gov, it may or may not be about the
-                study.
+                <u>Disclaimer</u>: The citation above was automatically linked
+                by ClinicalTrials.gov, it may or may not be about the study.
               </p>
             </div>
           )}
