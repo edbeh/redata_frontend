@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import {
+  AdminLogin,
   Login,
   Register,
   Onboarding,
@@ -27,7 +28,7 @@ const AppRouter = () => {
   if (isAdmin) {
     return (
       <Routes>
-        <Route path="/login" element={<Login userType="admin" />} />
+        <Route path="/login" element={<AdminLogin />} />
       </Routes>
     );
   }
@@ -35,7 +36,7 @@ const AppRouter = () => {
   if (isApp) {
     return (
       <Routes>
-        <Route path="/login" element={<Login userType="user" />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/sample" element={<Sample />} />
 

@@ -1,4 +1,5 @@
 export * from "./useMetadataQuery";
+export * from './useAdminQuery';
 export * from "./useSessionsQuery";
 export * from "./useUsersQuery";
 export * from "./useDepartmentsQuery";
