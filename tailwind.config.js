@@ -29,6 +29,7 @@ module.exports = {
         },
         faintBlue: "#EFF5FF",
         darkBlue: "#05195b",
+        adminBlue: "#002e6e",
         disabled: "#D7E2E8",
         white: "#FFFFFF",
         borderGray: "#9D9D9C",

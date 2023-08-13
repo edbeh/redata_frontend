@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import {
   AdminLogin,
+  AdminHome,
   Login,
   Register,
   Onboarding,
@@ -29,6 +30,7 @@ const AppRouter = () => {
     return (
       <Routes>
         <Route path="/login" element={<AdminLogin />} />
+        <Route path="/home" element={<AdminHome />}/>
       </Routes>
     );
   }
