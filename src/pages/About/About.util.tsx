@@ -257,6 +257,8 @@ const getSamplePublications = (): Publication[] => [
     pages: "88-89",
     apiSource: "pubmed",
     externalId: "33623963",
+    pmcId: null,
+    nctId: null,
   },
   {
     id: "285",
@@ -274,6 +276,8 @@ const getSamplePublications = (): Publication[] => [
     pages: "61-76",
     apiSource: "pubmed",
     externalId: "33623959",
+    pmcId: null,
+    nctId: null,
   },
 ];
 

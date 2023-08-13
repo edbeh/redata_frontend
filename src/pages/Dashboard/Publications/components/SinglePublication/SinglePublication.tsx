@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 
-import { Highlighted } from "components";
+import { Badge, Highlighted } from "components";
 import { ImgOpenNewTabOutline } from "assets";
 import { getSearchParams } from "utils";
 import { Publication } from "api/models";
@@ -106,6 +106,30 @@ const SinglePublication = ({
             publication.pages ? ":" + publication.pages + "." : ""
           } Published ${dayjs(publication.publishedAt).format("YYYY MMM")}`}
         </p>
+
+        {publication.nctId && (
+          <div className="w-fit">
+            <Badge
+              text=""
+              html={
+                <a
+                  href={`https://clinicaltrials.gov/study/${publication.nctId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Related ClinicalTrials.gov study: {publication.nctId}{" "}
+                  <ImgOpenNewTabOutline className="inline w-4 h-4 mb-1" />
+                </a>
+              }
+              variant="small"
+              isBolded
+            />
+          </div>
+          // <div className="border-[1px] border-blue-500 w-fit p-2 rounded-md cursor-pointer">
+          //   Related ClinicalTrials.gov study: {publication.nctId}{" "}
+          //   <ImgOpenNewTabOutline className="text-blue-500 inline w-4 h-4 mb-1" />
+          // </div>
+        )}
       </div>
     </div>
   );
