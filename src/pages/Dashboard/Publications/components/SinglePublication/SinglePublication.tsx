@@ -71,34 +71,28 @@ const SinglePublication = ({
         <p className={` ${isEditable ? "text-center mt-2" : ""}`}>{i + 1}.</p>
       </div>
       <div className="space-y-1">
-        {publication.elocationId?.includes("doi") ? (
-          <a
-            className="text-[15px] font-medium text-blue-500 hover:underline"
-            href={publication.elocationId.replace("doi: ", "https://doi.org/")}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {/* remove html tags from doi link */}
-            <Highlighted
-              text={publication.title?.replace(/(<([^>]+)>)/gi, "")}
-              highlight={searchParams?.highlight || ""}
-            />
-            <ImgOpenNewTabOutline className="text-blue-500 inline w-4 h-4 mb-1" />
-          </a>
-        ) : (
-          <p className="text-[15px]">
-            <Highlighted
-              text={publication.title?.replace(/(<([^>]+)>)/gi, "")}
-              highlight={searchParams?.highlight || ""}
-            />
-          </p>
-        )}
+        <a
+          className="text-[15px] font-medium text-blue-500 hover:underline"
+          href={`https://pubmed.ncbi.nlm.nih.gov/${publication.externalId}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {/* publication title */}
+          <Highlighted
+            text={publication.title?.replace(/(<([^>]+)>)/gi, "")}
+            highlight={searchParams?.highlight || ""}
+          />
+          <ImgOpenNewTabOutline className="text-blue-500 inline w-4 h-4 mb-1" />
+        </a>
 
+        {/* publication authors */}
         <p>
           {publication.authors?.map((author, i) => {
             return nameComponent(author, i);
           })}
         </p>
+
+        {/* publication source */}
         <p className="text-green-700">
           {`${publication.source}. ${publication.volume}${
             publication.issue ? "(" + publication.issue + ")" : ""
@@ -107,9 +101,10 @@ const SinglePublication = ({
           } Published ${dayjs(publication.publishedAt).format("YYYY MMM")}`}
         </p>
 
+        {/* doi link */}
         {publication.elocationId?.includes("doi") && (
           <a
-            className="text-sm text-blue-400 hover:underline"
+            className="text-blue-400 hover:underline"
             href={publication.elocationId.replace("doi: ", "https://doi.org/")}
             target="_blank"
             rel="noreferrer"
@@ -120,10 +115,12 @@ const SinglePublication = ({
           </a>
         )}
 
+        {/* link to clinicaltrials.gov */}
         {publication.nctId && (
           <div className="w-fit">
             <Badge
               text=""
+              isLowerCase
               html={
                 <a
                   href={`https://clinicaltrials.gov/study/${publication.nctId}`}
