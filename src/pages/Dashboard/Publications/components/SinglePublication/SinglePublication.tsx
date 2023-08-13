@@ -78,7 +78,7 @@ const SinglePublication = ({
             target="_blank"
             rel="noreferrer"
           >
-            {/* remove html tags */}
+            {/* remove html tags from doi link */}
             <Highlighted
               text={publication.title?.replace(/(<([^>]+)>)/gi, "")}
               highlight={searchParams?.highlight || ""}
@@ -107,6 +107,19 @@ const SinglePublication = ({
           } Published ${dayjs(publication.publishedAt).format("YYYY MMM")}`}
         </p>
 
+        {publication.elocationId?.includes("doi") && (
+          <a
+            className="text-sm text-blue-400 hover:underline"
+            href={publication.elocationId.replace("doi: ", "https://doi.org/")}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {/* remove html tags from doi link */}
+            {publication.elocationId}{" "}
+            <ImgOpenNewTabOutline className="text-blue-500 inline w-4 h-4 mb-1" />
+          </a>
+        )}
+
         {publication.nctId && (
           <div className="w-fit">
             <Badge
@@ -125,10 +138,6 @@ const SinglePublication = ({
               isBolded
             />
           </div>
-          // <div className="border-[1px] border-blue-500 w-fit p-2 rounded-md cursor-pointer">
-          //   Related ClinicalTrials.gov study: {publication.nctId}{" "}
-          //   <ImgOpenNewTabOutline className="text-blue-500 inline w-4 h-4 mb-1" />
-          // </div>
         )}
       </div>
     </div>
