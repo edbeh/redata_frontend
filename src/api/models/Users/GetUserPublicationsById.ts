@@ -14,6 +14,8 @@ export declare module GetUserPublicationsById {
     pages: string;
     apiSource: string;
     externalId: string;
+    pmcId: null | string;
+    nctId: null | string;
   }
 
   export interface ApiResponse {

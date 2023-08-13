@@ -1,5 +1,8 @@
+import { ReactNode } from "react";
+
 interface BadgeProps {
   text: string;
+  html?: ReactNode;
   onClickBadge?: (item: string) => void;
   variant?: "normal" | "small";
   isBolded?: boolean;
@@ -8,6 +11,7 @@ interface BadgeProps {
 
 const Badge = ({
   text,
+  html,
   onClickBadge,
   variant = "normal",
   isBolded = false,
@@ -33,6 +37,7 @@ const Badge = ({
                 ${isLowerCase ? "" : "capitalize"}`}
     >
       {text}
+      {html}
     </div>
   );
 };

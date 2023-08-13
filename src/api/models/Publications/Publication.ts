@@ -13,4 +13,6 @@ export interface Publication {
   pages: string;
   apiSource: string;
   externalId: string;
+  pmcId: null | string;
+  nctId: null | string;
 }
