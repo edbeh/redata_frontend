@@ -1,4 +1,5 @@
 import { GetStudiesByKeywords } from "api/models";
+import { useState } from "react";
 
 interface StudyCardProps {
   index: number;
@@ -28,6 +29,8 @@ const StudyCard = ({
     LocationCountry,
     LocationFacility,
   } = study;
+
+  const [showAllCitations, setShowAllCitations] = useState(false);
 
   const getStudyStatusColor = (status: GetStudiesByKeywords.OverallStatus) => {
     switch (status) {
@@ -124,15 +127,40 @@ const StudyCard = ({
 
           {ReferenceCitation?.length > 0 && (
             <div className="!mt-4 flex flex-col w-full text-[13px]">
-              <p className="font-semibold">Publication:</p>
-              <p>
-                {ReferenceCitation[0]}{" "}
-                {ReferencePMID ? `PMID: ${ReferencePMID[0]}` : ""}
-              </p>
+              <p className="font-semibold">Citations:</p>
+
+              {showAllCitations ? (
+                ReferenceCitation.map((citation, i) => {
+                  return (
+                    <div className="mt-2">
+                      <p>
+                        {ReferenceCitation[i]}{" "}
+                        {ReferencePMID ? `PMID: ${ReferencePMID[i]}` : ""}
+                      </p>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="mt-2">
+                  <p>
+                    {ReferenceCitation[0]}{" "}
+                    {ReferencePMID ? `PMID: ${ReferencePMID[0]}` : ""}
+                  </p>
+                  <p
+                    className="w-full flex justify-center text-primary-400"
+                    onClick={() => setShowAllCitations(true)}
+                  >
+                    {ReferenceCitation.length > 1 &&
+                      `Show ${ReferenceCitation.length - 1} more citation${
+                        ReferenceCitation.length - 1 > 1 ? "s" : ""
+                      }`}
+                  </p>
+                </div>
+              )}
+
               <p className="mt-2 text-xs">
-                <u>Disclaimer</u>: The publication above was automatically
-                linked by ClinicalTrials.gov, it may or may not be about the
-                study.
+                <u>Disclaimer</u>: The citation above was automatically linked
+                by ClinicalTrials.gov, it may or may not be about the study.
               </p>
             </div>
           )}

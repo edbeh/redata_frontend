@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 
-import { Highlighted } from "components";
+import { Badge, Highlighted } from "components";
 import { ImgOpenNewTabOutline } from "assets";
 import { getSearchParams } from "utils";
 import { Publication } from "api/models";
@@ -71,34 +71,28 @@ const SinglePublication = ({
         <p className={` ${isEditable ? "text-center mt-2" : ""}`}>{i + 1}.</p>
       </div>
       <div className="space-y-1">
-        {publication.elocationId?.includes("doi") ? (
-          <a
-            className="text-[15px] font-medium text-blue-500 hover:underline"
-            href={publication.elocationId.replace("doi: ", "https://doi.org/")}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {/* remove html tags */}
-            <Highlighted
-              text={publication.title?.replace(/(<([^>]+)>)/gi, "")}
-              highlight={searchParams?.highlight || ""}
-            />
-            <ImgOpenNewTabOutline className="text-blue-500 inline w-4 h-4 mb-1" />
-          </a>
-        ) : (
-          <p className="text-[15px]">
-            <Highlighted
-              text={publication.title?.replace(/(<([^>]+)>)/gi, "")}
-              highlight={searchParams?.highlight || ""}
-            />
-          </p>
-        )}
+        <a
+          className="text-[15px] font-medium text-blue-500 hover:underline"
+          href={`https://pubmed.ncbi.nlm.nih.gov/${publication.externalId}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {/* publication title */}
+          <Highlighted
+            text={publication.title?.replace(/(<([^>]+)>)/gi, "")}
+            highlight={searchParams?.highlight || ""}
+          />
+          <ImgOpenNewTabOutline className="text-blue-500 inline w-4 h-4 mb-1" />
+        </a>
 
+        {/* publication authors */}
         <p>
           {publication.authors?.map((author, i) => {
             return nameComponent(author, i);
           })}
         </p>
+
+        {/* publication source */}
         <p className="text-green-700">
           {`${publication.source}. ${publication.volume}${
             publication.issue ? "(" + publication.issue + ")" : ""
@@ -106,6 +100,42 @@ const SinglePublication = ({
             publication.pages ? ":" + publication.pages + "." : ""
           } Published ${dayjs(publication.publishedAt).format("YYYY MMM")}`}
         </p>
+
+        {/* doi link */}
+        {publication.elocationId?.includes("doi") && (
+          <a
+            className="text-blue-400 hover:underline"
+            href={publication.elocationId.replace("doi: ", "https://doi.org/")}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {/* remove html tags from doi link */}
+            {publication.elocationId}{" "}
+            <ImgOpenNewTabOutline className="text-blue-500 inline w-4 h-4 mb-1" />
+          </a>
+        )}
+
+        {/* link to clinicaltrials.gov */}
+        {publication.nctId && (
+          <div className="w-fit">
+            <Badge
+              text=""
+              isLowerCase
+              html={
+                <a
+                  href={`https://clinicaltrials.gov/study/${publication.nctId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Related ClinicalTrials.gov study: {publication.nctId}{" "}
+                  <ImgOpenNewTabOutline className="inline w-4 h-4 mb-1" />
+                </a>
+              }
+              variant="small"
+              isBolded
+            />
+          </div>
+        )}
       </div>
     </div>
   );
