@@ -3,6 +3,8 @@ export const USERS_PUBLICATIONS_API_KEY = "users_publications";
 
 export const ME_API_KEY = "me";
 
+export const USERS_BY_ADMIN_API_KEY = "users_by_admin";
+
 export const CONNECTIONS_API_KEY = "connections";
 
 export const DEPARTMENTS_API_KEY = "departments";

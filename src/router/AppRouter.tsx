@@ -30,7 +30,14 @@ const AppRouter = () => {
     return (
       <Routes>
         <Route path="/login" element={<AdminLogin />} />
-        <Route path="/home" element={<AdminHome />}/>
+
+        <Route element={<PrivateRoute />}>
+          <Route path="/home" element={<AdminHome />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Route>
+
+        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     );
   }
@@ -61,6 +68,7 @@ const AppRouter = () => {
         </Route>
 
         <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     );
   }

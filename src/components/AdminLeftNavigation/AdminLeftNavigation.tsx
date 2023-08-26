@@ -3,7 +3,6 @@ import AdminLeftNavigationItem from "./AdminLeftNavigationItem/AdminLeftNavigati
 import { getAppVersion } from "utils";
 
 const LeftNavigation = () => {
-  console.log("adminLeftNavigationItems", adminLeftNavigationItems);
   return (
     <div className="flex h-full max-h-[100vh] w-[250px] flex-col justify-between px-[18px] py-5 text-white bg-adminBlue">
       <div>

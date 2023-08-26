@@ -80,7 +80,6 @@ const PatientPopulationsForm = React.forwardRef<
 
       const cleanData = cleanUpData(data);
 
-      console.log(JSON.stringify(cleanData, null, 2));
       updateMe.mutate(cleanData);
     };
 
