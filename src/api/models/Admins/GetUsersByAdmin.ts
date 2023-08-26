@@ -1,9 +1,9 @@
 export declare module GetUsersByAdmin {
   export interface ApiResponse {
-    data: Datum[];
+    data: Data[];
   }
 
-  export interface Datum {
+  export interface Data {
     id: string;
     type: string;
     name: string;

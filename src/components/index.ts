@@ -19,3 +19,4 @@ export { default as SampleFooter } from "./SampleFooter/SampleFooter";
 export { default as Input } from "./Input/Input";
 export { default as AdminLeftNavigation } from "./AdminLeftNavigation/AdminLeftNavigation";
 export { default as AdminLeftNavigationMobile } from "./AdminLeftNavigation/AdminLeftNavigationMobile/AdminLeftNavigationMobile";
+export { default as Table } from "./Table/Table";
