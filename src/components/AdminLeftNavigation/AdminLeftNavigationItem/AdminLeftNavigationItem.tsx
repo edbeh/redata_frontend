@@ -22,10 +22,8 @@ const AdminLeftNavigationItem = ({ item }: AdminLeftNavigationItemProps) => {
                     ${isActive ? "bg-primary-400" : ""}`}
       onClick={() => navigate(item.path)}
     >
-      <item.Icon className={`w-8 h-8 stroke-2`} />
-      <p className={`ml-4 text-md ${isActive ? "font-medium" : ""}`}>
-        {item.text}
-      </p>
+      <item.Icon className={`w-6 h-6 stroke-1`} />
+      <p className={`ml-4 ${isActive ? "font-medium" : ""}`}>{item.text}</p>
     </div>
   );
 };

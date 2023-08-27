@@ -26,3 +26,4 @@ export * from "./Search/GetSearchPublications";
 export * from "./ClinicalTrialsGov/GetStudiesByKeywords";
 export * from './Admins/PostAdminSession'
 export * from "./Admins/GetUsersByAdmin";
+export * from "./Admins/GetPendingUsersByAdmin";

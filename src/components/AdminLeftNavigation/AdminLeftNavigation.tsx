@@ -6,6 +6,7 @@ const LeftNavigation = () => {
   return (
     <div className="flex h-full max-h-[100vh] w-[250px] flex-col justify-between px-[18px] py-5 text-white bg-adminBlue">
       <div>
+        <span className="ml-2 text-xl lg:text-xl font-semibold">ReData</span>
         <div className="mt-8 flex flex-col space-y-2">
           {adminLeftNavigationItems.map((item) => {
             return <AdminLeftNavigationItem item={item} key={item.name} />;

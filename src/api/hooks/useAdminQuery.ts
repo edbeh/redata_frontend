@@ -1,15 +1,23 @@
 import { toast } from "react-toastify";
 import { useMutation, useQuery } from "react-query";
 
-import { USERS_BY_ADMIN_API_KEY } from "api/keys";
+import {
+  PENDING_USERS_BY_ADMIN_API_KEY,
+  USERS_BY_ADMIN_API_KEY,
+} from "api/keys";
 import { createAxiosInstance, ApiErrorProps } from "api/utils";
 import { IAdminLoginFormFields } from "pages/Auth/AdminLogin/AdminLoginForm/AdminLoginForm.model";
 
 import {
+  ADMIN_LIST_PENDING_USERS_ENDPOINT,
   ADMIN_LIST_USERS_ENDPOINT,
   ADMIN_SESSION_API_ENDPOINT,
 } from "../endpoints";
-import { GetUsersByAdmin, PostAdminSession } from "../models";
+import {
+  GetPendingUsersByAdmin,
+  GetUsersByAdmin,
+  PostAdminSession,
+} from "../models";
 
 const AxiosInstance = createAxiosInstance();
 
@@ -50,6 +58,27 @@ const fetchUsersByAdmin = async () => {
 
 export const useFetchUsersByAdmin = () => {
   return useQuery([USERS_BY_ADMIN_API_KEY], fetchUsersByAdmin, {
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  });
+};
+
+/**
+ * //*GET Pending Users
+ */
+const fetchPendingUsersByAdmin = async () => {
+  return AxiosInstance.get<GetPendingUsersByAdmin.ApiResponse>(
+    ADMIN_LIST_PENDING_USERS_ENDPOINT
+  ).catch((error) => {
+    const { errors } = error.response?.data as ApiErrorProps;
+    errors?.length > 0
+      ? toast.error(errors[0].detail)
+      : toast.error(error.response.statusText);
+    throw error;
+  });
+};
+
+export const useFetchPendingUsersByAdmin = () => {
+  return useQuery([PENDING_USERS_BY_ADMIN_API_KEY], fetchPendingUsersByAdmin, {
     staleTime: 1000 * 60 * 5, // 5 minutes
   });
 };

@@ -66,7 +66,7 @@ const AdminBaseLayout: React.FC<AdminBaseLayoutProps> = ({
           </div>
 
           <div className="flex items-center space-x-2 lg:space-x-5">
-            <div>This is nav header</div>
+            <div></div>
           </div>
         </div>
         <div className="min-h-[calc(100vh-72px)] w-full bg-backgroundgray p-8 lg:max-w-[calc(100vw-250px)]">
