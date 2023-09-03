@@ -12,9 +12,10 @@ interface TableProps {
   columns: ColumnDef<any, string>[];
   data: any[];
   isLoading: boolean;
+  handleClickCell?: (cell: any) => void;
 }
 
-const Table = ({ columns, data, isLoading }: TableProps) => {
+const Table = ({ columns, data, isLoading, handleClickCell }: TableProps) => {
   const [sorting, setSorting] = useState<SortingState>([]);
 
   const table = useReactTable({
@@ -79,11 +80,28 @@ const Table = ({ columns, data, isLoading }: TableProps) => {
               return (
                 <tr
                   key={row.id}
-                  className="border-b-[1px] border-b-tableHeaderGray bg-white hover:bg-tableRowGray"
+                  className={`border-b-[1px] border-b-tableHeaderGray bg-white hover:bg-tableRowGray
+                              ${
+                                handleClickCell &&
+                                typeof handleClickCell === "function"
+                                  ? "cursor-pointer"
+                                  : "cursor-not-allowed"
+                              }`}
                 >
                   {row.getVisibleCells().map((cell) => {
                     return (
-                      <td key={cell.id} className="w-fit truncate p-3">
+                      <td
+                        key={cell.id}
+                        className="w-fit truncate p-3"
+                        onClick={() => {
+                          if (
+                            handleClickCell &&
+                            typeof handleClickCell === "function"
+                          ) {
+                            handleClickCell(cell);
+                          }
+                        }}
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext()

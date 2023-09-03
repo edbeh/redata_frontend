@@ -6,6 +6,8 @@ export const BASE_API_URL = process.env.REACT_APP_BASE_API_URL;
 // *Admins
 export const ADMIN_SESSION_API_ENDPOINT = `/admin/session/`;
 export const ADMIN_LIST_USERS_ENDPOINT = `/admin/users/`;
+export const ADMIN_USER_BY_ID_API_ENDPOINT = (userId: string) =>
+  `/admin/users/${userId}/`;
 export const ADMIN_LIST_PENDING_USERS_ENDPOINT = `/admin/users/pending/`;
 
 // *Users

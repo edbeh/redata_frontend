@@ -20,6 +20,11 @@ const AdminHome = () => {
   const fetchUsersByAdmin = useFetchUsersByAdmin();
   const fetchPendingUsersByAdmin = useFetchPendingUsersByAdmin();
 
+  // *Methods
+  const handleClickCell = (cell: any) => {
+    navigate(`/users/${cell?.row?.original?.id}`);
+  };
+
   // *Effects
   useEffect(() => {
     queryClient.invalidateQueries(USERS_BY_ADMIN_API_KEY);
@@ -37,6 +42,7 @@ const AdminHome = () => {
           columns={generateActiveUsersColumns()}
           data={fetchUsersByAdmin?.data?.data?.data || []}
           isLoading={fetchUsersByAdmin?.isLoading}
+          handleClickCell={handleClickCell}
         />
       </div>
 

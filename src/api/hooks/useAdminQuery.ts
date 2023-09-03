@@ -12,9 +12,11 @@ import {
   ADMIN_LIST_PENDING_USERS_ENDPOINT,
   ADMIN_LIST_USERS_ENDPOINT,
   ADMIN_SESSION_API_ENDPOINT,
+  ADMIN_USER_BY_ID_API_ENDPOINT,
 } from "../endpoints";
 import {
   GetPendingUsersByAdmin,
+  GetUserByAdminById,
   GetUsersByAdmin,
   PostAdminSession,
 } from "../models";
@@ -60,6 +62,31 @@ export const useFetchUsersByAdmin = () => {
   return useQuery([USERS_BY_ADMIN_API_KEY], fetchUsersByAdmin, {
     staleTime: 1000 * 60 * 5, // 5 minutes
   });
+};
+
+/**
+ *  //*GET User By Id
+ */
+const fetchUserByAdminById = async (userId: string) => {
+  return AxiosInstance.get<GetUserByAdminById.ApiResponse>(
+    ADMIN_USER_BY_ID_API_ENDPOINT(userId)
+  ).catch((error) => {
+    const { errors } = error.response?.data as ApiErrorProps;
+    errors?.length > 0
+      ? toast.error(errors[0].detail)
+      : toast.error(error.response.statusText);
+    throw error;
+  });
+};
+
+export const useFetchUserByAdminById = (userId: string, enabled = false) => {
+  return useQuery(
+    [USERS_BY_ADMIN_API_KEY, userId],
+    () => fetchUserByAdminById(userId),
+    {
+      enabled,
+    }
+  );
 };
 
 /**
