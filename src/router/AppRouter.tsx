@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import {
   AdminLogin,
   AdminHome,
+  AdminUserDetails,
   Login,
   Register,
   Onboarding,
@@ -33,6 +34,7 @@ const AppRouter = () => {
 
         <Route element={<PrivateRoute />}>
           <Route path="/home" element={<AdminHome />} />
+          <Route path="/users/:id" element={<AdminUserDetails />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>
 
