@@ -33,6 +33,7 @@ module.exports = {
         disabled: "#D7E2E8",
         white: "#FFFFFF",
         borderGray: "#9D9D9C",
+        backgroundGray: "#fafafa",
         tooltipGray: "#7D7D7D",
         gradientBlueStart: "#007cf0",
         gradientBlueEnd: "#00dfd8",

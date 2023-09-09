@@ -1,6 +1,18 @@
-import { useFetchUserByAdminById } from "api/hooks";
+import dayjs from "dayjs";
 import { useQueryClient } from "react-query";
 import { useParams } from "react-router-dom";
+
+import {
+  ImgCircleLoadingOutline,
+  ImgOpenNewTabOutline,
+  imgNoProfilePic,
+} from "assets";
+import { AdminBaseLayout } from "wrapper-components";
+import { Button, AdminCard, AdminRow, Badge } from "components";
+import {
+  useFetchUserByAdminById,
+  useFetchUserPublicationsById,
+} from "api/hooks";
 
 const AdminUserDetails = () => {
   const { id } = useParams();
@@ -8,10 +20,195 @@ const AdminUserDetails = () => {
   // *Queries
   const queryClient = useQueryClient();
   const fetchUserByAdminById = useFetchUserByAdminById(id as string, !!id);
+  const fetchUserPublicationsById = useFetchUserPublicationsById(
+    id as string,
+    !!id
+  );
 
-  console.log("fetchUserByAdminById", fetchUserByAdminById?.data?.data?.data);
+  // *JSX
+  if (fetchUserByAdminById?.isLoading || fetchUserPublicationsById?.isLoading)
+    return (
+      <AdminBaseLayout title="Users" withBackNavigation>
+        <div className="flex h-full justify-center items-center">
+          <ImgCircleLoadingOutline
+            width={40}
+            height={40}
+            className="animate-spin text-primary-500"
+          />
+        </div>
+      </AdminBaseLayout>
+    );
 
-  return <span>User details</span>;
+  const data = fetchUserByAdminById?.data?.data?.data;
+  const publications = fetchUserPublicationsById?.data?.data?.data;
+
+  console.log("pubs", publications);
+
+  return (
+    <AdminBaseLayout title="Users" withBackNavigation>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+        <div className="flex flex-col sm:flex-row sm:justify-between items-center space-x-5 space-y-2 sm:space-y-0">
+          <img
+            src={data?.image || imgNoProfilePic}
+            alt="profile"
+            className="object-cover min-h-[80px] min-w-[80px] max-h-[80px] max-w-[80px] border-2 border-white rounded-full ring-cyan-500 ring-2"
+          />
+          <h1 className="text-2xl font-semibold">{data?.name}</h1>
+        </div>
+
+        <div className="mt-2 sm:mt-0">
+          <Button>
+            <a
+              href={data?.assumeAccountLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Assume account
+            </a>
+          </Button>
+        </div>
+      </div>
+
+      <div className="mt-6 max-w-[600px]">
+        <AdminCard title="User details">
+          <AdminRow title="Bio" value={data?.bio} />
+          <AdminRow title="Insitution" value={data?.institution?.name} />
+          <AdminRow title="Department" value={data?.department?.name} />
+          <AdminRow title="Designation" value={data?.designation.name} />
+          <AdminRow title="Email" value={data?.email} />
+          <AdminRow
+            title="Pubmed Names"
+            value={data?.correctedPubmedNames.join(", ")}
+          />
+          <AdminRow title="G.Scholar Url" value={data?.googleScholar?.url} />
+        </AdminCard>
+      </div>
+
+      <div className="mt-8 max-w-[600px]">
+        <AdminCard title="Specialties">
+          <AdminRow
+            title="Primary Specialty"
+            value={data?.primarySpecialty?.name}
+          />
+          {data?.otherSpecialties && data?.otherSpecialties?.length > 0 ? (
+            <>
+              {data?.otherSpecialties.map((specialty, i) => (
+                <AdminRow
+                  title={`Other Specialty (${i + 1})`}
+                  value={specialty?.name}
+                />
+              ))}
+            </>
+          ) : (
+            <AdminRow title="Other Specialties" value="-" />
+          )}
+        </AdminCard>
+      </div>
+
+      <div className="mt-8 max-w-[600px]">
+        <AdminCard title="Research Interests">
+          {data?.researchInterests && data?.researchInterests?.length > 0 ? (
+            <>
+              {data.researchInterests.map((interest, i) => (
+                <AdminRow title={`Interest (${i + 1})`} value={interest.name} />
+              ))}
+            </>
+          ) : (
+            "None"
+          )}
+        </AdminCard>
+      </div>
+
+      <div className="mt-8 max-w-[600px]">
+        <AdminCard title="Patient Populations">
+          {data?.patientPools && data?.patientPools?.length > 0 ? (
+            <>
+              {data.patientPools.map((pool, i) => (
+                <AdminRow title={`Population (${i + 1})`} value={pool.name} />
+              ))}
+            </>
+          ) : (
+            "None"
+          )}
+        </AdminCard>
+      </div>
+
+      <div className="mt-8 w-full">
+        <AdminCard title="Publications">
+          {publications && publications.length > 0
+            ? publications.map((pub, i) => (
+                <div className="flex text-[12px]">
+                  <span className="min-w-[30px]">{i + 1}.</span>
+                  <div>
+                    {/* Publication title */}
+                    <a
+                      className="text-blue-500 hover:underline font-medium"
+                      href={`https://pubmed.ncbi.nlm.nih.gov/${pub.externalId}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {pub.title}
+                      <ImgOpenNewTabOutline className="text-blue-500 inline w-4 h-4 ml-1 mb-1" />
+                    </a>
+
+                    {/* Publication author */}
+                    <p>{pub.authors.join(", ")}</p>
+
+                    {/* Publication source */}
+                    <p className="text-green-700">
+                      {`${pub.source}. ${pub.volume}${
+                        pub.issue ? "(" + pub.issue + ")" : ""
+                      }${
+                        pub.pages ? ":" + pub.pages + "." : ""
+                      } Published ${dayjs(pub.publishedAt).format("YYYY MMM")}`}
+                    </p>
+
+                    {/* doi link */}
+                    {pub.elocationId?.includes("doi") && (
+                      <a
+                        className="text-blue-400 hover:underline"
+                        href={pub.elocationId.replace(
+                          "doi: ",
+                          "https://doi.org/"
+                        )}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {/* remove html tags from doi link */}
+                        {pub.elocationId}{" "}
+                        <ImgOpenNewTabOutline className="text-blue-500 inline w-4 h-4 mb-1" />
+                      </a>
+                    )}
+
+                    {/* link to clinicaltrials.gov */}
+                    {pub.nctId && (
+                      <div className="w-fit">
+                        <Badge
+                          text=""
+                          isLowerCase
+                          html={
+                            <a
+                              href={`https://clinicaltrials.gov/study/${pub.nctId}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Related ClinicalTrials.gov study: {pub.nctId}{" "}
+                              <ImgOpenNewTabOutline className="inline w-4 h-4 mb-1" />
+                            </a>
+                          }
+                          variant="extra small"
+                          isBolded
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))
+            : "None"}
+        </AdminCard>
+      </div>
+    </AdminBaseLayout>
+  );
 };
 
 export default AdminUserDetails;

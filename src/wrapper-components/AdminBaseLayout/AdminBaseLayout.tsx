@@ -32,7 +32,7 @@ const AdminBaseLayout: React.FC<AdminBaseLayoutProps> = ({
         <AdminLeftNavigation />
       </div>
 
-      <div className="flex w-full flex-col lg:ml-[250px]">
+      <div className="flex w-full flex-col lg:ml-[250px] bg-backgroundGray">
         <div
           className="sticky top-0 z-40 flex w-full 
                         justify-between border-b-[1px] border-b-bordergray bg-white py-5 pl-8 pr-4 font-bold lg:px-8"

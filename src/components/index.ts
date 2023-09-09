@@ -1,3 +1,5 @@
+export { default as AdminCard } from "./AdminCard/AdminCard";
+export { default as AdminRow } from "./AdminRow/AdminRow";
 export { default as Button } from "./Button/Button";
 export { default as BugsnagErrorBoundary } from "./BugSnagErrorBoundary/BugSnagErrorBoundary";
 export { default as FormInput } from "./FormInput/FormInput";
