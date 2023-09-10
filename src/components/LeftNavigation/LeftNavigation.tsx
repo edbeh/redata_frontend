@@ -9,6 +9,7 @@ import {
   getNavigationItems,
   getNavigationItemsLimited,
 } from "./LeftNavigation.util";
+import ConfirmLogout from "./ConfirmLogout/ConfirmLogout";
 
 const LeftNavigation = () => {
   const navigate = useNavigate();
@@ -27,26 +28,9 @@ const LeftNavigation = () => {
 
   return (
     <div className="fixed top-[50px] py-6 px-4 bg-white shadow-lg w-[190px] flex flex-col items-center rounded-xl h-fit z-50">
-      <Modal
-        content={
-          <div className="flex flex-col my-2">
-            <img
-              className="self-center"
-              src={imgExitDoor}
-              alt="confirm-logout"
-              width={200}
-              height={200}
-            />
-            <p className="self-center my-4">Are you sure you want to logout?</p>
-            <div className="w-[220px] self-center">
-              <Button onClick={signOut}>Confirm Logout</Button>
-            </div>
-          </div>
-        }
+      <ConfirmLogout
         isVisible={showLogOutModal}
-        onDismiss={() => {
-          setShowLogOutModal(false);
-        }}
+        handleDismiss={() => setShowLogOutModal(false)}
       />
       <h1 className="text-xl font-bold">ReData</h1>
 
