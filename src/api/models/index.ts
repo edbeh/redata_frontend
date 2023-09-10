@@ -28,3 +28,4 @@ export * from "./Admins/PostAdminSession";
 export * from "./Admins/GetUsersByAdmin";
 export * from "./Admins/GetPendingUsersByAdmin";
 export * from "./Admins/GetUserByAdminById";
+export * from "./Admins/PostAdminUser";
