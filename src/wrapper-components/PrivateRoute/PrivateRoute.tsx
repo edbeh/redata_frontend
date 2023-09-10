@@ -1,7 +1,7 @@
 import { useLayoutEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
-import { SampleFooter } from "components";
+import { AssumeAccountFooter, SampleFooter } from "components";
 import { useMe } from "hooks";
 import { getJwtTokenLocalStorage } from "utils";
 
@@ -34,6 +34,10 @@ const PrivateRoute = () => {
           <SampleFooter />
         </>
       ) : null}
+      <>
+        <div className="h-[60px] sm:h-[40px]" />
+        <AssumeAccountFooter />
+      </>
     </>
   );
 };
