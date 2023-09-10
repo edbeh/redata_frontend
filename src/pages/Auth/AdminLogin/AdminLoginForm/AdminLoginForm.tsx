@@ -3,7 +3,11 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 
-import { getYupIsRequired, setJwtTokenLocalStorage } from "utils";
+import {
+  getYupIsRequired,
+  setAdminNameLocalStorage,
+  setJwtTokenLocalStorage,
+} from "utils";
 import { FormInput, Button } from "components";
 import { isApiError, handleApiErrorsForm } from "api/utils";
 import { useSubmitAdminSession } from "api/hooks";
@@ -37,7 +41,9 @@ const LoginForm = () => {
   useEffect(() => {
     if (submitAdminSession?.data?.status === 200) {
       const jwt = submitAdminSession?.data?.data?.jwt;
+      const adminName = submitAdminSession?.data?.data?.data?.name;
       setJwtTokenLocalStorage(jwt);
+      setAdminNameLocalStorage(adminName);
       navigate("/home");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -49,6 +55,8 @@ const LoginForm = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitAdminSession.error]);
+
+  console.log("submitAdminSession", submitAdminSession?.data?.data?.data);
 
   // *JSX
   return (

@@ -13,6 +13,7 @@ import {
   useFetchUserByAdminById,
   useFetchUserPublicationsById,
 } from "api/hooks";
+import { getAdminNameLocalStorage } from "utils";
 
 const AdminUserDetails = () => {
   const { id } = useParams();
@@ -61,12 +62,13 @@ const AdminUserDetails = () => {
         <div className="flex flex-col-reverse gap-y-2 sm:flex-row items-center sm:space-x-2 mt-2 sm:mt-0">
           <Tooltip
             variant="primary-600"
-            content="Login as this researcher to help them update their profile."
+            content="Login as this user to help them update their profile."
           />
           <Button>
             <a
-              // href={data?.assumeAccountLink}
-              href={devAssumeAccLink}
+              href={`${
+                data?.assumeAccountLink
+              }&admin=${getAdminNameLocalStorage()}`}
               target="_blank"
               rel="noopener noreferrer"
             >

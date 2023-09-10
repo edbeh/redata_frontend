@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ImgArrowUturnLeftOutline, ImgBars4Outline } from "assets";
 import { AdminLeftNavigation, AdminLeftNavigationMobile } from "components";
+import { getAdminNameLocalStorage } from "utils";
 
 interface AdminBaseLayoutProps {
   title: string;
@@ -19,7 +20,15 @@ const AdminBaseLayout: React.FC<AdminBaseLayoutProps> = ({
 }) => {
   const navigate = useNavigate();
   const [isMobileNavVisible, setIsMobileNavVisible] = useState<boolean>(false);
+  const [adminName, setAdminName] = useState<string>("");
 
+  //* Effects
+  useEffect(() => {
+    const adminName = getAdminNameLocalStorage();
+    setAdminName(adminName || "");
+  }, []);
+
+  //* JSX
   return (
     <div className="flex min-h-[100vh] w-full">
       <div className="z-50 block lg:hidden">
@@ -66,7 +75,10 @@ const AdminBaseLayout: React.FC<AdminBaseLayoutProps> = ({
           </div>
 
           <div className="flex items-center space-x-2 lg:space-x-5">
-            <div></div>
+            <div>
+              <p className="text-xs font-light">Logged in as</p>
+              <p>{adminName}</p>
+            </div>
           </div>
         </div>
         <div className="min-h-[calc(100vh-72px)] w-full bg-backgroundgray p-8 lg:max-w-[calc(100vw-250px)]">

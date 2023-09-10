@@ -1,4 +1,3 @@
-import { useFetchMe } from "api/hooks";
 import { FullScreenLoader } from "components";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -8,18 +7,16 @@ const AssumeAccount = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const token = searchParams.get("token");
-
-  //* Queries
-  const fetchMe = useFetchMe();
+  const admin = searchParams.get("admin");
 
   //* Effects
   useEffect(() => {
-    if (token && fetchMe?.data?.data?.data) {
-      sessionStorage.setItem("assume_as", fetchMe?.data?.data?.data?.name);
+    if (token) {
+      sessionStorage.setItem("assume_as", admin || "");
       localStorage.setItem("token", token);
       navigate("/home");
     }
-  }, [navigate, token, fetchMe.data]);
+  }, [navigate, token, admin]);
 
   //* JSX
   return <FullScreenLoader />;
