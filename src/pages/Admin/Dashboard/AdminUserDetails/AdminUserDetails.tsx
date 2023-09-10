@@ -42,10 +42,6 @@ const AdminUserDetails = () => {
 
   const data = fetchUserByAdminById?.data?.data?.data;
   const publications = fetchUserPublicationsById?.data?.data?.data;
-  const devAssumeAccLink = data?.assumeAccountLink.replace(
-    "https://app.develop.getredata.com",
-    "http://app.localhost:3000"
-  );
 
   return (
     <AdminBaseLayout title="Users" withBackNavigation>

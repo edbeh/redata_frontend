@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { IAdminLeftNavigationItem } from "../AdminLeftNavigation.model";
+import { signOut } from "utils";
 
 interface AdminLeftNavigationItemProps {
   item: IAdminLeftNavigationItem;
@@ -13,14 +14,14 @@ const AdminLeftNavigationItem = ({ item }: AdminLeftNavigationItemProps) => {
 
   useEffect(() => {
     const location = window.location.pathname;
-    if (location.includes(item.path)) setIsActive(true);
+    if (item.path && location.includes(item.path)) setIsActive(true);
   }, [item]);
 
   return (
     <div
       className={`flex items-center rounded-md py-3 px-3 hover:cursor-pointer hover:bg-navblue
                     ${isActive ? "bg-primary-400" : ""}`}
-      onClick={() => navigate(item.path)}
+      onClick={() => (item.path ? navigate(item.path) : signOut())}
     >
       <item.Icon className={`w-6 h-6 stroke-1`} />
       <p className={`ml-4 ${isActive ? "font-medium" : ""}`}>{item.text}</p>

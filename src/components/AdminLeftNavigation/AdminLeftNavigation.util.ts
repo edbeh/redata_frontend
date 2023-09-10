@@ -1,17 +1,18 @@
-import {
-  ImgHomeOutline,
-} from "assets";
+import { ImgHomeOutline } from "assets";
 
 import { IAdminLeftNavigationItem } from "./AdminLeftNavigation.model";
 
-export const adminLeftNavigationItems:IAdminLeftNavigationItem[] = [
+export const adminLeftNavigationItems: IAdminLeftNavigationItem[] = [
   {
     name: "home",
     text: "Home",
     path: "/home",
     Icon: ImgHomeOutline,
-  }
-]
-
-
-  
+  },
+  {
+    name: "logout",
+    text: "Logout",
+    path: undefined,
+    Icon: ImgHomeOutline,
+  },
+];
