@@ -20,6 +20,7 @@ import {
   About,
   Sample,
   PageNotFound,
+  AssumeAccount,
 } from "pages";
 import { PrivateRoute } from "wrapper-components";
 
@@ -50,6 +51,7 @@ const AppRouter = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/sample" element={<Sample />} />
+        <Route path="/assume" element={<AssumeAccount />} />
 
         <Route element={<PrivateRoute />}>
           <Route path="/onboarding/:step" element={<Onboarding />} />

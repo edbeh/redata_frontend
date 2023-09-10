@@ -8,7 +8,7 @@ import {
   imgNoProfilePic,
 } from "assets";
 import { AdminBaseLayout } from "wrapper-components";
-import { Button, AdminCard, AdminRow, Badge } from "components";
+import { Button, AdminCard, AdminRow, Badge, Tooltip } from "components";
 import {
   useFetchUserByAdminById,
   useFetchUserPublicationsById,
@@ -41,8 +41,10 @@ const AdminUserDetails = () => {
 
   const data = fetchUserByAdminById?.data?.data?.data;
   const publications = fetchUserPublicationsById?.data?.data?.data;
-
-  console.log("pubs", publications);
+  const devAssumeAccLink = data?.assumeAccountLink.replace(
+    "https://app.develop.getredata.com",
+    "http://app.localhost:3000"
+  );
 
   return (
     <AdminBaseLayout title="Users" withBackNavigation>
@@ -56,10 +58,15 @@ const AdminUserDetails = () => {
           <h1 className="text-2xl font-semibold">{data?.name}</h1>
         </div>
 
-        <div className="mt-2 sm:mt-0">
+        <div className="flex flex-col-reverse gap-y-2 sm:flex-row items-center sm:space-x-2 mt-2 sm:mt-0">
+          <Tooltip
+            variant="primary-600"
+            content="Login as this researcher to help them update their profile."
+          />
           <Button>
             <a
-              href={data?.assumeAccountLink}
+              // href={data?.assumeAccountLink}
+              href={devAssumeAccLink}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -94,6 +101,7 @@ const AdminUserDetails = () => {
             <>
               {data?.otherSpecialties.map((specialty, i) => (
                 <AdminRow
+                  key={"specialty" + i}
                   title={`Other Specialty (${i + 1})`}
                   value={specialty?.name}
                 />
@@ -110,7 +118,11 @@ const AdminUserDetails = () => {
           {data?.researchInterests && data?.researchInterests?.length > 0 ? (
             <>
               {data.researchInterests.map((interest, i) => (
-                <AdminRow title={`Interest (${i + 1})`} value={interest.name} />
+                <AdminRow
+                  key={"interest" + i}
+                  title={`Interest (${i + 1})`}
+                  value={interest.name}
+                />
               ))}
             </>
           ) : (
@@ -124,7 +136,11 @@ const AdminUserDetails = () => {
           {data?.patientPools && data?.patientPools?.length > 0 ? (
             <>
               {data.patientPools.map((pool, i) => (
-                <AdminRow title={`Population (${i + 1})`} value={pool.name} />
+                <AdminRow
+                  key={"pool" + i}
+                  title={`Population (${i + 1})`}
+                  value={pool.name}
+                />
               ))}
             </>
           ) : (
@@ -137,7 +153,7 @@ const AdminUserDetails = () => {
         <AdminCard title="Publications">
           {publications && publications.length > 0
             ? publications.map((pub, i) => (
-                <div className="flex text-[12px]">
+                <div className="flex text-[12px]" key={"pub" + i}>
                   <span className="min-w-[30px]">{i + 1}.</span>
                   <div>
                     {/* Publication title */}
