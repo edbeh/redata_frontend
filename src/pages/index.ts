@@ -1,4 +1,8 @@
 export { default as About } from "./About/About";
+export { default as AdminLogin } from "./Auth/AdminLogin/AdminLogin";
+export { default as AdminHome } from "./Admin/Dashboard/AdminHome/AdminHome";
+export { default as AssumeAccount } from "./Admin/AssumeAccount/AssumeAccount";
+export { default as AdminUserDetails } from "./Admin/Dashboard/AdminUserDetails/AdminUserDetails";
 export { default as Login } from "./Auth/Login/Login";
 export { default as Register } from "./Auth/Register/Register";
 export { default as Onboarding } from "./Onboarding/Onboarding";

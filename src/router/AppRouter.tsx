@@ -1,6 +1,9 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import {
+  AdminLogin,
+  AdminHome,
+  AdminUserDetails,
   Login,
   Register,
   Onboarding,
@@ -17,11 +20,30 @@ import {
   About,
   Sample,
   PageNotFound,
+  AssumeAccount,
 } from "pages";
 import { PrivateRoute } from "wrapper-components";
 
 const AppRouter = () => {
   const isApp = window.location.host.split(".")[0] === "app";
+  const isAdmin = window.location.host.split(".")[0] === "admin";
+
+  if (isAdmin) {
+    return (
+      <Routes>
+        <Route path="/login" element={<AdminLogin />} />
+
+        <Route element={<PrivateRoute />}>
+          <Route path="/home" element={<AdminHome />} />
+          <Route path="/users/:id" element={<AdminUserDetails />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Route>
+
+        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    );
+  }
 
   if (isApp) {
     return (
@@ -29,6 +51,7 @@ const AppRouter = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/sample" element={<Sample />} />
+        <Route path="/assume" element={<AssumeAccount />} />
 
         <Route element={<PrivateRoute />}>
           <Route path="/onboarding/:step" element={<Onboarding />} />
@@ -49,6 +72,7 @@ const AppRouter = () => {
         </Route>
 
         <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     );
   }
