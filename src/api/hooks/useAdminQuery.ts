@@ -7,6 +7,7 @@ import {
 } from "api/keys";
 import { createAxiosInstance, ApiErrorProps } from "api/utils";
 import { IAdminLoginFormFields } from "pages/Auth/AdminLogin/AdminLoginForm/AdminLoginForm.model";
+import { IInviteNewUserFormFields } from "pages/Admin/Dashboard/AdminHome/components/InviteNewUserForm/InviteNewUserForm.model";
 
 import {
   ADMIN_LIST_PENDING_USERS_ENDPOINT,
@@ -19,6 +20,7 @@ import {
   GetUserByAdminById,
   GetUsersByAdmin,
   PostAdminSession,
+  PostAdminUser,
 } from "../models";
 
 const AxiosInstance = createAxiosInstance();
@@ -108,4 +110,24 @@ export const useFetchPendingUsersByAdmin = () => {
   return useQuery([PENDING_USERS_BY_ADMIN_API_KEY], fetchPendingUsersByAdmin, {
     staleTime: 1000 * 60 * 5, // 5 minutes
   });
+};
+
+/**
+ *  //*POST New Invitation
+ */
+const submitNewInvitation = async (data: IInviteNewUserFormFields) => {
+  return AxiosInstance.post<PostAdminUser.ApiResponse>(
+    ADMIN_LIST_USERS_ENDPOINT,
+    data
+  ).catch((error) => {
+    const { errors } = error.response?.data as ApiErrorProps;
+    errors?.length > 0
+      ? toast.error(errors[0].detail)
+      : toast.error(error.response.statusText);
+    throw error;
+  });
+};
+
+export const useSubmitNewInvitation = () => {
+  return useMutation(submitNewInvitation);
 };

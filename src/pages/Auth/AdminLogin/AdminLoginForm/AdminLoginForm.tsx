@@ -56,8 +56,6 @@ const LoginForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitAdminSession.error]);
 
-  console.log("submitAdminSession", submitAdminSession?.data?.data?.data);
-
   // *JSX
   return (
     <>

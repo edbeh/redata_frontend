@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { AdminBaseLayout } from "wrapper-components";
 
-import { Table } from "components";
+import { Button, Modal, Table } from "components";
 import { useFetchPendingUsersByAdmin, useFetchUsersByAdmin } from "api/hooks";
 import { USERS_BY_ADMIN_API_KEY } from "api/keys";
 
@@ -11,9 +11,12 @@ import {
   generateActiveUsersColumns,
   generatePendingUsersColumns,
 } from "./AdminHome.util";
+import InviteNewUserForm from "./components/InviteNewUserForm/InviteNewUserForm";
 
 const AdminHome = () => {
   const navigate = useNavigate();
+  const [isInvitationFormVisible, setIsInvitationFormVisible] =
+    useState<boolean>(false);
 
   // *Queries
   const queryClient = useQueryClient();
@@ -23,6 +26,10 @@ const AdminHome = () => {
   // *Methods
   const handleClickCell = (cell: any) => {
     navigate(`/users/${cell?.row?.original?.id}`);
+  };
+
+  const handleToggleInvitationForm = () => {
+    setIsInvitationFormVisible(!isInvitationFormVisible);
   };
 
   // *Effects
@@ -46,7 +53,7 @@ const AdminHome = () => {
         />
       </div>
 
-      <div className="mt-10">
+      <div className="flex flex-col mt-10">
         <h2 className="font-bold text-sm">Pending Users</h2>
         <p className="my-4 text-sm">
           Users who have been invited but have yet to complete onboarding
@@ -55,8 +62,19 @@ const AdminHome = () => {
           columns={generatePendingUsersColumns()}
           data={fetchPendingUsersByAdmin?.data?.data?.data || []}
           isLoading={fetchPendingUsersByAdmin?.isLoading}
+          handleClickCell={handleClickCell}
         />
+
+        <div className="mt-6 max-w-[300px] self-end">
+          <Button onClick={handleToggleInvitationForm}>Invite new user</Button>
+        </div>
       </div>
+
+      <Modal
+        isVisible={isInvitationFormVisible}
+        content={<InviteNewUserForm />}
+        onDismiss={handleToggleInvitationForm}
+      />
     </AdminBaseLayout>
   );
 };
