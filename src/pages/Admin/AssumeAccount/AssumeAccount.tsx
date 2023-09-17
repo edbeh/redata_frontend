@@ -14,7 +14,7 @@ const AssumeAccount = () => {
     if (token) {
       sessionStorage.setItem("assume_as", admin || "");
       localStorage.setItem("token", token);
-      navigate("/home");
+      navigate("/onboarding");
     }
   }, [navigate, token, admin]);
 

@@ -171,6 +171,7 @@ const Onboarding = () => {
               <PublicationsForm
                 ref={publicationsSubmitRef}
                 onSuccessCallback={handleFormSubmitSuccess}
+                isOnboarding
               />
             )}
           </div>
