@@ -17,9 +17,22 @@ export const generateActiveUsersColumns = (): ColumnDef<any, string>[] => [
     header: "Designation",
     cell: (info) => info.getValue(),
   }),
-  activeUsersColumnHelper.accessor("department.name", {
-    header: "Department",
-    cell: (info) => info.getValue(),
+  // activeUsersColumnHelper.accessor("department.name", {
+  //   header: "Department",
+  //   cell: (info) => info.getValue(),
+  // }),
+  activeUsersColumnHelper.display({
+    id: "acknowledgedAt",
+    header: "Acknowledged at",
+    cell: (props) => {
+      if (props.row.original.acknowledgedAt) {
+        return dayjs(props.row.original.acknowledgedAt).format(
+          "DD MMM YYYY, hh:mma"
+        );
+      } else {
+        return "-";
+      }
+    },
   }),
   activeUsersColumnHelper.display({
     id: "onboardingStatus",

@@ -15,6 +15,7 @@ export declare module GetUsersByAdmin {
     otherSpecialties: PrimarySpecialty[];
     researchInterests: PrimarySpecialty[];
     patientPools: PrimarySpecialty[];
+    acknowledgedAt: string | null;
   }
 
   export interface PrimarySpecialty {
