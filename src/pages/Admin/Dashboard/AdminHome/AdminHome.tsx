@@ -56,7 +56,7 @@ const AdminHome = () => {
       <div className="flex flex-col mt-10">
         <h2 className="font-bold text-sm">Pending Users</h2>
         <p className="my-4 text-sm">
-          Users who have been invited but have yet to complete onboarding
+          Users who have been invited but have yet to login to their accounts
         </p>
         <Table
           columns={generatePendingUsersColumns()}

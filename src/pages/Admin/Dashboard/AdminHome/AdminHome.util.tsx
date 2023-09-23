@@ -20,6 +20,32 @@ export const generateActiveUsersColumns = (): ColumnDef<any, string>[] => [
     header: "Department",
     cell: (info) => info.getValue(),
   }),
+  activeUsersColumnHelper.display({
+    id: "onboardingStatus",
+    header: "Onboarding Status",
+    cell: (props) => {
+      const { name, researchInterests, patientPools } = props.row.original;
+      if (
+        !name &&
+        researchInterests?.length === 0 &&
+        patientPools?.length === 0
+      ) {
+        return (
+          <span className="p-1 bg-red-600 text-white rounded">Uninitiated</span>
+        );
+      }
+      if (researchInterests?.length === 0 && patientPools?.length === 0) {
+        return (
+          <span className="p-1 bg-yellow-600 text-white rounded">
+            In progress
+          </span>
+        );
+      }
+      return (
+        <span className="p-1 bg-green-600 text-white rounded">Complete</span>
+      );
+    },
+  }),
 ];
 
 export const generatePendingUsersColumns = (): ColumnDef<any, string>[] => [
@@ -28,7 +54,7 @@ export const generatePendingUsersColumns = (): ColumnDef<any, string>[] => [
     cell: (info) => info.getValue(),
   }),
   pendingUsersColumnHelper.accessor("invitedAt", {
-    header: "Invitation Sent",
+    header: "Created at",
     cell: (info) => dayjs(info.getValue()).format("DD MMM YYYY, hh:mma"),
   }),
   pendingUsersColumnHelper.display({
