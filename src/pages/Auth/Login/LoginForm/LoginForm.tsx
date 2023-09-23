@@ -1,13 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Link } from "react-router-dom";
+import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 
 import { getYupIsRequired, setJwtTokenLocalStorage } from "utils";
 import { FormInput, Button } from "components";
 import { isApiError, handleApiErrorsForm } from "api/utils";
-import { useSubmitSession } from "api/hooks";
+import { useFetchMe, useSubmitSession } from "api/hooks";
 import { imgAppLogo } from "assets";
 
 import { schema } from "./LoginForm.schema";
@@ -15,6 +15,7 @@ import { ILoginFormFields } from "./LoginForm.model";
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const [shouldFetchMe, setShouldFetchMe] = useState<boolean>(false);
 
   // *Form
   const {
@@ -28,6 +29,7 @@ const LoginForm = () => {
 
   // *Queries
   const submitSession = useSubmitSession();
+  const fetchMe = useFetchMe(shouldFetchMe);
 
   // *Methods
   const handleSubmitForm = (data: ILoginFormFields) => {
@@ -39,7 +41,7 @@ const LoginForm = () => {
     if (submitSession?.data?.status === 200) {
       const jwt = submitSession?.data?.data?.jwt;
       setJwtTokenLocalStorage(jwt);
-      navigate("/home");
+      setShouldFetchMe(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitSession.data]);
@@ -50,6 +52,16 @@ const LoginForm = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitSession.error]);
+
+  useEffect(() => {
+    if (fetchMe?.data?.data?.data) {
+      const { name, researchInterests, patientPools } = fetchMe.data.data.data;
+      if (!name) navigate("/onboarding/1");
+      if (researchInterests?.length === 0) navigate("/onboarding/2");
+      if (patientPools?.length === 0) navigate("/onboarding/3");
+      navigate("/home");
+    }
+  }, [fetchMe, navigate]);
 
   // *JSX
   return (
