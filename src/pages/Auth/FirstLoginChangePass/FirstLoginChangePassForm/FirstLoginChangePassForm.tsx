@@ -70,7 +70,7 @@ const FirstLoginChangePassForm = () => {
 
   useEffect(() => {
     if (submitUserActivation?.status === "success") {
-      navigate("/home");
+      navigate("/onboarding/1");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitUserActivation]);
