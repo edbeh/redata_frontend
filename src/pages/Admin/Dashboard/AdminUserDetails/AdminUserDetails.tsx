@@ -1,30 +1,64 @@
 import dayjs from "dayjs";
-import { useQueryClient } from "react-query";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import {
   ImgCircleLoadingOutline,
   ImgOpenNewTabOutline,
+  imgClipboardDocument,
   imgNoProfilePic,
 } from "assets";
 import { AdminBaseLayout } from "wrapper-components";
 import { Button, AdminCard, AdminRow, Badge, Tooltip } from "components";
 import {
+  useFetchPendingUsersByAdmin,
   useFetchUserByAdminById,
   useFetchUserPublicationsById,
 } from "api/hooks";
-import { getAdminNameLocalStorage } from "utils";
+import { copyToClipboard, getAdminNameLocalStorage } from "utils";
 
 const AdminUserDetails = () => {
   const { id } = useParams();
+  const [token, setToken] = useState<string>("");
+  const [shouldShowFirstLoginLink, setShouldShowFirstLoginLink] =
+    useState<boolean>(false);
 
   // *Queries
-  const queryClient = useQueryClient();
+  const fetchPendingUsersByAdmin = useFetchPendingUsersByAdmin();
   const fetchUserByAdminById = useFetchUserByAdminById(id as string, !!id);
   const fetchUserPublicationsById = useFetchUserPublicationsById(
     id as string,
     !!id
   );
+
+  // *Methods
+  const copyLoginLinkToClipboard = async () => {
+    copyToClipboard(`${process.env.REACT_APP_APP_URL}login/first/${token}`);
+  };
+
+  // *Effects
+  useEffect(() => {
+    if (fetchUserByAdminById?.data?.data?.data) {
+      const assumeAccountLink =
+        fetchUserByAdminById.data.data.data.assumeAccountLink;
+      const token = assumeAccountLink.split("token=")[1];
+      setToken(token);
+    }
+  }, [fetchUserByAdminById]);
+
+  useEffect(() => {
+    if (
+      fetchUserByAdminById?.data?.data?.data &&
+      fetchPendingUsersByAdmin?.data?.data?.data
+    ) {
+      const user = fetchUserByAdminById.data.data.data;
+      const pendingUsers = fetchPendingUsersByAdmin.data.data.data;
+      const userIsPending = pendingUsers.some(
+        (pendingUser) => pendingUser.id === user.id
+      );
+      setShouldShowFirstLoginLink(userIsPending);
+    }
+  }, [fetchUserByAdminById, fetchPendingUsersByAdmin]);
 
   // *JSX
   if (fetchUserByAdminById?.isLoading || fetchUserPublicationsById?.isLoading)
@@ -42,6 +76,8 @@ const AdminUserDetails = () => {
 
   const data = fetchUserByAdminById?.data?.data?.data;
   const publications = fetchUserPublicationsById?.data?.data?.data;
+
+  console.log("data", data);
 
   return (
     <AdminBaseLayout title="Users" withBackNavigation>
@@ -73,6 +109,31 @@ const AdminUserDetails = () => {
           </Button>
         </div>
       </div>
+
+      {/* only show this section for pending users who haven't logged in before */}
+      {shouldShowFirstLoginLink && (
+        <div className="mt-6 max-w-[600px]">
+          <AdminCard title="First Login">
+            <p className="text-sm">
+              Copy the first login link below and send it to the researcher when
+              this profile is ready to be reviewed and acknowledged.
+            </p>
+            <div
+              className="flex space-x-1 text-blue-500 items-center cursor-pointer"
+              onClick={copyLoginLinkToClipboard}
+            >
+              <img
+                src={imgClipboardDocument}
+                alt="copy"
+                width={20}
+                height={20}
+                className="self-center text-blue-500"
+              />
+              <p className="text-sm">Copy link</p>
+            </div>
+          </AdminCard>
+        </div>
+      )}
 
       <div className="mt-6 max-w-[600px]">
         <AdminCard title="User details">

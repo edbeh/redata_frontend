@@ -7,7 +7,7 @@ const AdminRow = ({ title, value }: AdminRowProps) => {
   return (
     <div className="flex flex-col sm:flex-row text-[12px]">
       <p className="font-semibold w-full sm:max-w-[200px]">{title}</p>
-      <p>{value || "-"}</p>
+      <p className="overflow-hidden break-words">{value || "-"}</p>
     </div>
   );
 };

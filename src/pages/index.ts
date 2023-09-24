@@ -4,6 +4,7 @@ export { default as AdminHome } from "./Admin/Dashboard/AdminHome/AdminHome";
 export { default as AssumeAccount } from "./Admin/AssumeAccount/AssumeAccount";
 export { default as AdminUserDetails } from "./Admin/Dashboard/AdminUserDetails/AdminUserDetails";
 export { default as Login } from "./Auth/Login/Login";
+export { default as FirstLoginChangePass } from "./Auth/FirstLoginChangePass/FirstLoginChangePass";
 export { default as Register } from "./Auth/Register/Register";
 export { default as Onboarding } from "./Onboarding/Onboarding";
 export { default as BasicInfoForm } from "./DataForms/BasicInfoForm/BasicInfoForm";

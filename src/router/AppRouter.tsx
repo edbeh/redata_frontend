@@ -5,6 +5,7 @@ import {
   AdminHome,
   AdminUserDetails,
   Login,
+  FirstLoginChangePass,
   Register,
   Onboarding,
   Home,
@@ -49,7 +50,8 @@ const AppRouter = () => {
     return (
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/login/first/:token" element={<FirstLoginChangePass />} />
+        {/* <Route path="/register" element={<Register />} /> */}
         <Route path="/sample" element={<Sample />} />
         <Route path="/assume" element={<AssumeAccount />} />
 

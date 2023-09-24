@@ -24,6 +24,11 @@ const AdminBaseLayout: React.FC<AdminBaseLayoutProps> = ({
 
   //* Effects
   useEffect(() => {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }, []);
+
+  useEffect(() => {
     const adminName = getAdminNameLocalStorage();
     setAdminName(adminName || "");
   }, []);

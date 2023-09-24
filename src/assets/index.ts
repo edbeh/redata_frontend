@@ -19,6 +19,7 @@ import { ReactComponent as ImgSignOutOutline } from "./sign-out-outline.svg";
 import { ReactComponent as ImgInfoCircleOutline } from "./info-circle-outline.svg";
 import { ReactComponent as ImgBeakerOutline } from "./beaker-outline.svg";
 
+import imgClipboardDocument from "./clipboard-document.svg";
 import imgScientistMicroscope from "./scientist-microscope.jpg";
 import imgNotFound from "./not-found.jpg";
 import imgJohnDoe from "./john-doe.jpg";
@@ -58,6 +59,7 @@ export {
   ImgSignOutOutline,
   ImgInfoCircleOutline,
   ImgBeakerOutline,
+  imgClipboardDocument,
   imgNotFound,
   imgJohnDoe,
   imgStockProfilePic,

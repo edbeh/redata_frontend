@@ -53,20 +53,22 @@ export const generateActiveUsersColumns = (): ColumnDef<any, string>[] => [
         patientPools?.length === 0
       ) {
         return (
-          <span className="p-1 bg-red-600 text-white rounded">
+          <span className="px-2 py-1 bg-red-600 text-white rounded">
             Not initiated
           </span>
         );
       }
       if (researchInterests?.length === 0 && patientPools?.length === 0) {
         return (
-          <span className="p-1 bg-yellow-600 text-white rounded">
+          <span className="px-2 py-1 bg-yellow-600 text-white rounded">
             In progress
           </span>
         );
       }
       return (
-        <span className="p-1 bg-green-600 text-white rounded">Complete</span>
+        <span className="px-2 py-1 bg-green-600 text-white rounded">
+          Complete
+        </span>
       );
     },
   }),
@@ -110,20 +112,22 @@ export const generatePendingUsersColumns = (): ColumnDef<any, string>[] => [
         patientPools?.length === 0
       ) {
         return (
-          <span className="p-1 bg-red-600 text-white rounded">
+          <span className="px-2 py-1 bg-red-600 text-white rounded">
             Not initiated
           </span>
         );
       }
       if (researchInterests?.length === 0 && patientPools?.length === 0) {
         return (
-          <span className="p-1 bg-yellow-600 text-white rounded">
+          <span className="px-2 py-1 bg-yellow-600 text-white rounded">
             In progress
           </span>
         );
       }
       return (
-        <span className="p-1 bg-green-600 text-white rounded">Complete</span>
+        <span className="px-2 py-1 bg-green-600 text-white rounded">
+          Complete
+        </span>
       );
     },
   }),
