@@ -1,5 +1,5 @@
 export interface IFirstLoginChangePassFormFields {
-  token: string;
+  email: string;
   name: string;
   password: string;
   passwordConfirmation: string;

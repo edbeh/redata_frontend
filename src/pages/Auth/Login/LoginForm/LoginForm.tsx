@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 
 import { getYupIsRequired, setJwtTokenLocalStorage } from "utils";
@@ -119,12 +118,6 @@ const LoginForm = () => {
             >
               Login
             </Button>
-            {/* <p className="mt-3 text-center">
-              Don't have an account?{" "}
-              <Link to="/register" className="text-blue-500 underline">
-                Create one here
-              </Link>
-            </p> */}
           </div>
         </form>
       </div>

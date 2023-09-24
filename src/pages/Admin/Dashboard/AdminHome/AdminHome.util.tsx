@@ -85,7 +85,7 @@ export const generatePendingUsersColumns = (): ColumnDef<any, string>[] => [
   }),
   pendingUsersColumnHelper.display({
     id: "daysElapsed",
-    header: "Days elapsed",
+    header: "Days since creation",
     cell: (props) => {
       const days = dayjs()
         .startOf("day")

@@ -6,8 +6,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getYupIsRequired, setJwtTokenLocalStorage } from "utils";
 import { FormInput, Button } from "components";
 import { isApiError, handleApiErrorsForm } from "api/utils";
-import { useFetchMe, useSubmitSession } from "api/hooks";
+import {
+  useFetchMe,
+  useSubmitSession,
+  useSubmitUserActivation,
+} from "api/hooks";
 import { imgAppLogo } from "assets";
+import { PostUserActivation } from "api/models";
 
 import { schema } from "./FirstLoginChangePassForm.schema";
 import { IFirstLoginChangePassFormFields } from "./FirstLoginChangePassForm.model";
@@ -23,6 +28,7 @@ const FirstLoginChangePassForm = () => {
     register,
     handleSubmit,
     formState: { errors: formErrors },
+    setValue,
     setError,
   } = useForm<IFirstLoginChangePassFormFields>({
     resolver: yupResolver(schema),
@@ -30,33 +36,58 @@ const FirstLoginChangePassForm = () => {
 
   // *Queries
   const submitSession = useSubmitSession();
+  const submitUserActivation = useSubmitUserActivation();
   const fetchMe = useFetchMe(shouldFetchMe);
 
   // *Methods
   const handleSubmitForm = (data: IFirstLoginChangePassFormFields) => {
+    const payload: PostUserActivation.PayLoad = {
+      token: token as string,
+      name: data.name,
+      password: data.password,
+      passwordConfirmation: data.passwordConfirmation,
+    };
+    submitUserActivation.mutate(payload);
     // submitSession.mutate(data);
   };
 
   // *Effects
+  useEffect(() => {
+    if (token) {
+      setJwtTokenLocalStorage(token);
+      setShouldFetchMe(true);
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (fetchMe?.data?.data?.data) {
+      const { email, name } = fetchMe.data.data.data;
+      setValue("email", email);
+      setValue("name", name || "");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchMe]);
+
+  useEffect(() => {
+    if (submitUserActivation?.status === "success") {
+      navigate("/home");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [submitUserActivation]);
+
+  useEffect(() => {
+    if (isApiError(submitUserActivation?.error)) {
+      handleApiErrorsForm(submitUserActivation?.error, setError);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [submitUserActivation.error]);
+
   useEffect(() => {
     if (isApiError(submitSession?.error)) {
       handleApiErrorsForm(submitSession?.error, setError);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitSession.error]);
-
-  useEffect(() => {
-    if (fetchMe?.data?.data?.data) {
-      const { name, researchInterests, patientPools } = fetchMe.data.data.data;
-      if (!name) navigate("/onboarding/1");
-      if (researchInterests?.length === 0) navigate("/onboarding/2");
-      if (patientPools?.length === 0) navigate("/onboarding/3");
-      navigate("/home");
-    }
-  }, [fetchMe, navigate]);
-
-  console.log("token", token);
-  console.log("fetchMe", fetchMe?.data?.data?.data);
 
   // *JSX
   return (
@@ -92,15 +123,27 @@ const FirstLoginChangePassForm = () => {
               account.
             </p>
 
-            {/* <FormInput
+            <FormInput
               register={register}
               id="email"
               name="email"
               type="email"
               label="Email"
-              error={formErrors?.email?.message as string}
               required={getYupIsRequired(schema, "email")}
-            /> */}
+              readOnly
+              disabled
+            />
+
+            <FormInput
+              register={register}
+              id="name"
+              name="name"
+              type="name"
+              label="Name"
+              autoComplete="off"
+              error={formErrors?.name?.message as string}
+              required={getYupIsRequired(schema, "name")}
+            />
 
             <FormInput
               register={register}
@@ -111,21 +154,26 @@ const FirstLoginChangePassForm = () => {
               error={formErrors?.password?.message as string}
               required={getYupIsRequired(schema, "password")}
             />
+
+            <FormInput
+              register={register}
+              id="passwordConfirmation"
+              name="passwordConfirmation"
+              type="password"
+              label="Confirm password"
+              error={formErrors?.passwordConfirmation?.message as string}
+              required={getYupIsRequired(schema, "passwordConfirmation")}
+            />
           </div>
 
           <div className="mt-[30px]">
             <Button
-              isLoading={submitSession?.isLoading}
+              isLoading={submitUserActivation?.isLoading}
               loadingText="Logging In..."
+              type="submit"
             >
               Login
             </Button>
-            {/* <p className="mt-3 text-center">
-              Don't have an account?{" "}
-              <Link to="/register" className="text-blue-500 underline">
-                Create one here
-              </Link>
-            </p> */}
           </div>
         </form>
       </div>

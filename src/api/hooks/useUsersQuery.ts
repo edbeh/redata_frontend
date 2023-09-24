@@ -9,7 +9,12 @@ import {
   USERS_BY_ID_API_ENDPOINT,
   USERS_PUBLICATIONS_BY_ID_API_ENDPOINT,
 } from "../endpoints";
-import { GetUserById, GetUserPublicationsById, PostUser } from "../models";
+import {
+  GetUserById,
+  GetUserPublicationsById,
+  PostUser,
+  PostUserActivation,
+} from "../models";
 
 const AxiosInstance = createAxiosInstance();
 
@@ -77,7 +82,7 @@ export const useFetchUserPublicationsById = (
 };
 
 /**
- *  //*POST Users
+ *  //*POST Users (Register user, DEPRECATED)
  */
 const submitUser = async (data: PostUser.PayLoad) => {
   return AxiosInstance.post<PostUser.ApiResponse>(
@@ -94,4 +99,24 @@ const submitUser = async (data: PostUser.PayLoad) => {
 
 export const useSubmitUser = () => {
   return useMutation(submitUser);
+};
+
+/**
+ *  //*POST Users
+ */
+const submitUserActivation = async (data: PostUserActivation.PayLoad) => {
+  return AxiosInstance.post<PostUser.ApiResponse>(
+    USERS_API_ENDPOINT,
+    data
+  ).catch((error) => {
+    const { errors } = error.response?.data as ApiErrorProps;
+    errors?.length > 0
+      ? toast.error(errors[0].detail)
+      : toast.error(error.response.statusText);
+    throw error;
+  });
+};
+
+export const useSubmitUserActivation = () => {
+  return useMutation(submitUserActivation);
 };

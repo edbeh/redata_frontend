@@ -20,6 +20,7 @@ export * from "./Studies/PostStudies";
 export * from "./Studies/DeleteStudies";
 export * from "./Users/GetUserById";
 export * from "./Users/GetUserPublicationsById";
+export * from "./Users/PostUserActivation";
 export * from "./Search/GetSearchUsers";
 export * from "./Search/GetSearchMedicalKeywords";
 export * from "./Search/GetSearchPublications";
