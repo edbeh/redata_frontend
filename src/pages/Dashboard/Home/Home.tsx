@@ -18,6 +18,7 @@ import {
 import { useFetchMe } from "api/hooks";
 import { useEffect } from "react";
 import { ME_API_KEY } from "api/keys";
+import { setRequireAcknowledgementSessionStorage } from "utils";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -30,6 +31,12 @@ const Home = () => {
   useEffect(() => {
     queryClient.invalidateQueries(ME_API_KEY);
   }, [queryClient]);
+
+  useEffect(() => {
+    if (fetchMe?.data?.data?.data?.acknowledgedAt === null) {
+      setRequireAcknowledgementSessionStorage();
+    }
+  }, [fetchMe]);
 
   // *JSX
   return (

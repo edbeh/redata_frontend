@@ -1,19 +1,25 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { getAssumeAsSessionStorage } from "utils";
+import {
+  getAssumeAsSessionStorage,
+  getRequireAcknowledgementSessionStorage,
+} from "utils";
 
-const AssumeAccountFooter = () => {
-  const [assumeAs, setAssumeAs] = useState<string>("");
+const RequireAcknowledgeFooter = () => {
+  const [showFooter, setShowFooter] = useState<boolean>(false);
 
   //* Effects
   useEffect(() => {
-    if (getAssumeAsSessionStorage()) {
-      setAssumeAs(getAssumeAsSessionStorage() || "");
+    if (
+      getRequireAcknowledgementSessionStorage() === "true" &&
+      !getAssumeAsSessionStorage()
+    ) {
+      setShowFooter(true);
     }
   }, []);
 
   //* JSX
-  if (!assumeAs) return <div />;
+  if (!showFooter) return <div />;
 
   return (
     <motion.div
@@ -23,17 +29,17 @@ const AssumeAccountFooter = () => {
       transition={{ delay: 0.5, type: "tween" }}
     >
       <p className="font-semibold text-center text-white">
-        You are logged in as {assumeAs} and editing this user profile using
-        admin privileges.{" "}
+        If your profile details are correct, please acknowledge the accuracy of
+        information.{" "}
         <span
           onClick={() => window.close()}
           className="underline hover:cursor-pointer"
         >
-          Click here to exit
+          Click here to acknowledge
         </span>
       </p>
     </motion.div>
   );
 };
 
-export default AssumeAccountFooter;
+export default RequireAcknowledgeFooter;

@@ -25,3 +25,30 @@ export const setAdminNameLocalStorage = (adminName: string) => {
 export const removeAdminNameLocalStorage = () => {
   localStorage.removeItem("admin_name");
 };
+
+// *Assume as
+export const getAssumeAsSessionStorage = () => {
+  return sessionStorage.getItem("assume_as");
+};
+
+export const setAssumeAsSessionStorage = (name: string) => {
+  sessionStorage.setItem("assume_as", name || "");
+};
+
+export const removeAssumeAsSessionStorage = () => {
+  sessionStorage.removeItem("assume_as");
+};
+
+// *Acknowledged At flag
+export const getRequireAcknowledgementSessionStorage = () => {
+  const result = sessionStorage.getItem("require_acknowledgement");
+  return result;
+};
+
+export const setRequireAcknowledgementSessionStorage = () => {
+  sessionStorage.setItem("require_acknowledgement", "true");
+};
+
+export const removeRequireAcknowledgementSessionStorage = () => {
+  sessionStorage.removeItem("require_acknowledgement");
+};

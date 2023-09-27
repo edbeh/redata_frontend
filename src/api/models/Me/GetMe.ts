@@ -85,6 +85,7 @@ export declare module GetMe {
     type: string;
     name: string;
     image: string;
+    acknowledgedAt: null | string;
     institution: Institution;
     designation: Designation;
     department: Department;

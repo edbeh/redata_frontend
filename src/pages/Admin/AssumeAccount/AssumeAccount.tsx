@@ -1,6 +1,7 @@
 import { FullScreenLoader } from "components";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { setAssumeAsSessionStorage } from "utils";
 
 const AssumeAccount = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const AssumeAccount = () => {
   //* Effects
   useEffect(() => {
     if (token) {
-      sessionStorage.setItem("assume_as", admin || "");
+      setAssumeAsSessionStorage(admin || "");
       localStorage.setItem("token", token);
       navigate("/onboarding");
     }

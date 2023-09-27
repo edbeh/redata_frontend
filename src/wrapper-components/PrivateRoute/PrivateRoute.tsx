@@ -4,6 +4,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { AssumeAccountFooter, SampleFooter } from "components";
 import { useMe } from "hooks";
 import { getJwtTokenLocalStorage } from "utils";
+import RequireAcknowledgeFooter from "components/RequireAcknowledgeFooter/RequireAcknowledgeFooter";
 
 const PrivateRoute = () => {
   const { email } = useMe();
@@ -37,6 +38,7 @@ const PrivateRoute = () => {
       <>
         <div className="h-[60px] sm:h-[40px]" />
         <AssumeAccountFooter />
+        <RequireAcknowledgeFooter />
       </>
     </>
   );

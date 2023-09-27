@@ -23,3 +23,4 @@ export { default as Input } from "./Input/Input";
 export { default as AdminLeftNavigation } from "./AdminLeftNavigation/AdminLeftNavigation";
 export { default as AdminLeftNavigationMobile } from "./AdminLeftNavigation/AdminLeftNavigationMobile/AdminLeftNavigationMobile";
 export { default as Table } from "./Table/Table";
+export { default as RequireAcknowledgementFooter } from "./RequireAcknowledgeFooter/RequireAcknowledgeFooter";
