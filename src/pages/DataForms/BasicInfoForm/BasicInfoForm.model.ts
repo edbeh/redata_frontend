@@ -17,4 +17,5 @@ export interface IBasicInfoFormFields {
   mcrNo: string;
   bio: string;
   image: FileList;
+  acknowledgedAt?: string;
 }

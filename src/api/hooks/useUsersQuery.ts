@@ -5,6 +5,7 @@ import { createAxiosInstance, ApiErrorProps } from "api/utils";
 
 import { USERS_API_KEY, USERS_PUBLICATIONS_API_KEY } from "../keys";
 import {
+  USERS_ACKNOWLEDGE_API_ENDPOINT,
   USERS_API_ENDPOINT,
   USERS_BY_ID_API_ENDPOINT,
   USERS_PUBLICATIONS_BY_ID_API_ENDPOINT,
@@ -15,6 +16,7 @@ import {
   PostUser,
   PostUserActivation,
 } from "../models";
+import { PostUserAcknowledge } from "api/models/Users/PostUserAcknowledge";
 
 const AxiosInstance = createAxiosInstance();
 
@@ -119,4 +121,25 @@ const submitUserActivation = async (data: PostUserActivation.PayLoad) => {
 
 export const useSubmitUserActivation = () => {
   return useMutation(submitUserActivation);
+};
+
+/**
+ *  //*POST User Acknowledge
+ */
+const submitUserAcknowledge = async () => {
+  return AxiosInstance.post<PostUserAcknowledge.ApiResponse>(
+    USERS_ACKNOWLEDGE_API_ENDPOINT
+  ).catch((error) => {
+    const { errors } = error.response?.data as ApiErrorProps;
+    errors?.length > 0
+      ? toast.error(errors[0].detail)
+      : toast.error(error.response.statusText);
+    throw error;
+  });
+};
+
+export const useSubmitUserAcknowledge = (onSuccess?: () => void) => {
+  return useMutation(submitUserAcknowledge, {
+    onSuccess,
+  });
 };

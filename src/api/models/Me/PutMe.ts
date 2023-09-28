@@ -19,6 +19,7 @@ export declare module PutMe {
     patientPools?: PayLoadObject[];
     mcrNumber?: string;
     image?: any;
+    acknowledgedAt?: string;
   }
 
   export interface Data {

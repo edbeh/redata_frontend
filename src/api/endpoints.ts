@@ -15,6 +15,7 @@ export const USERS_API_ENDPOINT = `/users/`;
 export const USERS_BY_ID_API_ENDPOINT = (userId: string) => `/users/${userId}/`;
 export const USERS_PUBLICATIONS_BY_ID_API_ENDPOINT = (userId: string) =>
   `/users/${userId}/publications/`;
+export const USERS_ACKNOWLEDGE_API_ENDPOINT = `/users/acknowledge`;
 
 // *Sessions
 export const SESSIONS_API_ENDPOINT = `/session/`;
