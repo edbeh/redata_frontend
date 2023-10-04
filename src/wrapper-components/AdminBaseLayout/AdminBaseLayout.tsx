@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { ImgArrowUturnLeftOutline, ImgBars4Outline } from "assets";
 import { AdminLeftNavigation, AdminLeftNavigationMobile } from "components";
-import { getAdminNameLocalStorage } from "utils";
+import { getAdminDeptLocalStorage, getAdminNameLocalStorage } from "utils";
 
 interface AdminBaseLayoutProps {
   title: string;
@@ -21,6 +21,7 @@ const AdminBaseLayout: React.FC<AdminBaseLayoutProps> = ({
   const navigate = useNavigate();
   const [isMobileNavVisible, setIsMobileNavVisible] = useState<boolean>(false);
   const [adminName, setAdminName] = useState<string>("");
+  const [adminDept, setAdminDept] = useState<string>("");
 
   //* Effects
   useEffect(() => {
@@ -31,6 +32,9 @@ const AdminBaseLayout: React.FC<AdminBaseLayoutProps> = ({
   useEffect(() => {
     const adminName = getAdminNameLocalStorage();
     setAdminName(adminName || "");
+
+    const adminDept = getAdminDeptLocalStorage();
+    setAdminDept(adminDept || "");
   }, []);
 
   //* JSX
@@ -81,8 +85,8 @@ const AdminBaseLayout: React.FC<AdminBaseLayoutProps> = ({
 
           <div className="flex items-center space-x-2 lg:space-x-5">
             <div>
-              <p className="text-xs font-light">Logged in as</p>
               <p>{adminName}</p>
+              <p className="text-xs font-normal">{adminDept}</p>
             </div>
           </div>
         </div>

@@ -26,6 +26,20 @@ export const removeAdminNameLocalStorage = () => {
   localStorage.removeItem("admin_name");
 };
 
+// *Admin Dept
+export const getAdminDeptLocalStorage = () => {
+  const result = localStorage.getItem("admin_dept");
+  return result;
+};
+
+export const setAdminDeptLocalStorage = (adminDept: string) => {
+  localStorage.setItem("admin_dept", adminDept);
+};
+
+export const removeAdminDeptLocalStorage = () => {
+  localStorage.removeItem("admin_dept");
+};
+
 // *Assume as
 export const getAssumeAsSessionStorage = () => {
   return sessionStorage.getItem("assume_as");

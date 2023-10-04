@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import {
   getYupIsRequired,
+  setAdminDeptLocalStorage,
   setAdminNameLocalStorage,
   setJwtTokenLocalStorage,
 } from "utils";
@@ -42,8 +43,10 @@ const LoginForm = () => {
     if (submitAdminSession?.data?.status === 200) {
       const jwt = submitAdminSession?.data?.data?.jwt;
       const adminName = submitAdminSession?.data?.data?.data?.name;
+      const adminDept = submitAdminSession?.data?.data?.data?.department?.name;
       setJwtTokenLocalStorage(jwt);
       setAdminNameLocalStorage(adminName);
+      setAdminDeptLocalStorage(adminDept);
       navigate("/home");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
