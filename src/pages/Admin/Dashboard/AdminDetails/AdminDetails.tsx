@@ -1,21 +1,18 @@
-import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import {
   ImgCircleLoadingOutline,
-  ImgOpenNewTabOutline,
   imgClipboardDocument,
   imgNoProfilePic,
 } from "assets";
 import { AdminBaseLayout } from "wrapper-components";
-import { Button, AdminCard, AdminRow, Badge, Tooltip } from "components";
+import { AdminCard, AdminRow } from "components";
 import {
   useFetchPendingUsersByAdmin,
   useFetchUserByAdminById,
-  useFetchUserPublicationsById,
 } from "api/hooks";
-import { copyToClipboard, getAdminNameLocalStorage } from "utils";
+import { copyToClipboard } from "utils";
 
 const AdminUserDetails = () => {
   const { id } = useParams();
@@ -26,10 +23,6 @@ const AdminUserDetails = () => {
   // *Queries
   const fetchPendingUsersByAdmin = useFetchPendingUsersByAdmin();
   const fetchUserByAdminById = useFetchUserByAdminById(id as string, !!id);
-  const fetchUserPublicationsById = useFetchUserPublicationsById(
-    id as string,
-    !!id
-  );
 
   // *Methods
   const copyLoginLinkToClipboard = async () => {
@@ -61,9 +54,9 @@ const AdminUserDetails = () => {
   }, [fetchUserByAdminById, fetchPendingUsersByAdmin]);
 
   // *JSX
-  if (fetchUserByAdminById?.isLoading || fetchUserPublicationsById?.isLoading)
+  if (fetchUserByAdminById?.isLoading)
     return (
-      <AdminBaseLayout title="Users" withBackNavigation>
+      <AdminBaseLayout title="Admins" withBackNavigation>
         <div className="flex h-full justify-center items-center">
           <ImgCircleLoadingOutline
             width={40}
@@ -75,9 +68,6 @@ const AdminUserDetails = () => {
     );
 
   const data = fetchUserByAdminById?.data?.data?.data;
-  const publications = fetchUserPublicationsById?.data?.data?.data;
-
-  console.log("data", data);
 
   return (
     <AdminBaseLayout title="Users" withBackNavigation>

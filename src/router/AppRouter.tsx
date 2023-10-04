@@ -24,6 +24,7 @@ import {
   AssumeAccount,
   AdminList,
   AdminDetails,
+  AdminFirstLogin,
 } from "pages";
 import { PrivateRoute } from "wrapper-components";
 
@@ -35,6 +36,7 @@ const AppRouter = () => {
     return (
       <Routes>
         <Route path="/login" element={<AdminLogin />} />
+        <Route path="/login/first/:token" element={<AdminFirstLogin />} />
 
         <Route element={<PrivateRoute />}>
           <Route path="/home" element={<AdminHome />} />

@@ -48,7 +48,6 @@ const FirstLoginChangePassForm = () => {
       passwordConfirmation: data.passwordConfirmation,
     };
     submitUserActivation.mutate(payload);
-    // submitSession.mutate(data);
   };
 
   // *Effects
@@ -69,11 +68,17 @@ const FirstLoginChangePassForm = () => {
   }, [fetchMe]);
 
   useEffect(() => {
-    if (submitUserActivation?.status === "success") {
+    if (!fetchMe?.data?.data?.data) return;
+    const userType = fetchMe.data.data.data.role;
+
+    if (submitUserActivation?.status === "success" && userType === "user") {
       navigate("/onboarding/1");
     }
+    if (submitUserActivation?.status === "success" && userType === "admin") {
+      window.location.href = `${process.env.REACT_APP_ADMIN_URL}login/first/${token}`;
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [submitUserActivation]);
+  }, [submitUserActivation, fetchMe.data]);
 
   useEffect(() => {
     if (isApiError(submitUserActivation?.error)) {
