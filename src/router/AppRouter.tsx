@@ -22,6 +22,8 @@ import {
   Sample,
   PageNotFound,
   AssumeAccount,
+  AdminList,
+  AdminDetails,
 } from "pages";
 import { PrivateRoute } from "wrapper-components";
 
@@ -37,6 +39,8 @@ const AppRouter = () => {
         <Route element={<PrivateRoute />}>
           <Route path="/home" element={<AdminHome />} />
           <Route path="/users/:id" element={<AdminUserDetails />} />
+          <Route path="/admins" element={<AdminList />} />
+          <Route path="/admins/:id" element={<AdminDetails />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>
 
