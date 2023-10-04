@@ -7,6 +7,7 @@ export module GetPendingUsersByAdmin {
     id: string;
     type: string;
     name?: string;
+    role: "user" | "admin" | "developer";
     email: string;
     invitedAt: string;
     researchInterests: ResearchInterest[];

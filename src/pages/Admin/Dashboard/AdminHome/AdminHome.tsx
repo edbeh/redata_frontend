@@ -47,7 +47,11 @@ const AdminHome = () => {
         </p>
         <Table
           columns={generateActiveUsersColumns()}
-          data={fetchUsersByAdmin?.data?.data?.data || []}
+          data={
+            fetchUsersByAdmin?.data?.data?.data?.filter(
+              (user) => user.role === "user"
+            ) || []
+          }
           isLoading={fetchUsersByAdmin?.isLoading}
           handleClickCell={handleClickCell}
         />
@@ -60,7 +64,11 @@ const AdminHome = () => {
         </p>
         <Table
           columns={generatePendingUsersColumns()}
-          data={fetchPendingUsersByAdmin?.data?.data?.data || []}
+          data={
+            fetchPendingUsersByAdmin?.data?.data?.data?.filter(
+              (user) => user.role === "user"
+            ) || []
+          }
           isLoading={fetchPendingUsersByAdmin?.isLoading}
           handleClickCell={handleClickCell}
         />

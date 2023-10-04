@@ -8,6 +8,7 @@ export declare module GetUsersByAdmin {
     type: string;
     name: string;
     image: string;
+    role: "user" | "admin" | "developer";
     institution: Institution;
     designation: Institution;
     department: Institution;
