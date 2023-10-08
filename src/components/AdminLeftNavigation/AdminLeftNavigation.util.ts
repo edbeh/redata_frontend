@@ -8,9 +8,9 @@ import { IAdminLeftNavigationItem } from "./AdminLeftNavigation.model";
 
 export const adminLeftNavigationItems: IAdminLeftNavigationItem[] = [
   {
-    name: "home",
-    text: "Home",
-    path: "/home",
+    name: "users",
+    text: "Users",
+    path: "/users",
     Icon: ImgHomeOutline,
   },
   {

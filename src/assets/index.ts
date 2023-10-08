@@ -11,6 +11,8 @@ import { ReactComponent as ImgBars4Outline } from "./bars-4-outline.svg";
 import { ReactComponent as ImgXCircleOutline } from "./x-circle-outline.svg";
 import { ReactComponent as ImgCheckCircleOutline } from "./check-circle-outline.svg";
 import { ReactComponent as ImgArrowUturnLeftOutline } from "./arrow-uturn-left-outline.svg";
+import { ReactComponent as ImgArrowDown } from "./arrow-down.svg";
+import { ReactComponent as ImgTriangleDown } from "./triangle-down.svg";
 import { ReactComponent as ImgOpenNewTabOutline } from "./open-new-tab-outline.svg";
 import { ReactComponent as ImgMagnifyingGlassOutline } from "./magnifying-glass-outline.svg";
 import { ReactComponent as ImgChevronDownOutline } from "./chevron-down-outline.svg";
@@ -53,6 +55,8 @@ export {
   ImgBars4Outline,
   ImgXCircleOutline,
   ImgCheckCircleOutline,
+  ImgArrowDown,
+  ImgTriangleDown,
   ImgArrowUturnLeftOutline,
   ImgOpenNewTabOutline,
   ImgMagnifyingGlassOutline,

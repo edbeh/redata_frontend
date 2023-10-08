@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 
-import { AdminBaseLayout } from "wrapper-components";
 import { Table } from "components";
+import { getAdminDeptLocalStorage } from "utils";
+import { AdminBaseLayout } from "wrapper-components";
 import { useFetchPendingUsersByAdmin, useFetchUsersByAdmin } from "api/hooks";
 import { USERS_BY_ADMIN_API_KEY } from "api/keys";
 
@@ -42,7 +43,9 @@ const AdminList = () => {
           columns={generateActiveAdminsColumns()}
           data={
             fetchUsersByAdmin?.data?.data?.data?.filter(
-              (user) => user.role === "admin"
+              (user) =>
+                user.role === "admin" &&
+                user.department.id === getAdminDeptLocalStorage()?.id
             ) || []
           }
           isLoading={fetchUsersByAdmin?.isLoading}

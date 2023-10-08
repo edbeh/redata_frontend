@@ -1,3 +1,5 @@
+import { PostAdminSession } from "api/models";
+
 // *JWT Token
 export const getJwtTokenLocalStorage = () => {
   const result = localStorage.getItem("token");
@@ -29,11 +31,17 @@ export const removeAdminNameLocalStorage = () => {
 // *Admin Dept
 export const getAdminDeptLocalStorage = () => {
   const result = localStorage.getItem("admin_dept");
-  return result;
+  if (result) {
+    return JSON.parse(result) as PostAdminSession.Department;
+  } else {
+    return null;
+  }
 };
 
-export const setAdminDeptLocalStorage = (adminDept: string) => {
-  localStorage.setItem("admin_dept", adminDept);
+export const setAdminDeptLocalStorage = (
+  adminDept: PostAdminSession.Department
+) => {
+  localStorage.setItem("admin_dept", JSON.stringify(adminDept));
 };
 
 export const removeAdminDeptLocalStorage = () => {

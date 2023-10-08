@@ -39,14 +39,14 @@ const AppRouter = () => {
         <Route path="/login/first/:token" element={<AdminFirstLogin />} />
 
         <Route element={<PrivateRoute />}>
-          <Route path="/home" element={<AdminHome />} />
+          <Route path="/users" element={<AdminHome />} />
           <Route path="/users/:id" element={<AdminUserDetails />} />
           <Route path="/admins" element={<AdminList />} />
           <Route path="/admins/:id" element={<AdminDetails />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>
 
-        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/" element={<Navigate to="/users" />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     );

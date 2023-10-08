@@ -12,6 +12,7 @@ import {
   generatePendingUsersColumns,
 } from "./AdminHome.util";
 import InviteNewUserForm from "./components/InviteNewUserForm/InviteNewUserForm";
+import { getAdminDeptLocalStorage } from "utils";
 
 const AdminHome = () => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const AdminHome = () => {
 
   // *JSX
   return (
-    <AdminBaseLayout title="Home">
+    <AdminBaseLayout title="Users">
       <div>
         <h2 className="font-bold text-sm">Active Users</h2>
         <p className="my-4 text-sm">
@@ -49,7 +50,9 @@ const AdminHome = () => {
           columns={generateActiveUsersColumns()}
           data={
             fetchUsersByAdmin?.data?.data?.data?.filter(
-              (user) => user.role === "user"
+              (user) =>
+                user.role === "user" &&
+                user.department.id === getAdminDeptLocalStorage()?.id
             ) || []
           }
           isLoading={fetchUsersByAdmin?.isLoading}

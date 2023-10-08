@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 import { ImgArrowUturnLeftOutline, ImgBars4Outline } from "assets";
 import { AdminLeftNavigation, AdminLeftNavigationMobile } from "components";
-import { getAdminDeptLocalStorage, getAdminNameLocalStorage } from "utils";
+
+import AdminTopNav from "../AdminTopNav/AdminTopNav";
 
 interface AdminBaseLayoutProps {
   title: string;
@@ -20,21 +21,11 @@ const AdminBaseLayout: React.FC<AdminBaseLayoutProps> = ({
 }) => {
   const navigate = useNavigate();
   const [isMobileNavVisible, setIsMobileNavVisible] = useState<boolean>(false);
-  const [adminName, setAdminName] = useState<string>("");
-  const [adminDept, setAdminDept] = useState<string>("");
 
   //* Effects
   useEffect(() => {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
-  }, []);
-
-  useEffect(() => {
-    const adminName = getAdminNameLocalStorage();
-    setAdminName(adminName || "");
-
-    const adminDept = getAdminDeptLocalStorage();
-    setAdminDept(adminDept || "");
   }, []);
 
   //* JSX
@@ -51,10 +42,7 @@ const AdminBaseLayout: React.FC<AdminBaseLayoutProps> = ({
       </div>
 
       <div className="flex w-full flex-col lg:ml-[250px] bg-backgroundGray">
-        <div
-          className="sticky top-0 flex w-full 
-                        justify-between border-b-[1px] border-b-bordergray bg-white py-5 pl-8 pr-4 font-bold lg:px-8"
-        >
+        <div className="sticky top-0 flex w-full z-30 justify-between border-b-[1px] border-b-bordergray bg-white py-5 pl-8 pr-4 font-bold lg:px-8">
           <div
             className={`flex items-center ${
               withBackNavigation ? "cursor-pointer" : ""
@@ -84,10 +72,7 @@ const AdminBaseLayout: React.FC<AdminBaseLayoutProps> = ({
           </div>
 
           <div className="flex items-center space-x-2 lg:space-x-5">
-            <div>
-              <p>{adminName}</p>
-              <p className="text-xs font-normal">{adminDept}</p>
-            </div>
+            <AdminTopNav />
           </div>
         </div>
         <div className="min-h-[calc(100vh-72px)] w-full bg-backgroundgray p-8 lg:max-w-[calc(100vw-250px)]">

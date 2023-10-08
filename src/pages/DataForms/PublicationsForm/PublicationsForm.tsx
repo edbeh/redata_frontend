@@ -97,8 +97,6 @@ const PublicationsForm = React.forwardRef<
       !!pubMedNamesToSearch
     );
 
-    console.log("fetchPubMedByNames", fetchPubMedByNames);
-
     const fetchPubMedByIds = useFetchPubMedByIds(
       pubMedIdsToSearch,
       pubMedIdsToSearch.length > 0

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { getYupIsRequired } from "utils";
+import { getAdminDeptLocalStorage, getYupIsRequired } from "utils";
 import { FormInput, Button } from "components";
 import { isApiError, handleApiErrorsForm } from "api/utils";
 import { useSubmitNewInvitation } from "api/hooks";
@@ -31,7 +31,6 @@ const InviteNewUserForm = () => {
 
   // *Effects
   useEffect(() => {
-    console.log("submitNewInvitation?.data", submitNewInvitation?.data);
     if (submitNewInvitation?.data?.data?.success === true) {
       window.location.reload();
     }
@@ -54,7 +53,9 @@ const InviteNewUserForm = () => {
           className="w-full"
         >
           <div className="flex flex-col space-y-4">
-            <h1 className="text-2xl font-semibold mb-6">Invite New User</h1>
+            <h1 className="text-2xl font-semibold mb-6">
+              Invite New User ({getAdminDeptLocalStorage()?.name})
+            </h1>
 
             <FormInput
               register={register}

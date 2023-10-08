@@ -69,11 +69,21 @@ const Table = ({ columns, data, isLoading, handleClickCell }: TableProps) => {
         <tbody className="text-[13px]">
           {isLoading ? (
             <tr className="border-b-[1px] border-b-tableHeaderGray bg-white hover:bg-tableRowGray">
-              <td className="w-fit truncate p-3">Loading...</td>
+              <td
+                className="w-fit truncate p-3 text-center"
+                colSpan={columns.length}
+              >
+                Loading...
+              </td>
             </tr>
           ) : table.getRowModel().rows.length === 0 ? (
             <tr className="border-b-[1px] border-b-tableHeaderGray bg-white hover:bg-tableRowGray">
-              <td className="w-fit truncate p-3">No data</td>
+              <td
+                className="w-fit truncate p-3 text-center"
+                colSpan={columns.length}
+              >
+                No data
+              </td>
             </tr>
           ) : (
             table.getRowModel().rows.map((row) => {

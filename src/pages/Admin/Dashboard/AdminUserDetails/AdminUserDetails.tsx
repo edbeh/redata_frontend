@@ -77,8 +77,6 @@ const AdminUserDetails = () => {
   const data = fetchUserByAdminById?.data?.data?.data;
   const publications = fetchUserPublicationsById?.data?.data?.data;
 
-  console.log("data", data);
-
   return (
     <AdminBaseLayout title="Users" withBackNavigation>
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
