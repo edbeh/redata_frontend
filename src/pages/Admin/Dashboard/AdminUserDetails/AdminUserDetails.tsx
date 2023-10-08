@@ -94,17 +94,15 @@ const AdminUserDetails = () => {
             variant="primary-600"
             content="Login as this user to help them update their profile."
           />
-          <Button>
-            <a
-              href={`${
-                data?.assumeAccountLink
-              }&admin=${getAdminNameLocalStorage()}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Assume account
-            </a>
-          </Button>
+          <a
+            href={`${
+              data?.assumeAccountLink
+            }&admin=${getAdminNameLocalStorage()}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button>Assume account</Button>
+          </a>
         </div>
       </div>
 
