@@ -26,7 +26,10 @@ const InviteNewUserForm = () => {
 
   // *Methods
   const handleSubmitForm = (data: IInviteNewUserFormFields) => {
-    submitNewInvitation.mutate(data);
+    submitNewInvitation.mutate({
+      emails: data.emails,
+      department_id: getAdminDeptLocalStorage()?.id || "",
+    });
   };
 
   // *Effects

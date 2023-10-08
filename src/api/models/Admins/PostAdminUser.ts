@@ -1,6 +1,7 @@
 export declare module PostAdminUser {
   export interface PayLoad {
-    email: string;
+    emails: string;
+    department_id: string;
   }
 
   export interface ApiResponse {

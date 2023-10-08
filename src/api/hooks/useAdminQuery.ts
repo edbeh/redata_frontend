@@ -7,7 +7,6 @@ import {
 } from "api/keys";
 import { createAxiosInstance, ApiErrorProps } from "api/utils";
 import { IAdminLoginFormFields } from "pages/Auth/AdminLogin/AdminLoginForm/AdminLoginForm.model";
-import { IInviteNewUserFormFields } from "pages/Admin/Dashboard/AdminHome/components/InviteNewUserForm/InviteNewUserForm.model";
 
 import {
   ADMIN_LIST_PENDING_USERS_ENDPOINT,
@@ -115,7 +114,7 @@ export const useFetchPendingUsersByAdmin = () => {
 /**
  *  //*POST New Invitation
  */
-const submitNewInvitation = async (data: IInviteNewUserFormFields) => {
+const submitNewInvitation = async (data: PostAdminUser.PayLoad) => {
   return AxiosInstance.post<PostAdminUser.ApiResponse>(
     ADMIN_LIST_USERS_ENDPOINT,
     data
