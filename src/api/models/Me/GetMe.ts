@@ -12,7 +12,6 @@ export declare module GetMe {
     image: string;
     institution: Institution;
     designation: Institution;
-    department: Institution;
     userDepartments: UserDepartment[];
     primarySpecialty: PrimarySpecialty;
     otherSpecialties: PrimarySpecialty[];

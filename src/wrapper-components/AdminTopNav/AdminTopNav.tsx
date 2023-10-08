@@ -17,16 +17,16 @@ const AdminTopNav = () => {
 
   const [adminName, setAdminName] = useState<string>("");
   const [adminDept, setAdminDept] =
-    useState<PostAdminSession.Department | null>(null);
-  const [departments, setDepartments] = useState<PostAdminSession.Department[]>(
-    []
-  );
+    useState<PostAdminSession.Institution | null>(null);
+  const [departments, setDepartments] = useState<
+    PostAdminSession.Institution[]
+  >([]);
 
   // *Queries
   const fetchMe = useFetchMe(true);
 
   // *Methods
-  const handleChangeDept = (dept: PostAdminSession.Department) => {
+  const handleChangeDept = (dept: PostAdminSession.Institution) => {
     setAdminDept(dept);
     setAdminDeptLocalStorage(dept);
     if (window.location.href.includes("/users")) {

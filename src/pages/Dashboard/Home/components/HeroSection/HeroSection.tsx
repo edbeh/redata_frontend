@@ -27,7 +27,7 @@ const HeroSection = ({
             <p className="pt-1">{data?.designation?.name}</p>
 
             <p className="pt-2 sm:pt-4 text-base">
-              {`${data?.department?.name}, ${data?.institution?.name}`}
+              {`${data?.userDepartments[0]?.department?.name}, ${data?.institution?.name}`}
             </p>
           </div>
         </div>

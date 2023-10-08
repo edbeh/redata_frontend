@@ -79,7 +79,10 @@ const Onboarding = () => {
   }, [step, onboardingSteps]);
 
   useEffect(() => {
-    if (fetchMe?.data && fetchMe.data.data?.data?.department === null) {
+    if (
+      fetchMe?.data &&
+      fetchMe.data.data?.data?.userDepartments[0]?.department?.name === null
+    ) {
       setIsIntroModalVisible(true);
     }
   }, [fetchMe.data]);

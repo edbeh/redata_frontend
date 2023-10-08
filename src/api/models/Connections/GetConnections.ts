@@ -1,20 +1,22 @@
 export declare module GetConnections {
-  export interface Institution {
-    id: string;
-    type: string;
-    name: string;
+  export interface ApiResponse {
+    data: Data[];
   }
 
-  export interface Designation {
+  export interface Data {
     id: string;
     type: string;
     name: string;
-  }
-
-  export interface Department {
-    id: string;
-    type: string;
-    name: string;
+    role: string;
+    acknowledgedAt?: string;
+    image: string;
+    institution: Institution;
+    designation?: Institution;
+    userDepartments: UserDepartment[];
+    primarySpecialty?: PrimarySpecialty;
+    otherSpecialties: PrimarySpecialty[];
+    researchInterests: PrimarySpecialty[];
+    patientPools: PrimarySpecialty[];
   }
 
   export interface PrimarySpecialty {
@@ -24,45 +26,16 @@ export declare module GetConnections {
     variant: string;
   }
 
-  export interface OtherSpecialty {
+  export interface UserDepartment {
+    id: string;
+    type: string;
+    designation?: Institution;
+    department: Institution;
+  }
+
+  export interface Institution {
     id: string;
     type: string;
     name: string;
-    variant: string;
-  }
-
-  export interface ResearchInterest {
-    id: string;
-    type: string;
-    name: string;
-    variant: string;
-  }
-
-  export interface PatientPool {
-    id: string;
-    type: string;
-    name: string;
-    variant: string;
-  }
-
-  export interface Datum {
-    id: string;
-    type: string;
-    name: string;
-    email: string;
-    bio: string;
-    correctedPubmedNames: string[];
-    institution: Institution;
-    designation: Designation;
-    department: Department;
-    primarySpecialty: PrimarySpecialty;
-    otherSpecialties: OtherSpecialty[];
-    researchInterests: ResearchInterest[];
-    patientPools: PatientPool[];
-    image: string | null;
-  }
-
-  export interface ApiResponse {
-    data: Datum[];
   }
 }

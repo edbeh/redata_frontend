@@ -43,7 +43,8 @@ const LoginForm = () => {
     if (submitAdminSession?.data?.status === 200) {
       const jwt = submitAdminSession?.data?.data?.jwt;
       const adminName = submitAdminSession?.data?.data?.data?.name;
-      const adminDept = submitAdminSession?.data?.data?.data?.department;
+      const adminDept =
+        submitAdminSession?.data?.data?.data?.userDepartments[0]?.department;
 
       setJwtTokenLocalStorage(jwt);
       setAdminNameLocalStorage(adminName);

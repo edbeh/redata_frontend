@@ -1,33 +1,28 @@
 export declare module GetSearchUsers {
-  export interface Designation {
-    id: string;
-    type: string;
-    name: string;
+  export interface ApiResponse {
+    data: Data[];
   }
 
-  export interface Department {
+  export interface Data {
     id: string;
     type: string;
     name: string;
+    image: string;
+    institution: Institution;
+    userDepartments: UserDepartment[];
+    designation: Institution;
+  }
+
+  export interface UserDepartment {
+    id: string;
+    type: string;
+    designation?: Institution;
+    department: Institution;
   }
 
   export interface Institution {
     id: string;
     type: string;
     name: string;
-  }
-
-  export interface Datum {
-    id: string;
-    type: string;
-    name: string;
-    designation: Designation;
-    department: Department;
-    institution: Institution;
-    image: string | null;
-  }
-
-  export interface ApiResponse {
-    data: Datum[];
   }
 }

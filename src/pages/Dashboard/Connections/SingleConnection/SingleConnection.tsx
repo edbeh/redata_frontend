@@ -5,7 +5,7 @@ import { Button, Card } from "components";
 import { GetConnections } from "api/models";
 
 interface SingleConnectionProps {
-  connection: GetConnections.Datum;
+  connection: GetConnections.Data;
 }
 
 const SingleConnection = ({ connection }: SingleConnectionProps) => {
@@ -24,7 +24,9 @@ const SingleConnection = ({ connection }: SingleConnectionProps) => {
           <div className="flex-1">
             <p className="font-semibold">{connection.name}</p>
             <p className="line-clamp-1">{connection.designation?.name}</p>
-            <p className="line-clamp-1">{connection.department?.name}</p>
+            <p className="line-clamp-1">
+              {connection.userDepartments[0]?.department?.name}
+            </p>
             <p className="line-clamp-1">{connection?.institution?.name}</p>
           </div>
         </div>

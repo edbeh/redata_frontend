@@ -1,41 +1,35 @@
 export declare module GetSearchPublications {
-  export interface Designation {
-    id: string;
-    type: string;
-    name: string;
+  export interface ApiResponse {
+    data: Data[];
   }
 
-  export interface Department {
+  export interface Data {
     id: string;
     type: string;
     name: string;
-  }
-
-  export interface Institution {
-    id: string;
-    type: string;
-    name: string;
-  }
-
-  export interface Datum {
-    id: string;
-    type: string;
-    name: string;
-    // designation: Designation;
-    department: Department;
+    image: string;
     institution: Institution;
+    userDepartments: UserDepartment[];
     publicationTitle: string;
     publicationAuthors: string[];
     publicationSource: string;
     publicationVolume: string;
     publicationIssue: string;
     publicationPages: string;
-    publicationPublishedAt: Date | string;
+    publicationPublishedAt: string;
     publicationCount: number;
-    image: string | null;
   }
 
-  export interface ApiResponse {
-    data: Datum[];
+  export interface UserDepartment {
+    id: string;
+    type: string;
+    designation?: Institution | Institution;
+    department: Institution;
+  }
+
+  export interface Institution {
+    id: string;
+    type: string;
+    name: string;
   }
 }

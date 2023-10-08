@@ -1,36 +1,30 @@
 export declare module GetSearchMedicalKeywords {
-  export interface Designation {
-    id: string;
-    type: string;
-    name: string;
+  export interface ApiResponse {
+    data: Data[];
   }
 
-  export interface Department {
+  export interface Data {
     id: string;
     type: string;
     name: string;
+    image: string;
+    institution: Institution;
+    userDepartments: UserDepartment[];
+    specialties: string[];
+    researchInterests: string[];
+    patientPools: string[];
+  }
+
+  export interface UserDepartment {
+    id: string;
+    type: string;
+    designation: Institution;
+    department: Institution;
   }
 
   export interface Institution {
     id: string;
     type: string;
     name: string;
-  }
-
-  export interface Datum {
-    id: string;
-    type: string;
-    name: string;
-    // designation: Designation;
-    department: Department;
-    institution: Institution;
-    specialties: string[];
-    researchInterests: string[];
-    patientPools: string[];
-    image: string | null;
-  }
-
-  export interface ApiResponse {
-    data: Datum[];
   }
 }

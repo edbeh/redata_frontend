@@ -135,7 +135,10 @@ const AdminUserDetails = () => {
         <AdminCard title="User details">
           <AdminRow title="Bio" value={data?.bio} />
           <AdminRow title="Insitution" value={data?.institution?.name} />
-          <AdminRow title="Department" value={data?.department?.name} />
+          <AdminRow
+            title="Department"
+            value={data?.userDepartments[0]?.department?.name}
+          />
           <AdminRow title="Designation" value={data?.designation?.name} />
           <AdminRow title="Email" value={data?.email} />
           <AdminRow

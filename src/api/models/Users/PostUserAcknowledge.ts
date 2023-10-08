@@ -7,17 +7,18 @@ export declare module PostUserAcknowledge {
     id: string;
     type: string;
     name: string;
+    role: string;
     acknowledgedAt: string;
     image: string;
     institution: Institution;
     designation: Institution;
-    department: Institution;
+    userDepartments: UserDepartment[];
     primarySpecialty: PrimarySpecialty;
     otherSpecialties: PrimarySpecialty[];
     researchInterests: PrimarySpecialty[];
     patientPools: PrimarySpecialty[];
     email: string;
-    bio: string;
+    bio?: any;
     correctedPubmedNames: string[];
     googleScholar: GoogleScholar;
   }
@@ -52,6 +53,13 @@ export declare module PostUserAcknowledge {
     type: string;
     name: string;
     variant: string;
+  }
+
+  export interface UserDepartment {
+    id: string;
+    type: string;
+    designation?: Institution;
+    department: Institution;
   }
 
   export interface Institution {

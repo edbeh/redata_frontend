@@ -281,17 +281,28 @@ const getSamplePublications = (): Publication[] => [
   },
 ];
 
-const getSampleMedicalKeywordResults = (): GetSearchMedicalKeywords.Datum[] => [
+const getSampleMedicalKeywordResults = (): GetSearchMedicalKeywords.Data[] => [
   {
     id: "1",
     type: "searchMedicalKeywords",
     name: "Jessica Koh",
     image: imgStockPhoto3,
-    department: {
-      id: "3",
-      type: "department",
-      name: "Ophthalmology",
-    },
+    userDepartments: [
+      {
+        id: "9",
+        type: "userDepartment",
+        designation: {
+          id: "6",
+          type: "designation",
+          name: "Associate Consultant",
+        },
+        department: {
+          id: "2",
+          type: "department",
+          name: "Opthalmology",
+        },
+      },
+    ],
     institution: {
       id: "1",
       type: "institution",
@@ -306,11 +317,22 @@ const getSampleMedicalKeywordResults = (): GetSearchMedicalKeywords.Datum[] => [
     type: "searchMedicalKeywords",
     name: "Janice Wong",
     image: imgStockPhoto2,
-    department: {
-      id: "3",
-      type: "department",
-      name: "Ophthalmology",
-    },
+    userDepartments: [
+      {
+        id: "9",
+        type: "userDepartment",
+        designation: {
+          id: "6",
+          type: "designation",
+          name: "Associate Consultant",
+        },
+        department: {
+          id: "2",
+          type: "department",
+          name: "Opthalmology",
+        },
+      },
+    ],
     institution: {
       id: "1",
       type: "institution",
@@ -322,40 +344,50 @@ const getSampleMedicalKeywordResults = (): GetSearchMedicalKeywords.Datum[] => [
   },
 ];
 
-const getSamplePublicationKeywordResults =
-  (): GetSearchPublications.Datum[] => [
-    {
-      id: "10",
-      type: "searchPublication",
-      name: "William Prince",
-      image: imgStockPhoto4,
-      department: {
-        id: "1",
-        type: "department",
-        name: "Ophthalmology",
+const getSamplePublicationKeywordResults = (): GetSearchPublications.Data[] => [
+  {
+    id: "10",
+    type: "searchPublication",
+    name: "William Prince",
+    image: imgStockPhoto4,
+    userDepartments: [
+      {
+        id: "9",
+        type: "userDepartment",
+        designation: {
+          id: "6",
+          type: "designation",
+          name: "Associate Consultant",
+        },
+        department: {
+          id: "2",
+          type: "department",
+          name: "Opthalmology",
+        },
       },
-      institution: {
-        id: "1",
-        type: "institution",
-        name: "ACME General Hospital",
-      },
-      publicationTitle:
-        "Improvement in inner retinal function in glaucoma with nicotinamide (vitamin B3) supplementation: A crossover randomized clinical trial.",
-      publicationAuthors: [
-        "Hui F",
-        "Tang J",
-        "Willam PA",
-        "Casson RJ",
-        "Coote M",
-      ],
-      publicationSource: "Clin Exp Ophthalmol.",
-      publicationVolume: "",
-      publicationIssue: "",
-      publicationPages: "1-12",
-      publicationPublishedAt: "2022-09-13T16:00:00.000Z",
-      publicationCount: 25,
+    ],
+    institution: {
+      id: "1",
+      type: "institution",
+      name: "ACME General Hospital",
     },
-  ];
+    publicationTitle:
+      "Improvement in inner retinal function in glaucoma with nicotinamide (vitamin B3) supplementation: A crossover randomized clinical trial.",
+    publicationAuthors: [
+      "Hui F",
+      "Tang J",
+      "Willam PA",
+      "Casson RJ",
+      "Coote M",
+    ],
+    publicationSource: "Clin Exp Ophthalmol.",
+    publicationVolume: "",
+    publicationIssue: "",
+    publicationPages: "1-12",
+    publicationPublishedAt: "2022-09-13T16:00:00.000Z",
+    publicationCount: 25,
+  },
+];
 
 const getSampleBase64 = () => {
   return `JVBERi0xLjMKJf////8KMSAwIG9iago8PCAvQ3JlYXRvciA8ZmVmZjAwNTAw

@@ -7,7 +7,7 @@ import { GetSearchPublications } from "api/models";
 
 interface SingleResultPublicationProps {
   q: string;
-  data: GetSearchPublications.Datum[];
+  data: GetSearchPublications.Data[];
   disableLinks?: boolean;
 }
 
@@ -37,7 +37,7 @@ const SingleResultPublication = ({
                   {result?.name}
                 </p>
                 <p className="sm:text-center line-clamp-1">
-                  {result?.department?.name}
+                  {result?.userDepartments[0]?.department?.name}
                 </p>
                 <p className="sm:text-center line-clamp-1">
                   {result?.institution?.name}

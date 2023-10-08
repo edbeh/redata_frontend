@@ -2,7 +2,6 @@ import dayjs from "dayjs";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
 import { GetPendingUsersByAdmin, GetUsersByAdmin } from "api/models";
-import { Tooltip } from "components";
 
 const activeAdminsColumnHelper = createColumnHelper<GetUsersByAdmin.Data>();
 const pendingAdminsColumnHelper =
@@ -13,10 +12,13 @@ export const generateActiveAdminsColumns = (): ColumnDef<any, string>[] => [
     header: "Name",
     cell: (info) => info.getValue(),
   }),
-  activeAdminsColumnHelper.accessor("department.name", {
-    header: "Department",
-    cell: (info) => info.getValue(),
-  }),
+  activeAdminsColumnHelper.accessor(
+    (row) => row.userDepartments[0].department.name,
+    {
+      header: "Department",
+      cell: (info) => info.getValue(),
+    }
+  ),
   activeAdminsColumnHelper.accessor("institution.name", {
     header: "Institution",
     cell: (info) => info.getValue(),

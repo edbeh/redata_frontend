@@ -6,7 +6,7 @@ import { GetSearchMedicalKeywords } from "api/models";
 
 interface SingleResultMedicalProps {
   q: string;
-  data: GetSearchMedicalKeywords.Datum[];
+  data: GetSearchMedicalKeywords.Data[];
   disabledLinks?: boolean;
 }
 
@@ -42,7 +42,7 @@ const SingleResultMedical = ({
                   {result?.name}
                 </p>
                 <p className="sm:text-center line-clamp-1">
-                  {result?.department?.name}
+                  {result?.userDepartments[0]?.department?.name}
                 </p>
                 <p className="sm:text-center line-clamp-1">
                   {result?.institution?.name}

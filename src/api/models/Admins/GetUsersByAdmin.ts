@@ -7,16 +7,16 @@ export declare module GetUsersByAdmin {
     id: string;
     type: string;
     name: string;
+    role: string;
+    acknowledgedAt?: string;
     image: string;
-    role: "user" | "admin" | "developer";
     institution: Institution;
-    designation: Institution;
-    department: Institution;
-    primarySpecialty: PrimarySpecialty;
+    designation?: Institution;
+    userDepartments: UserDepartment[];
+    primarySpecialty?: PrimarySpecialty;
     otherSpecialties: PrimarySpecialty[];
     researchInterests: PrimarySpecialty[];
     patientPools: PrimarySpecialty[];
-    acknowledgedAt: string | null;
   }
 
   export interface PrimarySpecialty {
@@ -24,6 +24,13 @@ export declare module GetUsersByAdmin {
     type: string;
     name: string;
     variant: string;
+  }
+
+  export interface UserDepartment {
+    id: string;
+    type: string;
+    designation?: Institution | Institution | null;
+    department: Institution;
   }
 
   export interface Institution {

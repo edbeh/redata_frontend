@@ -18,7 +18,6 @@ export declare module PostUserActivation {
     image: string;
     institution: Institution;
     designation?: any;
-    department: Institution;
     primarySpecialty?: any;
     otherSpecialties: any[];
     researchInterests: any[];

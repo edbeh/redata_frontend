@@ -32,14 +32,14 @@ export const removeAdminNameLocalStorage = () => {
 export const getAdminDeptLocalStorage = () => {
   const result = localStorage.getItem("admin_dept");
   if (result) {
-    return JSON.parse(result) as PostAdminSession.Department;
+    return JSON.parse(result) as PostAdminSession.Institution;
   } else {
     return null;
   }
 };
 
 export const setAdminDeptLocalStorage = (
-  adminDept: PostAdminSession.Department
+  adminDept: PostAdminSession.Institution
 ) => {
   localStorage.setItem("admin_dept", JSON.stringify(adminDept));
 };

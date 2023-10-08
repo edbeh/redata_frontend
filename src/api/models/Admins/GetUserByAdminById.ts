@@ -7,18 +7,19 @@ export declare module GetUserByAdminById {
     id: string;
     type: string;
     name: string;
+    role: string;
+    acknowledgedAt: string;
     image: string;
     institution: Institution;
     designation: Institution;
-    department: Institution;
+    userDepartments: UserDepartment[];
     primarySpecialty: PrimarySpecialty;
-    otherSpecialties: any[];
+    otherSpecialties: PrimarySpecialty[];
     researchInterests: PrimarySpecialty[];
     patientPools: PrimarySpecialty[];
     email: string;
     bio?: any;
     correctedPubmedNames: string[];
-    acknowledgedAt?: any;
     googleScholar: GoogleScholar;
     assumeAccountLink: string;
   }
@@ -53,6 +54,13 @@ export declare module GetUserByAdminById {
     type: string;
     name: string;
     variant: string;
+  }
+
+  export interface UserDepartment {
+    id: string;
+    type: string;
+    designation?: Institution;
+    department: Institution;
   }
 
   export interface Institution {
