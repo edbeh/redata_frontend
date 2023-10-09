@@ -9,7 +9,8 @@ export declare module GetSearchPublications {
     name: string;
     image: string;
     institution: Institution;
-    userDepartments: UserDepartment[];
+    designation: Institution;
+    departments: Institution[];
     publicationTitle: string;
     publicationAuthors: string[];
     publicationSource: string;

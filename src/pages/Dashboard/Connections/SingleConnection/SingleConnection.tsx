@@ -24,9 +24,7 @@ const SingleConnection = ({ connection }: SingleConnectionProps) => {
           <div className="flex-1">
             <p className="font-semibold">{connection.name}</p>
             <p className="line-clamp-1">{connection.designation?.name}</p>
-            <p className="line-clamp-1">
-              {connection.userDepartments[0]?.department?.name}
-            </p>
+            <p className="line-clamp-1">{connection.departments[0]?.name}</p>
             <p className="line-clamp-1">{connection?.institution?.name}</p>
           </div>
         </div>

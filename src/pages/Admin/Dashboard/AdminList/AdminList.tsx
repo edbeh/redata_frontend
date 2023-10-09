@@ -45,8 +45,7 @@ const AdminList = () => {
             fetchUsersByAdmin?.data?.data?.data?.filter(
               (user) =>
                 user.role === "admin" &&
-                user.userDepartments[0]?.department.id ===
-                  getAdminDeptLocalStorage()?.id
+                user.departments[0].id === getAdminDeptLocalStorage()?.id
             ) || []
           }
           isLoading={fetchUsersByAdmin?.isLoading}

@@ -26,9 +26,7 @@ const SingleResultName = ({ data }: SingleSearchResultNameProps) => {
               <div className="flex-1">
                 <p className="font-semibold">{result?.name}</p>
                 <p className="line-clamp-1">{result?.designation?.name}</p>
-                <p className="line-clamp-1">
-                  {result?.userDepartments[0]?.department?.name}
-                </p>
+                <p className="line-clamp-1">{result?.departments[0]?.name}</p>
                 <p className="line-clamp-1">{result?.institution?.name}</p>
               </div>
             </div>

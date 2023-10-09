@@ -12,7 +12,7 @@ export declare module GetMe {
     image: string;
     institution: Institution;
     designation: Institution;
-    userDepartments: UserDepartment[];
+    departments: Institution[];
     primarySpecialty: PrimarySpecialty;
     otherSpecialties: PrimarySpecialty[];
     researchInterests: PrimarySpecialty[];

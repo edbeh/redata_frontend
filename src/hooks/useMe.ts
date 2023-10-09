@@ -6,7 +6,7 @@ export const useMe = () => {
   const data = fetchMe?.data?.data?.data;
 
   return {
-    departmentId: data?.userDepartments[0]?.department?.id,
+    departmentId: data?.departments[0]?.id,
     email: data?.email,
   };
 };

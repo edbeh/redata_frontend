@@ -9,7 +9,7 @@ export declare module GetSearchUsers {
     name: string;
     image: string;
     institution: Institution;
-    userDepartments: UserDepartment[];
+    departments: Institution[];
     designation: Institution;
   }
 

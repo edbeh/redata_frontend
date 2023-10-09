@@ -48,9 +48,9 @@ const AdminTopNav = () => {
   }, []);
 
   useEffect(() => {
-    if (fetchMe?.data?.data?.data?.userDepartments) {
-      const departments = fetchMe.data.data.data.userDepartments.map((dept) => {
-        return dept.department;
+    if (fetchMe?.data?.data?.data?.departments) {
+      const departments = fetchMe.data.data.data.departments.map((dept) => {
+        return dept;
       });
       setDepartments(departments);
     }

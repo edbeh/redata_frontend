@@ -287,20 +287,16 @@ const getSampleMedicalKeywordResults = (): GetSearchMedicalKeywords.Data[] => [
     type: "searchMedicalKeywords",
     name: "Jessica Koh",
     image: imgStockPhoto3,
-    userDepartments: [
+    designation: {
+      id: "6",
+      type: "designation",
+      name: "Associate Consultant",
+    },
+    departments: [
       {
-        id: "9",
-        type: "userDepartment",
-        designation: {
-          id: "6",
-          type: "designation",
-          name: "Associate Consultant",
-        },
-        department: {
-          id: "2",
-          type: "department",
-          name: "Opthalmology",
-        },
+        id: "2",
+        type: "department",
+        name: "Opthalmology",
       },
     ],
     institution: {
@@ -317,20 +313,16 @@ const getSampleMedicalKeywordResults = (): GetSearchMedicalKeywords.Data[] => [
     type: "searchMedicalKeywords",
     name: "Janice Wong",
     image: imgStockPhoto2,
-    userDepartments: [
+    designation: {
+      id: "6",
+      type: "designation",
+      name: "Associate Consultant",
+    },
+    departments: [
       {
-        id: "9",
-        type: "userDepartment",
-        designation: {
-          id: "6",
-          type: "designation",
-          name: "Associate Consultant",
-        },
-        department: {
-          id: "2",
-          type: "department",
-          name: "Opthalmology",
-        },
+        id: "2",
+        type: "department",
+        name: "Opthalmology",
       },
     ],
     institution: {
@@ -350,20 +342,16 @@ const getSamplePublicationKeywordResults = (): GetSearchPublications.Data[] => [
     type: "searchPublication",
     name: "William Prince",
     image: imgStockPhoto4,
-    userDepartments: [
+    designation: {
+      id: "6",
+      type: "designation",
+      name: "Associate Consultant",
+    },
+    departments: [
       {
-        id: "9",
-        type: "userDepartment",
-        designation: {
-          id: "6",
-          type: "designation",
-          name: "Associate Consultant",
-        },
-        department: {
-          id: "2",
-          type: "department",
-          name: "Opthalmology",
-        },
+        id: "2",
+        type: "department",
+        name: "Opthalmology",
       },
     ],
     institution: {

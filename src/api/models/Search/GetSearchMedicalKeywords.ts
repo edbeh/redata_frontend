@@ -9,17 +9,11 @@ export declare module GetSearchMedicalKeywords {
     name: string;
     image: string;
     institution: Institution;
-    userDepartments: UserDepartment[];
+    designation: Institution;
+    departments: Institution[];
     specialties: string[];
     researchInterests: string[];
     patientPools: string[];
-  }
-
-  export interface UserDepartment {
-    id: string;
-    type: string;
-    designation: Institution;
-    department: Institution;
   }
 
   export interface Institution {

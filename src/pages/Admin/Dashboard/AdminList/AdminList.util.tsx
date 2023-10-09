@@ -12,13 +12,10 @@ export const generateActiveAdminsColumns = (): ColumnDef<any, string>[] => [
     header: "Name",
     cell: (info) => info.getValue(),
   }),
-  activeAdminsColumnHelper.accessor(
-    (row) => row.userDepartments[0].department.name,
-    {
-      header: "Department",
-      cell: (info) => info.getValue(),
-    }
-  ),
+  activeAdminsColumnHelper.accessor((row) => row.departments[0].name, {
+    header: "Department",
+    cell: (info) => info.getValue(),
+  }),
   activeAdminsColumnHelper.accessor("institution.name", {
     header: "Institution",
     cell: (info) => info.getValue(),

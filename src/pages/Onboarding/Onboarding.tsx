@@ -81,7 +81,7 @@ const Onboarding = () => {
   useEffect(() => {
     if (
       fetchMe?.data &&
-      fetchMe.data.data?.data?.userDepartments[0]?.department?.name === null
+      fetchMe.data.data?.data?.departments[0]?.name === null
     ) {
       setIsIntroModalVisible(true);
     }

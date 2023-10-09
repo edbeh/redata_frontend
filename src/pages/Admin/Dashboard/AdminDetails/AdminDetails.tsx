@@ -110,10 +110,7 @@ const AdminUserDetails = () => {
       <div className="mt-6 max-w-[600px]">
         <AdminCard title="User details">
           <AdminRow title="Insitution" value={data?.institution?.name} />
-          <AdminRow
-            title="Department"
-            value={data?.userDepartments[0]?.department?.name}
-          />
+          <AdminRow title="Department" value={data?.departments[0]?.name} />
           <AdminRow title="Email" value={data?.email} />
         </AdminCard>
       </div>

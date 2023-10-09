@@ -42,7 +42,7 @@ const SingleResultMedical = ({
                   {result?.name}
                 </p>
                 <p className="sm:text-center line-clamp-1">
-                  {result?.userDepartments[0]?.department?.name}
+                  {result?.departments[0]?.name}
                 </p>
                 <p className="sm:text-center line-clamp-1">
                   {result?.institution?.name}

@@ -182,8 +182,8 @@ const BasicInfoForm = React.forwardRef<HTMLButtonElement, BasicInfoFormProps>(
     useEffect(() => {
       if (fetchMe?.data) {
         const data = fetchMe?.data?.data?.data;
-        if (isInitialRender.current && data.userDepartments[0]?.department) {
-          setValue("department", data.userDepartments[0].department);
+        if (isInitialRender.current && data.departments[0]) {
+          setValue("department", data.departments[0]);
         }
       }
     }, [fetchMe.data]);
