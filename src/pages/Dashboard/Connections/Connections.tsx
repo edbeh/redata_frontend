@@ -49,9 +49,11 @@ const Connections = () => {
 
           {fetchConnections?.data?.data?.data &&
             fetchConnections.data.data.data.length > 0 &&
-            fetchConnections.data?.data.data.map((connection) => (
-              <SingleConnection key={connection.id} connection={connection} />
-            ))}
+            fetchConnections.data?.data.data
+              .filter((conn) => conn.role === "user")
+              .map((conn) => (
+                <SingleConnection key={conn.id} connection={conn} />
+              ))}
         </div>
       </div>
     </BaseLayout>
