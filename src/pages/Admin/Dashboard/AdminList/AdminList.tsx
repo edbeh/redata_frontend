@@ -62,7 +62,9 @@ const AdminList = () => {
           columns={generatePendingAdminsColumns()}
           data={
             fetchPendingUsersByAdmin?.data?.data?.data?.filter(
-              (user) => user.role === "admin"
+              (user) =>
+                user.role === "admin" &&
+                user.departments[0].id === getAdminDeptLocalStorage()?.id
             ) || []
           }
           isLoading={fetchPendingUsersByAdmin?.isLoading}

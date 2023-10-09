@@ -6,18 +6,20 @@ export module GetPendingUsersByAdmin {
   export interface Data {
     id: string;
     type: string;
-    name?: string;
-    role: "user" | "admin" | "developer";
+    name?: any;
+    role: string;
     email: string;
     invitedAt: string;
-    researchInterests: ResearchInterest[];
-    patientPools: ResearchInterest[];
+    institution: Institution;
+    designation?: any;
+    departments: Institution[];
+    researchInterests: any[];
+    patientPools: any[];
   }
 
-  export interface ResearchInterest {
+  export interface Institution {
     id: string;
     type: string;
     name: string;
-    variant: string;
   }
 }
