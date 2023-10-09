@@ -79,11 +79,13 @@ const Profile = () => {
               />
             )}
 
-            {fetchUserById?.data?.data?.data?.googleScholar && (
-              <CitationSection
-                data={fetchUserById.data.data.data.googleScholar}
-              />
-            )}
+            {fetchUserById?.data?.data?.data?.googleScholar &&
+              fetchUserById.data.data.data.googleScholar.graph?.length > 0 &&
+              fetchUserById.data.data.data.googleScholar.table?.length > 0 && (
+                <CitationSection
+                  data={fetchUserById.data.data.data.googleScholar}
+                />
+              )}
 
             {fetchUserPublicationsById?.data?.data?.data && (
               <PublicationsSection

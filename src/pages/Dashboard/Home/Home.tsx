@@ -107,9 +107,13 @@ const Home = () => {
                 />
               )}
 
-              {fetchMe?.data?.data?.data?.googleScholar && (
-                <CitationSection data={fetchMe.data.data.data.googleScholar} />
-              )}
+              {fetchMe?.data?.data?.data?.googleScholar &&
+                fetchMe.data.data.data.googleScholar.graph?.length > 0 &&
+                fetchMe.data.data.data.googleScholar.table?.length > 0 && (
+                  <CitationSection
+                    data={fetchMe.data.data.data.googleScholar}
+                  />
+                )}
             </>
           ) : (
             <>
