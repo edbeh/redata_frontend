@@ -31,6 +31,11 @@ export const removeAdminNameLocalStorage = () => {
 // *Admin Dept
 export const getAdminDeptLocalStorage = () => {
   const result = localStorage.getItem("admin_dept");
+  // TODO: temp fix, to remove
+  if (result === "Gastroenterology & Hepatology") {
+    localStorage.clear();
+    return window.location.reload();
+  }
   if (result) {
     return JSON.parse(result) as PostAdminSession.Institution;
   } else {
