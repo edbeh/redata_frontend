@@ -5,8 +5,6 @@ import { Combobox } from "@headlessui/react";
 import { ImgChevronDownOutline, ImgCircleLoadingOutline } from "assets";
 import { FormSelectModel } from "models";
 
-import Virtualized from "./Virtualized/Virtualized";
-
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   control: any;
   id: string;
@@ -58,10 +56,12 @@ const Select = memo(
               return (
                 <Combobox
                   value={field.value}
-                  onChange={(e) => {
+                  onChange={(selectedOption) => {
+                    console.log("selected", selectedOption);
                     setQuery("");
-                    if (onChange && typeof onChange === "function") onChange(e);
-                    field.onChange(e);
+                    if (onChange && typeof onChange === "function")
+                      onChange(selectedOption);
+                    field.onChange(selectedOption);
                   }}
                   disabled={disabled}
                 >
@@ -74,10 +74,6 @@ const Select = memo(
                         }}
                         onFocus={() => {
                           if (field.value?.id) setQuery("");
-                        }}
-                        onBlur={() => {
-                          setQuery("");
-                          field.onBlur();
                         }}
                         autoComplete="off"
                         className={`w-full min-h-[42px] py-3 pl-3 pr-4 border-[1px] rounded-lg 
@@ -112,10 +108,29 @@ const Select = memo(
                           {noOptionsText}
                         </p>
                       ) : (
-                        <Virtualized
-                          options={filteredOptionList}
-                          activeId={field.value?.id}
-                        />
+                        filteredOptionList.map((option) => (
+                          <Combobox.Option
+                            key={option.id}
+                            value={option}
+                            className={({ active }) =>
+                              field.value?.id === option.id
+                                ? "bg-blue-500"
+                                : active
+                                ? "bg-faintBlue" // Background color for the active option
+                                : ""
+                            }
+                          >
+                            <span
+                              className={`p-3 block truncate ${
+                                field.value?.id === option.id
+                                  ? "text-white"
+                                  : ""
+                              }`}
+                            >
+                              {option.name}
+                            </span>
+                          </Combobox.Option>
+                        ))
                       )}
                     </Combobox.Options>
                   </div>
