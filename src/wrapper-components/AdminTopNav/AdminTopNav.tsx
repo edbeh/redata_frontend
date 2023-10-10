@@ -44,7 +44,7 @@ const AdminTopNav = () => {
     setAdminName(adminName || "");
 
     const adminDept = getAdminDeptLocalStorage();
-    setAdminDept(adminDept);
+    if (adminDept) setAdminDept(adminDept);
   }, []);
 
   useEffect(() => {
