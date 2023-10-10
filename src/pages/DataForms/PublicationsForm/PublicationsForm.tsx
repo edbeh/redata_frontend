@@ -182,6 +182,10 @@ const PublicationsForm = React.forwardRef<
 
     // *Effects
     useEffect(() => {
+      fetchMe.refetch();
+    }, []);
+
+    useEffect(() => {
       handleSelectAllPubMedIds();
     }, [selectAllPublications]);
 
