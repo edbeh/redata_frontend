@@ -217,7 +217,7 @@ const AdminUserDetails = () => {
         <AdminCard title="Publications">
           {publications && publications.length > 0
             ? publications.map((pub, i) => (
-                <div className="flex text-[12px]" key={"pub" + i}>
+                <div className="flex text-[13px]" key={"pub" + i}>
                   <span className="min-w-[30px]">{i + 1}.</span>
                   <div>
                     {/* Publication title */}
