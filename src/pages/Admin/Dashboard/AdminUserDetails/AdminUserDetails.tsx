@@ -22,6 +22,8 @@ const AdminUserDetails = () => {
   const [token, setToken] = useState<string>("");
   const [shouldShowFirstLoginLink, setShouldShowFirstLoginLink] =
     useState<boolean>(false);
+  const [isOnboardingComplete, setIsOnboardingComplete] =
+    useState<boolean>(false);
 
   // *Queries
   const fetchPendingUsersByAdmin = useFetchPendingUsersByAdmin();
@@ -56,6 +58,13 @@ const AdminUserDetails = () => {
       const userIsPending = pendingUsers.some(
         (pendingUser) => pendingUser.id === user.id
       );
+      if (
+        user?.name &&
+        user?.researchInterests?.length > 0 &&
+        user?.patientPools?.length > 0
+      ) {
+        setIsOnboardingComplete(true);
+      }
       setShouldShowFirstLoginLink(userIsPending);
     }
   }, [fetchUserByAdminById, fetchPendingUsersByAdmin]);
@@ -97,7 +106,7 @@ const AdminUserDetails = () => {
           <a
             href={`${
               data?.assumeAccountLink
-            }&admin=${getAdminNameLocalStorage()}`}
+            }&admin=${getAdminNameLocalStorage()}&onboarding_complete=${isOnboardingComplete}`}
             target="_blank"
             rel="noopener noreferrer"
           >

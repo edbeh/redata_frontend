@@ -9,15 +9,20 @@ const AssumeAccount = () => {
   const searchParams = new URLSearchParams(location.search);
   const token = searchParams.get("token");
   const admin = searchParams.get("admin");
+  const onboardingComplete = searchParams.get("onboarding_complete");
 
   //* Effects
   useEffect(() => {
     if (token) {
       setAssumeAsSessionStorage(admin || "");
       localStorage.setItem("token", token);
-      navigate("/onboarding");
+      if (onboardingComplete === "true") {
+        navigate("/home");
+      } else {
+        navigate("/onboarding");
+      }
     }
-  }, [navigate, token, admin]);
+  }, [navigate, token, admin, onboardingComplete]);
 
   //* JSX
   return <FullScreenLoader />;
