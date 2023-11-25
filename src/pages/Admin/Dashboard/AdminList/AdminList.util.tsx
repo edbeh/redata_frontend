@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 
 import { GetPendingUsersByAdmin, GetUsersByAdmin } from "api/models";
+import { getAdminDeptLocalStorage } from "utils";
 
 const activeAdminsColumnHelper = createColumnHelper<GetUsersByAdmin.Data>();
 const pendingAdminsColumnHelper =
@@ -12,10 +13,23 @@ export const generateActiveAdminsColumns = (): ColumnDef<any, string>[] => [
     header: "Name",
     cell: (info) => info.getValue(),
   }),
-  activeAdminsColumnHelper.accessor((row) => row.departments[0].name, {
-    header: "Department",
-    cell: (info) => info.getValue(),
-  }),
+  activeAdminsColumnHelper.accessor(
+    (row) => {
+      const adminDept = getAdminDeptLocalStorage();
+      if (adminDept) {
+        const department = row.departments.filter(
+          (dept) => dept.id === adminDept.id
+        );
+        return department[0].name;
+      } else {
+        return row.departments[0].name;
+      }
+    },
+    {
+      header: "Department",
+      cell: (info) => info.getValue(),
+    }
+  ),
   activeAdminsColumnHelper.accessor("institution.name", {
     header: "Institution",
     cell: (info) => info.getValue(),
