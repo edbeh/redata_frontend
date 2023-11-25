@@ -17,10 +17,6 @@ export const generateActiveUsersColumns = (): ColumnDef<any, string>[] => [
     header: "Designation",
     cell: (info) => info.getValue(),
   }),
-  // activeUsersColumnHelper.accessor("department.name", {
-  //   header: "Department",
-  //   cell: (info) => info.getValue(),
-  // }),
   activeUsersColumnHelper.display({
     id: "acknowledgedAt",
     header: "Acknowledged at",

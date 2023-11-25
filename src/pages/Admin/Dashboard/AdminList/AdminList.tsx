@@ -45,7 +45,7 @@ const AdminList = () => {
             fetchUsersByAdmin?.data?.data?.data?.filter(
               (user) =>
                 user.role === "admin" &&
-                user.departments[0].id === getAdminDeptLocalStorage()?.id
+                user.departments.some(dept => dept.id === getAdminDeptLocalStorage()?.id) 
             ) || []
           }
           isLoading={fetchUsersByAdmin?.isLoading}
@@ -64,7 +64,7 @@ const AdminList = () => {
             fetchPendingUsersByAdmin?.data?.data?.data?.filter(
               (user) =>
                 user.role === "admin" &&
-                user.departments[0].id === getAdminDeptLocalStorage()?.id
+                user.departments.some(dept => dept.id === getAdminDeptLocalStorage()?.id) 
             ) || []
           }
           isLoading={fetchPendingUsersByAdmin?.isLoading}
