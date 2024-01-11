@@ -7,9 +7,12 @@ import { useFetchMe, useFetchAllPublications } from "api/hooks";
 
 import { publicationsNav } from "./Publications.util";
 import { PublicationsSection, PublicationsSectionLoading } from "./components";
+import { useMe } from "hooks";
+import { isSampleProfile } from "utils";
 
 const Publications = () => {
   const navigate = useNavigate();
+  const { email } = useMe();
 
   // *Queries
   const fetchMe = useFetchMe();
@@ -24,13 +27,15 @@ const Publications = () => {
           <h1 className="text-4xl font-semibold tracking-tight text-white">
             Publications
           </h1>
-          <div
-            className="flex space-x-1 items-center text-white cursor-pointer"
-            onClick={() => navigate("/publications/edit")}
-          >
-            <ImgPencilSquareOutline width={20} height={20} />
-            <p>Edit</p>
-          </div>
+          {!isSampleProfile(email) && (
+            <div
+              className="flex space-x-1 items-center text-white cursor-pointer"
+              onClick={() => navigate("/publications/edit")}
+            >
+              <ImgPencilSquareOutline width={20} height={20} />
+              <p>Edit</p>
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col w-full mt-8 space-y-6">

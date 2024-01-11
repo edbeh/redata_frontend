@@ -7,3 +7,4 @@ export * from "./downloadBase64";
 export * from "./navigateToSubdomain";
 export * from "./getAppVersion";
 export * from "./copyToClipboard";
+export * from './isSampleProfile'

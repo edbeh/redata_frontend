@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 
@@ -16,12 +17,16 @@ import {
   CitationSection,
 } from "./components";
 import { useFetchMe } from "api/hooks";
-import { useEffect } from "react";
 import { ME_API_KEY } from "api/keys";
-import { setRequireAcknowledgementSessionStorage } from "utils";
+import {
+  isSampleProfile,
+  setRequireAcknowledgementSessionStorage,
+} from "utils";
+import { useMe } from "hooks";
 
 const Home = () => {
   const navigate = useNavigate();
+  const { email } = useMe();
 
   // *Queries
   const queryClient = useQueryClient();
@@ -48,13 +53,15 @@ const Home = () => {
             Profile
           </h1>
 
-          <div
-            className="flex space-x-1 items-center text-white cursor-pointer"
-            onClick={() => navigate("/home/edit")}
-          >
-            <ImgPencilSquareOutline width={20} height={20} />
-            <p>Edit</p>
-          </div>
+          {!isSampleProfile(email) && (
+            <div
+              className="flex space-x-1 items-center text-white cursor-pointer"
+              onClick={() => navigate("/home/edit")}
+            >
+              <ImgPencilSquareOutline width={20} height={20} />
+              <p>Edit</p>
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col w-full mt-8 space-y-6">

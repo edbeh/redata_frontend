@@ -7,9 +7,12 @@ import { useFetchAllStudies, useFetchMe } from "api/hooks";
 
 import { studiesNav } from "./Studies.util";
 import StudiesSection from "./components/StudiesSection/StudiesSection";
+import { isSampleProfile } from "utils";
+import { useMe } from "hooks";
 
 const Studies = () => {
   const navigate = useNavigate();
+  const { email } = useMe();
 
   // *Queries
   const fetchAllStudies = useFetchAllStudies();
@@ -23,13 +26,15 @@ const Studies = () => {
           <h1 className="text-4xl font-semibold tracking-tight text-white">
             Studies
           </h1>
-          <div
-            className="flex space-x-1 items-center text-white cursor-pointer"
-            onClick={() => navigate("/studies/edit")}
-          >
-            <ImgPencilSquareOutline width={20} height={20} />
-            <p>Edit</p>
-          </div>
+          {!isSampleProfile(email) && (
+            <div
+              className="flex space-x-1 items-center text-white cursor-pointer"
+              onClick={() => navigate("/studies/edit")}
+            >
+              <ImgPencilSquareOutline width={20} height={20} />
+              <p>Edit</p>
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col w-full mt-8 space-y-6">
