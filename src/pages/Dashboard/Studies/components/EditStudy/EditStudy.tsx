@@ -1,7 +1,10 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { useMe } from "hooks";
+import { isSampleProfile } from "utils";
 import { BaseLayout } from "wrapper-components";
-import { BreadCrumbs, Card, Modal } from "components";
+import { BreadCrumbs, Card } from "components";
 import { ImgArrowUturnLeftOutline } from "assets";
 
 import { editStudyNav } from "../../Studies.util";
@@ -9,7 +12,15 @@ import { editStudyNav } from "../../Studies.util";
 import StudiesForm from "pages/DataForms/StudiesForm/StudiesForm";
 
 const EditStudy = () => {
+  const { email } = useMe();
   const navigate = useNavigate();
+
+  /** Effects */
+  useEffect(() => {
+    if (isSampleProfile(email)) {
+      navigate("/studies");
+    }
+  }, [navigate, email]);
 
   return (
     <BaseLayout withLeftNavigation>
