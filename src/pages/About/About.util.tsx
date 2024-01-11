@@ -63,7 +63,7 @@ export const getFeatureContent = (): FeatureModel[] => [
               <div className="flex flex-col space-y-6">
                 <CommonSection
                   title="Research Interests"
-                  data={["Intracranial hypertension", "Teleophthalmology"]}
+                  data={["Intraocular hypertension", "Teleophthalmology"]}
                 />
                 <CommonSection
                   title="Patient Populations"
