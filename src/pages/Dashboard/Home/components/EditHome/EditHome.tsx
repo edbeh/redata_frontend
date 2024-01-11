@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ImgArrowUturnLeftOutline } from "assets";
-import { getSearchParams } from "utils";
+import { getSearchParams, isSampleProfile } from "utils";
 import { BreadCrumbs, Button, Card } from "components";
 import { BaseLayout } from "wrapper-components";
 import {
@@ -17,8 +17,10 @@ import {
   IsSubmissionLoadingType,
   IsSubmissionSuccessfulType,
 } from "./EditHome.model";
+import { useMe } from "hooks";
 
 const EditProfile = () => {
+  const { email } = useMe();
   const navigate = useNavigate();
   const searchParams = getSearchParams() as any;
   const basicInfoSubmitRef = useRef<HTMLButtonElement>(null);
@@ -39,6 +41,12 @@ const EditProfile = () => {
     });
 
   // *Effects
+  useEffect(() => {
+    if (isSampleProfile(email)) {
+      navigate("/home");
+    }
+  }, [navigate, email]);
+
   useEffect(() => {
     if (
       isSubmissionSuccessful.basicInfo &&

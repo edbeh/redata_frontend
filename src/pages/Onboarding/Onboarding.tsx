@@ -11,12 +11,15 @@ import {
   PatientPopulationsForm,
   PublicationsForm,
 } from "pages";
+import { useMe } from "hooks";
+import { isSampleProfile } from "utils";
 import { useFetchMe } from "api/hooks";
 
 import { getOnboardingSteps } from "./Onboarding.utils";
 import OnboardingIndicator from "./OnboardingIndicator/OnboardingIndicator";
 
 const Onboarding = () => {
+  const { email } = useMe();
   const navigate = useNavigate();
   const { step } = useParams();
 
@@ -57,6 +60,12 @@ const Onboarding = () => {
   };
 
   // *Effects
+  useEffect(() => {
+    if (isSampleProfile(email)) {
+      navigate("/home");
+    }
+  }, [navigate, email]);
+
   useLayoutEffect(() => {
     if (!step) return navigate("/onboarding/1");
     const stepInt = parseInt(step);
