@@ -55,10 +55,8 @@ const Select = memo(
             render={({ field }) => {
               return (
                 <Combobox
-                  value={field.value}
+                  value={field.value || query}
                   onChange={(selectedOption) => {
-                    console.log("selected", selectedOption);
-                    setQuery("");
                     if (onChange && typeof onChange === "function")
                       onChange(selectedOption);
                     field.onChange(selectedOption);

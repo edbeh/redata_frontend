@@ -21,6 +21,7 @@ const SingleResultPublication = ({
   return (
     <>
       {data.map((result) => {
+        console.log('result', result)
         return (
           <div
             className="flex flex-col sm:flex-row px-0 sm:px-0 py-6 border-b-[1px] space-y-2 sm:space-y-0 border-b-gray-200 space-x-0 sm:space-x-6"
