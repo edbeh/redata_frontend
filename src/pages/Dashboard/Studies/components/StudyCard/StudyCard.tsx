@@ -25,6 +25,7 @@ const StudyCard = ({
     ReferencePMID,
     ReferenceCitation,
     ResponsiblePartyType,
+    ReferenceType,
     StudyType,
     LocationCountry,
     LocationFacility,
@@ -125,7 +126,7 @@ const StudyCard = ({
             </div>
           )}
 
-          {ReferenceCitation?.length > 0 && (
+          {ReferenceType[0] === 'result' && ReferenceCitation?.length > 0 && (
             <div className="!mt-4 flex flex-col w-full text-[13px]">
               <p className="font-semibold">Citations:</p>
 
@@ -158,10 +159,10 @@ const StudyCard = ({
                 </div>
               )}
 
-              <p className="mt-2 text-xs">
+              {/* <p className="mt-2 text-xs">
                 <u>Disclaimer</u>: The citation above was automatically linked
                 by ClinicalTrials.gov, it may or may not be about the study.
-              </p>
+              </p> */}
             </div>
           )}
         </div>

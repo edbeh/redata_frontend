@@ -66,6 +66,8 @@ const SearchStudiesForm = () => {
   const fetchAllStudies = useFetchAllStudies();
   const studiesData = fetchAllStudies?.data?.data?.data;
 
+  console.log('fetchStudiesByKeywords', fetchStudiesByKeywords?.data?.data)
+
   const submitStudies = useSubmitStudies(() => {
     queryClient.invalidateQueries(STUDIES_API_KEY);
     toast.success("Studies added successfully!");
@@ -112,7 +114,7 @@ const SearchStudiesForm = () => {
         studyType: selected.StudyType[0],
         initiatedBy: selected.ResponsiblePartyType[0],
         sponsorName: selected.LeadSponsorName[0],
-        pmid: selected.ReferencePMID?.length ? selected.ReferencePMID[0] : "",
+        pmid: selected.ReferenceType[0] === "result" && selected.ReferencePMID?.length ? selected.ReferencePMID[0] : "",
       }));
 
     submitStudies.mutate(payload);

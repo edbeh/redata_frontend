@@ -88,6 +88,7 @@ const getStudyFields = [
   "ReferenceCitation",
   "LocationCountry",
   "LocationFacility",
+  "ReferenceType"
 ];
 
 export const CLINICAL_TRIALS_GOV_API_URL = (keywords: string) =>

@@ -20,6 +20,7 @@ export declare module GetStudiesByKeywords {
     ReferenceCitation: string[];
     LocationCountry: string[];
     LocationFacility: string[];
+    ReferenceType: string[];
   }
 
   export interface StudyFieldsResponse {
