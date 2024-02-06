@@ -66,7 +66,7 @@ const SearchStudiesForm = () => {
   const fetchAllStudies = useFetchAllStudies();
   const studiesData = fetchAllStudies?.data?.data?.data;
 
-  console.log('fetchStudiesByKeywords', fetchStudiesByKeywords?.data?.data)
+  console.log("fetchStudiesByKeywords", fetchStudiesByKeywords?.data?.data);
 
   const submitStudies = useSubmitStudies(() => {
     queryClient.invalidateQueries(STUDIES_API_KEY);
@@ -112,9 +112,13 @@ const SearchStudiesForm = () => {
         title: selected.OfficialTitle[0],
         protocolId: selected.OrgStudyId[0],
         studyType: selected.StudyType[0],
-        initiatedBy: selected.ResponsiblePartyType[0],
+        initiatedBy: selected?.ResponsiblePartyType[0] || "Unspecified",
         sponsorName: selected.LeadSponsorName[0],
-        pmid: selected.ReferenceType[0] === "result" && selected.ReferencePMID?.length ? selected.ReferencePMID[0] : "",
+        pmid:
+          selected.ReferenceType[0] === "result" &&
+          selected.ReferencePMID?.length
+            ? selected.ReferencePMID[0]
+            : "",
       }));
 
     submitStudies.mutate(payload);
